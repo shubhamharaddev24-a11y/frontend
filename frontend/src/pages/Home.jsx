@@ -122,14 +122,14 @@ const Home = () => {
       {/* Buttons */}
       <div className="flex gap-2 sm:gap-3 flex-shrink-0 items-center">
         <motion.a
-          href="tel:9876543210"
+          href="tel:9272707115"
           className="bg-orange-500 hover:bg-orange-600 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg font-semibold transition-all shadow-md text-xs sm:text-sm whitespace-nowrap"
           whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
         >
           Call Now
         </motion.a>
         <motion.a
-          href="https://wa.me/919876543210"
+          href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%20%21%20I%20would%20like%20to%20know%20more%20about%20your%20services%20and%20pricing."
           target="_blank"
           rel="noopener noreferrer"
           className="bg-[#25D366] hover:bg-[#20bd5a] text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg font-semibold transition-all shadow-md text-xs sm:text-sm whitespace-nowrap inline-flex items-center gap-1 sm:gap-2"
