@@ -122,7 +122,7 @@ const Home = () => {
       {/* Buttons */}
       <div className="flex gap-2 sm:gap-3 flex-shrink-0 items-center">
         <motion.a
-          href="tel:9272707115"
+          href="tel:9271456749"
           className="bg-orange-500 hover:bg-orange-600 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg font-semibold transition-all shadow-md text-xs sm:text-sm whitespace-nowrap"
           whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
         >
