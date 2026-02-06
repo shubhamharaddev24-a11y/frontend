@@ -54,7 +54,7 @@ const VisitUs = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-amber-900 mb-1">
-                    Call: 9876543210
+                    Call: 9272707115
                   </h3>
                   <p className="text-amber-700 font-medium">
                     Or WhatsApp Us Anytime
