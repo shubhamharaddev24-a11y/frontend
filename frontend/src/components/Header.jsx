@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-
+import { MessageCircle ,Phone,Menu,X } from "lucide-react";
 const navItems = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
@@ -33,9 +32,9 @@ const Header = () => {
             <p className="text-sm font-semibold tracking-wide text-brandTextPrimary">
               Shubham Photos Studio
             </p>
-            <p className="text-xs text-brandTextMuted">
-              Your Trusted Photo & Digital Service Center
-            </p>
+           <p className="hidden text-xs text-brandTextMuted sm:block">
+  Your Trusted Photo & Digital Service Center
+</p>
           </div>
         </div>
 
@@ -58,32 +57,43 @@ const Header = () => {
 
         {/* Call / WhatsApp + mobile menu */}
         <div className="flex items-center gap-2">
-          <motion.a
-            href="tel:9271456749"
-            className="hidden rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-2 text-xs font-semibold text-brandAccent shadow-sm hover:bg-brandAccent/10 sm:inline-flex"
-            whileTap={reduceMotion ? undefined : { scale: 0.96 }}
-          >
-            Call Now
-          </motion.a>
-          <motion.a
-            href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%20-%20I%20would%20like%20to%20enquire%20about%20your%20services."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-brandAccent px-4 py-2 text-xs font-semibold text-black shadow-lg shadow-brandAccent/40 hover:bg-amber-400"
-            whileTap={reduceMotion ? undefined : { scale: 0.96 }}
-          >
-            <span>WhatsApp</span>
-          </motion.a>
-          {/* Mobile menu toggle */}
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-full border border-brandBorder bg-brandSurface p-2 text-brandTextPrimary md:hidden"
-            aria-label="Toggle navigation"
-            onClick={() => setOpen((prev) => !prev)}
-          >
-            {open ? <X size={18} /> : <Menu size={18} />}
-          </button>
-        </div>
+  {/* Call Button */}
+  <motion.a
+    href="tel:9271456749"
+    className="hidden sm:inline-flex items-center gap-2 rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-2 text-xs font-semibold text-brandAccent shadow-sm hover:bg-brandAccent/10"
+    whileTap={reduceMotion ? undefined : { scale: 0.96 }}
+    aria-label="Call Now"
+  >
+    <Phone size={14} />
+    <span>Call Now</span>
+  </motion.a>
+
+  {/* WhatsApp Button */}
+  <motion.a
+    href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%20-%20I%20would%20like%20to%20enquire%20about%20your%20services."
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white text-[#25D366] shadow-sm transition hover:shadow-md active:scale-95 sm:px-4 sm:py-2 sm:gap-2"
+    whileTap={reduceMotion ? undefined : { scale: 0.96 }}
+    aria-label="Chat on WhatsApp"
+  >
+    <MessageCircle size={18} />
+    <span className="hidden text-xs font-semibold text-black sm:inline">
+      WhatsApp
+    </span>
+  </motion.a>
+
+  {/* Mobile menu toggle */}
+  <button
+    type="button"
+    className="inline-flex items-center justify-center rounded-full border border-brandBorder bg-brandSurface p-2 text-brandTextPrimary md:hidden"
+    aria-label="Toggle navigation"
+    onClick={() => setOpen((prev) => !prev)}
+  >
+    {open ? <X size={18} /> : <Menu size={18} />}
+  </button>
+</div>
+
       </div>
 
       {/* Mobile menu panel */}

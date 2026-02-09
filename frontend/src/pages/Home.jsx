@@ -40,7 +40,7 @@ const Home = () => {
         <div className="absolute inset-0">
           <video
             className="h-full w-full object-cover opacity-70"
-            src="/background-village-wedding.mp4"
+            src="/backgroundd v1.mp4"
             autoPlay
             loop
             muted
@@ -402,8 +402,8 @@ const Home = () => {
               Visit or call
             </p>
             <p className="text-sm text-brandTextMuted">
-              Located on the main bazaar road near the bus stand, easy to reach
-              by foot, two-wheeler or auto.
+              Located on the main bazaar , near the bus stand, opposite to saralgaon police chowki ,murbad- easy to reach
+              by foot..
             </p>
             <p className="text-sm">
               Phone:{" "}
