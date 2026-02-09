@@ -1,8 +1,16 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const Contact = () => {
   const reduceMotion = useReducedMotion();
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    service: "",
+    date: "",
+    message: "",
+  });
+  const [error, setError] = useState("");
   const fadeUp = useMemo(
     () => ({
       hidden: { opacity: 0, y: 20 },
@@ -38,7 +46,7 @@ const Contact = () => {
         </motion.div>
 
         <motion.div
-          className="grid gap-6 md:grid-cols-[1.2fr,1.3fr]"
+          className="grid gap-6 md:grid-cols-[1.15fr,1.4fr]"
           initial={reduceMotion ? "show" : "hidden"}
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
@@ -69,8 +77,8 @@ const Contact = () => {
                 Studio address
               </p>
               <p className="mt-1 text-sm">
-                Main bazaar road near bus stand, close to the vegetable market.
-                The studio is on the ground floor with clear board outside.
+                Main bazaar road near bus stand, close to police chowki , saralgaon , murbad.
+                The studio is on the 1st floor with clear board outside.
               </p>
             </div>
             <div>
@@ -98,17 +106,143 @@ const Contact = () => {
               </a>
             </div>
           </div>
-
-          <div className="overflow-hidden rounded-2xl border border-brandBorder bg-brandSurface">
-            <iframe
-              title="Shubham Photos Studio map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.632823324528!2d75.8788!3d17.4369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z17LjI2ICBD"
-              className="h-64 w-full border-0 md:h-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+          {/* Enquiry / booking form */}
+          <div className="space-y-4 rounded-2xl border border-brandBorder bg-brandSurface p-5 text-sm text-brandTextMuted">
+            <h2 className="text-sm font-semibold text-white">
+              Booking & enquiry form
+            </h2>
+            <p className="text-xs text-brandTextMuted">
+              Share a few details and we will respond on call or WhatsApp with
+              availability and pricing.
+            </p>
+            <form
+              className="space-y-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setError("");
+                if (!form.name.trim() || !form.phone.trim()) {
+                  setError("Please fill your name and mobile number so we can contact you.");
+                  return;
+                }
+                const base =
+                  "https://wa.me/919271456749?text=";
+                const lines = [
+                  "New enquiry from Shubham Photos Studio website:",
+                  "",
+                  `Name: ${form.name}`,
+                  `Mobile: ${form.phone}`,
+                  form.service ? `Interested in: ${form.service}` : "",
+                  form.date ? `Preferred date: ${form.date}` : "",
+                  form.message ? `Message: ${form.message}` : "",
+                ]
+                  .filter(Boolean)
+                  .join("%0A");
+                const url = base + lines;
+                if (typeof window !== "undefined") {
+                  window.open(url, "_blank");
+                }
+              }}
+            >
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-brandTextMuted">
+                    Your name *
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                    value={form.name}
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, name: e.target.value }))
+                    }
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-brandTextMuted">
+                    Mobile number *
+                  </label>
+                  <input
+                    type="tel"
+                    className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                    value={form.phone}
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, phone: e.target.value }))
+                    }
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-brandTextMuted">
+                  What do you want to book?
+                </label>
+                <select
+                  className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                  value={form.service}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, service: e.target.value }))
+                  }
+                >
+                  <option value="">Select a service</option>
+                  <option>Wedding photography & video</option>
+                  <option>Pre-wedding shoot</option>
+                  <option>Passport photos / prints</option>
+                  <option>Wedding cards (लग्नपत्रिका)</option>
+                  <option>Banners / flex / posters</option>
+                  <option>DTP / biodata / CV</option>
+                  <option>Other studio service</option>
+                </select>
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-brandTextMuted">
+                  Preferred date (optional)
+                </label>
+                <input
+                  type="date"
+                  className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                  value={form.date}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, date: e.target.value }))
+                  }
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-brandTextMuted">
+                  Anything else we should know?
+                </label>
+                <textarea
+                  rows={3}
+                  className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                  value={form.message}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, message: e.target.value }))
+                  }
+                  placeholder="Example: village name, number of days, timing, or special requirement."
+                />
+              </div>
+              {error && (
+                <p className="text-xs font-medium text-amber-300">{error}</p>
+              )}
+              <motion.button
+                type="submit"
+                className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-brandAccent px-5 py-2.5 text-sm font-semibold text-black shadow-md shadow-brandAccent/40 hover:bg-amber-400"
+                whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+              >
+                Send enquiry on WhatsApp
+              </motion.button>
+            </form>
           </div>
         </motion.div>
+
+        {/* Map below on its own row for clarity */}
+        <div className="mt-8 overflow-hidden rounded-2xl border border-brandBorder bg-brandSurface">
+          <iframe
+            title="Shubham Photos Studio map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.632823324528!2d75.8788!3d17.4369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z17LjI2ICBD"
+            className="h-64 w-full border-0 md:h-80"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
       </section>
     </div>
   );

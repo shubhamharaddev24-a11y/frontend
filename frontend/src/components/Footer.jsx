@@ -40,7 +40,7 @@ const Footer = () => {
               Contact
             </p>
             <p className="text-sm text-brandTextMuted">
-              Main bazaar road near bus stand, local market area. Easy to reach from any side of town.
+              Main bazaar road near bus stand, local market area,close to police chowki,saralgaon,murbad. Easy to reach from any side of town.
             </p>
             <p className="text-sm text-brandTextMuted">
               Phone: <span className="text-brandTextPrimary">+91 92714 56749</span>
