@@ -1,6 +1,7 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "Home", to: "/" },
@@ -12,6 +13,13 @@ const navItems = [
 
 const Header = () => {
   const reduceMotion = useReducedMotion();
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 border-b border-brandBorder/80 bg-black/60 backdrop-blur-xl">
@@ -31,7 +39,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Navigation */}
+        {/* Navigation - desktop */}
         <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => (
             <NavLink
@@ -48,7 +56,7 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Call / WhatsApp */}
+        {/* Call / WhatsApp + mobile menu */}
         <div className="flex items-center gap-2">
           <motion.a
             href="tel:9271456749"
@@ -66,8 +74,40 @@ const Header = () => {
           >
             <span>WhatsApp</span>
           </motion.a>
+          {/* Mobile menu toggle */}
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-full border border-brandBorder bg-brandSurface p-2 text-brandTextPrimary md:hidden"
+            aria-label="Toggle navigation"
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile menu panel */}
+      {open && (
+        <div className="border-t border-brandBorder/70 bg-brandSurface/95 px-4 pb-4 pt-3 text-sm text-brandTextPrimary md:hidden">
+          <nav className="mx-auto flex max-w-6xl flex-col gap-2">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-brandAccent/10 text-brandAccent"
+                      : "text-brandTextMuted hover:bg-brandSurfaceSoft hover:text-brandTextPrimary"
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
