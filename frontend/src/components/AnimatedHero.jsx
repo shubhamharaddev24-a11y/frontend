@@ -158,7 +158,13 @@ const AnimatedHero = () => {
         >
           <motion.a
             href="tel:9271456749"
-            className="group relative inline-flex items-center gap-2 bg-brandAccent text-black px-8 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-brandAccent/50 transition-all"
+            className="group relative inline-flex items-center gap-2
+  bg-brandAccent text-black
+  px-5 py-3 text-base
+  sm:px-8 sm:py-4 sm:text-lg
+  rounded-full font-semibold
+  shadow-2xl hover:shadow-brandAccent/50
+  transition-all"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -174,7 +180,13 @@ const AnimatedHero = () => {
             href="https://wa.me/919271456749"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 border-2 border-brandAccent text-brandAccent px-8 py-4 rounded-full font-semibold text-lg hover:bg-brandAccent hover:text-black transition-all"
+            className="group inline-flex items-center gap-2
+  border-2 border-brandAccent text-brandAccent
+  px-5 py-3 text-base
+  sm:px-8 sm:py-4 sm:text-lg
+  rounded-full font-semibold
+  hover:bg-brandAccent hover:text-black
+  transition-all"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
