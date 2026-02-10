@@ -1,19 +1,10 @@
 import React, { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useMotionVariants } from "../utils/motion";
 
 const About = () => {
   const reduceMotion = useReducedMotion();
-  const fadeUp = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 24 },
-      show: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] },
-      },
-    }),
-    [],
-  );
+  const variants = useMotionVariants();
 
   return (
     <div className="bg-brandBg pb-16 pt-10 text-brandTextPrimary sm:pt-14">
@@ -22,7 +13,7 @@ const About = () => {
           className="space-y-4"
           initial={reduceMotion ? "show" : "hidden"}
           animate="show"
-          variants={fadeUp}
+          variants={variants.fadeUp}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
             About Shubham Photos Studio
@@ -43,9 +34,9 @@ const About = () => {
           initial={reduceMotion ? "show" : "hidden"}
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          variants={fadeUp}
+          variants={variants.staggerContainer}
         >
-          <div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted">
+          <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
             <h2 className="text-sm font-semibold text-white">
               Our story & experience
             </h2>
@@ -60,8 +51,8 @@ const About = () => {
               couples and relatives. That is why we keep backups, deliver
               albums carefully and never compromise on print quality.
             </p>
-          </div>
-          <div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted">
+          </motion.div>
+          <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
             <h2 className="text-sm font-semibold text-white">
               What we believe in
             </h2>
@@ -78,7 +69,7 @@ const About = () => {
                 a large wedding – with the same respect.
               </li>
             </ul>
-          </div>
+          </motion.div>
         </motion.div>
       </section>
     </div>
