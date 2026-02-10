@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { Camera, Aperture, Image } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { Camera, Aperture, Image } from "lucide-react";
 
 const AnimatedHero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
-  
+
   const { scrollY } = useScroll();
   const yRange = useTransform(scrollY, [0, 300], [0, 1]);
   const opacity = useTransform(yRange, [0, 1], [1, 0.3]);
@@ -17,23 +17,23 @@ const AnimatedHero = () => {
         const rect = containerRef.current.getBoundingClientRect();
         setMousePosition({
           x: (e.clientX - rect.left - rect.width / 2) / rect.width,
-          y: (e.clientY - rect.top - rect.height / 2) / rect.height
+          y: (e.clientY - rect.top - rect.height / 2) / rect.height,
         });
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   const floatingIcons = [
     { Icon: Camera, delay: 0, duration: 3 },
     { Icon: Aperture, delay: 0.5, duration: 3.5 },
-    { Icon: Image, delay: 1, duration: 4 }
+    { Icon: Image, delay: 1, duration: 4 },
   ];
 
   return (
-    <motion.section 
+    <motion.section
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black"
       style={{ opacity, scale }}
@@ -45,8 +45,8 @@ const AnimatedHero = () => {
           background: [
             "linear-gradient(to right, rgba(251, 146, 60, 0.1), rgba(245, 158, 11, 0.1), rgba(234, 179, 8, 0.1))",
             "linear-gradient(to right, rgba(245, 158, 11, 0.1), rgba(234, 179, 8, 0.1), rgba(251, 146, 60, 0.1))",
-            "linear-gradient(to right, rgba(234, 179, 8, 0.1), rgba(251, 146, 60, 0.1), rgba(245, 158, 11, 0.1))"
-          ]
+            "linear-gradient(to right, rgba(234, 179, 8, 0.1), rgba(251, 146, 60, 0.1), rgba(245, 158, 11, 0.1))",
+          ],
         }}
         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
       />
@@ -58,17 +58,17 @@ const AnimatedHero = () => {
           className="absolute text-brandAccent/20"
           style={{
             left: `${20 + index * 30}%`,
-            top: `${30 + index * 15}%`
+            top: `${30 + index * 15}%`,
           }}
           animate={{
             y: [0, -20, 0],
-            rotate: [0, 5, -5, 0]
+            rotate: [0, 5, -5, 0],
           }}
           transition={{
             duration,
             delay,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
           <Icon size={40 + index * 10} />
@@ -80,17 +80,17 @@ const AnimatedHero = () => {
         className="absolute w-96 h-96 rounded-full bg-brandAccent/5 blur-3xl"
         animate={{
           x: mousePosition.x * 100,
-          y: mousePosition.y * 100
+          y: mousePosition.y * 100,
         }}
         transition={{
           type: "spring",
           stiffness: 100,
-          damping: 30
+          damping: 30,
         }}
       />
 
       {/* Main content */}
-      <motion.div 
+      <motion.div
         className="relative z-10 text-center px-4 max-w-4xl mx-auto"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -102,18 +102,18 @@ const AnimatedHero = () => {
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
         >
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccent bg-brandAccent/10 px-4 py-2 rounded-full">
+          <span className="inline-flex items-center justify-center text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-brandAccent bg-brandAccent/10 px-4 py-2 rounded-full text-center">
             Shubham Photos Studio
           </span>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
         >
-          <motion.span 
+          <motion.span
             className="block text-brandAccent"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -121,7 +121,7 @@ const AnimatedHero = () => {
           >
             Capturing Moments,
           </motion.span>
-          <motion.span 
+          <motion.span
             className="block"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -131,24 +131,26 @@ const AnimatedHero = () => {
           </motion.span>
         </motion.h1>
 
-        <motion.p 
+        <motion.p
           className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.6 }}
         >
-          From intimate portraits to grand celebrations, we bring your stories to life with 
-          <motion.span 
+          From intimate portraits to grand celebrations, we bring your stories
+          to life with
+          <motion.span
             className="text-brandAccent font-semibold"
             whileHover={{ scale: 1.1 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
-            {" "}cinematic quality
-          </motion.span>
-          {" "}and artistic vision.
+            {" "}
+            cinematic quality
+          </motion.span>{" "}
+          and artistic vision.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
