@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useMotionVariants } from "../utils/motion";
 
 const sections = [
   {
@@ -85,25 +86,8 @@ const sections = [
 
 const Services = () => {
   const reduceMotion = useReducedMotion();
-  const fadeUp = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 20 },
-      show: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] },
-      },
-    }),
-    [],
-  );
-
-  const hoverCard = reduceMotion
-    ? {}
-    : {
-        whileHover: { y: -4, scale: 1.01 },
-        transition: { type: "spring", stiffness: 220, damping: 22 },
-      };
-
+  const variants = useMotionVariants();
+const { fadeUp } = variants;
   return (
     <div className="bg-brandBg pb-16 pt-10 text-brandTextPrimary sm:pt-14">
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -134,8 +118,8 @@ const Services = () => {
               initial={reduceMotion ? "show" : "hidden"}
               whileInView="show"
               viewport={{ once: true, amount: 0.25 }}
-              variants={fadeUp}
-              {...hoverCard}
+              variants={variants.fadeUpShort}
+              {...variants.cardHover}
             >
               <div className="flex items-center gap-3">
                 <h2 className="text-base font-semibold text-white">
@@ -164,12 +148,14 @@ const Services = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center rounded-full bg-brandAccent px-4 py-1.5 font-semibold text-black shadow-sm shadow-brandAccent/40 hover:bg-amber-400"
+                  {...variants.buttonHover}
                 >
                   WhatsApp enquiry
                 </a>
                 <a
                   href="tel:9271456749"
                   className="inline-flex items-center rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-1.5 font-semibold text-brandAccent hover:bg-brandSurfaceSoft"
+                  {...variants.buttonHover}
                 >
                   Call studio
                 </a>
