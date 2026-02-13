@@ -1,0 +1,142 @@
+/* Light and Dark Theme Variables */
+
+:root {
+  /* Light theme colors */
+  --light-bg: #ffffff;
+  --light-surface: #f8fafc;
+  --light-surface-soft: #f1f5f9;
+  --light-border: #e2e8f0;
+  --light-text-primary: #1e293b;
+  --light-text-muted: #64748b;
+  --light-accent: #f59e0b;
+  --light-accent-soft: #fef3c7;
+  
+  /* Dark theme colors (existing brand colors) */
+  --dark-bg: #0f0f0f;
+  --dark-surface: #1a1a1a;
+  --dark-surface-soft: #262626;
+  --dark-border: #333333;
+  --dark-text-primary: #ffffff;
+  --dark-text-muted: #a1a1aa;
+  --dark-accent: #f59e0b;
+  --dark-accent-soft: #451a03;
+}
+
+/* Light theme */
+.light {
+  --bg-primary: var(--light-bg);
+  --bg-surface: var(--light-surface);
+  --bg-surface-soft: var(--light-surface-soft);
+  --bg-border: var(--light-border);
+  --text-primary: var(--light-text-primary);
+  --text-muted: var(--light-text-muted);
+  --text-accent: var(--light-accent);
+  --text-accent-soft: var(--light-accent-soft);
+  
+  color-scheme: light;
+}
+
+/* Dark theme */
+.dark {
+  --bg-primary: var(--dark-bg);
+  --bg-surface: var(--dark-surface);
+  --bg-surface-soft: var(--dark-surface-soft);
+  --bg-border: var(--dark-border);
+  --text-primary: var(--dark-text-primary);
+  --text-muted: var(--dark-text-muted);
+  --text-accent: var(--dark-accent);
+  --text-accent-soft: var(--dark-accent-soft);
+  
+  color-scheme: dark;
+}
+
+/* Custom CSS variables for existing Tailwind classes */
+.brandBg {
+  background-color: var(--bg-primary);
+}
+
+.brandSurface {
+  background-color: var(--bg-surface);
+}
+
+.brandSurfaceSoft {
+  background-color: var(--bg-surface-soft);
+}
+
+.brandBorder {
+  border-color: var(--bg-border);
+}
+
+.brandTextPrimary {
+  color: var(--text-primary);
+}
+
+.brandTextMuted {
+  color: var(--text-muted);
+}
+
+.brandAccent {
+  color: var(--text-accent);
+}
+
+.brandAccentSoft {
+  color: var(--text-accent-soft);
+}
+
+/* Theme transitions */
+* {
+  transition: background-color 0.3s ease, 
+              border-color 0.3s ease, 
+              color 0.3s ease;
+}
+
+/* Smooth theme switching */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar styling for both themes */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Image and video adjustments for light theme */
+.light img,
+.light video {
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.dark img,
+.dark video {
+  filter: brightness(1.05) contrast(0.95);
+}
+
+/* Shadow adjustments */
+.light .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.light .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
+}

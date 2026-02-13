@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://frontend-smoky-eight-54.vercel.app/sitemap.xml
+
+# Block unnecessary crawlers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Allow important bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
