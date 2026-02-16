@@ -8,6 +8,7 @@ import MagneticButton from "../components/MagneticButton";
 import RevealOnScroll from "../components/RevealOnScroll";
 import OptimizedImage from "../components/OptimizedImage";
 import PhotoCounter from "../components/PhotoCounter";
+import VideoTestimonials from "../components/VideoTestimonials";
 
 const Home = () => {
   const reduceMotion = useReducedMotion();
@@ -223,6 +224,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Video Testimonials Section */}
+      <VideoTestimonials />
 
       {/* Trust + contact CTA */}
       <section className="bg-brandBg py-12 sm:py-16">
