@@ -237,7 +237,7 @@ const Contact = () => {
         <div className="mt-8 overflow-hidden rounded-2xl border border-brandBorder bg-brandSurface">
           <iframe
             title="Shubham Photos Studio map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.632823324528!2d75.8788!3d17.4369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z17LjI2ICBD"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1853.5440233125282!2d73.49114426967328!3d19.28537903115143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdd6354ef9e4943%3A0xcf202aae594562d2!2sShubham%20photos%20studio%20%26%20printing%20press!5e1!3m2!1sen!2sin!4v1771242150138!5m2!1sen!2sin"
             className="h-64 w-full border-0 md:h-80"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

@@ -6,6 +6,8 @@ import AnimatedHero from "../components/AnimatedHero";
 import ParallaxSection from "../components/ParallaxSection";
 import MagneticButton from "../components/MagneticButton";
 import RevealOnScroll from "../components/RevealOnScroll";
+import OptimizedImage from "../components/OptimizedImage";
+import PhotoCounter from "../components/PhotoCounter";
 
 const Home = () => {
   const reduceMotion = useReducedMotion();
@@ -146,6 +148,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Photo Counter Section */}
+      <PhotoCounter />
 
       {/* Featured work preview */}
       <section className="bg-brandSurface py-12 sm:py-16">
