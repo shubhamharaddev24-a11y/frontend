@@ -55,7 +55,7 @@ const Gallery = () => {
   );
 
   return (
-    <div className="bg-brandBg pb-16 pt-10 text-brandTextPrimary sm:pt-14">
+    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           className="mb-8 space-y-3 sm:mb-10"
@@ -66,7 +66,7 @@ const Gallery = () => {
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
             Gallery
           </p>
-          <h1 className="text-2xl font-semibold text-white sm:text-3xl">
+          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
             A small preview of the stories we capture.
           </h1>
           <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">

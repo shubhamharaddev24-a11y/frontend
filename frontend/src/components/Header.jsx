@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { MessageCircle ,Phone,Menu,X } from "lucide-react";
 import { useMotionVariants, useReducedMotionProps } from "../utils/motion";
+import ThemeToggle from "./ThemeToggle";
 const navItems = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
@@ -39,7 +40,7 @@ const Header = () => {
 
   return (
     <motion.header 
-      className="fixed top-0 inset-x-0 z-50 border-b border-brandBorder/80"
+      className="fixed top-0 inset-x-0 z-50 border-b border-transparent"
       variants={variants.headerScroll}
       animate={scrolled ? "scrolled" : "top"}
       initial="top"
@@ -47,14 +48,14 @@ const Header = () => {
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo / Brand */}
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brandAccent to-amber-500 shadow-lg">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brandAccent shadow-lg shadow-black/30">
             <span className="text-xl font-semibold text-black">SP</span>
           </div>
           <div className="leading-tight">
-            <p className="text-sm font-semibold tracking-wide text-brandTextPrimary">
+            <p className="text-sm font-semibold tracking-wide text-white">
               Shubham Photos Studio
             </p>
-           <p className="hidden text-xs text-brandTextMuted sm:block">
+           <p className="hidden text-xs text-white/60 sm:block">
   Your Trusted Photo & Digital Service Center
 </p>
           </div>
@@ -68,7 +69,7 @@ const Header = () => {
                 to={item.to}
                 className={({ isActive }) =>
                   `relative text-xs font-medium uppercase tracking-[0.18em] transition-colors ${
-                    isActive ? "text-brandAccent" : "text-brandTextMuted hover:text-brandTextPrimary"
+                    isActive ? "text-brandAccent" : "text-white/70 hover:text-white"
                   }`
                 }
               >
@@ -92,10 +93,11 @@ const Header = () => {
 
         {/* Call / WhatsApp + mobile menu */}
         <div className="flex items-center gap-2">
+  <ThemeToggle className="hidden sm:inline-flex" />
   {/* Call Button */}
   <motion.a
     href="tel:9271456749"
-    className="hidden sm:inline-flex items-center gap-2 rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-2 text-xs font-semibold text-brandAccent shadow-sm hover:bg-brandAccent/10"
+    className="hidden sm:inline-flex items-center gap-2 rounded-full bg-brandAccent px-4 py-2 text-xs font-semibold text-black shadow-lg shadow-black/30 hover:bg-brandAccentSoft transition-colors"
     {...variants.buttonHover}
     aria-label="Call Now"
   >
@@ -108,12 +110,12 @@ const Header = () => {
     href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%20-%20I%20would%20like%20to%20enquire%20about%20your%20services."
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white text-[#25D366] shadow-sm transition hover:shadow-md active:scale-95 sm:px-4 sm:py-2 sm:gap-2"
+    className="inline-flex items-center justify-center rounded-full border border-white/15 bg-black/20 text-white shadow-sm transition hover:bg-black/30 active:scale-95 sm:px-4 sm:py-2 sm:gap-2"
     {...variants.buttonHover}
     aria-label="Chat on WhatsApp"
   >
     <MessageCircle size={18} />
-    <span className="hidden text-xs font-semibold text-black sm:inline">
+    <span className="hidden text-xs font-semibold sm:inline">
       WhatsApp
     </span>
   </motion.a>
@@ -136,7 +138,7 @@ const Header = () => {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="border-t border-brandBorder/70 bg-brandSurface/95 px-4 pb-4 pt-3 text-sm text-brandTextPrimary md:hidden"
+            className="border-t border-white/10 bg-black/85 px-4 pb-4 pt-3 text-sm text-white md:hidden"
             variants={variants.mobileMenuContent}
             initial="initial"
             animate="animate"
@@ -156,7 +158,7 @@ const Header = () => {
                       `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                         isActive
                           ? "bg-brandAccent/10 text-brandAccent"
-                          : "text-brandTextMuted hover:bg-brandSurfaceSoft hover:text-brandTextPrimary"
+                          : "text-white/70 hover:bg-white/5 hover:text-white"
                       }`
                     }
                   >

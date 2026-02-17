@@ -3,23 +3,33 @@
 :root {
   /* Light theme colors */
   --light-bg: #ffffff;
-  --light-surface: #f8fafc;
-  --light-surface-soft: #f1f5f9;
-  --light-border: #e2e8f0;
-  --light-text-primary: #1e293b;
-  --light-text-muted: #64748b;
-  --light-accent: #f59e0b;
-  --light-accent-soft: #fef3c7;
-  
-  /* Dark theme colors (existing brand colors) */
-  --dark-bg: #0f0f0f;
-  --dark-surface: #1a1a1a;
-  --dark-surface-soft: #262626;
-  --dark-border: #333333;
-  --dark-text-primary: #ffffff;
-  --dark-text-muted: #a1a1aa;
-  --dark-accent: #f59e0b;
-  --dark-accent-soft: #451a03;
+  --light-surface: #f7f7f8;
+  --light-surface-soft: #efeff1;
+  --light-border: #d8d8de;
+  --light-text-primary: #111113;
+  --light-text-muted: #5b5b64;
+  --light-accent: #ff7a18;       /* warm orange */
+  --light-accent-soft: #c24f00;  /* darker orange for hover */
+
+  /* Dark luxury theme colors */
+  --dark-bg: #070708;
+  --dark-surface: #0f0f11;
+  --dark-surface-soft: #17171a;
+  --dark-border: #2a2a2f;
+  --dark-text-primary: #f7f7f8;
+  --dark-text-muted: #b0b0b7;
+  --dark-accent: #ff7a18;        /* warm orange */
+  --dark-accent-soft: #ffb26a;   /* soft highlight */
+
+  /* Defaults (before JS/theme class runs): start in dark */
+  --bg-primary: var(--dark-bg);
+  --bg-surface: var(--dark-surface);
+  --bg-surface-soft: var(--dark-surface-soft);
+  --bg-border: var(--dark-border);
+  --text-primary: var(--dark-text-primary);
+  --text-muted: var(--dark-text-muted);
+  --text-accent: var(--dark-accent);
+  --text-accent-soft: var(--dark-accent-soft);
 }
 
 /* Light theme */

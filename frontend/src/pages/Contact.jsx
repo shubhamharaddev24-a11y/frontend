@@ -24,7 +24,7 @@ const Contact = () => {
   );
 
   return (
-    <div className="bg-brandBg pb-16 pt-10 text-brandTextPrimary sm:pt-14">
+    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
       <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <motion.div
           className="mb-8 space-y-3 sm:mb-10"
@@ -35,7 +35,7 @@ const Contact = () => {
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
             Contact
           </p>
-          <h1 className="text-2xl font-semibold text-white sm:text-3xl">
+          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
             Visit, call or message Shubham Photos Studio.
           </h1>
           <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
@@ -53,7 +53,7 @@ const Contact = () => {
           variants={fadeUp}
         >
           <div className="space-y-4 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted">
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-brandTextPrimary">
               Studio contact details
             </h2>
             <div>
@@ -92,7 +92,7 @@ const Contact = () => {
             <div className="flex flex-wrap gap-3 pt-2 text-xs">
               <a
                 href="tel:9271456749"
-                className="inline-flex flex-1 items-center justify-center rounded-full bg-brandAccent px-5 py-2 font-semibold text-black shadow-md shadow-brandAccent/40 hover:bg-amber-400"
+                className="inline-flex flex-1 items-center justify-center rounded-full bg-brandAccent px-5 py-2 font-semibold text-white shadow-md shadow-brandAccent/30 hover:bg-brandAccentSoft"
               >
                 Call Now
               </a>
@@ -108,7 +108,7 @@ const Contact = () => {
           </div>
           {/* Enquiry / booking form */}
           <div className="space-y-4 rounded-2xl border border-brandBorder bg-brandSurface p-5 text-sm text-brandTextMuted">
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-brandTextPrimary">
               Booking & enquiry form
             </h2>
             <p className="text-xs text-brandTextMuted">

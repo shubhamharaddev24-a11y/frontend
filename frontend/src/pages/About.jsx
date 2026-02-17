@@ -7,7 +7,7 @@ const About = () => {
   const variants = useMotionVariants();
 
   return (
-    <div className="bg-brandBg pb-16 pt-10 text-brandTextPrimary sm:pt-14">
+    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
       <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <motion.div
           className="space-y-4"
@@ -18,7 +18,7 @@ const About = () => {
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
             About Shubham Photos Studio
           </p>
-          <h1 className="text-2xl font-semibold text-white sm:text-3xl">
+          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
             A neighbourhood studio built on long-term trust.
           </h1>
           <p className="text-sm text-brandTextMuted sm:text-base">
@@ -37,7 +37,7 @@ const About = () => {
           variants={variants.staggerContainer}
         >
           <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-brandTextPrimary">
               Our story & experience
             </h2>
             <p>
@@ -53,7 +53,7 @@ const About = () => {
             </p>
           </motion.div>
           <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-brandTextPrimary">
               What we believe in
             </h2>
             <ul className="space-y-2">

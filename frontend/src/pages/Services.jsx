@@ -89,7 +89,7 @@ const Services = () => {
   const variants = useMotionVariants();
 const { fadeUp } = variants;
   return (
-    <div className="bg-brandBg pb-16 pt-10 text-brandTextPrimary sm:pt-14">
+    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           className="mb-8 space-y-3 sm:mb-10"
@@ -100,7 +100,7 @@ const { fadeUp } = variants;
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
             Our services
           </p>
-          <h1 className="text-2xl font-semibold text-white sm:text-3xl">
+          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
             One studio for photography, printing and digital services.
           </h1>
           <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
@@ -122,11 +122,11 @@ const { fadeUp } = variants;
               {...variants.cardHover}
             >
               <div className="flex items-center gap-3">
-                <h2 className="text-base font-semibold text-white">
+                <h2 className="text-base font-semibold text-brandTextPrimary">
                   {section.title}
                 </h2>
                 {section.comingSoon && (
-                  <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-amber-300">
+                  <span className="rounded-full bg-brandAccent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent">
                     Coming soon
                   </span>
                 )}

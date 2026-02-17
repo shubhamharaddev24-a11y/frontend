@@ -9,7 +9,7 @@ const ThemeToggle = ({ className = "" }) => {
   return (
     <motion.button
       onClick={toggleTheme}
-      className={`relative inline-flex items-center justify-center w-10 h-10 rounded-full border bg-slate-200 dark:bg-slate-700 p-2 transition-colors hover:bg-slate-300 dark:hover:bg-slate-600 ${className}`}
+      className={`relative inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-black/20 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/30 dark:border-white/10 dark:bg-black/20 ${className}`}
       whileHover={{ scale: 1.1, rotate: isDark ? 180 : 0 }}
       whileTap={{ scale: 0.9 }}
       aria-label="Toggle theme"
@@ -20,12 +20,12 @@ const ThemeToggle = ({ className = "" }) => {
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         <Sun 
-          className={`absolute w-4 h-4 text-amber-500 transition-all ${
+          className={`absolute w-4 h-4 text-brandAccent transition-all ${
             isDark ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
           }`}
         />
         <Moon 
-          className={`absolute w-4 h-4 text-slate-400 transition-all ${
+          className={`absolute w-4 h-4 text-white/80 transition-all ${
             isDark ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
           }`}
         />
@@ -33,12 +33,10 @@ const ThemeToggle = ({ className = "" }) => {
       
       {/* Subtle glow effect */}
       <motion.div
-        className={`absolute inset-0 rounded-full ${
-          isDark ? 'bg-amber-500/20' : 'bg-slate-400/10'
-        }`}
+        className="absolute inset-0 rounded-full bg-brandAccent/10"
         animate={{ 
           scale: isDark ? [1, 1.2, 1] : [1, 1.1, 1],
-          opacity: isDark ? [0.3, 0.6, 0.3] : [0.2, 0.4, 0.2]
+          opacity: isDark ? [0.18, 0.35, 0.18] : [0.12, 0.24, 0.12]
         }}
         transition={{ 
           duration: isDark ? 4 : 3, 
