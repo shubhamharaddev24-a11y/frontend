@@ -93,7 +93,7 @@ const Header = () => {
 
         {/* Call / WhatsApp + mobile menu */}
         <div className="flex items-center gap-2">
-  <ThemeToggle className="hidden sm:inline-flex" />
+  <ThemeToggle className="inline-flex" />
   {/* Call Button */}
   <motion.a
     href="tel:9271456749"
