@@ -18,20 +18,22 @@ export const ThemeProvider = ({ children }) => {
       if (saved) {
         return saved === 'dark';
       }
-      // Check system preference
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+      // Default to dark for the premium cinematic look
+      return true;
     }
     return true; // Default to dark
   });
 
   useEffect(() => {
-    // Toggle dark class on html element for Tailwind
+    // Toggle theme class on html element (Tailwind + CSS variables)
     const root = document.documentElement;
     
     if (isDark) {
       root.classList.add('dark');
+      root.classList.remove('light');
     } else {
       root.classList.remove('dark');
+      root.classList.add('light');
     }
     
     // Save to localStorage

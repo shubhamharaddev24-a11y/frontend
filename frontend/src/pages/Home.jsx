@@ -61,7 +61,7 @@ const Home = () => {
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
             Services
           </p>
-          <h2 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
+          <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
             Everything you expect from a complete photo studio.
           </h2>
           <p className="mt-3 text-sm text-brandTextMuted sm:text-base">
@@ -127,7 +127,7 @@ const Home = () => {
                 direction="up"
                 className="flex h-full flex-col rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md hover:shadow-xl transition-shadow"
               >
-                <h3 className="mb-3 text-base font-semibold text-white">
+                <h3 className="mb-3 text-base font-semibold text-brandTextPrimary">
                   {service.name}
                 </h3>
                 <ul className="flex-1 space-y-2 text-xs text-brandTextMuted">
@@ -161,7 +161,7 @@ const Home = () => {
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
                 Featured work
               </p>
-              <h2 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
+              <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
                 Real couples, real village stories.
               </h2>
               <p className="mt-3 text-sm text-brandTextMuted sm:max-w-md">
@@ -235,7 +235,7 @@ const Home = () => {
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
               Local studio · Long-term trust
             </p>
-            <h2 className="text-2xl font-semibold text-white sm:text-3xl">
+            <h2 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
               A studio that answers every day – not only on wedding day.
             </h2>
             <p className="text-sm text-brandTextMuted sm:text-base">
@@ -254,15 +254,15 @@ const Home = () => {
             </p>
             <p className="text-sm">
               Phone:{" "}
-              <span className="font-semibold text-white">+91 92714 56749</span>
+              <span className="font-semibold text-brandTextPrimary">+91 92714 56749</span>
             </p>
             <p className="text-sm text-brandTextMuted">
-              Everyday studio timings: <span className="text-white">9:00 AM – 8:00 PM</span>
+              Everyday studio timings: <span className="text-brandTextPrimary">9:00 AM – 8:00 PM</span>
             </p>
             <div className="mt-3 flex flex-wrap gap-3">
               <MagneticButton
                 href="tel:9271456749"
-                className="flex-1 items-center justify-center rounded-full bg-brandAccent px-6 py-2.5 text-xs font-semibold text-black shadow-md shadow-brandAccent/40 hover:bg-amber-400 sm:text-sm"
+                className="flex-1 items-center justify-center rounded-full bg-brandAccent px-6 py-2.5 text-xs font-semibold text-black shadow-md shadow-brandAccent/30 hover:bg-brandAccentSoft sm:text-sm"
               >
                 Call Shubham Photos Studio
               </MagneticButton>

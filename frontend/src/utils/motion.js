@@ -153,16 +153,20 @@ export const useMotionVariants = () => {
       }
     },
     
-    // Header scroll animation
+    // Header scroll animation (transparent over hero, solid on scroll)
     headerScroll: {
       scrolled: {
-        backgroundColor: "rgba(0, 0, 0, 0.85)",
-        backdropFilter: "blur(16px)",
+        backgroundColor: "rgba(7, 7, 8, 0.92)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        borderColor: "rgba(42, 42, 47, 0.9)",
         transition: { duration: 0.3, ease: "easeOut" }
       },
       top: {
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
-        backdropFilter: "blur(12px)",
+        backgroundColor: "rgba(7, 7, 8, 0.35)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        borderColor: "rgba(255, 255, 255, 0.06)",
         transition: { duration: 0.3, ease: "easeOut" }
       }
     }
