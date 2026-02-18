@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { leadService } from "../services";
 
 const Contact = () => {
   const reduceMotion = useReducedMotion();
@@ -11,6 +12,8 @@ const Contact = () => {
     message: "",
   });
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const fadeUp = useMemo(
     () => ({
       hidden: { opacity: 0, y: 20 },
@@ -117,29 +120,62 @@ const Contact = () => {
             </p>
             <form
               className="space-y-3"
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
                 setError("");
+                setSuccessMessage("");
+                
                 if (!form.name.trim() || !form.phone.trim()) {
                   setError("Please fill your name and mobile number so we can contact you.");
                   return;
                 }
-                const base =
-                  "https://wa.me/919271456749?text=";
-                const lines = [
-                  "New enquiry from Shubham Photos Studio website:",
-                  "",
-                  `Name: ${form.name}`,
-                  `Mobile: ${form.phone}`,
-                  form.service ? `Interested in: ${form.service}` : "",
-                  form.date ? `Preferred date: ${form.date}` : "",
-                  form.message ? `Message: ${form.message}` : "",
-                ]
-                  .filter(Boolean)
-                  .join("%0A");
-                const url = base + lines;
-                if (typeof window !== "undefined") {
-                  window.open(url, "_blank");
+
+                setIsSubmitting(true);
+                
+                try {
+                  const leadData = {
+                    name: form.name,
+                    phone: form.phone,
+                    email: form.email || '',
+                    service: form.service,
+                    preferredDate: form.date,
+                    message: form.message,
+                    source: 'website',
+                    status: 'new'
+                  };
+                  
+                  await leadService.createLead(leadData);
+                  setSuccessMessage("Thank you for your enquiry! We will contact you soon.");
+                  setForm({
+                    name: "",
+                    phone: "",
+                    service: "",
+                    date: "",
+                    message: "",
+                  });
+                  
+                  // Also open WhatsApp as backup
+                  const base = "https://wa.me/919271456749?text=";
+                  const lines = [
+                    "New enquiry from Shubham Photos Studio website:",
+                    "",
+                    `Name: ${form.name}`,
+                    `Mobile: ${form.phone}`,
+                    form.service ? `Interested in: ${form.service}` : "",
+                    form.date ? `Preferred date: ${form.date}` : "",
+                    form.message ? `Message: ${form.message}` : "",
+                  ]
+                    .filter(Boolean)
+                    .join("%0A");
+                  const url = base + lines;
+                  if (typeof window !== "undefined") {
+                    window.open(url, "_blank");
+                  }
+                } catch (err) {
+                  setError("Failed to submit enquiry. Please try again or contact us directly.");
+                  console.error('Lead submission error:', err);
+                } finally {
+                  setIsSubmitting(false);
                 }
               }}
             >
@@ -222,12 +258,16 @@ const Contact = () => {
               {error && (
                 <p className="text-xs font-medium text-amber-300">{error}</p>
               )}
+              {successMessage && (
+                <p className="text-xs font-medium text-green-400">{successMessage}</p>
+              )}
               <motion.button
                 type="submit"
-                className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-brandAccent px-5 py-2.5 text-sm font-semibold text-black shadow-md shadow-brandAccent/40 hover:bg-amber-400"
+                disabled={isSubmitting}
+                className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-brandAccent px-5 py-2.5 text-sm font-semibold text-black shadow-md shadow-brandAccent/40 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed"
                 whileTap={reduceMotion ? undefined : { scale: 0.97 }}
               >
-                Send enquiry on WhatsApp
+                {isSubmitting ? "Submitting..." : "Send enquiry on WhatsApp"}
               </motion.button>
             </form>
           </div>

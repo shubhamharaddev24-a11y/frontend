@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
+import { serviceService } from "../services";
 
 const sections = [
   {
@@ -87,7 +88,28 @@ const sections = [
 const Services = () => {
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
-const { fadeUp } = variants;
+  const { fadeUp } = variants;
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const servicesData = await serviceService.getAllServices();
+        setServices(servicesData.data || []);
+      } catch (err) {
+        console.error('Failed to fetch services:', err);
+        setError('Failed to load services');
+        // Fallback to static sections if API fails
+        setServices(sections);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
   return (
     <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -111,57 +133,67 @@ const { fadeUp } = variants;
         </motion.div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {sections.map((section) => (
-            <motion.article
-              key={section.id}
-              className="flex h-full flex-col rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md"
-              initial={reduceMotion ? "show" : "hidden"}
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              variants={variants.fadeUpShort}
-              {...variants.cardHover}
-            >
-              <div className="flex items-center gap-3">
-                <h2 className="text-base font-semibold text-brandTextPrimary">
-                  {section.title}
-                </h2>
-                {section.comingSoon && (
-                  <span className="rounded-full bg-brandAccent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent">
-                    Coming soon
-                  </span>
-                )}
-              </div>
-              <p className="mt-2 text-sm text-brandTextMuted">
-                {section.description}
-              </p>
-              <ul className="mt-3 flex-1 space-y-2 text-xs text-brandTextMuted">
-                {section.items.map((item) => (
-                  <li key={item} className="flex gap-2">
-                    <span className="mt-1 h-1 w-1 rounded-full bg-brandAccent" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                <a
-                  href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%2C%20I%20want%20to%20enquire%20about%20your%20services."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-full bg-brandAccent px-4 py-1.5 font-semibold text-black shadow-sm shadow-brandAccent/40 hover:bg-amber-400"
-                  {...variants.buttonHover}
-                >
-                  WhatsApp enquiry
-                </a>
-                <a
-                  href="tel:9271456749"
-                  className="inline-flex items-center rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-1.5 font-semibold text-brandAccent hover:bg-brandSurfaceSoft"
-                  {...variants.buttonHover}
-                >
-                  Call studio
-                </a>
-              </div>
-            </motion.article>
-          ))}
+          {loading ? (
+            <div className="col-span-2 text-center py-8">
+              <p className="text-brandTextMuted">Loading services...</p>
+            </div>
+          ) : error ? (
+            <div className="col-span-2 text-center py-8">
+              <p className="text-red-400">{error}</p>
+            </div>
+          ) : (
+            services.map((section) => (
+              <motion.article
+                key={section.id || section._id}
+                className="flex h-full flex-col rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md"
+                initial={reduceMotion ? "show" : "hidden"}
+                whileInView="show"
+                viewport={{ once: true, amount: 0.25 }}
+                variants={variants.fadeUpShort}
+                {...variants.cardHover}
+              >
+                <div className="flex items-center gap-3">
+                  <h2 className="text-base font-semibold text-brandTextPrimary">
+                    {section.title}
+                  </h2>
+                  {section.comingSoon && (
+                    <span className="rounded-full bg-brandAccent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent">
+                      Coming soon
+                    </span>
+                  )}
+                </div>
+                <p className="mt-2 text-sm text-brandTextMuted">
+                  {section.description}
+                </p>
+                <ul className="mt-3 flex-1 space-y-2 text-xs text-brandTextMuted">
+                  {(section.items || []).map((item, index) => (
+                    <li key={index} className="flex gap-2">
+                      <span className="mt-1 h-1 w-1 rounded-full bg-brandAccent" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-4 flex flex-wrap gap-2 text-xs">
+                  <a
+                    href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%2C%20I%20want%20to%20enquire%20about%20your%20services."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center rounded-full bg-brandAccent px-4 py-1.5 font-semibold text-black shadow-sm shadow-brandAccent/40 hover:bg-amber-400"
+                    {...variants.buttonHover}
+                  >
+                    WhatsApp enquiry
+                  </a>
+                  <a
+                    href="tel:9271456749"
+                    className="inline-flex items-center rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-1.5 font-semibold text-brandAccent hover:bg-brandSurfaceSoft"
+                    {...variants.buttonHover}
+                  >
+                    Call studio
+                  </a>
+                </div>
+              </motion.article>
+            ))
+          )}
         </div>
       </section>
     </div>
