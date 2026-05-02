@@ -4,6 +4,7 @@ import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { MessageCircle ,Phone,Menu,X } from "lucide-react";
 import { useMotionVariants, useReducedMotionProps } from "../utils/motion";
 import ThemeToggle from "./ThemeToggle";
+import logoShubham from "../assets/logo-shubham-photos-studio.png";
 const navItems = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
@@ -45,21 +46,23 @@ const Header = () => {
       animate={scrolled ? "scrolled" : "top"}
       initial="top"
     >
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Logo / Brand */}
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brandAccent shadow-lg shadow-black/30">
-            <span className="text-xl font-semibold text-black">SP</span>
-          </div>
-          <div className="leading-tight">
-            <p className="text-sm font-semibold tracking-wide text-white">
-              Shubham Photos Studio
-            </p>
-           <p className="hidden text-xs text-white/60 sm:block">
-  Your Trusted Photo & Digital Service Center
-</p>
-          </div>
-        </div>
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-6 md:h-24 lg:px-8">
+        {/* Logo / Brand — shrink-0 so flex nav/buttons never squeeze the mark */}
+        <NavLink
+          to="/"
+          className="flex shrink-0 items-center rounded-lg outline-none ring-brandAccent/70 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          aria-label="Shubham Photos Studio — Home"
+        >
+          <img
+            src={logoShubham}
+            alt="Shubham Photos Studio"
+            width={560}
+            height={280}
+            decoding="async"
+            draggable={false}
+            className="h-16 w-auto object-contain object-left sm:h-[4.5rem] md:h-20 lg:h-[5.25rem]"
+          />
+        </NavLink>
 
         {/* Navigation - desktop */}
         <nav className="hidden items-center gap-6 md:flex">
