@@ -97,10 +97,23 @@ const Services = () => {
     const fetchServices = async () => {
       try {
         const servicesData = await serviceService.getAllServices();
-        setServices(servicesData.data || []);
+        const servicesList = servicesData.data?.services;
+        
+        if (Array.isArray(servicesList) && servicesList.length > 0) {
+          const mappedServices = servicesList.map(s => ({
+            id: s._id,
+            title: s.name,
+            description: s.description,
+            items: s.features && s.features.length > 0 ? s.features : (s.includes || []),
+            comingSoon: !s.isActive
+          }));
+          setServices(mappedServices);
+        } else {
+          // Fallback to static sections if database list is empty
+          setServices(sections);
+        }
       } catch (err) {
-        console.error('Failed to fetch services:', err);
-        setError('Failed to load services');
+        console.error('Failed to fetch services, using static fallback:', err);
         // Fallback to static sections if API fails
         setServices(sections);
       } finally {
