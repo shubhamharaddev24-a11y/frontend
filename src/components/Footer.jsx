@@ -32,6 +32,9 @@ const Footer = () => {
               <Link to="/contact" className="hover:text-brandAccent">
                 Contact
               </Link>
+              <Link to="/login" className="hover:text-brandAccent">
+                Staff Login
+              </Link>
             </nav>
           </div>
 
