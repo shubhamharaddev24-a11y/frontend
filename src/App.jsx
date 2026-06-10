@@ -1,8 +1,9 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SEOHead from "./components/SEOHead";
+import Lenis from "lenis";
 import "./App.css";
 
 // Lazy loaded page components for optimal initial bundle sizes
@@ -24,6 +25,44 @@ const PageLoader = () => (
 // Child component that reads browser location and injects the corresponding SEO config
 const AppContent = () => {
   const location = useLocation();
+
+  // Initialize Lenis smooth scroll on mount
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // spring-like deceleration
+      direction: "vertical",
+      gestureDirection: "vertical",
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false, // Keep default scroll behaviors on touchscreens
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    window.lenis = lenis;
+
+    return () => {
+      lenis.destroy();
+      window.lenis = undefined;
+    };
+  }, []);
+
+  // Reset scroll position instantly on path transitions
+  useEffect(() => {
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   const getSEOConfig = (pathname) => {
     const baseUrl = "https://smediadigitalservices.com";
