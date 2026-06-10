@@ -188,7 +188,7 @@ const VideoTestimonials = () => {
             Customer Stories
           </h2>
           <p className="text-lg text-brandTextMuted max-w-3xl mx-auto">
-            Hear directly from our happy couples about their experience with Shubham Photos Studio
+            Hear directly from our happy couples and business clients about their experience with us.
           </p>
         </motion.div>
       </div>

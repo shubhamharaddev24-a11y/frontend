@@ -36,15 +36,14 @@ const Contact = () => {
           variants={fadeUp}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            Contact
+            Contact Us
           </p>
           <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            Visit, call or message Shubham Photos Studio.
+            Visit, call or message Shubham Media & Digital Services.
           </h1>
           <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
-            We are happy to talk about weddings, albums, banners, passport
-            photos or any studio work you need. Calls and messages are answered
-            by the studio team directly.
+            We are happy to talk about weddings, albums, custom websites, digital marketing, or local DTP tasks. 
+            Calls and messages are answered by our core team directly.
           </p>
         </motion.div>
 
@@ -57,7 +56,7 @@ const Contact = () => {
         >
           <div className="space-y-4 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted">
             <h2 className="text-sm font-semibold text-brandTextPrimary">
-              Studio contact details
+              Office & Studio contact details
             </h2>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brandTextMuted">
@@ -77,11 +76,11 @@ const Contact = () => {
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brandTextMuted">
-                Studio address
+                Office & Studio address
               </p>
               <p className="mt-1 text-sm">
-                Main bazaar road near bus stand, close to police chowki , saralgaon , murbad.
-                The studio is on the 1st floor with clear board outside.
+                Main bazaar road near bus stand, close to police chowki, saralgaon, murbad.
+                Our physical photography division (Shubham Photos Studio) is on the 1st floor with clear signage.
               </p>
             </div>
             <div>
@@ -100,7 +99,7 @@ const Contact = () => {
                 Call Now
               </a>
               <a
-                href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%2C%20I%20would%20like%20to%20book%20a%20shoot%20or%20know%20your%20prices."
+                href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex flex-1 items-center justify-center rounded-full border border-brandAccent/60 bg-brandSurface px-5 py-2 font-semibold text-brandAccent hover:bg-brandSurfaceSoft"
@@ -157,7 +156,7 @@ const Contact = () => {
                   // Also open WhatsApp as backup
                   const base = "https://wa.me/919271456749?text=";
                   const lines = [
-                    "New enquiry from Shubham Photos Studio website:",
+                    "New enquiry from Shubham Media & Digital Services website:",
                     "",
                     `Name: ${form.name}`,
                     `Mobile: ${form.phone}`,
@@ -219,13 +218,13 @@ const Contact = () => {
                   }
                 >
                   <option value="">Select a service</option>
-                  <option>Wedding photography & video</option>
-                  <option>Pre-wedding shoot</option>
-                  <option>Passport photos / prints</option>
-                  <option>Wedding cards (लग्नपत्रिका)</option>
-                  <option>Banners / flex / posters</option>
-                  <option>DTP / biodata / CV</option>
-                  <option>Other studio service</option>
+                  <option>Wedding photography & cinematography</option>
+                  <option>Pre-wedding / portrait shoot</option>
+                  <option>Custom Web Development (MERN)</option>
+                  <option>Digital Marketing & SEO Setup</option>
+                  <option>Banners, cards & graphic branding</option>
+                  <option>DTP, biodata & document services</option>
+                  <option>Other agency services</option>
                 </select>
               </div>
               <div className="space-y-1">

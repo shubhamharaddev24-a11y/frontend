@@ -10,16 +10,16 @@ const SEOHead = ({
   keywords,
   jsonLd 
 }) => {
-  const siteTitle = 'Shubham Photos Studio';
+  const siteTitle = 'Shubham Media & Digital Services';
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-  const siteUrl = 'https://shubhamphotosstudio.com';
-  const siteDescription = 'Professional photography studio in Murbad offering wedding photography, passport photos, DTP services, digital printing, and custom banners. Your trusted local photo service center.';
-  const defaultImage = 'https://shubhamphotosstudio.com/images/og-image.jpg';
+  const siteUrl = 'https://shubhammedia.com';
+  const siteDescription = 'Shubham Media & Digital Services offers professional web development (MERN stack), local digital marketing/SEO, graphic design, and premium cinematic photography through Shubham Photos Studio in Murbad.';
+  const defaultImage = 'https://shubhammedia.com/images/og-image.jpg';
 
   const structuredData = jsonLd || {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Shubham Photos Studio",
+    "name": "Shubham Media & Digital Services",
     "description": siteDescription,
     "url": siteUrl,
     "telephone": "+91 92714 56749",
@@ -36,17 +36,17 @@ const SEOHead = ({
     "priceRange": "$$",
     "sameAs": [
       "https://wa.me/919271456749",
-      "https://instagram.com/shubhamphotosstudio"
+      "https://instagram.com/shubhammedia"
     ],
     "services": [
+      "Web Development",
+      "Digital Marketing & SEO",
+      "Graphic Design",
       "Wedding Photography",
-      "Pre-wedding Photography", 
+      "Cinematography", 
       "Passport Photos",
-      "Digital Printing",
-      "Banner Design",
       "DTP Services",
-      "Album Design",
-      "Photo Restoration"
+      "Album Design"
     ]
   };
 
@@ -80,7 +80,7 @@ const SEOHead = ({
       <meta name="twitter:site" content="@shubhamphotos" />
       
       {/* Additional SEO Meta */}
-      <meta name="author" content="Shubham Photos Studio" />
+      <meta name="author" content="Shubham Media & Digital Services" />
       <meta name="language" content="English" />
       <meta name="geo.region" content="IN-MH" />
       <meta name="geo.placename" content="Murbad, Maharashtra" />

@@ -20,7 +20,7 @@ const Home = () => {
       <AnimatedHero />
 
       {/* Quick service highlights with parallax */}
-      <ParallaxSection 
+      <ParallaxSection
         className="border-y border-brandBorder/70 bg-brandSurfaceSoft/60 py-12"
         speed={0.2}
       >
@@ -58,66 +58,57 @@ const Home = () => {
       <section className="bg-brandBg py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <RevealOnScroll delay={0.2} direction="up" className="mb-8 text-center sm:mb-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            Services
-          </p>
-          <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            Everything you expect from a complete photo studio.
-          </h2>
-          <p className="mt-3 text-sm text-brandTextMuted sm:text-base">
-            Wedding coverage, day-to-day studio work and digital support for your
-            family, business and studies.
-          </p>
-        </RevealOnScroll>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
+              Divisions & Services
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
+              High-level media, technology and marketing services.
+            </h2>
+            <p className="mt-3 text-sm text-brandTextMuted sm:text-base">
+              Powering local and digital growth through customized web development, local SEO marketing, custom print branding, and professional cinematic films.
+            </p>
+          </RevealOnScroll>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                name: "Wedding photography & videography",
+                name: "Web Development Division",
                 points: [
-                  "Village and city weddings, haldi, sangeet and reception",
-                  "Edited highlight films and long coverage",
-                  "Custom album designing and prints",
+                  "Custom Full-Stack web applications (MERN)",
+                  "Corporate portfolio websites & high-converting landing pages",
+                  "Digital wedding invitation sites with RSVP and maps",
                 ],
               },
               {
-                name: "Pre-wedding & portraits",
+                name: "Digital Marketing & SEO",
                 points: [
-                  "Outdoor pre-wedding concepts close to nature",
-                  "Family portraits and kids' shoots",
-                  "Studio lighting for formal photos",
+                  "Google Business Profile optimization and local map ranking",
+                  "On-page & Off-page SEO to drive organic Google search traffic",
+                  "Social media growth & production (Instagram Reels & YouTube)",
                 ],
               },
               {
-                name: "Passport & print studio",
+                name: "Media Division (Shubham Photos Studio)",
                 points: [
-                  "Passport, visa and ID photos with instant print",
-                  "Photo lamination, enlargement and framing support",
-                  "Scanning and old photo restoration",
+                  "Cinematic wedding films, trailers, and traditional photography",
+                  "Scenic sunset outdoor pre-wedding & baby portraits",
+                  "Instant passport printing, photo scanning & framing in Saralgaon",
                 ],
               },
               {
-                name: "Wedding cards & stationery",
+                name: "Graphic Design & Branding",
                 points: [
-                  "Traditional Marathi lagna-patrika and modern invitations",
-                  "Engagement, reception and baby naming cards",
-                  "School forms, files and notebooks support",
+                  "Political campaign banners, rally posters & flex designs",
+                  "Marathi Lagna-Patrika and event cards (traditional & modern)",
+                  "Visiting cards, brochures, and corporate brand designs",
                 ],
               },
               {
-                name: "Banners, posters & flex",
+                name: "Cyber Desk & DTP Services",
                 points: [
-                  "Political banners and meeting flex boards",
-                  "Wedding, birthday and opening ceremony backdrops",
-                  "Business posters and shop front branding",
-                ],
-              },
-              {
-                name: "DTP & future cyber desk",
-                points: [
-                  "Biodata, CV and resume design with printing",
-                  "Pamphlets, ID cards and application forms",
-                  "Aadhaar, PAN and online forms – coming soon",
+                  "Professional biodata and marriage resume creation",
+                  "Student CV/resumes and online job applications",
+                  "Aadhaar, PAN, and local e-governance service support",
                 ],
               },
             ].map((service, index) => (
@@ -233,15 +224,13 @@ const Home = () => {
         <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8">
           <RevealOnScroll delay={0.7} direction="left" className="flex-1 space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-              Local studio · Long-term trust
+              Creative Agency & Local Studio
             </p>
             <h2 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-              A studio that answers every day – not only on wedding day.
+              A team that answers every day — for code, marketing, or photography.
             </h2>
             <p className="text-sm text-brandTextMuted sm:text-base">
-              Walk in for passport photos, school projects or important wedding
-              decisions. We keep your files safe, guide you through forms and
-              deliver prints on time.
+              Whether you need to scale your online business with full-stack web applications, run Google marketing campaigns, or book premium cinematography for a family wedding, we manage your media and digital needs with utmost care.
             </p>
           </RevealOnScroll>
           <RevealOnScroll delay={0.8} direction="right" className="flex flex-1 flex-col gap-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md">
@@ -249,22 +238,22 @@ const Home = () => {
               Visit or call
             </p>
             <p className="text-sm text-brandTextMuted">
-              Located on the main bazaar , near the bus stand, opposite to saralgaon police chowki ,murbad- easy to reach
-              by foot..
+              Located on the main bazaar near the bus stand, opposite to saralgaon police chowki, murbad.
+              Our photography division counters are fully active daily.
             </p>
             <p className="text-sm">
               Phone:{" "}
               <span className="font-semibold text-brandTextPrimary">+91 92714 56749</span>
             </p>
             <p className="text-sm text-brandTextMuted">
-              Everyday studio timings: <span className="text-brandTextPrimary">9:00 AM – 8:00 PM</span>
+              Everyday timings: <span className="text-brandTextPrimary">9:00 AM – 8:00 PM</span>
             </p>
             <div className="mt-3 flex flex-wrap gap-3">
               <MagneticButton
                 href="tel:9271456749"
                 className="flex-1 items-center justify-center rounded-full bg-brandAccent px-6 py-2.5 text-xs font-semibold text-black shadow-md shadow-brandAccent/30 hover:bg-brandAccentSoft sm:text-sm"
               >
-                Call Shubham Photos Studio
+                Call Shubham Media
               </MagneticButton>
               <MagneticButton
                 href="/contact"
