@@ -30,6 +30,12 @@
   --text-muted: var(--dark-text-muted);
   --text-accent: var(--dark-accent);
   --text-accent-soft: var(--dark-accent-soft);
+
+  /* Header variables default (dark) */
+  --header-bg-scrolled: rgba(7, 7, 8, 0.92);
+  --header-bg-top: rgba(7, 7, 8, 0.35);
+  --header-border-scrolled: rgba(42, 42, 47, 0.9);
+  --header-border-top: rgba(255, 255, 255, 0.06);
 }
 
 /* Light theme */
@@ -42,6 +48,12 @@
   --text-muted: var(--light-text-muted);
   --text-accent: var(--light-accent);
   --text-accent-soft: var(--light-accent-soft);
+
+  /* Header variables for light theme */
+  --header-bg-scrolled: rgba(255, 255, 255, 0.92);
+  --header-bg-top: rgba(255, 255, 255, 0.35);
+  --header-border-scrolled: rgba(216, 216, 222, 0.9);
+  --header-border-top: rgba(0, 0, 0, 0.06);
   
   color-scheme: light;
 }
@@ -56,6 +68,12 @@
   --text-muted: var(--dark-text-muted);
   --text-accent: var(--dark-accent);
   --text-accent-soft: var(--dark-accent-soft);
+
+  /* Header variables for dark theme */
+  --header-bg-scrolled: rgba(7, 7, 8, 0.92);
+  --header-bg-top: rgba(7, 7, 8, 0.35);
+  --header-border-scrolled: rgba(42, 42, 47, 0.9);
+  --header-border-top: rgba(255, 255, 255, 0.06);
   
   color-scheme: dark;
 }
@@ -93,16 +111,16 @@
   color: var(--text-accent-soft);
 }
 
-/* Theme transitions */
-* {
+/* Optimized theme transitions to avoid universal layout recalculation overhead */
+body, 
+header, footer, nav, section, main,
+h1, h2, h3, h4, h5, h6, p, a, button, input, textarea, select,
+.brandBg, .brandSurface, .brandSurfaceSoft, .brandBorder, 
+.brandTextPrimary, .brandTextMuted, .brandAccent, .brandAccentSoft {
   transition: background-color 0.3s ease, 
               border-color 0.3s ease, 
-              color 0.3s ease;
-}
-
-/* Smooth theme switching */
-html {
-  transition: background-color 0.3s ease, color 0.3s ease;
+              color 0.3s ease,
+              box-shadow 0.3s ease;
 }
 
 /* Scrollbar styling for both themes */

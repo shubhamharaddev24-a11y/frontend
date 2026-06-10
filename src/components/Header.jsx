@@ -57,7 +57,7 @@ const Header = () => {
             S
           </div>
           <div className="flex flex-col leading-none">
-            <span className="text-sm font-extrabold tracking-wider text-white sm:text-base">
+            <span className="text-sm font-extrabold tracking-wider text-brandTextPrimary sm:text-base">
               SHUBHAM
             </span>
             <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-brandAccent sm:text-[10px]">
@@ -73,7 +73,7 @@ const Header = () => {
               <NavLink
                 to={item.to}
                 className={({ isActive }) =>
-                  `relative text-xs font-medium uppercase tracking-[0.18em] transition-colors ${isActive ? "text-brandAccent" : "text-white/70 hover:text-white"
+                  `relative text-xs font-medium uppercase tracking-[0.18em] transition-colors ${isActive ? "text-brandAccent" : "text-brandTextPrimary/70 hover:text-brandTextPrimary"
                   }`
                 }
               >
@@ -114,7 +114,7 @@ const Header = () => {
             href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20photography%2C%20development%20or%20marketing%20services."
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-full border border-white/15 bg-black/20 text-white shadow-sm transition hover:bg-black/30 active:scale-95 sm:px-4 sm:py-2 sm:gap-2"
+            className="inline-flex items-center justify-center rounded-full border border-brandBorder bg-brandSurfaceSoft/40 text-brandTextPrimary shadow-sm transition hover:bg-brandSurfaceSoft/75 active:scale-95 sm:px-4 sm:py-2 sm:gap-2"
             {...variants.buttonHover}
             aria-label="Chat on WhatsApp"
           >
@@ -142,7 +142,7 @@ const Header = () => {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="border-t border-white/10 bg-black/85 px-4 pb-4 pt-3 text-sm text-white md:hidden"
+            className="border-t border-brandBorder bg-brandSurface/95 px-4 pb-4 pt-3 text-sm text-brandTextPrimary md:hidden"
             variants={variants.mobileMenuContent}
             initial="initial"
             animate="animate"
@@ -161,7 +161,7 @@ const Header = () => {
                     className={({ isActive }) =>
                       `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${isActive
                         ? "bg-brandAccent/10 text-brandAccent"
-                        : "text-white/70 hover:bg-white/5 hover:text-white"
+                        : "text-brandTextPrimary/70 hover:bg-brandSurfaceSoft hover:text-brandTextPrimary"
                       }`
                     }
                   >
