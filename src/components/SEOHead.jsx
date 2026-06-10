@@ -12,9 +12,9 @@ const SEOHead = ({
 }) => {
   const siteTitle = 'Shubham Media & Digital Services';
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-  const siteUrl = 'https://shubhammedia.com';
+  const siteUrl = 'https://smediadigitalservices.com';
   const siteDescription = 'Shubham Media & Digital Services offers professional web development (MERN stack), local digital marketing/SEO, graphic design, and premium cinematic photography through Shubham Photos Studio in Murbad.';
-  const defaultImage = 'https://shubhammedia.com/images/og-image.jpg';
+  const defaultImage = 'https://smediadigitalservices.com/images/og-image.jpg';
 
   const structuredData = jsonLd || {
     "@context": "https://schema.org",
