@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
+import EnvelopeCard from "../components/EnvelopeCard";
 
 const About = () => {
   const reduceMotion = useReducedMotion();
@@ -16,19 +17,21 @@ const About = () => {
           variants={variants.fadeUp}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            About Shubham Photos Studio
+            About Shubham Media & Digital Services
           </p>
           <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            A neighbourhood studio built on long-term trust.
+            A creative agency rooted in local trust and digital excellence.
           </h1>
           <p className="text-sm text-brandTextMuted sm:text-base">
-            Shubham Photos Studio started as a small passport photo counter and
-            has grown into a complete photo and digital service centre for our
-            village. We capture weddings, design albums, print banners and help
-            people with the documents that matter in daily life.
+            Shubham Media & Digital Services is a forward-thinking agency that combines
+            creative media and modern technology. Through our physical division, 
+            <strong> Shubham Photos Studio</strong> in Saralgaon, we continue to serve 
+            the local Murbad community with professional wedding films, prints, and 
+            e-governance services. Concurrently, our digital division delivers custom 
+            full-stack websites, software applications, SEO, and graphic branding solutions.
           </p>
         </motion.div>
-
+ 
         <motion.div
           className="mt-8 grid gap-6 md:grid-cols-2"
           initial={reduceMotion ? "show" : "hidden"}
@@ -38,38 +41,59 @@ const About = () => {
         >
           <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
             <h2 className="text-sm font-semibold text-brandTextPrimary">
-              Our story & experience
+              Our story & evolution
             </h2>
             <p>
-              Over the years, Shubham Photos Studio has covered hundreds of
-              wedding functions, village processions, school events and small
-              ceremonies. Many families now have our photos in every important
-              album at home.
+              We started as a local neighborhood passport and photo studio near Murbad. 
+              Over the years, we covered hundreds of weddings, traditional Marathi rituals, 
+              local festivals, and corporate openings, earning the lifelong trust of local families.
             </p>
             <p>
-              We understand how precious wedding moments are for parents,
-              couples and relatives. That is why we keep backups, deliver
-              albums carefully and never compromise on print quality.
+              As the digital landscape grew, we integrated professional software engineering, 
+              modern web designs, and search engine optimization (SEO) into our offerings. Today, 
+              we act as a single point of contact for families needing timeless memories and businesses 
+              demanding digital growth.
             </p>
           </motion.div>
           <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
             <h2 className="text-sm font-semibold text-brandTextPrimary">
-              What we believe in
+              What we stand for
             </h2>
             <ul className="space-y-2">
               <li>
-                • Clear communication about shoots, prices and delivery dates.
+                • Clear communication regarding event shoots, project delivery timelines, and pricing.
               </li>
               <li>
-                • Blending traditional village style with modern cameras,
-                lenses and editing.
+                • Blending local traditional styles with high-end modern gear, cinema editing, and clean web code.
               </li>
               <li>
-                • Treating every client – whether for a single passport photo or
-                a large wedding – with the same respect.
+                • Treating every client with equal respect—whether for a single passport photo or a full enterprise web application.
               </li>
             </ul>
           </motion.div>
+        </motion.div>
+
+        {/* Centered Thank You Envelope Section */}
+        <motion.div
+          className="mt-16 flex flex-col items-center justify-center text-center gap-5"
+          variants={variants.fadeUp}
+          initial={reduceMotion ? "show" : "hidden"}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+        >
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-brandAccentSoft">
+            A Special Note
+          </p>
+          <EnvelopeCard
+            title="Thank You"
+            subtitle="It's so nice that you took the time to read our story."
+            body="Wishing you a fantastic day ahead!"
+            signature="SHUBHAM MEDIA"
+            useLogoSeal={true}
+          />
+          <p className="text-xs text-brandTextMuted mt-1 italic">
+            Hover or tap the envelope seal to open the letter.
+          </p>
         </motion.div>
       </section>
     </div>

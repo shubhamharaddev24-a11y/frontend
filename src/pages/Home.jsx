@@ -9,10 +9,77 @@ import RevealOnScroll from "../components/RevealOnScroll";
 import OptimizedImage from "../components/OptimizedImage";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
+import AnimatedServiceCard from "../components/AnimatedServiceCard";
+import {
+  Code,
+  TrendingUp,
+  Camera,
+  Palette,
+  Laptop,
+  ArrowRight
+} from "lucide-react";
 
 const Home = () => {
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
+
+  const servicesList = useMemo(() => [
+    {
+      name: "Web Development Division",
+      points: [
+        "Custom Full-Stack web applications (MERN)",
+        "Corporate portfolio websites & high-converting landing pages",
+        "Digital wedding invitation sites with RSVP and maps",
+      ],
+      mainIcon: Code,
+      themeColor: "#ff7a18",
+      shadowColor: "rgba(255, 122, 24, 0.25)"
+    },
+    {
+      name: "Digital Marketing & SEO",
+      points: [
+        "Google Business Profile optimization and local map ranking",
+        "On-page & Off-page SEO to drive organic Google search traffic",
+        "Social media growth & production (Instagram Reels & YouTube)",
+      ],
+      mainIcon: TrendingUp,
+      themeColor: "#3b82f6",
+      shadowColor: "rgba(59, 130, 246, 0.25)"
+    },
+    {
+      name: "Media Division (Shubham Photos Studio)",
+      points: [
+        "Cinematic wedding films, trailers, and traditional photography",
+        "Scenic sunset outdoor pre-wedding & baby portraits",
+        "Instant passport printing, photo scanning & framing in Saralgaon",
+      ],
+      mainIcon: Camera,
+      themeColor: "#10b981",
+      shadowColor: "rgba(16, 185, 129, 0.25)"
+    },
+    {
+      name: "Graphic Design & Branding",
+      points: [
+        "Political campaign banners, rally posters & flex designs",
+        "Marathi Lagna-Patrika and event cards (traditional & modern)",
+        "Visiting cards, brochures, and corporate brand designs",
+      ],
+      mainIcon: Palette,
+      themeColor: "#a855f7",
+      shadowColor: "rgba(168, 85, 247, 0.25)"
+    },
+    {
+      name: "Cyber Desk & DTP Services",
+      points: [
+        "Professional biodata and marriage resume creation",
+        "Student CV/resumes and online job applications",
+        "Aadhaar, PAN, and local e-governance service support",
+      ],
+      mainIcon: Laptop,
+      themeColor: "#ec4899",
+      shadowColor: "rgba(236, 72, 153, 0.25)"
+    }
+  ], []);
 
   return (
     <div className="bg-brandBg text-brandTextPrimary">
@@ -20,7 +87,7 @@ const Home = () => {
       <AnimatedHero />
 
       {/* Quick service highlights with parallax */}
-      <ParallaxSection 
+      <ParallaxSection
         className="border-y border-brandBorder/70 bg-brandSurfaceSoft/60 py-12"
         speed={0.2}
       >
@@ -58,94 +125,55 @@ const Home = () => {
       <section className="bg-brandBg py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <RevealOnScroll delay={0.2} direction="up" className="mb-8 text-center sm:mb-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            Services
-          </p>
-          <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            Everything you expect from a complete photo studio.
-          </h2>
-          <p className="mt-3 text-sm text-brandTextMuted sm:text-base">
-            Wedding coverage, day-to-day studio work and digital support for your
-            family, business and studies.
-          </p>
-        </RevealOnScroll>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
+              Divisions & Services
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
+              High-level media, technology and marketing services.
+            </h2>
+            <p className="mt-3 text-sm text-brandTextMuted sm:text-base">
+              Powering local and digital growth through customized web development, local SEO marketing, custom print branding, and professional cinematic films.
+            </p>
+          </RevealOnScroll>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                name: "Wedding photography & videography",
-                points: [
-                  "Village and city weddings, haldi, sangeet and reception",
-                  "Edited highlight films and long coverage",
-                  "Custom album designing and prints",
-                ],
-              },
-              {
-                name: "Pre-wedding & portraits",
-                points: [
-                  "Outdoor pre-wedding concepts close to nature",
-                  "Family portraits and kids' shoots",
-                  "Studio lighting for formal photos",
-                ],
-              },
-              {
-                name: "Passport & print studio",
-                points: [
-                  "Passport, visa and ID photos with instant print",
-                  "Photo lamination, enlargement and framing support",
-                  "Scanning and old photo restoration",
-                ],
-              },
-              {
-                name: "Wedding cards & stationery",
-                points: [
-                  "Traditional Marathi lagna-patrika and modern invitations",
-                  "Engagement, reception and baby naming cards",
-                  "School forms, files and notebooks support",
-                ],
-              },
-              {
-                name: "Banners, posters & flex",
-                points: [
-                  "Political banners and meeting flex boards",
-                  "Wedding, birthday and opening ceremony backdrops",
-                  "Business posters and shop front branding",
-                ],
-              },
-              {
-                name: "DTP & future cyber desk",
-                points: [
-                  "Biodata, CV and resume design with printing",
-                  "Pamphlets, ID cards and application forms",
-                  "Aadhaar, PAN and online forms – coming soon",
-                ],
-              },
-            ].map((service, index) => (
-              <RevealOnScroll
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {servicesList.map((service, index) => (
+              <AnimatedServiceCard
                 key={service.name}
-                delay={0.3 + index * 0.05}
-                direction="up"
-                className="flex h-full flex-col rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md hover:shadow-xl transition-shadow"
-              >
-                <h3 className="mb-3 text-base font-semibold text-brandTextPrimary">
-                  {service.name}
-                </h3>
-                <ul className="flex-1 space-y-2 text-xs text-brandTextMuted">
-                  {service.points.map((p) => (
-                    <li key={p} className="flex gap-2">
-                      <span className="mt-1 h-1 w-1 rounded-full bg-brandAccent" />
-                      <span>{p}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/services"
-                  className="mt-4 inline-flex text-xs font-semibold text-brandAccent hover:text-brandAccentSoft"
-                >
-                  View full service details →
-                </Link>
-              </RevealOnScroll>
+                index={index}
+                name={service.name}
+                points={service.points}
+                mainIcon={service.mainIcon}
+                themeColor={service.themeColor}
+                shadowColor={service.shadowColor}
+              />
             ))}
+            {/* Custom CTA card matching layout style */}
+            <div className="hidden lg:block p-[1px] rounded-2xl bg-brandBorder/60 transition-all duration-500 hover:bg-brandBorder">
+              <div className="h-full w-full rounded-2xl bg-gradient-to-br from-brandSurface/30 via-brandBg to-brandSurfaceSoft/40 p-6 flex flex-col justify-between overflow-hidden relative group">
+                <div className="absolute inset-0 bg-radial-gradient from-brandAccent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                <div className="relative z-10 space-y-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccentSoft">
+                    Need Custom Solutions?
+                  </p>
+                  <h3 className="text-lg font-bold text-brandTextPrimary leading-snug">
+                    Let's design and build something special together.
+                  </h3>
+                  <p className="text-xs text-brandTextMuted leading-relaxed font-light">
+                    Have a custom project requirement in mind? From custom branding designs to complex web dashboards and enterprise local marketing, we have you covered.
+                  </p>
+                </div>
+                <div className="mt-8 pt-4 border-t border-brandBorder/40 relative z-10">
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-brandAccent hover:text-brandAccentSoft transition-all duration-300 group"
+                  >
+                    <span>Start a conversation</span>
+                    <ArrowRight size={14} className="transform transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -233,15 +261,13 @@ const Home = () => {
         <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8">
           <RevealOnScroll delay={0.7} direction="left" className="flex-1 space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-              Local studio · Long-term trust
+              Creative Agency & Local Studio
             </p>
             <h2 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-              A studio that answers every day – not only on wedding day.
+              A team that answers every day — for code, marketing, or photography.
             </h2>
             <p className="text-sm text-brandTextMuted sm:text-base">
-              Walk in for passport photos, school projects or important wedding
-              decisions. We keep your files safe, guide you through forms and
-              deliver prints on time.
+              Whether you need to scale your online business with full-stack web applications, run Google marketing campaigns, or book premium cinematography for a family wedding, we manage your media and digital needs with utmost care.
             </p>
           </RevealOnScroll>
           <RevealOnScroll delay={0.8} direction="right" className="flex flex-1 flex-col gap-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md">
@@ -249,22 +275,22 @@ const Home = () => {
               Visit or call
             </p>
             <p className="text-sm text-brandTextMuted">
-              Located on the main bazaar , near the bus stand, opposite to saralgaon police chowki ,murbad- easy to reach
-              by foot..
+              Located on the main bazaar near the bus stand, opposite to saralgaon police chowki, murbad.
+              Our photography division counters are fully active daily.
             </p>
             <p className="text-sm">
               Phone:{" "}
               <span className="font-semibold text-brandTextPrimary">+91 92714 56749</span>
             </p>
             <p className="text-sm text-brandTextMuted">
-              Everyday studio timings: <span className="text-brandTextPrimary">9:00 AM – 8:00 PM</span>
+              Everyday timings: <span className="text-brandTextPrimary">9:00 AM – 8:00 PM</span>
             </p>
             <div className="mt-3 flex flex-wrap gap-3">
               <MagneticButton
                 href="tel:9271456749"
                 className="flex-1 items-center justify-center rounded-full bg-brandAccent px-6 py-2.5 text-xs font-semibold text-black shadow-md shadow-brandAccent/30 hover:bg-brandAccentSoft sm:text-sm"
               >
-                Call Shubham Photos Studio
+                Call Shubham Media
               </MagneticButton>
               <MagneticButton
                 href="/contact"

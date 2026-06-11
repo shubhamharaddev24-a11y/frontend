@@ -47,5 +47,18 @@ export const authService = {
   resetPassword: async (token, password) => {
     const response = await api.post(`/auth/reset-password/${token}`, { password });
     return response.data;
+  },
+
+  // Get all users (admin)
+  getAllUsers: async () => {
+    const response = await api.get('/auth/admin/users');
+    return response.data;
+  },
+
+  // Delete user (admin)
+  deleteUser: async (id) => {
+    const response = await api.delete(`/auth/admin/users/${id}`);
+    return response.data;
   }
 };
+

@@ -8,10 +8,10 @@ const Footer = () => {
         <div className="grid gap-8 md:grid-cols-4">
           <div className="space-y-2 md:col-span-2">
             <p className="text-sm font-semibold text-brandTextPrimary">
-              Shubham Photos Studio
+              Shubham Media & Digital Services
             </p>
             <p className="text-xs text-brandTextMuted">
-              Your trusted corner studio for weddings, portraits, prints and digital services in one place.
+              Premium photography, custom website development, digital marketing, graphic design, and e-governance solutions. Serving local clients via our physical division, Shubham Photos Studio.
             </p>
           </div>
 
@@ -32,15 +32,18 @@ const Footer = () => {
               <Link to="/contact" className="hover:text-brandAccent">
                 Contact
               </Link>
+              <Link to="/login" className="hover:text-brandAccent">
+                Staff Login
+              </Link>
             </nav>
           </div>
 
           <div className="space-y-2">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brandTextMuted">
-              Contact
+              Contact Us
             </p>
             <p className="text-sm text-brandTextMuted">
-              Main bazaar road near bus stand, local market area,close to police chowki,saralgaon,murbad. Easy to reach from any side of town.
+              Main bazaar road near bus stand, close to police chowki, saralgaon, murbad. Easy to reach from any side of town.
             </p>
             <p className="text-sm text-brandTextMuted">
               Phone: <span className="text-brandTextPrimary">+91 92714 56749</span>
@@ -49,8 +52,8 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-brandBorder/60 pt-4 text-[11px] text-brandTextMuted sm:flex-row">
-          <p>© {new Date().getFullYear()} Shubham Photos Studio. All rights reserved.</p>
-          <p>Made to grow with future online booking and cyber services.</p>
+          <p>© {new Date().getFullYear()} Shubham Media & Digital Services. All rights reserved.</p>
+          <p>Delivering digital excellence and timeless media memories.</p>
         </div>
       </div>
     </footer>

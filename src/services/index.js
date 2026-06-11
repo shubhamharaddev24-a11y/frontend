@@ -3,3 +3,5 @@ export { authService } from './authService';
 export { leadService } from './leadService';
 export { bookingService } from './bookingService';
 export { serviceService } from './serviceService';
+export { taskService } from './taskService';
+

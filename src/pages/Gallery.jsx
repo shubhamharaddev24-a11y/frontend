@@ -70,9 +70,9 @@ const Gallery = () => {
             A small preview of the stories we capture.
           </h1>
           <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
-            Here is a glimpse of weddings, pre-wedding shoots and banner work
-            from Shubham Photos Studio. Full albums and sample designs are
-            available at the studio.
+            Here is a glimpse of weddings, pre-wedding shoots, and creative designs 
+            produced by Shubham Media & Digital Services. Full corporate portfolios, custom websites, 
+            and albums are available upon inquiry.
           </p>
         </motion.div>
 

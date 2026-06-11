@@ -14,7 +14,7 @@ const AnimatedHero = () => {
       <motion.img
         src={HERO_BG}
         alt="Premium cinematic photography background"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-[30%_center] md:object-center"
         initial={reduceMotion ? { scale: 1 } : { scale: 1.08 }}
         animate={reduceMotion ? { scale: 1 } : { scale: [1.08, 1.02, 1.06] }}
         transition={

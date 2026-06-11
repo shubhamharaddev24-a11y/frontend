@@ -6,82 +6,70 @@ import { serviceService } from "../services";
 const sections = [
   {
     id: "photography",
-    title: "Photography & Videography",
+    title: "Media Services (Shubham Photos Studio)",
     description:
-      "Complete wedding, pre-wedding and event coverage with edited photos, films and albums.",
+      "Timeless memories, wedding films, and professional photography captured by our dedicated studio branch.",
     items: [
-      "Wedding photography and videography for village and city ceremonies",
-      "Pre-wedding shoots at farms, riverside and local locations",
-      "Passport size photos with instant print and soft copy",
-      "Album designing, printing and gift photo frames",
-      "Event photography for birthdays, engagements and school functions",
-      "Photo scanning and restoration of old family prints",
+      "Wedding photography and videography (Traditional & Cinematic)",
+      "Pre-wedding shoots at scenic outdoor locations near Murbad",
+      "Event coverage (Engagements, birthdays, and school functions)",
+      "Passport and visa photos with instant studio printing",
+      "Custom album design, photo framing, and laminations",
+      "Scanning and restoration of old, damaged family photos",
     ],
   },
   {
-    id: "cards",
-    title: "Wedding Cards (लग्नपत्रिका)",
+    id: "web-dev",
+    title: "Web Development Division",
     description:
-      "Traditional and modern invitations for every function around the wedding.",
+      "Modern, fast, and responsive websites to establish your business online.",
     items: [
-      "Lagna-patrika in classic Marathi designs",
-      "Engagement and reception invitations",
-      "Modern photo-based cards and premium papers",
-      "Custom colours, fonts and layouts as per family choice",
-      "Bulk printing with envelopes and numbering",
+      "Custom Full-Stack web applications (MERN Stack)",
+      "Business and corporate portfolio websites",
+      "High-converting landing pages and product funnels",
+      "Digital wedding invitation websites with maps and RSVP",
+      "E-commerce stores and custom customer portals",
+      "Website maintenance, speed optimization, and hosting setup",
     ],
   },
   {
-    id: "banners",
-    title: "Banners & Posters",
+    id: "digital-marketing",
+    title: "Digital Marketing Division",
     description:
-      "Design and printing for political work, functions and business promotion.",
+      "Drive traffic, build authority, and acquire local customers for your brand.",
     items: [
-      "Political banners for meetings, rallies and greetings",
-      "Wedding welcome boards and stage backdrops",
-      "Birthday and naming ceremony flex designs",
-      "Business posters, shop boards and offer banners",
-      "Various sizes and materials with fast delivery",
+      "Google Business Profile (GMB) setup and local search optimization",
+      "Search Engine Optimization (SEO) to rank #1 on Google",
+      "Social Media Management (Instagram, YouTube, Facebook)",
+      "Lead generation campaigns and Google/Meta advertisement setups",
+      "WhatsApp Business automation and customer relationship tools",
     ],
   },
   {
-    id: "dtp",
-    title: "DTP & Document Design",
+    id: "design-branding",
+    title: "Design & Graphic Branding",
     description:
-      "Clean, professional designs for your documents, applications and IDs.",
+      "Professional visual assets for your offline promotions and branding.",
     items: [
-      "Biodata and marriage profile creation",
-      "CV / Resume design for students and job seekers",
-      "Application forms, notice designs and certificates",
-      "ID cards for schools, coaching classes and events",
-      "Pamphlets and flyers with clear layout and print",
+      "Political banners, rally posters, and flex designs",
+      "Shop front board designs and corporate identity assets",
+      "Wedding welcome boards, backdrops, and Marathi Lagna-Patrika",
+      "Visiting cards, brochures, and promotional pamphlets",
+      "Custom logo designs and social media post templates",
     ],
   },
   {
-    id: "stationery",
-    title: "School Stationery & Copies",
+    id: "cyber-dtp",
+    title: "Cyber Desk & DTP Services",
     description:
-      "Everyday study support for students and parents visiting the studio.",
+      "Your physical point of contact in Saralgaon for essential digital document tasks.",
     items: [
-      "Printouts and photocopies for homework and projects",
-      "Notebooks, files and basic school stationery",
-      "Lamination for ID cards, mark-sheets and certificates",
-      "Scanning of documents for online submission",
+      "Professional biodata and marriage CV creation",
+      "Student resumes and job application documents",
+      "Aadhaar updates, eKYC assistance, and PAN card services (Coming Soon)",
+      "Online college admissions and government scholarship forms (Coming Soon)",
+      "High-volume document printing, copying, and laminations",
     ],
-  },
-  {
-    id: "cyber",
-    title: "Cyber Services (Coming Soon)",
-    description:
-      "Preparing a separate desk for secure online government and banking work.",
-    items: [
-      "Aadhaar updates and eKYC assistance",
-      "PAN card related services",
-      "Government and scholarship forms",
-      "Online exam and admission forms",
-      "Other e-governance services as they become available",
-    ],
-    comingSoon: true,
   },
 ];
 
@@ -136,12 +124,12 @@ const Services = () => {
             Our services
           </p>
           <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            One studio for photography, printing and digital services.
+            Comprehensive Media, Technology & Design Solutions.
           </h1>
           <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
-            Whether you are planning a wedding, preparing documents or printing
-            school projects, Shubham Photos Studio is designed to handle
-            everything calmly at one counter.
+            From professional cinematography and wedding albums at our local 
+            <strong> Shubham Photos Studio</strong> counter, to custom websites, 
+            local SEO marketing, and digital branding — we deliver high-level solutions.
           </p>
         </motion.div>
 
@@ -188,7 +176,7 @@ const Services = () => {
                 </ul>
                 <div className="mt-4 flex flex-wrap gap-2 text-xs">
                   <a
-                    href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%2C%20I%20want%20to%20enquire%20about%20your%20services."
+                    href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center rounded-full bg-brandAccent px-4 py-1.5 font-semibold text-black shadow-sm shadow-brandAccent/40 hover:bg-amber-400"
@@ -201,7 +189,7 @@ const Services = () => {
                     className="inline-flex items-center rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-1.5 font-semibold text-brandAccent hover:bg-brandSurfaceSoft"
                     {...variants.buttonHover}
                   >
-                    Call studio
+                    Call team
                   </a>
                 </div>
               </motion.article>
