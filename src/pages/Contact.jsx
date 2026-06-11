@@ -112,22 +112,9 @@ const Contact = () => {
                 </a>
               </div>
             </div>
-
-            {/* Sci-fi Shutter Social Card */}
-            <div className="rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted flex flex-col items-center justify-center gap-5">
-              <div className="w-full text-center sm:text-left">
-                <h2 className="text-sm font-semibold text-brandTextPrimary">
-                  Connect on Social Media
-                </h2>
-                <p className="text-xs text-brandTextMuted mt-1 leading-relaxed">
-                  Hover or tap the shutter below to reveal our physical and digital social presence.
-                </p>
-              </div>
-              <SocialFollowCard />
-            </div>
           </div>
           {/* Enquiry / booking form or Success Envelope */}
-          <div className="rounded-2xl border border-brandBorder bg-brandSurface p-5 text-sm text-brandTextMuted flex flex-col justify-center items-center min-h-[350px]">
+          <div className="rounded-2xl border border-brandBorder bg-brandSurface p-6 text-sm text-brandTextMuted flex flex-col justify-start items-stretch min-h-[350px] self-start w-full">
             {successMessage && submittedData ? (
               <div className="flex flex-col items-center justify-center text-center gap-6 py-4 w-full">
                 <div className="space-y-1">
@@ -322,6 +309,27 @@ const Contact = () => {
                 </form>
               </div>
             )}
+          </div>
+        </motion.div>
+
+        {/* Connect on Social Media Card */}
+        <motion.div
+          className="mt-6 flex justify-center"
+          initial={reduceMotion ? "show" : "hidden"}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUp}
+        >
+          <div className="w-full max-w-xl rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted flex flex-col items-center justify-center gap-5">
+            <div className="w-full text-center">
+              <h2 className="text-sm font-semibold text-brandTextPrimary">
+                Connect on Social Media
+              </h2>
+              <p className="text-xs text-brandTextMuted mt-1 leading-relaxed">
+                Hover or tap the shutter below to reveal our physical and digital social presence.
+              </p>
+            </div>
+            <SocialFollowCard />
           </div>
         </motion.div>
 
