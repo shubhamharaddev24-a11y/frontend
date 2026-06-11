@@ -134,35 +134,49 @@ const Services = () => {
             services.map((section) => (
               <motion.article
                 key={section.id || section._id}
-                className="flex h-full flex-col rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md"
+                className="slimy-card text-sm"
                 initial={reduceMotion ? "show" : "hidden"}
                 whileInView="show"
                 viewport={{ once: true, amount: 0.25 }}
                 variants={variants.fadeUpShort}
-                {...variants.cardHover}
               >
+                <div className="card__border"></div>
                 <div className="flex items-center gap-3">
-                  <h2 className="text-base font-semibold text-brandTextPrimary">
+                  <h2 className="card_title">
                     {section.title}
                   </h2>
                   {section.comingSoon && (
-                    <span className="rounded-full bg-brandAccent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent">
+                    <span className="rounded-full bg-brandAccent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent relative z-10">
                       Coming soon
                     </span>
                   )}
                 </div>
-                <p className="mt-2 text-sm text-brandTextMuted">
+                <p className="card_paragraph">
                   {section.description}
                 </p>
-                <ul className="mt-3 flex-1 space-y-2 text-xs text-brandTextMuted">
+                <hr className="line" />
+                <ul className="card__list">
                   {(section.items || []).map((item, index) => (
-                    <li key={index} className="flex gap-2">
-                      <span className="mt-1 h-1 w-1 rounded-full bg-brandAccent" />
-                      <span>{item}</span>
+                    <li key={index} className="card__list_item">
+                      <span className="check">
+                        <svg
+                          className="check_svg"
+                          fill="currentColor"
+                          viewBox="0 0 16 16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clipRule="evenodd"
+                            d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
+                            fillRule="evenodd"
+                          ></path>
+                        </svg>
+                      </span>
+                      <span className="list_text">{item}</span>
                     </li>
                   ))}
                 </ul>
-                <div className="mt-4 flex flex-wrap gap-2 text-xs">
+                <div className="mt-4 flex flex-wrap gap-2 text-xs relative z-10">
                   <a
                     href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
                     target="_blank"
