@@ -68,30 +68,30 @@ const Login = () => {
             </div>
           )}
 
-          <div className="space-y-1">
-            <label className="text-xs font-medium text-brandTextMuted" htmlFor="email">
+          <div className="coolinput w-full">
+            <label className="text" htmlFor="email">
               Email Address
             </label>
             <input
               id="email"
               type="email"
               placeholder="admin@shubhambackend.com"
-              className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+              className="input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
 
-          <div className="space-y-1">
-            <label className="text-xs font-medium text-brandTextMuted" htmlFor="password">
+          <div className="coolinput w-full">
+            <label className="text" htmlFor="password">
               Password
             </label>
             <input
               id="password"
               type="password"
               placeholder="••••••••"
-              className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+              className="input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

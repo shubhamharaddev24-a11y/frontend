@@ -220,26 +220,26 @@ const Contact = () => {
                   }}
                 >
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-brandTextMuted">
+                    <div className="coolinput w-full">
+                      <label className="text">
                         Your name *
                       </label>
                       <input
                         type="text"
-                        className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                        className="input"
                         value={form.name}
                         onChange={(e) =>
                           setForm((f) => ({ ...f, name: e.target.value }))
                         }
                       />
                     </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-brandTextMuted">
+                    <div className="coolinput w-full">
+                      <label className="text">
                         Mobile number *
                       </label>
                       <input
                         type="tel"
-                        className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                        className="input"
                         value={form.phone}
                         onChange={(e) =>
                           setForm((f) => ({ ...f, phone: e.target.value }))
@@ -247,12 +247,12 @@ const Contact = () => {
                       />
                     </div>
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-medium text-brandTextMuted">
+                  <div className="coolinput w-full">
+                    <label className="text">
                       What do you want to book?
                     </label>
                     <select
-                      className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                      className="input"
                       value={form.service}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, service: e.target.value }))
@@ -268,26 +268,26 @@ const Contact = () => {
                       <option>Other agency services</option>
                     </select>
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-medium text-brandTextMuted">
+                  <div className="coolinput w-full">
+                    <label className="text">
                       Preferred date (optional)
                     </label>
                     <input
                       type="date"
-                      className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                      className="input"
                       value={form.date}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, date: e.target.value }))
                       }
                     />
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-medium text-brandTextMuted">
+                  <div className="coolinput w-full">
+                    <label className="text">
                       Anything else we should know?
                     </label>
                     <textarea
                       rows={3}
-                      className="w-full rounded-lg border border-brandBorder bg-brandSurfaceSoft/70 px-3 py-2 text-sm text-brandTextPrimary outline-none ring-0 focus:border-brandAccent focus:ring-1 focus:ring-brandAccent/60"
+                      className="input"
                       value={form.message}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, message: e.target.value }))

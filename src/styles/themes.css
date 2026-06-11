@@ -168,3 +168,78 @@ h1, h2, h3, h4, h5, h6, p, a, button, input, textarea, select,
 .dark .shadow-xl {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
 }
+
+/* Custom Uiverse input style (lovely-fly-87) adapted for our theme system */
+.coolinput {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+
+.coolinput label.text {
+  font-size: 0.75rem;
+  color: var(--text-muted); /* muted gray by default for clean look */
+  font-weight: 700;
+  position: relative;
+  top: 0.5rem;
+  margin: 0 0 0 10px;
+  padding: 0 5px;
+  background: var(--bg-surface); /* matches card background */
+  width: fit-content;
+  z-index: 10;
+  pointer-events: none; /* passes clicks to input underneath */
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Variant for soft background containers */
+.coolinput-soft-bg label.text {
+  background: var(--bg-surface-soft);
+}
+
+.coolinput input.input,
+.coolinput textarea.input,
+.coolinput select.input {
+  padding: 11px 12px;
+  font-size: 0.875rem;
+  border: 2px var(--bg-border) solid;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  width: 100%;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+/* Select specific styling overrides for arrow centering/padding */
+.coolinput select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23b0b0b7'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 36px;
+}
+
+.light .coolinput select.input {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235b5b64'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+}
+
+/* Ensure select option text and background display clearly according to theme */
+.coolinput select.input option {
+  background-color: var(--bg-surface-soft);
+  color: var(--text-primary);
+}
+
+/* Focus state triggers */
+.coolinput input.input:focus,
+.coolinput textarea.input:focus,
+.coolinput select.input:focus {
+  border-color: var(--text-accent);
+  box-shadow: 0 0 0 3px rgba(255, 122, 24, 0.15); /* subtle orange shadow glow */
+}
+
+/* Style label text as accent color when container is focused */
+.coolinput:focus-within label.text {
+  color: var(--text-accent);
+}
