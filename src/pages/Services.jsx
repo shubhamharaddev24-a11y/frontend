@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
 import { serviceService } from "../services";
+import SplitText from "../components/SplitText";
 
 const sections = [
   {
@@ -103,6 +104,15 @@ const Services = () => {
 
     fetchServices();
   }, []);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
     <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -116,7 +126,7 @@ const Services = () => {
             Our services
           </p>
           <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            Comprehensive Media, Technology & Design Solutions.
+            <SplitText>Comprehensive Media, Technology & Design Solutions.</SplitText>
           </h1>
           <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
             From professional cinematography and wedding albums at our local 
@@ -134,7 +144,11 @@ const Services = () => {
             services.map((section) => (
               <motion.article
                 key={section.id || section._id}
-                className="slimy-card text-sm"
+                className="slimy-card text-sm mouse-glow-card"
+                onMouseMove={handleMouseMove}
+                style={{
+                  "--card-shadow-color": "rgba(255, 122, 24, 0.12)"
+                }}
                 initial={reduceMotion ? "show" : "hidden"}
                 whileInView="show"
                 viewport={{ once: true, amount: 0.25 }}
