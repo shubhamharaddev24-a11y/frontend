@@ -9,10 +9,77 @@ import RevealOnScroll from "../components/RevealOnScroll";
 import OptimizedImage from "../components/OptimizedImage";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
+import AnimatedServiceCard from "../components/AnimatedServiceCard";
+import {
+  Code,
+  TrendingUp,
+  Camera,
+  Palette,
+  Laptop,
+  ArrowRight
+} from "lucide-react";
 
 const Home = () => {
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
+
+  const servicesList = useMemo(() => [
+    {
+      name: "Web Development Division",
+      points: [
+        "Custom Full-Stack web applications (MERN)",
+        "Corporate portfolio websites & high-converting landing pages",
+        "Digital wedding invitation sites with RSVP and maps",
+      ],
+      mainIcon: Code,
+      themeColor: "#ff7a18",
+      shadowColor: "rgba(255, 122, 24, 0.25)"
+    },
+    {
+      name: "Digital Marketing & SEO",
+      points: [
+        "Google Business Profile optimization and local map ranking",
+        "On-page & Off-page SEO to drive organic Google search traffic",
+        "Social media growth & production (Instagram Reels & YouTube)",
+      ],
+      mainIcon: TrendingUp,
+      themeColor: "#3b82f6",
+      shadowColor: "rgba(59, 130, 246, 0.25)"
+    },
+    {
+      name: "Media Division (Shubham Photos Studio)",
+      points: [
+        "Cinematic wedding films, trailers, and traditional photography",
+        "Scenic sunset outdoor pre-wedding & baby portraits",
+        "Instant passport printing, photo scanning & framing in Saralgaon",
+      ],
+      mainIcon: Camera,
+      themeColor: "#10b981",
+      shadowColor: "rgba(16, 185, 129, 0.25)"
+    },
+    {
+      name: "Graphic Design & Branding",
+      points: [
+        "Political campaign banners, rally posters & flex designs",
+        "Marathi Lagna-Patrika and event cards (traditional & modern)",
+        "Visiting cards, brochures, and corporate brand designs",
+      ],
+      mainIcon: Palette,
+      themeColor: "#a855f7",
+      shadowColor: "rgba(168, 85, 247, 0.25)"
+    },
+    {
+      name: "Cyber Desk & DTP Services",
+      points: [
+        "Professional biodata and marriage resume creation",
+        "Student CV/resumes and online job applications",
+        "Aadhaar, PAN, and local e-governance service support",
+      ],
+      mainIcon: Laptop,
+      themeColor: "#ec4899",
+      shadowColor: "rgba(236, 72, 153, 0.25)"
+    }
+  ], []);
 
   return (
     <div className="bg-brandBg text-brandTextPrimary">
@@ -69,74 +136,44 @@ const Home = () => {
             </p>
           </RevealOnScroll>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                name: "Web Development Division",
-                points: [
-                  "Custom Full-Stack web applications (MERN)",
-                  "Corporate portfolio websites & high-converting landing pages",
-                  "Digital wedding invitation sites with RSVP and maps",
-                ],
-              },
-              {
-                name: "Digital Marketing & SEO",
-                points: [
-                  "Google Business Profile optimization and local map ranking",
-                  "On-page & Off-page SEO to drive organic Google search traffic",
-                  "Social media growth & production (Instagram Reels & YouTube)",
-                ],
-              },
-              {
-                name: "Media Division (Shubham Photos Studio)",
-                points: [
-                  "Cinematic wedding films, trailers, and traditional photography",
-                  "Scenic sunset outdoor pre-wedding & baby portraits",
-                  "Instant passport printing, photo scanning & framing in Saralgaon",
-                ],
-              },
-              {
-                name: "Graphic Design & Branding",
-                points: [
-                  "Political campaign banners, rally posters & flex designs",
-                  "Marathi Lagna-Patrika and event cards (traditional & modern)",
-                  "Visiting cards, brochures, and corporate brand designs",
-                ],
-              },
-              {
-                name: "Cyber Desk & DTP Services",
-                points: [
-                  "Professional biodata and marriage resume creation",
-                  "Student CV/resumes and online job applications",
-                  "Aadhaar, PAN, and local e-governance service support",
-                ],
-              },
-            ].map((service, index) => (
-              <RevealOnScroll
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {servicesList.map((service, index) => (
+              <AnimatedServiceCard
                 key={service.name}
-                delay={0.3 + index * 0.05}
-                direction="up"
-                className="flex h-full flex-col rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md hover:shadow-xl transition-shadow"
-              >
-                <h3 className="mb-3 text-base font-semibold text-brandTextPrimary">
-                  {service.name}
-                </h3>
-                <ul className="flex-1 space-y-2 text-xs text-brandTextMuted">
-                  {service.points.map((p) => (
-                    <li key={p} className="flex gap-2">
-                      <span className="mt-1 h-1 w-1 rounded-full bg-brandAccent" />
-                      <span>{p}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/services"
-                  className="mt-4 inline-flex text-xs font-semibold text-brandAccent hover:text-brandAccentSoft"
-                >
-                  View full service details →
-                </Link>
-              </RevealOnScroll>
+                index={index}
+                name={service.name}
+                points={service.points}
+                mainIcon={service.mainIcon}
+                themeColor={service.themeColor}
+                shadowColor={service.shadowColor}
+              />
             ))}
+            {/* Custom CTA card matching layout style */}
+            <div className="hidden lg:block p-[1px] rounded-2xl bg-brandBorder/60 transition-all duration-500 hover:bg-brandBorder">
+              <div className="h-full w-full rounded-2xl bg-gradient-to-br from-brandSurface/30 via-brandBg to-brandSurfaceSoft/40 p-6 flex flex-col justify-between overflow-hidden relative group">
+                <div className="absolute inset-0 bg-radial-gradient from-brandAccent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                <div className="relative z-10 space-y-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccentSoft">
+                    Need Custom Solutions?
+                  </p>
+                  <h3 className="text-lg font-bold text-brandTextPrimary leading-snug">
+                    Let's design and build something special together.
+                  </h3>
+                  <p className="text-xs text-brandTextMuted leading-relaxed font-light">
+                    Have a custom project requirement in mind? From custom branding designs to complex web dashboards and enterprise local marketing, we have you covered.
+                  </p>
+                </div>
+                <div className="mt-8 pt-4 border-t border-brandBorder/40 relative z-10">
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-brandAccent hover:text-brandAccentSoft transition-all duration-300 group"
+                  >
+                    <span>Start a conversation</span>
+                    <ArrowRight size={14} className="transform transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

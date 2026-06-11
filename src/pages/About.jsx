@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
+import EnvelopeCard from "../components/EnvelopeCard";
 
 const About = () => {
   const reduceMotion = useReducedMotion();
@@ -70,6 +71,29 @@ const About = () => {
               </li>
             </ul>
           </motion.div>
+        </motion.div>
+
+        {/* Centered Thank You Envelope Section */}
+        <motion.div
+          className="mt-16 flex flex-col items-center justify-center text-center gap-5"
+          variants={variants.fadeUp}
+          initial={reduceMotion ? "show" : "hidden"}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+        >
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-brandAccentSoft">
+            A Special Note
+          </p>
+          <EnvelopeCard
+            title="Thank You"
+            subtitle="It's so nice that you took the time to read our story."
+            body="Wishing you a fantastic day ahead!"
+            signature="SHUBHAM MEDIA"
+            useLogoSeal={true}
+          />
+          <p className="text-xs text-brandTextMuted mt-1 italic">
+            Hover or tap the envelope seal to open the letter.
+          </p>
         </motion.div>
       </section>
     </div>
