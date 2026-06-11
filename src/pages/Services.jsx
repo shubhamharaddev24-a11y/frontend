@@ -77,8 +77,7 @@ const Services = () => {
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
   const { fadeUp } = variants;
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [services, setServices] = useState(sections);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -96,16 +95,9 @@ const Services = () => {
             comingSoon: !s.isActive
           }));
           setServices(mappedServices);
-        } else {
-          // Fallback to static sections if database list is empty
-          setServices(sections);
         }
       } catch (err) {
         console.error('Failed to fetch services, using static fallback:', err);
-        // Fallback to static sections if API fails
-        setServices(sections);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -134,11 +126,7 @@ const Services = () => {
         </motion.div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {loading ? (
-            <div className="col-span-2 text-center py-8">
-              <p className="text-brandTextMuted">Loading services...</p>
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="col-span-2 text-center py-8">
               <p className="text-red-400">{error}</p>
             </div>
