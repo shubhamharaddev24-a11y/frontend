@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import React, { useMemo, useState, useRef } from "react";
+import { motion, useReducedMotion, AnimatePresence, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMotionVariants } from "../utils/motion";
 import AnimatedHero from "../components/AnimatedHero";
@@ -24,6 +24,8 @@ const Home = () => {
   const [activeService, setActiveService] = useState(null);
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
+  const gridRef = useRef(null);
+  const isGridInView = useInView(gridRef, { once: true, amount: 0.15 });
 
   const servicesList = useMemo(() => [
     {
@@ -138,7 +140,7 @@ const Home = () => {
             </p>
           </RevealOnScroll>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div ref={gridRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {servicesList.map((service, index) => (
               <AnimatedServiceCard
                 key={service.name}
@@ -149,10 +151,22 @@ const Home = () => {
                 themeColor={service.themeColor}
                 shadowColor={service.shadowColor}
                 onClick={() => setActiveService(service)}
+                reveal={isGridInView}
               />
             ))}
-            {/* Custom CTA card matching layout style */}
-            <div className="hidden lg:block p-[1px] rounded-2xl bg-brandBorder/60 transition-all duration-500 hover:bg-brandBorder">
+            {/* Custom CTA card matching layout style with firework entrance */}
+            <motion.div
+              initial={{ opacity: 0, x: -120, y: -100, scale: 0.1, rotate: 8 }}
+              animate={isGridInView ? { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0 } : { opacity: 0, x: -120, y: -100, scale: 0.1, rotate: 8 }}
+              transition={{
+                type: "spring",
+                stiffness: 90,
+                damping: 11,
+                mass: 1,
+                delay: 5 * 0.1
+              }}
+              className="hidden lg:block p-[1px] rounded-2xl bg-brandBorder/60 transition-all duration-500 hover:bg-brandBorder"
+            >
               <div className="h-full w-full rounded-2xl bg-gradient-to-br from-brandSurface/30 via-brandBg to-brandSurfaceSoft/40 p-6 flex flex-col justify-between overflow-hidden relative group">
                 <div className="absolute inset-0 bg-radial-gradient from-brandAccent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                 <div className="relative z-10 space-y-4">
@@ -176,7 +190,7 @@ const Home = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

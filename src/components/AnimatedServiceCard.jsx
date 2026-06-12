@@ -1,28 +1,86 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import MouseGlowCard from "./MouseGlowCard";
+import FireworkSparks from "./FireworkSparks";
 
-const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeColor, shadowColor, onClick }) => {
+const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeColor, shadowColor, onClick, reveal }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const isInView = useInView(ref, { once: true, amount: 0.12 });
+  const activeReveal = reveal !== undefined ? reveal : isInView;
+  const [showSparks, setShowSparks] = useState(false);
+
+  useEffect(() => {
+    if (activeReveal) {
+      // Fire sparks exactly when the card reaches its final position and recoils
+      const timer = setTimeout(() => {
+        setShowSparks(true);
+      }, index * 100 + 350); // Land-synchronized delay
+      return () => clearTimeout(timer);
+    }
+  }, [activeReveal, index]);
+
+  // Coordinates to collect cards at the center of the container grid
+  const getCollectOffset = (idx) => {
+    switch (idx) {
+      case 0: // Top-left -> shift down-right
+        return { x: 120, y: 100, rotate: -12 };
+      case 1: // Top-center -> shift down
+        return { x: 0, y: 120, rotate: 0 };
+      case 2: // Top-right -> shift down-left
+        return { x: -120, y: 100, rotate: 12 };
+      case 3: // Bottom-left -> shift up-right
+        return { x: 120, y: -100, rotate: -8 };
+      case 4: // Bottom-center -> shift up
+        return { x: 0, y: -120, rotate: 0 };
+      case 5: // Bottom-right -> shift up-left
+        return { x: -120, y: -100, rotate: 8 };
+      default:
+        return { x: 0, y: 0, rotate: 0 };
+    }
+  };
+
+  const collectOffset = getCollectOffset(index);
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{
-        duration: 0.7,
-        delay: index * 0.1,
-        ease: [0.21, 0.47, 0.32, 0.98]
+      initial={{ 
+        opacity: 0, 
+        x: collectOffset.x, 
+        y: collectOffset.y, 
+        scale: 0.1, 
+        rotate: collectOffset.rotate 
       }}
-      className="h-full cursor-pointer"
+      animate={activeReveal ? { 
+        opacity: 1, 
+        x: 0, 
+        y: 0, 
+        scale: 1, 
+        rotate: 0 
+      } : { 
+        opacity: 0, 
+        x: collectOffset.x, 
+        y: collectOffset.y, 
+        scale: 0.1, 
+        rotate: collectOffset.rotate 
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 90,
+        damping: 11, // Bouncy fireworks recoil effect
+        mass: 1,
+        delay: index * 0.1
+      }}
+      className="h-full cursor-pointer relative"
       onClick={onClick}
     >
+      {/* Reusable sparkle burst component centered on card */}
+      {showSparks && <FireworkSparks color={themeColor} />}
+
       <MouseGlowCard
-        className="happy-card group h-full flex flex-col justify-between p-6"
+        className="happy-card group h-full flex flex-col justify-between p-6 relative z-10"
         style={{
           "--card-theme-color": themeColor,
           "--card-shadow-color": shadowColor
