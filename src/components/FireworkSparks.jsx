@@ -11,19 +11,20 @@ const FireworkSparks = ({ color }) => {
       "#ec4899", // Cyber pink
       "#f59e0b", // Amber
       "#ef4444", // Red
-      "#06b6d4", // Cyan
-      "#ffffff"  // White flash
+      "#06b6d4"  // Cyan
     ];
     
-    return Array.from({ length: 16 }).map((_, i) => {
+    // Reduced to 8 sparks per card to keep animations extremely lightweight and butter-smooth
+    const count = 8;
+    return Array.from({ length: count }).map((_, i) => {
       // Distribute sparks in a circle with a small random deviation
-      const angle = (i / 16) * 2 * Math.PI + (Math.random() * 0.15 - 0.075);
-      const distance = 80 + Math.random() * 90;
+      const angle = (i / count) * 2 * Math.PI + (Math.random() * 0.15 - 0.075);
+      const distance = 60 + Math.random() * 60; // Slightly shorter distance for tighter, faster animation
       const tx = Math.cos(angle) * distance;
       const ty = Math.sin(angle) * distance;
       const sparkColor = color || fireworkColors[Math.floor(Math.random() * fireworkColors.length)];
-      const delay = Math.random() * 0.12;
-      const size = 3 + Math.random() * 5;
+      const delay = Math.random() * 0.08;
+      const size = 3 + Math.random() * 3;
       return { id: i, tx, ty, color: sparkColor, delay, size };
     });
   }, [color]);
