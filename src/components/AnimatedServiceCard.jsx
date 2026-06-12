@@ -12,13 +12,22 @@ const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeCol
   const [showSparks, setShowSparks] = useState(false);
 
   useEffect(() => {
-    if (activeReveal) {
-      // Fire sparks exactly when the card reaches its final position and recoils
-      const timer = setTimeout(() => {
-        setShowSparks(true);
-      }, index * 100 + 350); // Land-synchronized delay
-      return () => clearTimeout(timer);
-    }
+    if (!activeReveal) return;
+
+    // Fire sparks exactly when the card reaches its final position and recoils
+    const timer = setTimeout(() => {
+      setShowSparks(true);
+    }, index * 80 + 300);
+
+    // Automatic cleanup: unmount sparks after 1 second to release memory and prevent DOM weight
+    const cleanupTimer = setTimeout(() => {
+      setShowSparks(false);
+    }, index * 80 + 1300);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(cleanupTimer);
+    };
   }, [activeReveal, index]);
 
   // Coordinates to collect cards at the center of the container grid
@@ -74,6 +83,7 @@ const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeCol
         delay: index * 0.1
       }}
       className="h-full cursor-pointer relative"
+      style={{ willChange: "transform, opacity" }}
       onClick={onClick}
     >
       {/* Reusable sparkle burst component centered on card */}
