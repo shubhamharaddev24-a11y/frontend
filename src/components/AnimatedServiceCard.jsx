@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import MouseGlowCard from "./MouseGlowCard";
 
-const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeColor, shadowColor }) => {
+const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeColor, shadowColor, onClick }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.15 });
 
@@ -17,9 +18,10 @@ const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeCol
         delay: index * 0.1,
         ease: [0.21, 0.47, 0.32, 0.98]
       }}
-      className="h-full"
+      className="h-full cursor-pointer"
+      onClick={onClick}
     >
-      <div
+      <MouseGlowCard
         className="happy-card group h-full flex flex-col justify-between p-6"
         style={{
           "--card-theme-color": themeColor,
@@ -72,7 +74,7 @@ const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeCol
             <ArrowRight size={14} className="transform transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
-      </div>
+      </MouseGlowCard>
     </motion.div>
   );
 };

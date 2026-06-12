@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useMemo, useState } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMotionVariants } from "../utils/motion";
 import AnimatedHero from "../components/AnimatedHero";
@@ -10,6 +10,7 @@ import OptimizedImage from "../components/OptimizedImage";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
 import AnimatedServiceCard from "../components/AnimatedServiceCard";
+import SplitText from "../components/SplitText";
 import {
   Code,
   TrendingUp,
@@ -20,6 +21,7 @@ import {
 } from "lucide-react";
 
 const Home = () => {
+  const [activeService, setActiveService] = useState(null);
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
 
@@ -129,7 +131,7 @@ const Home = () => {
               Divisions & Services
             </p>
             <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-              High-level media, technology and marketing services.
+              <SplitText>High-level media, technology and marketing services.</SplitText>
             </h2>
             <p className="mt-3 text-sm text-brandTextMuted sm:text-base">
               Powering local and digital growth through customized web development, local SEO marketing, custom print branding, and professional cinematic films.
@@ -146,6 +148,7 @@ const Home = () => {
                 mainIcon={service.mainIcon}
                 themeColor={service.themeColor}
                 shadowColor={service.shadowColor}
+                onClick={() => setActiveService(service)}
               />
             ))}
             {/* Custom CTA card matching layout style */}
@@ -264,7 +267,7 @@ const Home = () => {
               Creative Agency & Local Studio
             </p>
             <h2 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-              A team that answers every day — for code, marketing, or photography.
+              <SplitText>A team that answers every day — for code, marketing, or photography.</SplitText>
             </h2>
             <p className="text-sm text-brandTextMuted sm:text-base">
               Whether you need to scale your online business with full-stack web applications, run Google marketing campaigns, or book premium cinematography for a family wedding, we manage your media and digital needs with utmost care.
@@ -302,6 +305,84 @@ const Home = () => {
           </RevealOnScroll>
         </div>
       </section>
+
+      {/* Morphing Detail Modal */}
+      <AnimatePresence>
+        {activeService && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+            {/* Click backdrop to close */}
+            <div className="absolute inset-0" onClick={() => setActiveService(null)} />
+            
+            <motion.div
+              layoutId={`service-card-${activeService.name}`}
+              className="relative w-full max-w-lg rounded-3xl border border-brandBorder bg-brandSurface p-6 shadow-2xl z-10"
+              style={{
+                "--card-theme-color": activeService.themeColor,
+                "--card-shadow-color": activeService.shadowColor
+              }}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setActiveService(null)}
+                className="absolute top-4 right-4 p-1.5 rounded-full border border-brandBorder bg-brandSurfaceSoft text-brandTextMuted hover:text-brandTextPrimary hover:scale-105 transition-all"
+                aria-label="Close modal"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Modal Content */}
+              <div className="space-y-5">
+                <div className="flex items-center gap-4 pt-2">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[var(--card-theme-color)] bg-brandSurfaceSoft text-[var(--card-theme-color)]">
+                    {React.createElement(activeService.mainIcon, { size: 22 })}
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: activeService.themeColor }}>
+                      Division Details
+                    </p>
+                    <h3 className="text-xl font-bold text-brandTextPrimary">
+                      {activeService.name}
+                    </h3>
+                  </div>
+                </div>
+
+                <hr className="border-brandBorder/60" />
+
+                <div className="space-y-3">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-brandTextMuted">
+                    Core Capabilities & Features
+                  </p>
+                  <ul className="space-y-2.5 text-sm text-brandTextMuted">
+                    {activeService.points.map((point, idx) => (
+                      <li key={idx} className="flex gap-3 items-start">
+                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: activeService.themeColor }} />
+                        <span className="leading-relaxed font-light">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-brandBorder/40 flex gap-3">
+                  <Link
+                    to="/services"
+                    className="flex-1 text-center rounded-full bg-[var(--card-theme-color)] py-2.5 text-xs font-semibold text-black hover:brightness-110 transition-all"
+                  >
+                    Explore all details
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="flex-1 text-center rounded-full border border-brandBorder bg-brandSurfaceSoft py-2.5 text-xs font-semibold text-brandTextPrimary hover:bg-brandSurface transition-all"
+                  >
+                    Get instant quote
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
