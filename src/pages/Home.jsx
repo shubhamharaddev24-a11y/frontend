@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useMemo, useState, useRef } from "react";
+import { motion, useReducedMotion, AnimatePresence, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useMotionVariants } from "../utils/motion";
 import AnimatedHero from "../components/AnimatedHero";
 import RevealOnScroll from "../components/RevealOnScroll";
 import PhotoCounter from "../components/PhotoCounter";
@@ -17,6 +18,10 @@ import {
 
 const Home = () => {
   const [activeService, setActiveService] = useState(null);
+  const reduceMotion = useReducedMotion();
+  const variants = useMotionVariants();
+  const gridRef = useRef(null);
+  const isGridInView = useInView(gridRef, { once: true, amount: 0.15 });
 
   const servicesList = useMemo(() => [
     {
@@ -177,6 +182,7 @@ const Home = () => {
         {/* Soft luxury dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15" />
 
+<<<<<<< HEAD
         {/* Centered Quote Overlay Text (Floating over the image) */}
         <div className="absolute bottom-16 sm:bottom-24 inset-x-0 z-10 max-w-4xl mx-auto px-6 text-center space-y-4">
           <p className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-light leading-relaxed drop-shadow-md">
@@ -185,6 +191,60 @@ const Home = () => {
           <p className="text-xs uppercase tracking-[0.35em] font-sans text-white/80 pt-2">
             SHUBHAM MEDIA & FILMS
           </p>
+=======
+          <div ref={gridRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {servicesList.map((service, index) => (
+              <AnimatedServiceCard
+                key={service.name}
+                index={index}
+                name={service.name}
+                points={service.points}
+                mainIcon={service.mainIcon}
+                themeColor={service.themeColor}
+                shadowColor={service.shadowColor}
+                onClick={() => setActiveService(service)}
+                reveal={isGridInView}
+              />
+            ))}
+            {/* Custom CTA card matching layout style with firework entrance */}
+            <motion.div
+              initial={{ opacity: 0, x: -120, y: -100, scale: 0.1, rotate: 8 }}
+              animate={isGridInView ? { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0 } : { opacity: 0, x: -120, y: -100, scale: 0.1, rotate: 8 }}
+              transition={{
+                type: "spring",
+                stiffness: 90,
+                damping: 11,
+                mass: 1,
+                delay: 5 * 0.1
+              }}
+              className="hidden lg:block p-[1px] rounded-2xl bg-brandBorder/60 transition-all duration-500 hover:bg-brandBorder"
+            >
+              <div className="h-full w-full rounded-2xl bg-gradient-to-br from-brandSurface/30 via-brandBg to-brandSurfaceSoft/40 p-6 flex flex-col justify-between overflow-hidden relative group">
+                <div className="absolute inset-0 bg-radial-gradient from-brandAccent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                <div className="relative z-10 space-y-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccentSoft">
+                    Need Custom Solutions?
+                  </p>
+                  <h3 className="text-lg font-bold text-brandTextPrimary leading-snug">
+                    Let's design and build something special together.
+                  </h3>
+                  <p className="text-xs text-brandTextMuted leading-relaxed font-light">
+                    Have a custom project requirement in mind? From custom branding designs to complex web dashboards and enterprise local marketing, we have you covered.
+                  </p>
+                </div>
+                <div className="mt-8 pt-4 border-t border-brandBorder/40 relative z-10">
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-brandAccent hover:text-brandAccentSoft transition-all duration-300 group"
+                  >
+                    <span>Start a conversation</span>
+                    <ArrowRight size={14} className="transform transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+>>>>>>> a66606a6e9d2ec084d64e454f8dd51580eca9375
         </div>
       </section>
 

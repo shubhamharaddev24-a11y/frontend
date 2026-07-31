@@ -1,26 +1,82 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import MouseGlowCard from "./MouseGlowCard";
 
-const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, onClick }) => {
+const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeColor, shadowColor, onClick }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const isInView = useInView(ref, { once: true, amount: 0.12 });
+  const activeReveal = reveal !== undefined ? reveal : isInView;
+  const [showSparks, setShowSparks] = useState(false);
+
+  useEffect(() => {
+    if (!activeReveal) return;
+
+    // Fire sparks exactly when the card reaches its final position and recoils
+    const timer = setTimeout(() => {
+      setShowSparks(true);
+    }, index * 80 + 300);
+
+    // Automatic cleanup: unmount sparks after 1 second to release memory and prevent DOM weight
+    const cleanupTimer = setTimeout(() => {
+      setShowSparks(false);
+    }, index * 80 + 1300);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(cleanupTimer);
+    };
+  }, [activeReveal, index]);
+
+  // Coordinates to collect cards at the center of the container grid
+  const getCollectOffset = (idx) => {
+    switch (idx) {
+      case 0: // Top-left -> shift down-right
+        return { x: 120, y: 100, rotate: -12 };
+      case 1: // Top-center -> shift down
+        return { x: 0, y: 120, rotate: 0 };
+      case 2: // Top-right -> shift down-left
+        return { x: -120, y: 100, rotate: 12 };
+      case 3: // Bottom-left -> shift up-right
+        return { x: 120, y: -100, rotate: -8 };
+      case 4: // Bottom-center -> shift up
+        return { x: 0, y: -120, rotate: 0 };
+      case 5: // Bottom-right -> shift up-left
+        return { x: -120, y: -100, rotate: 8 };
+      default:
+        return { x: 0, y: 0, rotate: 0 };
+    }
+  };
+
+  const collectOffset = getCollectOffset(index);
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{
-        duration: 0.6,
+        duration: 0.7,
         delay: index * 0.1,
+        ease: [0.21, 0.47, 0.32, 0.98]
       }}
-      className="h-full cursor-pointer"
+      className="h-full cursor-pointer relative"
+      style={{ willChange: "transform, opacity" }}
       onClick={onClick}
     >
-      <div className="bg-white dark:bg-[#221C19] border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 p-7 sm:p-8 rounded-none flex flex-col justify-between h-full hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
-        <div className="space-y-4">
+      <MouseGlowCard
+        className="happy-card group h-full flex flex-col justify-between p-6"
+        style={{
+          "--card-theme-color": themeColor,
+          "--card-shadow-color": shadowColor
+        }}
+      >
+        {/* Expanding circle overlay (starts small behind the icon) */}
+        <div className="overlay-circle" />
+
+        {/* Card Header Content */}
+        <div className="relative z-10 flex flex-col gap-4">
           <div className="flex items-start justify-between gap-3">
             <h3 className="font-serif text-xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4] group-hover:text-[#A67C6B] transition-colors">
               {name}

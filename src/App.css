@@ -448,3 +448,33 @@
 .mouse-glow-card:hover::before {
   opacity: 1;
 }
+
+/* Firecracker Spark Explosion Animations */
+@keyframes spark-burst {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+    box-shadow: 0 0 4px var(--spark-color, currentColor);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--tx), var(--ty), 0) scale(0);
+    opacity: 0;
+  }
+}
+
+.spark-particle {
+  --spark-color: currentColor;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  pointer-events: none;
+  animation: spark-burst 0.8s cubic-bezier(0.1, 0.8, 0.25, 1) forwards;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
