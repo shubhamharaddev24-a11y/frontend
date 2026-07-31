@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
 import EnvelopeCard from "../components/EnvelopeCard";
@@ -8,67 +8,52 @@ const About = () => {
   const variants = useMotionVariants();
 
   return (
-    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+      <section className="mx-auto max-w-5xl space-y-12">
         <motion.div
-          className="space-y-4"
+          className="space-y-4 text-center max-w-3xl mx-auto"
           initial={reduceMotion ? "show" : "hidden"}
           animate="show"
           variants={variants.fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            About Shubham Media & Digital Services
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#88796E] dark:text-[#B8ABA0]">
+            ABOUT SHUBHAM MEDIA & DIGITAL
           </p>
-          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#4A3E37] dark:text-[#F2EDE4] font-normal leading-tight">
             A creative agency rooted in local trust and digital excellence.
           </h1>
-          <p className="text-sm text-brandTextMuted sm:text-base">
-            Shubham Media & Digital Services is a forward-thinking agency that combines
-            creative media and modern technology. Through our physical division, 
-            <strong> Shubham Photos Studio</strong> in Saralgaon, we continue to serve 
-            the local Murbad community with professional wedding films, prints, and 
-            e-governance services. Concurrently, our digital division delivers custom 
-            full-stack websites, software applications, SEO, and graphic branding solutions.
+          <p className="text-sm sm:text-base text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed pt-2">
+            Shubham Media & Digital Services combines high-end photography, cinematic wedding films, and modern software engineering. Through our physical division, 
+            <strong className="font-medium text-[#4A3E37] dark:text-[#F2EDE4]"> Shubham Photos Studio</strong> in Saralgaon, we serve the local Murbad community with timeless photo stories, prints, and e-governance services, alongside enterprise web applications and SEO.
           </p>
         </motion.div>
- 
+
         <motion.div
-          className="mt-8 grid gap-6 md:grid-cols-2"
+          className="grid gap-8 md:grid-cols-2"
           initial={reduceMotion ? "show" : "hidden"}
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
           variants={variants.staggerContainer}
         >
-          <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
-            <h2 className="text-sm font-semibold text-brandTextPrimary">
-              Our story & evolution
+          <motion.div className="space-y-3 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed" variants={variants.fadeUpShort}>
+            <h2 className="font-serif text-xl font-normal text-[#4A3E37] dark:text-[#F2EDE4]">
+              Our Story & Journey
             </h2>
             <p>
-              We started as a local neighborhood passport and photo studio near Murbad. 
-              Over the years, we covered hundreds of weddings, traditional Marathi rituals, 
-              local festivals, and corporate openings, earning the lifelong trust of local families.
+              We started as a local neighborhood studio near Murbad. Over the years, we covered hundreds of traditional Indian weddings, Marathi rituals, and family milestones, earning the lifelong trust of local families.
             </p>
             <p>
-              As the digital landscape grew, we integrated professional software engineering, 
-              modern web designs, and search engine optimization (SEO) into our offerings. Today, 
-              we act as a single point of contact for families needing timeless memories and businesses 
-              demanding digital growth.
+              Integrating modern web development, search engine marketing, and digital branding, we act as a single point of contact for families needing timeless memories and businesses demanding digital growth.
             </p>
           </motion.div>
-          <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
-            <h2 className="text-sm font-semibold text-brandTextPrimary">
-              What we stand for
+          <motion.div className="space-y-3 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed" variants={variants.fadeUpShort}>
+            <h2 className="font-serif text-xl font-normal text-[#4A3E37] dark:text-[#F2EDE4]">
+              Our Core Philosophy
             </h2>
             <ul className="space-y-2">
-              <li>
-                • Clear communication regarding event shoots, project delivery timelines, and pricing.
-              </li>
-              <li>
-                • Blending local traditional styles with high-end modern gear, cinema editing, and clean web code.
-              </li>
-              <li>
-                • Treating every client with equal respect—whether for a single passport photo or a full enterprise web application.
-              </li>
+              <li>• Preserving raw emotions and authentic couple moments with cinematic clarity.</li>
+              <li>• Seamless communication regarding event coverage, delivery timelines, and pricing.</li>
+              <li>• Blending traditional warmth with state-of-the-art camera gear, color grading, and clean web architecture.</li>
             </ul>
           </motion.div>
         </motion.div>
@@ -81,7 +66,7 @@ const About = () => {
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
         >
-          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-brandAccentSoft">
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#A67C6B]">
             A Special Note
           </p>
           <EnvelopeCard
@@ -91,7 +76,7 @@ const About = () => {
             signature="SHUBHAM MEDIA"
             useLogoSeal={true}
           />
-          <p className="text-xs text-brandTextMuted mt-1 italic">
+          <p className="text-xs text-[#88796E] dark:text-[#B8ABA0] italic font-light">
             Hover or tap the envelope seal to open the letter.
           </p>
         </motion.div>

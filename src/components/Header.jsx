@@ -3,15 +3,14 @@ import { NavLink, useLocation } from "react-router-dom";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X } from "lucide-react";
 import { useMotionVariants, useReducedMotionProps } from "../utils/motion";
-import ThemeToggle from "./ThemeToggle";
 import logoShubham from "../assets/logo-shubham-photos-studio.png";
 import Logo from "./Logo";
 const navItems = [
-  // { label: "Home", to: "/" },
+  { label: "Home", to: "/" },
   { label: "About", to: "/about" },
+  { label: "Portfolio", to: "/gallery" },
   { label: "Services", to: "/services" },
-  { label: "Gallery", to: "/gallery" },
-  { label: "Contact", to: "/contact" },
+  { label: "Book Us", to: "/contact" },
 ];
 
 const Header = () => {
@@ -20,7 +19,6 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const variants = useMotionVariants();
-  const reducedMotionProps = useReducedMotionProps(reduceMotion);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -42,27 +40,20 @@ const Header = () => {
 
   return (
     <motion.header
-      className="fixed top-0 inset-x-0 z-50 border-b border-transparent"
-      variants={variants.headerScroll}
-      animate={scrolled ? "scrolled" : "top"}
-      initial="top"
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-[#F2EDE4]/95 dark:bg-[#181412]/95 backdrop-blur-md border-b border-brandBorder/60 shadow-sm py-2"
+          : "bg-transparent py-4"
+      }`}
     >
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-6 md:h-24 lg:px-8">
-        {/* Logo / Brand — shrink-0 so flex nav/buttons never squeeze the mark */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 md:px-12">
+        {/* Logo / Brand */}
         <NavLink
           to="/"
-          className="flex shrink-0 items-center gap-2.5 rounded-lg outline-none ring-brandAccent/70 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          className="flex shrink-0 items-center gap-2 rounded-lg outline-none"
           aria-label="Shubham Media & Digital Services — Home"
         >
-          <Logo className="h-10 w-10" />
-          <div className="flex flex-col leading-none">
-            <span className="text-sm font-extrabold tracking-wider text-brandTextPrimary sm:text-base">
-              SHUBHAM
-            </span>
-            <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-brandAccent sm:text-[10px]">
-              Media & Digital Services
-            </span>
-          </div>
+          <Logo />
         </NavLink>
 
         {/* Navigation - desktop */}
@@ -96,7 +87,6 @@ const Header = () => {
 
         {/* Call / WhatsApp + mobile menu */}
         <div className="flex items-center gap-2">
-          <ThemeToggle className="inline-flex" />
           {/* Call Button */}
           <motion.a
             href="tel:9271456749"

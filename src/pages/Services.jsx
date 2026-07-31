@@ -1,8 +1,7 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
 import { serviceService } from "../services";
-import SplitText from "../components/SplitText";
 
 const sections = [
   {
@@ -13,7 +12,7 @@ const sections = [
     items: [
       "Wedding photography and videography (Traditional & Cinematic)",
       "Pre-wedding shoots at scenic outdoor locations near Murbad",
-      "Event coverage (Engagements, birthdays, and school functions)",
+      "Event coverage (Engagements, birthdays, and celebrations)",
       "Passport and visa photos with instant studio printing",
       "Custom album design, photo framing, and laminations",
       "Scanning and restoration of old, damaged family photos",
@@ -67,8 +66,8 @@ const sections = [
     items: [
       "Professional biodata and marriage CV creation",
       "Student resumes and job application documents",
-      "Aadhaar updates, eKYC assistance, and PAN card services (Coming Soon)",
-      "Online college admissions and government scholarship forms (Coming Soon)",
+      "Aadhaar updates, eKYC assistance, and PAN card services",
+      "Online college admissions and government scholarship forms",
       "High-volume document printing, copying, and laminations",
     ],
   },
@@ -105,112 +104,76 @@ const Services = () => {
     fetchServices();
   }, []);
 
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-  };
-
   return (
-    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+      <section className="mx-auto max-w-7xl space-y-12">
         <motion.div
-          className="mb-8 space-y-3 sm:mb-10"
+          className="text-center max-w-3xl mx-auto space-y-4"
           initial={reduceMotion ? "show" : "hidden"}
           animate="show"
           variants={fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            Our services
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#88796E] dark:text-[#B8ABA0]">
+            DIVISIONS & SERVICES
           </p>
-          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            <SplitText>Comprehensive Media, Technology & Design Solutions.</SplitText>
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#4A3E37] dark:text-[#F2EDE4] font-normal leading-tight">
+            Media, Technology & Graphic Branding
           </h1>
-          <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
-            From professional cinematography and wedding albums at our local 
-            <strong> Shubham Photos Studio</strong> counter, to custom websites, 
-            local SEO marketing, and digital branding — we deliver high-level solutions.
+          <p className="text-sm sm:text-base text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed">
+            From professional cinematography and wedding albums at our local studio, to custom web applications, local SEO marketing, and digital document desk.
           </p>
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          {error ? (
-            <div className="col-span-2 text-center py-8">
-              <p className="text-red-400">{error}</p>
-            </div>
-          ) : (
-            services.map((section) => (
-              <motion.article
-                key={section.id || section._id}
-                className="slimy-card text-sm mouse-glow-card"
-                onMouseMove={handleMouseMove}
-                style={{
-                  "--card-shadow-color": "rgba(255, 122, 24, 0.12)"
-                }}
-                initial={reduceMotion ? "show" : "hidden"}
-                whileInView="show"
-                viewport={{ once: true, amount: 0.25 }}
-                variants={variants.fadeUpShort}
-              >
-                <div className="card__border"></div>
-                <div className="flex items-center gap-3">
-                  <h2 className="card_title">
-                    {section.title}
-                  </h2>
-                  {section.comingSoon && (
-                    <span className="rounded-full bg-brandAccent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent relative z-10">
-                      Coming soon
-                    </span>
-                  )}
-                </div>
-                <p className="card_paragraph">
-                  {section.description}
-                </p>
-                <hr className="line" />
-                <ul className="card__list">
-                  {(section.items || []).map((item, index) => (
-                    <li key={index} className="card__list_item">
-                      <span className="check">
-                        <svg
-                          className="check_svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clipRule="evenodd"
-                            d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
-                            fillRule="evenodd"
-                          ></path>
-                        </svg>
-                      </span>
-                      <span className="list_text">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-4 flex flex-wrap gap-2 text-xs relative z-10">
-                  <a
-                    href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center rounded-full bg-brandAccent px-4 py-1.5 font-semibold text-black shadow-sm shadow-brandAccent/40 hover:bg-amber-400"
-                    {...variants.buttonHover}
-                  >
-                    WhatsApp enquiry
-                  </a>
-                  <a
-                    href="tel:9271456749"
-                    className="inline-flex items-center rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-1.5 font-semibold text-brandAccent hover:bg-brandSurfaceSoft"
-                    {...variants.buttonHover}
-                  >
-                    Call team
-                  </a>
-                </div>
-              </motion.article>
-            ))
-          )}
+        <div className="grid gap-8 lg:grid-cols-2">
+          {services.map((section) => (
+            <motion.article
+              key={section.id || section._id}
+              className="bg-white dark:bg-[#221C19] border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 p-8 sm:p-10 rounded-none space-y-5 shadow-sm hover:shadow-md transition-all duration-300"
+              initial={reduceMotion ? "show" : "hidden"}
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              variants={variants.fadeUpShort}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="font-serif text-2xl font-normal text-[#4A3E37] dark:text-[#F2EDE4]">
+                  {section.title}
+                </h2>
+                {section.comingSoon && (
+                  <span className="rounded-full bg-[#A67C6B]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A67C6B]">
+                    Coming soon
+                  </span>
+                )}
+              </div>
+              <p className="text-xs sm:text-sm text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed">
+                {section.description}
+              </p>
+              <hr className="border-[#E0D7CC]/60 dark:border-[#3D342E]/60" />
+              <ul className="space-y-3 text-xs sm:text-sm text-[#88796E] dark:text-[#B8ABA0] font-light">
+                {(section.items || []).map((item, index) => (
+                  <li key={index} className="flex gap-2.5 items-start">
+                    <span className="text-[#A67C6B]">•</span>
+                    <span className="leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-4 flex flex-wrap gap-3">
+                <a
+                  href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2.5 bg-[#4A3E37] text-white text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-[#A67C6B]"
+                >
+                  WhatsApp Enquiry
+                </a>
+                <a
+                  href="tel:9271456749"
+                  className="px-6 py-2.5 border border-[#4A3E37] text-[#4A3E37] text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-[#A67C6B] hover:text-[#A67C6B]"
+                >
+                  Call Team
+                </a>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </section>
     </div>

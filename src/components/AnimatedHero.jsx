@@ -1,72 +1,116 @@
-import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const HERO_BG =
-  "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?w=2400&auto=format&fit=crop&q=80";
+const SLIDES = [
+  {
+    id: 1,
+    image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=2400&auto=format&fit=crop&q=85",
+    objectPosition: "center 30%",
+    isMonochrome: false,
+    title: "Destination Pre-Weddings & Editorial Stories",
+    subtitle: "Preserving raw emotions, scenic landscapes, and unforgettable moments",
+  },
+  // {
+  //   id: 2,
+  //   image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=2400&auto=format&fit=crop&q=85",
+  //   objectPosition: "center 30%",
+  //   isMonochrome: true,
+  //   title: "Artistic Black & White Landscapes",
+  //   subtitle: "Creating timeless visual windows into your love story",
+  // },
+  {
+    id: 2,
+    image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=2400&auto=format&fit=crop&q=85",
+    objectPosition: "center 20%",
+    isMonochrome: false,
+    title: "Sacred Indian Vows & Joyful Moments",
+    subtitle: "Capturing love, laughter, and family celebrations with artistic perfection",
+  },
+  {
+    id: 3,
+    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=2400&auto=format&fit=crop&q=85",
+    objectPosition: "center 25%",
+    isMonochrome: false,
+    title: "Authentic Celebrations & Wedding Cinema",
+    subtitle: "Documenting your journey with elegance and editorial depth",
+  },
+];
 
 const AnimatedHero = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const reduceMotion = useReducedMotion();
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % SLIDES.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + SLIDES.length) % SLIDES.length);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % SLIDES.length);
+  };
+
   return (
-    <section className="relative w-screen h-screen overflow-hidden">
-      {/* Background image (100vw x 100vh, object-fit: cover) */}
-      <motion.img
-        src={HERO_BG}
-        alt="Premium cinematic photography background"
-        className="absolute inset-0 w-full h-full object-cover object-[30%_center] md:object-center"
-        initial={reduceMotion ? { scale: 1 } : { scale: 1.08 }}
-        animate={reduceMotion ? { scale: 1 } : { scale: [1.08, 1.02, 1.06] }}
-        transition={
-          reduceMotion
-            ? undefined
-            : { duration: 18, ease: "easeInOut", repeat: Infinity, repeatType: "mirror" }
-        }
-      />
+    <section className="relative w-full h-screen min-h-[650px] overflow-hidden bg-[#181412]">
+      {/* Background Image Carousel Slider */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
+          className="absolute inset-0 w-full h-full"
+        >
+          <img
+            src={SLIDES[currentIndex].image}
+            alt={SLIDES[currentIndex].title}
+            className={`w-full h-full object-cover brightness-105 contrast-[1.02] ${SLIDES[currentIndex].isMonochrome ? "grayscale contrast-125" : ""
+              }`}
+            style={{ objectPosition: SLIDES[currentIndex].objectPosition || "center 20%" }}
+          />
+          {/* Soft luxury gradient overlay - bright and luminous */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Cinematic overlay (60–70% black gradient) */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70" />
+      {/* Left Navigation Arrow (←) */}
+      <button
+        type="button"
+        onClick={handlePrev}
+        className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none"
+        aria-label="Previous Slide"
+      >
+        <span className="text-3xl font-light leading-none select-none">←</span>
+      </button>
 
-      {/* Centered content */}
-      <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-        <div className="max-w-4xl">
-          <motion.h1
-            className="text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
-            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: [0.21, 0.47, 0.32, 0.98] }}
-          >
-            Premium Photography
-            <span className="text-brandAccent">.</span>
-            <br />
-            Digital Services, Done Right.
-          </motion.h1>
+      {/* Right Navigation Arrow (→) */}
+      <button
+        type="button"
+        onClick={handleNext}
+        className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none"
+        aria-label="Next Slide"
+      >
+        <span className="text-3xl font-light leading-none select-none">→</span>
+      </button>
 
-          <motion.p
-            className="mt-5 text-sm leading-relaxed text-white/80 sm:text-base md:text-lg"
-            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-          >
-            Weddings, portraits, albums, printing, banners, and everyday digital work —
-            crafted with a cinematic eye and professional delivery.
-          </motion.p>
-
-          <motion.div
-            className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-          >
-            <motion.div
-              className="inline-flex items-center justify-center rounded-full bg-brandAccent px-7 py-3 text-sm font-semibold text-black shadow-lg shadow-black/30 hover:bg-brandAccentSoft"
-              whileHover={reduceMotion ? undefined : { y: -2, scale: 1.02 }}
-              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-            >
-              <Link to="/contact">Book a Shoot</Link>
-            </motion.div>
-          </motion.div>
-        </div>
+      {/* Bottom Slider Dots */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+        {SLIDES.map((slide, idx) => (
+          <button
+            key={slide.id}
+            onClick={() => setCurrentIndex(idx)}
+            className={`h-1.5 rounded-full transition-all duration-500 ${idx === currentIndex ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/70"
+              }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
       </div>
     </section>
   );

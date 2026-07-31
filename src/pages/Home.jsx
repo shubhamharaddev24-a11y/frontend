@@ -1,16 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useMotionVariants } from "../utils/motion";
 import AnimatedHero from "../components/AnimatedHero";
-import ParallaxSection from "../components/ParallaxSection";
-import MagneticButton from "../components/MagneticButton";
 import RevealOnScroll from "../components/RevealOnScroll";
-import OptimizedImage from "../components/OptimizedImage";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
 import AnimatedServiceCard from "../components/AnimatedServiceCard";
-import SplitText from "../components/SplitText";
 import {
   Code,
   TrendingUp,
@@ -22,8 +17,6 @@ import {
 
 const Home = () => {
   const [activeService, setActiveService] = useState(null);
-  const reduceMotion = useReducedMotion();
-  const variants = useMotionVariants();
 
   const servicesList = useMemo(() => [
     {
@@ -34,8 +27,8 @@ const Home = () => {
         "Digital wedding invitation sites with RSVP and maps",
       ],
       mainIcon: Code,
-      themeColor: "#ff7a18",
-      shadowColor: "rgba(255, 122, 24, 0.25)"
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
       name: "Digital Marketing & SEO",
@@ -45,8 +38,8 @@ const Home = () => {
         "Social media growth & production (Instagram Reels & YouTube)",
       ],
       mainIcon: TrendingUp,
-      themeColor: "#3b82f6",
-      shadowColor: "rgba(59, 130, 246, 0.25)"
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
       name: "Media Division (Shubham Photos Studio)",
@@ -56,8 +49,8 @@ const Home = () => {
         "Instant passport printing, photo scanning & framing in Saralgaon",
       ],
       mainIcon: Camera,
-      themeColor: "#10b981",
-      shadowColor: "rgba(16, 185, 129, 0.25)"
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
       name: "Graphic Design & Branding",
@@ -67,8 +60,8 @@ const Home = () => {
         "Visiting cards, brochures, and corporate brand designs",
       ],
       mainIcon: Palette,
-      themeColor: "#a855f7",
-      shadowColor: "rgba(168, 85, 247, 0.25)"
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
       name: "Cyber Desk & DTP Services",
@@ -78,304 +71,264 @@ const Home = () => {
         "Aadhaar, PAN, and local e-governance service support",
       ],
       mainIcon: Laptop,
-      themeColor: "#ec4899",
-      shadowColor: "rgba(236, 72, 153, 0.25)"
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
     }
   ], []);
 
   return (
-    <div className="bg-brandBg text-brandTextPrimary">
-      {/* Animated Hero Section */}
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] font-sans selection:bg-[#A67C6B]/20">
+      {/* 1. Full-Bleed Animated Hero Carousel */}
       <AnimatedHero />
 
-      {/* Quick service highlights with parallax */}
-      <ParallaxSection
-        className="border-y border-brandBorder/70 bg-brandSurfaceSoft/60 py-12"
-        speed={0.2}
-      >
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
+      {/* 2. Philosophy & Welcome Intro Section (2-Column Layout matching Viya Films screenshot 2) */}
+      <section className="py-20 md:py-28 px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column Text */}
+          <div className="lg:col-span-6 space-y-6">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#4A3E37] dark:text-[#F2EDE4] leading-tight font-normal">
+              into unforgettable memories.
+            </h2>
+            <div className="space-y-5 text-sm sm:text-base text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed">
+              <p>
+                Welcome to Shubham Media & Digital, where every image tells a heartfelt love story. We are passionate about capturing the true essence of each couple's journey, preserving their most cherished moments through timeless photography and film.
+              </p>
+              <p>
+                Our goal is simple: to document emotions that are raw, meaningful, and unforgettable. Whether it's a grand wedding celebration, sunset pre-wedding, or an intimate ceremony, we strive to portray your special day in a way that feels authentic to you.
+              </p>
+              <p>
+                Take a glimpse into our collection of stories and see the magic unfold. Each experience is a reflection of joy, laughter, and deep emotions that make their journey extraordinary. Let us inspire you with the beautiful memories we've helped create.
+              </p>
+              <p className="pt-2 italic font-serif text-[#4A3E37] dark:text-[#F2EDE4]">
+                Step into a world of storytelling through our lens, where every frame is a work of art.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column Portrait Image */}
+          <div className="lg:col-span-6">
+            <div className="relative overflow-hidden rounded-xl shadow-xl aspect-[4/5] max-w-md mx-auto lg:max-w-none">
+              <img
+                src="/images/marathi-wedding-ritual.jpg"
+                alt="Marathi wedding ritual of groom and bride"
+                className="w-full h-full object-cover object-[center_15%] brightness-95 hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Precious Moments Showcase Grid (Matching Viya Films screenshot 3) */}
+      <section className="py-16 md:py-24 px-6 sm:px-12 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
+        {/* Editorial Text Block */}
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
+          <p className="text-xs sm:text-sm text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed">
+            the vows to the laughter, weaves a story of commitment and joy.
+          </p>
+          <p className="text-xs sm:text-sm text-[#88796E] dark:text-[#B8ABA0] font-light">
+            These are moments too precious to be forgotten.
+          </p>
+          <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-[#4A3E37] dark:text-[#F2EDE4] font-medium pt-2">
+            We ensure they live on forever, turning fleeting emotions into timeless memories.
+          </h3>
+        </div>
+
+        {/* 3 Vertical Portrait Grid (Matching Viya Films couple portrait set) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {[
             {
-              title: "Wedding photography & films",
-              body: "Full-day coverage, village baraat, traditional rituals and cinematic couple moments.",
+              url: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1000&auto=format&fit=crop&q=85",
+              pos: "center 25%",
+              alt: "Groom and bride standing together at sunset"
             },
             {
-              title: "Prints, albums & DTP",
-              body: "Passport photos, instant prints, album design, biodata and resume creation.",
+              url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1000&auto=format&fit=crop&q=85",
+              pos: "center 20%",
+              alt: "Candid playful close portrait of couple laughing"
             },
             {
-              title: "Banners, cards & digital",
-              body: "Wedding cards, political banners, flex posters and future-ready cyber desk.",
-            },
-          ].map((item, index) => (
-            <RevealOnScroll
-              key={item.title}
-              delay={index * 0.1}
-              direction="up"
-              className="flex-1 space-y-1"
+              url: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1000&auto=format&fit=crop&q=85",
+              pos: "center 20%",
+              alt: "Romantic couple embrace portrait at golden hour"
+            }
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="overflow-hidden rounded-lg shadow-md aspect-[3/4] group bg-[#FAF6F0] dark:bg-[#221C19]"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccentSoft">
-                {item.title}
-              </p>
-              <p className="text-xs text-brandTextMuted">{item.body}</p>
-            </RevealOnScroll>
+              <img
+                src={item.url}
+                alt={item.alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                style={{ objectPosition: item.pos }}
+              />
+            </div>
           ))}
         </div>
-      </ParallaxSection>
+      </section>
 
-      {/* Services summary */}
-      <section className="bg-brandBg py-12 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll delay={0.2} direction="up" className="mb-8 text-center sm:mb-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-              Divisions & Services
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-              <SplitText>High-level media, technology and marketing services.</SplitText>
-            </h2>
-            <p className="mt-3 text-sm text-brandTextMuted sm:text-base">
-              Powering local and digital growth through customized web development, local SEO marketing, custom print branding, and professional cinematic films.
-            </p>
-          </RevealOnScroll>
+      {/* 4. Full-Width B&W Banner with Centered Quote Overlay (Matching Viya Films screenshot) */}
+      <section className="w-full relative h-screen min-h-[600px] overflow-hidden bg-black flex items-end justify-center">
+        <img
+          src="/images/bw-couple-sunburst-banner.png"
+          alt="Cinematic B&W sunburst couple pre-wedding portrait banner"
+          className="w-full h-full object-cover object-[center_30%] brightness-100"
+        />
+        {/* Soft luxury dark gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15" />
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {servicesList.map((service, index) => (
-              <AnimatedServiceCard
-                key={service.name}
-                index={index}
-                name={service.name}
-                points={service.points}
-                mainIcon={service.mainIcon}
-                themeColor={service.themeColor}
-                shadowColor={service.shadowColor}
-                onClick={() => setActiveService(service)}
-              />
-            ))}
-            {/* Custom CTA card matching layout style */}
-            <div className="hidden lg:block p-[1px] rounded-2xl bg-brandBorder/60 transition-all duration-500 hover:bg-brandBorder">
-              <div className="h-full w-full rounded-2xl bg-gradient-to-br from-brandSurface/30 via-brandBg to-brandSurfaceSoft/40 p-6 flex flex-col justify-between overflow-hidden relative group">
-                <div className="absolute inset-0 bg-radial-gradient from-brandAccent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                <div className="relative z-10 space-y-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccentSoft">
-                    Need Custom Solutions?
-                  </p>
-                  <h3 className="text-lg font-bold text-brandTextPrimary leading-snug">
-                    Let's design and build something special together.
-                  </h3>
-                  <p className="text-xs text-brandTextMuted leading-relaxed font-light">
-                    Have a custom project requirement in mind? From custom branding designs to complex web dashboards and enterprise local marketing, we have you covered.
-                  </p>
-                </div>
-                <div className="mt-8 pt-4 border-t border-brandBorder/40 relative z-10">
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-brandAccent hover:text-brandAccentSoft transition-all duration-300 group"
-                  >
-                    <span>Start a conversation</span>
-                    <ArrowRight size={14} className="transform transition-transform duration-300 group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Centered Quote Overlay Text (Floating over the image) */}
+        <div className="absolute bottom-16 sm:bottom-24 inset-x-0 z-10 max-w-4xl mx-auto px-6 text-center space-y-4">
+          <p className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-light leading-relaxed drop-shadow-md">
+            Time flies, and you can't relive moments once they're gone. But through our lens, we create a window for you to revisit them.
+          </p>
+          <p className="text-xs uppercase tracking-[0.35em] font-sans text-white/80 pt-2">
+            SHUBHAM MEDIA & FILMS
+          </p>
         </div>
       </section>
 
-      {/* Photo Counter Section */}
+      {/* 5. Signature White Navigation Cards (Matching Viya Films screenshot 5) */}
+      <section className="py-16 md:py-24 px-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              title: "ABOUT",
+              subtitle: "GET TO KNOW US",
+              link: "/about"
+            },
+            {
+              title: "PORTFOLIO",
+              subtitle: "EXPLORE OUR WORK",
+              link: "/gallery"
+            },
+            {
+              title: "BOOK US",
+              subtitle: "GET IN TOUCH",
+              link: "/contact"
+            }
+          ].map((card) => (
+            <Link
+              key={card.title}
+              to={card.link}
+              className="bg-white dark:bg-[#221C19] p-10 sm:p-14 rounded-none border border-[#E0D7CC]/60 dark:border-[#3D342E]/60 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
+            >
+              <h4 className="font-sans text-lg sm:text-xl font-medium tracking-[0.25em] text-[#4A3E37] dark:text-[#F2EDE4] uppercase group-hover:text-[#A67C6B] transition-colors">
+                {card.title}
+              </h4>
+              <p className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#88796E] dark:text-[#B8ABA0] mt-3">
+                {card.subtitle}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 6. Company Divisions & Services Showcase */}
+      <section className="py-16 px-6 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <p className="text-xs uppercase tracking-[0.25em] text-[#88796E] dark:text-[#B8ABA0]">
+            Full Capabilities
+          </p>
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#4A3E37] dark:text-[#F2EDE4] mt-2">
+            Media, Technology & Digital Divisions
+          </h2>
+          <p className="text-sm text-[#88796E] dark:text-[#B8ABA0] mt-3">
+            From high-end wedding films and portraits to full-stack web applications, local SEO, and print designs.
+          </p>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {servicesList.map((service, index) => (
+            <AnimatedServiceCard
+              key={service.name}
+              index={index}
+              name={service.name}
+              points={service.points}
+              mainIcon={service.mainIcon}
+              themeColor={service.themeColor}
+              shadowColor={service.shadowColor}
+              onClick={() => setActiveService(service)}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* 7. Counter Section */}
       <PhotoCounter />
 
-      {/* Featured work preview */}
-      <section className="bg-brandSurface py-12 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll delay={0.4} direction="up" className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-                Featured work
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-                Real couples, real village stories.
-              </h2>
-              <p className="mt-3 text-sm text-brandTextMuted sm:max-w-md">
-                A quick glimpse of weddings, pre-wedding shoots and banner designs
-                captured by our team.
-              </p>
-            </div>
-            <Link
-              to="/gallery"
-              className="text-xs font-semibold text-brandAccent hover:text-brandAccentSoft"
-            >
-              Open full gallery →
-            </Link>
-          </RevealOnScroll>
+      {/* 8. Video Testimonials */}
+      <VideoTestimonials />
 
-          <div className="grid gap-4 sm:grid-cols-3">
-            {[
-              {
-                title: "Evening wedding in the village temple",
-                image:
-                  "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&auto=format&fit=crop&q=80",
-              },
-              {
-                title: "Pre-wedding by the fields at sunset",
-                image:
-                  "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=900&auto=format&fit=crop&q=80",
-              },
-              {
-                title: "Colourful flex banners for local events",
-                image:
-                  "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=900&auto=format&fit=crop&q=80",
-              },
-            ].map((item, index) => (
-              <RevealOnScroll
-                key={item.title}
-                delay={0.5 + index * 0.1}
-                direction="scale"
-                className="group relative overflow-hidden rounded-2xl border border-brandBorder/70 bg-black"
-              >
-                <motion.img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-56 w-full object-cover"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 + index * 0.1, duration: 0.6 }}
-                  whileHover={{ scale: 1.05 }}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4">
-                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-brandAccentSoft">
-                    Featured frame
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-white">
-                    {item.title}
-                  </p>
-                </div>
-              </RevealOnScroll>
-            ))}
+      {/* 9. Contact / Visit Studio Section */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="bg-white dark:bg-[#221C19] border border-[#E0D7CC]/60 dark:border-[#3D342E]/60 p-8 sm:p-12 rounded-xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="space-y-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#88796E] dark:text-[#B8ABA0]">
+              Visit Our Studio
+            </p>
+            <h3 className="font-serif text-2xl sm:text-3xl text-[#4A3E37] dark:text-[#F2EDE4]">
+              Shubham Photos Studio & Digital Center
+            </h3>
+            <p className="text-sm text-[#88796E] dark:text-[#B8ABA0] leading-relaxed">
+              Located on the main bazaar road near the bus stand, opposite Saralgaon Police Chowki, Murbad. Open daily from 9:00 AM – 8:00 PM for photography bookings, digital services, and consultations.
+            </p>
+            <p className="text-sm font-medium text-[#4A3E37] dark:text-[#F2EDE4]">
+              Phone / WhatsApp: <span className="font-semibold">+91 92714 56749</span>
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-end">
+            <Link
+              to="/contact"
+              className="px-8 py-3.5 bg-[#4A3E37] text-white text-xs font-bold uppercase tracking-[0.2em] text-center rounded-none hover:bg-[#A67C6B] transition-colors inline-block"
+            >
+              Book Us / Contact
+            </Link>
+            <a
+              href="tel:9271456749"
+              className="px-8 py-3.5 border border-[#4A3E37] text-[#4A3E37] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-none hover:border-[#A67C6B] hover:text-[#A67C6B] transition-colors inline-block"
+            >
+              Call Studio
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Video Testimonials Section */}
-      <VideoTestimonials />
-
-      {/* Trust + contact CTA */}
-      <section className="bg-brandBg py-12 sm:py-16">
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8">
-          <RevealOnScroll delay={0.7} direction="left" className="flex-1 space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-              Creative Agency & Local Studio
-            </p>
-            <h2 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-              <SplitText>A team that answers every day — for code, marketing, or photography.</SplitText>
-            </h2>
-            <p className="text-sm text-brandTextMuted sm:text-base">
-              Whether you need to scale your online business with full-stack web applications, run Google marketing campaigns, or book premium cinematography for a family wedding, we manage your media and digital needs with utmost care.
-            </p>
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.8} direction="right" className="flex flex-1 flex-col gap-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandTextMuted">
-              Visit or call
-            </p>
-            <p className="text-sm text-brandTextMuted">
-              Located on the main bazaar near the bus stand, opposite to saralgaon police chowki, murbad.
-              Our photography division counters are fully active daily.
-            </p>
-            <p className="text-sm">
-              Phone:{" "}
-              <span className="font-semibold text-brandTextPrimary">+91 92714 56749</span>
-            </p>
-            <p className="text-sm text-brandTextMuted">
-              Everyday timings: <span className="text-brandTextPrimary">9:00 AM – 8:00 PM</span>
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <MagneticButton
-                href="tel:9271456749"
-                className="flex-1 items-center justify-center rounded-full bg-brandAccent px-6 py-2.5 text-xs font-semibold text-black shadow-md shadow-brandAccent/30 hover:bg-brandAccentSoft sm:text-sm"
-              >
-                Call Shubham Media
-              </MagneticButton>
-              <MagneticButton
-                href="/contact"
-                className="flex-1 items-center justify-center rounded-full border border-brandAccent/60 bg-brandSurface px-6 py-2.5 text-xs font-semibold text-brandAccent hover:bg-brandSurfaceSoft sm:text-sm"
-              >
-                Open contact details
-              </MagneticButton>
-            </div>
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      {/* Morphing Detail Modal */}
+      {/* Morphing Detail Modal for Services */}
       <AnimatePresence>
         {activeService && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
-            {/* Click backdrop to close */}
             <div className="absolute inset-0" onClick={() => setActiveService(null)} />
-            
             <motion.div
               layoutId={`service-card-${activeService.name}`}
-              className="relative w-full max-w-lg rounded-3xl border border-brandBorder bg-brandSurface p-6 shadow-2xl z-10"
-              style={{
-                "--card-theme-color": activeService.themeColor,
-                "--card-shadow-color": activeService.shadowColor
-              }}
+              className="relative w-full max-w-lg rounded-2xl border border-[#E0D7CC] bg-white dark:bg-[#221C19] p-8 shadow-2xl z-10 text-[#4A3E37] dark:text-[#F2EDE4]"
             >
-              {/* Close Button */}
               <button
                 onClick={() => setActiveService(null)}
-                className="absolute top-4 right-4 p-1.5 rounded-full border border-brandBorder bg-brandSurfaceSoft text-brandTextMuted hover:text-brandTextPrimary hover:scale-105 transition-all"
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-[#FAF6F0] dark:hover:bg-[#2C2521] text-[#88796E]"
                 aria-label="Close modal"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                ✕
               </button>
-
-              {/* Modal Content */}
-              <div className="space-y-5">
-                <div className="flex items-center gap-4 pt-2">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[var(--card-theme-color)] bg-brandSurfaceSoft text-[var(--card-theme-color)]">
-                    {React.createElement(activeService.mainIcon, { size: 22 })}
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: activeService.themeColor }}>
-                      Division Details
-                    </p>
-                    <h3 className="text-xl font-bold text-brandTextPrimary">
-                      {activeService.name}
-                    </h3>
-                  </div>
-                </div>
-
-                <hr className="border-brandBorder/60" />
-
-                <div className="space-y-3">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-brandTextMuted">
-                    Core Capabilities & Features
-                  </p>
-                  <ul className="space-y-2.5 text-sm text-brandTextMuted">
-                    {activeService.points.map((point, idx) => (
-                      <li key={idx} className="flex gap-3 items-start">
-                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: activeService.themeColor }} />
-                        <span className="leading-relaxed font-light">{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-brandBorder/40 flex gap-3">
-                  <Link
-                    to="/services"
-                    className="flex-1 text-center rounded-full bg-[var(--card-theme-color)] py-2.5 text-xs font-semibold text-black hover:brightness-110 transition-all"
-                  >
-                    Explore all details
-                  </Link>
+              <div className="space-y-4">
+                <h3 className="font-serif text-2xl font-normal text-[#4A3E37] dark:text-[#F2EDE4]">
+                  {activeService.name}
+                </h3>
+                <hr className="border-[#E0D7CC]/60" />
+                <ul className="space-y-3 text-sm text-[#88796E] dark:text-[#B8ABA0]">
+                  {activeService.points.map((pt, i) => (
+                    <li key={i} className="flex gap-2 items-start">
+                      <span className="text-[#A67C6B]">•</span>
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="pt-4 flex gap-4">
                   <Link
                     to="/contact"
-                    className="flex-1 text-center rounded-full border border-brandBorder bg-brandSurfaceSoft py-2.5 text-xs font-semibold text-brandTextPrimary hover:bg-brandSurface transition-all"
+                    className="flex-1 py-3 bg-[#4A3E37] text-white text-xs font-bold uppercase tracking-wider text-center"
                   >
-                    Get instant quote
+                    Inquire Now
                   </Link>
                 </div>
               </div>
