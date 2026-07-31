@@ -13,8 +13,8 @@ export default {
       },
       colors: {
         viyaCream: "#F2EDE4",
-        viyaTaupe: "#4A3E37",
-        viyaMuted: "#88796E",
+        viyaTaupe: "#1A1A1A",
+        viyaMuted: "#4A4A4A",
         viyaAccent: "#A67C6B",
         viyaBorder: "#E0D7CC",
         viyaCardBg: "#FFFFFF",

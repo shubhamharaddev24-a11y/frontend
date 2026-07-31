@@ -77,7 +77,7 @@ const Home = () => {
   ], []);
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] font-sans selection:bg-[#A67C6B]/20">
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] font-sans selection:bg-[#A67C6B]/20">
       {/* 1. Full-Bleed Animated Hero Carousel */}
       <AnimatedHero />
 
@@ -86,10 +86,10 @@ const Home = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column Text */}
           <div className="lg:col-span-6 space-y-6">
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#4A3E37] dark:text-[#F2EDE4] leading-tight font-normal">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] leading-tight font-normal">
               into unforgettable memories.
             </h2>
-            <div className="space-y-5 text-sm sm:text-base text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed">
+            <div className="space-y-5 text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
               <p>
                 Welcome to Shubham Media & Digital, where every image tells a heartfelt love story. We are passionate about capturing the true essence of each couple's journey, preserving their most cherished moments through timeless photography and film.
               </p>
@@ -99,7 +99,7 @@ const Home = () => {
               <p>
                 Take a glimpse into our collection of stories and see the magic unfold. Each experience is a reflection of joy, laughter, and deep emotions that make their journey extraordinary. Let us inspire you with the beautiful memories we've helped create.
               </p>
-              <p className="pt-2 italic font-serif text-[#4A3E37] dark:text-[#F2EDE4]">
+              <p className="pt-2 italic font-serif text-[#1A1A1A] dark:text-[#F2EDE4]">
                 Step into a world of storytelling through our lens, where every frame is a work of art.
               </p>
             </div>
@@ -122,13 +122,13 @@ const Home = () => {
       <section className="py-16 md:py-24 px-6 sm:px-12 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
         {/* Editorial Text Block */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <p className="text-xs sm:text-sm text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
             the vows to the laughter, weaves a story of commitment and joy.
           </p>
-          <p className="text-xs sm:text-sm text-[#88796E] dark:text-[#B8ABA0] font-light">
+          <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light">
             These are moments too precious to be forgotten.
           </p>
-          <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-[#4A3E37] dark:text-[#F2EDE4] font-medium pt-2">
+          <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-[#1A1A1A] dark:text-[#F2EDE4] font-medium pt-2">
             We ensure they live on forever, turning fleeting emotions into timeless memories.
           </h3>
         </div>
@@ -213,10 +213,10 @@ const Home = () => {
               to={card.link}
               className="bg-white dark:bg-[#221C19] p-10 sm:p-14 rounded-none border border-[#E0D7CC]/60 dark:border-[#3D342E]/60 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
             >
-              <h4 className="font-sans text-lg sm:text-xl font-medium tracking-[0.25em] text-[#4A3E37] dark:text-[#F2EDE4] uppercase group-hover:text-[#A67C6B] transition-colors">
+              <h4 className="font-sans text-lg sm:text-xl font-medium tracking-[0.25em] text-[#1A1A1A] dark:text-[#F2EDE4] uppercase group-hover:text-[#A67C6B] transition-colors">
                 {card.title}
               </h4>
-              <p className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#88796E] dark:text-[#B8ABA0] mt-3">
+              <p className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#4A4A4A] dark:text-[#B8ABA0] mt-3">
                 {card.subtitle}
               </p>
             </Link>
@@ -227,13 +227,13 @@ const Home = () => {
       {/* 6. Company Divisions & Services Showcase */}
       <section className="py-16 px-6 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#88796E] dark:text-[#B8ABA0]">
+          <p className="text-xs uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
             Full Capabilities
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#4A3E37] dark:text-[#F2EDE4] mt-2">
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#1A1A1A] dark:text-[#F2EDE4] mt-2">
             Media, Technology & Digital Divisions
           </h2>
-          <p className="text-sm text-[#88796E] dark:text-[#B8ABA0] mt-3">
+          <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] mt-3">
             From high-end wedding films and portraits to full-stack web applications, local SEO, and print designs.
           </p>
         </div>
@@ -264,29 +264,29 @@ const Home = () => {
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="bg-white dark:bg-[#221C19] border border-[#E0D7CC]/60 dark:border-[#3D342E]/60 p-8 sm:p-12 rounded-xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#88796E] dark:text-[#B8ABA0]">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
               Visit Our Studio
             </p>
-            <h3 className="font-serif text-2xl sm:text-3xl text-[#4A3E37] dark:text-[#F2EDE4]">
+            <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] dark:text-[#F2EDE4]">
               Shubham Photos Studio & Digital Center
             </h3>
-            <p className="text-sm text-[#88796E] dark:text-[#B8ABA0] leading-relaxed">
+            <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] leading-relaxed">
               Located on the main bazaar road near the bus stand, opposite Saralgaon Police Chowki, Murbad. Open daily from 9:00 AM – 8:00 PM for photography bookings, digital services, and consultations.
             </p>
-            <p className="text-sm font-medium text-[#4A3E37] dark:text-[#F2EDE4]">
+            <p className="text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
               Phone / WhatsApp: <span className="font-semibold">+91 92714 56749</span>
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-end">
             <Link
               to="/contact"
-              className="px-8 py-3.5 bg-[#4A3E37] text-white text-xs font-bold uppercase tracking-[0.2em] text-center rounded-none hover:bg-[#A67C6B] transition-colors inline-block"
+              className="px-8 py-3.5 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-[0.2em] text-center rounded-none hover:bg-[#A67C6B] transition-colors inline-block"
             >
               Book Us / Contact
             </Link>
             <a
               href="tel:9271456749"
-              className="px-8 py-3.5 border border-[#4A3E37] text-[#4A3E37] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-none hover:border-[#A67C6B] hover:text-[#A67C6B] transition-colors inline-block"
+              className="px-8 py-3.5 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-none hover:border-[#A67C6B] hover:text-[#A67C6B] transition-colors inline-block"
             >
               Call Studio
             </a>
@@ -301,21 +301,21 @@ const Home = () => {
             <div className="absolute inset-0" onClick={() => setActiveService(null)} />
             <motion.div
               layoutId={`service-card-${activeService.name}`}
-              className="relative w-full max-w-lg rounded-2xl border border-[#E0D7CC] bg-white dark:bg-[#221C19] p-8 shadow-2xl z-10 text-[#4A3E37] dark:text-[#F2EDE4]"
+              className="relative w-full max-w-lg rounded-2xl border border-[#E0D7CC] bg-white dark:bg-[#221C19] p-8 shadow-2xl z-10 text-[#1A1A1A] dark:text-[#F2EDE4]"
             >
               <button
                 onClick={() => setActiveService(null)}
-                className="absolute top-4 right-4 p-2 rounded-full hover:bg-[#FAF6F0] dark:hover:bg-[#2C2521] text-[#88796E]"
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-[#FAF6F0] dark:hover:bg-[#2C2521] text-[#4A4A4A]"
                 aria-label="Close modal"
               >
                 ✕
               </button>
               <div className="space-y-4">
-                <h3 className="font-serif text-2xl font-normal text-[#4A3E37] dark:text-[#F2EDE4]">
+                <h3 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
                   {activeService.name}
                 </h3>
                 <hr className="border-[#E0D7CC]/60" />
-                <ul className="space-y-3 text-sm text-[#88796E] dark:text-[#B8ABA0]">
+                <ul className="space-y-3 text-sm text-[#4A4A4A] dark:text-[#B8ABA0]">
                   {activeService.points.map((pt, i) => (
                     <li key={i} className="flex gap-2 items-start">
                       <span className="text-[#A67C6B]">•</span>
@@ -326,7 +326,7 @@ const Home = () => {
                 <div className="pt-4 flex gap-4">
                   <Link
                     to="/contact"
-                    className="flex-1 py-3 bg-[#4A3E37] text-white text-xs font-bold uppercase tracking-wider text-center"
+                    className="flex-1 py-3 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-wider text-center"
                   >
                     Inquire Now
                   </Link>

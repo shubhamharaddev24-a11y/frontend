@@ -65,16 +65,16 @@ const Gallery = () => {
     : images.filter((img) => img.category === activeCategory);
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
       <section className="mx-auto max-w-7xl space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#88796E] dark:text-[#B8ABA0]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
             PORTFOLIO & GALLERY
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#4A3E37] dark:text-[#F2EDE4] font-normal leading-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
             Timeless Love Stories & Visual Collections
           </h1>
-          <p className="text-sm sm:text-base text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
             A curated glimpse into our wedding films, pre-wedding couple shoots, and branding design work.
           </p>
         </div>
@@ -87,8 +87,8 @@ const Gallery = () => {
               onClick={() => setActiveCategory(cat.id)}
               className={`px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition-all ${
                 activeCategory === cat.id
-                  ? "bg-[#4A3E37] text-white dark:bg-[#F2EDE4] dark:text-[#181412]"
-                  : "bg-white/60 dark:bg-[#221C19] text-[#88796E] dark:text-[#B8ABA0] hover:text-[#4A3E37]"
+                  ? "bg-[#1A1A1A] text-white dark:bg-[#F2EDE4] dark:text-[#181412]"
+                  : "bg-white/60 dark:bg-[#221C19] text-[#4A4A4A] dark:text-[#B8ABA0] hover:text-[#1A1A1A]"
               }`}
             >
               {cat.label}

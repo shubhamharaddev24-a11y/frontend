@@ -6,8 +6,8 @@
   --light-surface: #FFFFFF;     /* Pure clean elevated cards */
   --light-surface-soft: #FAF6F0;/* Soft beige container */
   --light-border: #E0D7CC;      /* Subtle warm taupe border */
-  --light-text-primary: #4A3E37;/* Rich dark mocha/taupe text */
-  --light-text-muted: #88796E;  /* Warm muted taupe text */
+  --light-text-primary: #1A1A1A;/* Rich crisp dark black text */
+  --light-text-muted: #4A4A4A;  /* Crisp dark charcoal muted text */
   --light-accent: #A67C6B;      /* Warm dusty terracotta / rose bronze */
   --light-accent-soft: #7E5B4D; /* Darker warm terracotta for hover */
 

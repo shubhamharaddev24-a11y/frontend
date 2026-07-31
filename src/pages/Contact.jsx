@@ -30,7 +30,7 @@ const Contact = () => {
   );
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
       <section className="mx-auto max-w-5xl space-y-12">
         <motion.div
           className="text-center max-w-3xl mx-auto space-y-4"
@@ -38,13 +38,13 @@ const Contact = () => {
           animate="show"
           variants={fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#88796E] dark:text-[#B8ABA0]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
             BOOK US / GET IN TOUCH
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#4A3E37] dark:text-[#F2EDE4] font-normal leading-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
             Let's Capture Your Story or Build Your Vision
           </h1>
-          <p className="text-sm sm:text-base text-[#88796E] dark:text-[#B8ABA0] font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
             Reach out for wedding film bookings, pre-wedding couple shoots, custom web development, digital marketing, or local DTP tasks.
           </p>
         </motion.div>
@@ -57,15 +57,15 @@ const Contact = () => {
           variants={fadeUp}
         >
           <div className="space-y-6">
-            <div className="space-y-5 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#88796E] dark:text-[#B8ABA0] font-light shadow-sm">
-              <h2 className="font-serif text-xl font-normal text-[#4A3E37] dark:text-[#F2EDE4]">
+            <div className="space-y-5 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light shadow-sm">
+              <h2 className="font-serif text-xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
                 Studio & Office Details
               </h2>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C6B]">
                   Direct Call / WhatsApp
                 </p>
-                <p className="mt-1 text-sm font-medium text-[#4A3E37] dark:text-[#F2EDE4]">
+                <p className="mt-1 text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
                   +91 92714 56749
                 </p>
               </div>
@@ -82,13 +82,13 @@ const Contact = () => {
                   Working Hours
                 </p>
                 <p className="mt-1 text-sm">
-                  Open Daily: <span className="text-[#4A3E37] dark:text-[#F2EDE4]">9:00 AM – 8:00 PM</span>
+                  Open Daily: <span className="text-[#1A1A1A] dark:text-[#F2EDE4]">9:00 AM – 8:00 PM</span>
                 </p>
               </div>
               <div className="flex flex-wrap gap-3 pt-3">
                 <a
                   href="tel:9271456749"
-                  className="flex-1 text-center py-3 bg-[#4A3E37] text-white text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-[#A67C6B]"
+                  className="flex-1 text-center py-3 bg-[#1A1A1A] text-white text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-[#A67C6B]"
                 >
                   Call Direct
                 </a>
@@ -96,7 +96,7 @@ const Contact = () => {
                   href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 text-center py-3 border border-[#4A3E37] text-[#4A3E37] text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-[#A67C6B] hover:text-[#A67C6B]"
+                  className="flex-1 text-center py-3 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-[#A67C6B] hover:text-[#A67C6B]"
                 >
                   WhatsApp
                 </a>
@@ -105,14 +105,14 @@ const Contact = () => {
           </div>
 
           {/* Form */}
-          <div className="rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#88796E] dark:text-[#B8ABA0] shadow-sm">
+          <div className="rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] shadow-sm">
             {successMessage && submittedData ? (
               <div className="flex flex-col items-center justify-center text-center gap-6 py-4 w-full">
                 <div className="space-y-1">
-                  <h2 className="font-serif text-2xl text-[#4A3E37] dark:text-[#F2EDE4]">
+                  <h2 className="font-serif text-2xl text-[#1A1A1A] dark:text-[#F2EDE4]">
                     Enquiry Sent Successfully!
                   </h2>
-                  <p className="text-xs text-[#88796E] dark:text-[#B8ABA0]">
+                  <p className="text-xs text-[#4A4A4A] dark:text-[#B8ABA0]">
                     We've received your request and will contact you shortly on WhatsApp.
                   </p>
                 </div>
@@ -137,7 +137,7 @@ const Contact = () => {
               </div>
             ) : (
               <div className="w-full space-y-5">
-                <h2 className="font-serif text-2xl font-normal text-[#4A3E37] dark:text-[#F2EDE4]">
+                <h2 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
                   Send Us an Inquiry
                 </h2>
                 <form
