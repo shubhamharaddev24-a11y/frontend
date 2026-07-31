@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useContent } from "../contexts/ContentContext";
 
-const SLIDES = [
+const DEFAULT_SLIDES = [
   {
     id: 1,
     image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=2400&auto=format&fit=crop&q=85",
@@ -11,14 +12,6 @@ const SLIDES = [
     title: "Destination Pre-Weddings & Editorial Stories",
     subtitle: "Preserving raw emotions, scenic landscapes, and unforgettable moments",
   },
-  // {
-  //   id: 2,
-  //   image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=2400&auto=format&fit=crop&q=85",
-  //   objectPosition: "center 30%",
-  //   isMonochrome: true,
-  //   title: "Artistic Black & White Landscapes",
-  //   subtitle: "Creating timeless visual windows into your love story",
-  // },
   {
     id: 2,
     image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=2400&auto=format&fit=crop&q=85",
@@ -40,21 +33,27 @@ const SLIDES = [
 const AnimatedHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const reduceMotion = useReducedMotion();
+  const { getSection } = useContent();
+
+  const heroData = getSection('hero_slides', { items: DEFAULT_SLIDES });
+  const slides = (heroData.items && heroData.items.length > 0) ? heroData.items : DEFAULT_SLIDES;
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % SLIDES.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + SLIDES.length) % SLIDES.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % SLIDES.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
+
+  const currentSlide = slides[currentIndex] || slides[0] || {};
 
   return (
     <section className="relative w-full h-screen min-h-[650px] overflow-hidden bg-[#181412]">
@@ -69,11 +68,11 @@ const AnimatedHero = () => {
           className="absolute inset-0 w-full h-full"
         >
           <img
-            src={SLIDES[currentIndex].image}
-            alt={SLIDES[currentIndex].title}
-            className={`w-full h-full object-cover brightness-105 contrast-[1.02] ${SLIDES[currentIndex].isMonochrome ? "grayscale contrast-125" : ""
+            src={currentSlide.imageUrl || currentSlide.image}
+            alt={currentSlide.title || "Shubham Media"}
+            className={`w-full h-full object-cover brightness-105 contrast-[1.02] ${currentSlide.isMonochrome ? "grayscale contrast-125" : ""
               }`}
-            style={{ objectPosition: SLIDES[currentIndex].objectPosition || "center 20%" }}
+            style={{ objectPosition: currentSlide.objectPosition || "center 20%" }}
           />
           {/* Soft luxury gradient overlay - bright and luminous */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
@@ -102,9 +101,9 @@ const AnimatedHero = () => {
 
       {/* Bottom Slider Dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-        {SLIDES.map((slide, idx) => (
+        {slides.map((slide, idx) => (
           <button
-            key={slide.id}
+            key={slide.id || idx}
             onClick={() => setCurrentIndex(idx)}
             className={`h-1.5 rounded-full transition-all duration-500 ${idx === currentIndex ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/70"
               }`}

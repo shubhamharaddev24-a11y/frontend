@@ -1,68 +1,71 @@
 import React, { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useContent } from "../contexts/ContentContext";
 
 const categories = [
   { id: "all", label: "ALL WORK" },
-  { id: "weddings", label: "WEDDING FILMS & MOMENTS" },
+  { id: "wedding", label: "WEDDING FILMS & MOMENTS" },
   { id: "prewedding", label: "PRE-WEDDING & PORTRAITS" },
-  { id: "banners", label: "BRANDING & DESIGN" },
+  { id: "graphic", label: "BRANDING & DESIGN" },
+  { id: "development", label: "WEB DEVELOPMENT" },
 ];
 
-const images = [
+const DEFAULT_IMAGES = [
   {
-    category: "weddings",
-    src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1200&auto=format&fit=crop&q=85",
-    alt: "Grand Indian wedding mandap ceremony.",
+    category: "wedding",
+    imageUrl: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1200&auto=format&fit=crop&q=85",
+    title: "Grand Indian wedding mandap ceremony.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
-    category: "weddings",
-    src: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1200&auto=format&fit=crop&q=85",
-    alt: "Bride getting ready in traditional gold attire & saree.",
+    category: "wedding",
+    imageUrl: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1200&auto=format&fit=crop&q=85",
+    title: "Bride getting ready in traditional gold attire & saree.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
-    category: "weddings",
-    src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&q=85",
-    alt: "Evening wedding rituals under golden festive lights.",
-  },
-  {
-    category: "prewedding",
-    src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&auto=format&fit=crop&q=85",
-    alt: "Sunset pre-wedding shoot by open fields.",
-  },
-  {
-    category: "prewedding",
-    src: "https://images.unsplash.com/photo-1525286116112-b59af11adad1?w=1200&auto=format&fit=crop&q=85",
-    alt: "Candid couple walk in natural landscape.",
+    category: "wedding",
+    imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&q=85",
+    title: "Evening wedding rituals under golden festive lights.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
     category: "prewedding",
-    src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&auto=format&fit=crop&q=85",
-    alt: "Outdoor celebration & candid couple portrait.",
+    imageUrl: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&auto=format&fit=crop&q=85",
+    title: "Sunset pre-wedding shoot by open fields.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
-    category: "banners",
-    src: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&auto=format&fit=crop&q=85",
-    alt: "Colourful flex banners for local events & political branding.",
+    category: "prewedding",
+    imageUrl: "https://images.unsplash.com/photo-1525286116112-b59af11adad1?w=1200&auto=format&fit=crop&q=85",
+    title: "Candid couple walk in natural landscape.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
-    category: "banners",
-    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=85",
-    alt: "Digital web application dashboard & brand identity.",
-  },
-  {
-    category: "banners",
-    src: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=1200&auto=format&fit=crop&q=85",
-    alt: "Cinematic portrait & photography studio work.",
+    category: "graphic",
+    imageUrl: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&auto=format&fit=crop&q=85",
+    title: "Colourful flex banners for local events & political branding.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
 ];
 
 const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const reduceMotion = useReducedMotion();
+  const { getSection, formatImageUrl } = useContent();
+
+  const cmsData = getSection("portfolio_items", { items: DEFAULT_IMAGES });
+  const allImages = (cmsData.items && cmsData.items.length > 0) ? cmsData.items : DEFAULT_IMAGES;
 
   const filteredImages = activeCategory === "all"
-    ? images
-    : images.filter((img) => img.category === activeCategory);
+    ? allImages
+    : allImages.filter((img) => img.category === activeCategory || (activeCategory === "wedding" && img.category === "weddings"));
 
   return (
     <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
@@ -104,20 +107,21 @@ const Gallery = () => {
           {filteredImages.map((img, idx) => (
             <motion.div
               layout
-              key={img.src}
+              key={img.id || img.imageUrl || img.src || idx}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
               className="group relative overflow-hidden bg-white dark:bg-[#221C19] aspect-[4/5] shadow-sm hover:shadow-md"
             >
               <img
-                src={img.src}
-                alt={img.alt}
-                className="h-full w-full object-cover object-[center_20%] transition-transform duration-700 group-hover:scale-105"
+                src={formatImageUrl(img.imageUrl || img.src)}
+                alt={img.title || img.alt || "Portfolio image"}
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                style={{ objectPosition: img.objectPosition || "center 20%" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                 <p className="text-xs text-white/90 font-serif leading-snug">
-                  {img.alt}
+                  {img.title || img.alt}
                 </p>
               </div>
             </motion.div>

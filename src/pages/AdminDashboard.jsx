@@ -15,7 +15,8 @@ import {
   FileCode,
   PlusCircle,
   Paperclip,
-  ExternalLink
+  ExternalLink,
+  Sliders
 } from "lucide-react";
 import { 
   bookingService, 
@@ -23,6 +24,7 @@ import {
   authService,
   taskService
 } from "../services";
+import AdminCMSManager from "../components/AdminCMSManager";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("bookings"); // bookings, leads, staff, or tasks
@@ -472,16 +474,29 @@ const AdminDashboard = () => {
             Website Tasks ({tasks.length})
           </button>
           {isAdmin && (
-            <button
-              onClick={() => setActiveTab("staff")}
-              className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${
-                activeTab === "staff" 
-                  ? "border-b-2 border-brandAccent text-brandAccent" 
-                  : "text-brandTextMuted hover:text-brandTextPrimary"
-              }`}
-            >
-              Staff Directory ({staff.length})
-            </button>
+            <>
+              <button
+                onClick={() => setActiveTab("staff")}
+                className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${
+                  activeTab === "staff" 
+                    ? "border-b-2 border-brandAccent text-brandAccent" 
+                    : "text-brandTextMuted hover:text-brandTextPrimary"
+                }`}
+              >
+                Staff Directory ({staff.length})
+              </button>
+              <button
+                onClick={() => setActiveTab("cms")}
+                className={`pb-2 text-sm font-semibold tracking-wider transition-colors flex items-center gap-1.5 ${
+                  activeTab === "cms" 
+                    ? "border-b-2 border-brandAccent text-brandAccent" 
+                    : "text-brandTextMuted hover:text-brandTextPrimary"
+                }`}
+              >
+                <Sliders size={15} />
+                <span>Website CMS & Media</span>
+              </button>
+            </>
           )}
         </div>
 
@@ -491,6 +506,9 @@ const AdminDashboard = () => {
             <div className="py-12 text-center text-brandTextMuted">
               Loading dashboard details...
             </div>
+          ) : activeTab === "cms" ? (
+            /* Master CMS Tab */
+            <AdminCMSManager />
           ) : activeTab === "bookings" ? (
             /* Bookings Tab */
             <div className="overflow-x-auto">
