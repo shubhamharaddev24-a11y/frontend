@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import MouseGlowCard from "./MouseGlowCard";
 
-const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeColor, shadowColor, onClick }) => {
+const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeColor, shadowColor, onClick, reveal }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.12 });
   const activeReveal = reveal !== undefined ? reveal : isInView;
@@ -102,7 +102,7 @@ const AnimatedServiceCard = ({ name, points, index, mainIcon: MainIcon, themeCol
             <ArrowRight size={13} className="transform transition-transform duration-300 group-hover:translate-x-1" />
           </span>
         </div>
-      </div>
+      </MouseGlowCard>
     </motion.div>
   );
 };
