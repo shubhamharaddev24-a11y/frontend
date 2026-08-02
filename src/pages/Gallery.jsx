@@ -6,6 +6,7 @@ const categories = [
   { id: "all", label: "ALL WORK" },
   { id: "wedding", label: "WEDDING FILMS & MOMENTS" },
   { id: "prewedding", label: "PRE-WEDDING & PORTRAITS" },
+  { id: "banner", label: "FLEX & EVENT BANNERS" },
   { id: "graphic", label: "BRANDING & DESIGN" },
   { id: "development", label: "WEB DEVELOPMENT" },
 ];
@@ -47,7 +48,7 @@ const DEFAULT_IMAGES = [
     objectPosition: "center 20%",
   },
   {
-    category: "graphic",
+    category: "banner",
     imageUrl: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&auto=format&fit=crop&q=85",
     title: "Colourful flex banners for local events & political branding.",
     aspectRatio: "4/5",
@@ -65,7 +66,11 @@ const Gallery = () => {
 
   const filteredImages = activeCategory === "all"
     ? allImages
-    : allImages.filter((img) => img.category === activeCategory || (activeCategory === "wedding" && img.category === "weddings"));
+    : allImages.filter((img) => 
+        img.category === activeCategory || 
+        (activeCategory === "wedding" && img.category === "weddings") ||
+        (activeCategory === "banner" && (img.category === "banners" || img.category === "banner"))
+      );
 
   return (
     <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
@@ -100,33 +105,32 @@ const Gallery = () => {
         </div>
 
         {/* Masonry / Grid */}
-        <motion.div
-          layout
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredImages.map((img, idx) => (
-            <motion.div
-              layout
+            <div
               key={img.id || img.imageUrl || img.src || idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="group relative overflow-hidden bg-white dark:bg-[#221C19] aspect-[4/5] shadow-sm hover:shadow-md"
+              className="group relative overflow-hidden bg-white dark:bg-[#221C19] aspect-[4/5] shadow-sm hover:shadow-md rounded-xl transition-all duration-300 transform-gpu"
+              style={{
+                contentVisibility: "auto",
+                containIntrinsicSize: "300px 400px",
+              }}
             >
               <img
                 src={formatImageUrl(img.imageUrl || img.src)}
                 alt={img.title || img.alt || "Portfolio image"}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 style={{ objectPosition: img.objectPosition || "center 20%" }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 pointer-events-none">
                 <p className="text-xs text-white/90 font-serif leading-snug">
                   {img.title || img.alt}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </section>
     </div>
   );

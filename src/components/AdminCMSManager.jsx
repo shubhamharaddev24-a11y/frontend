@@ -435,8 +435,9 @@ const AdminCMSManager = () => {
                         >
                           <option value="wedding">Wedding Films</option>
                           <option value="prewedding">Pre-Wedding Shoots</option>
-                          <option value="development">Web Development</option>
+                          <option value="banner">Flex & Event Banners</option>
                           <option value="graphic">Graphic Design</option>
+                          <option value="development">Web Development</option>
                         </select>
                       </div>
                     )}
