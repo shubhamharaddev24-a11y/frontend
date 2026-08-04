@@ -151,7 +151,7 @@ const AppContent = () => {
       <div className="flex min-h-screen flex-col bg-brandBg text-brandTextPrimary">
         <Starfield />
         <Header />
-        <main className="flex-1 pt-20">
+        <main className="flex-1">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />

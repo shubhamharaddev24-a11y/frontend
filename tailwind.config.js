@@ -6,11 +6,19 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        serif: ["'Cormorant Garamond'", "Georgia", "serif"],
+        sans: ["'Plus Jakarta Sans'", "system-ui", "sans-serif"],
+        script: ["'Alex Brush'", "cursive"],
+      },
       colors: {
-        // Legacy colors (still usable if needed)
-        cream: "#fef7ed",
-        warmBrown: "#78350f",
-        studioOrange: "#ea580c",
+        viyaCream: "#F2EDE4",
+        viyaTaupe: "#1A1A1A",
+        viyaMuted: "#4A4A4A",
+        viyaAccent: "#A67C6B",
+        viyaBorder: "#E0D7CC",
+        viyaCardBg: "#FFFFFF",
+        viyaSurfaceSoft: "#FAF6F0",
 
         // Theme-aware brand system (driven by CSS variables in `src/styles/themes.css`)
         brandBg: "var(--bg-primary)",

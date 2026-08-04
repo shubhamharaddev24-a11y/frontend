@@ -1,41 +1,41 @@
-/* Light and Dark Theme Variables */
+/* Light and Dark Theme Variables - Viya Films Style */
 
 :root {
-  /* Light theme colors */
-  --light-bg: #ffffff;
-  --light-surface: #f7f7f8;
-  --light-surface-soft: #efeff1;
-  --light-border: #d8d8de;
-  --light-text-primary: #111113;
-  --light-text-muted: #5b5b64;
-  --light-accent: #ff7a18;       /* warm orange */
-  --light-accent-soft: #c24f00;  /* darker orange for hover */
+  /* Viya Luxury Light Theme (Default) */
+  --light-bg: #F2EDE4;          /* Warm luxury eggshell cream background */
+  --light-surface: #FFFFFF;     /* Pure clean elevated cards */
+  --light-surface-soft: #FAF6F0;/* Soft beige container */
+  --light-border: #E0D7CC;      /* Subtle warm taupe border */
+  --light-text-primary: #1A1A1A;/* Rich crisp dark black text */
+  --light-text-muted: #4A4A4A;  /* Crisp dark charcoal muted text */
+  --light-accent: #A67C6B;      /* Warm dusty terracotta / rose bronze */
+  --light-accent-soft: #7E5B4D; /* Darker warm terracotta for hover */
 
-  /* Dark luxury theme colors */
-  --dark-bg: #070708;
-  --dark-surface: #0f0f11;
-  --dark-surface-soft: #17171a;
-  --dark-border: #2a2a2f;
-  --dark-text-primary: #f7f7f8;
-  --dark-text-muted: #b0b0b7;
-  --dark-accent: #ff7a18;        /* warm orange */
-  --dark-accent-soft: #ffb26a;   /* soft highlight */
+  /* Luxury Dark Espresso Theme */
+  --dark-bg: #181412;
+  --dark-surface: #221C19;
+  --dark-surface-soft: #2C2521;
+  --dark-border: #3D342E;
+  --dark-text-primary: #F2EDE4;
+  --dark-text-muted: #B8ABA0;
+  --dark-accent: #D4A594;
+  --dark-accent-soft: #EABDAE;
 
-  /* Defaults (before JS/theme class runs): start in dark */
-  --bg-primary: var(--dark-bg);
-  --bg-surface: var(--dark-surface);
-  --bg-surface-soft: var(--dark-surface-soft);
-  --bg-border: var(--dark-border);
-  --text-primary: var(--dark-text-primary);
-  --text-muted: var(--dark-text-muted);
-  --text-accent: var(--dark-accent);
-  --text-accent-soft: var(--dark-accent-soft);
+  /* Defaults: start in Viya Light luxury cream theme */
+  --bg-primary: var(--light-bg);
+  --bg-surface: var(--light-surface);
+  --bg-surface-soft: var(--light-surface-soft);
+  --bg-border: var(--light-border);
+  --text-primary: var(--light-text-primary);
+  --text-muted: var(--light-text-muted);
+  --text-accent: var(--light-accent);
+  --text-accent-soft: var(--light-accent-soft);
 
-  /* Header variables default (dark) */
-  --header-bg-scrolled: rgba(7, 7, 8, 0.92);
-  --header-bg-top: rgba(7, 7, 8, 0.35);
-  --header-border-scrolled: rgba(42, 42, 47, 0.9);
-  --header-border-top: rgba(255, 255, 255, 0.06);
+  /* Header variables default (light cream) */
+  --header-bg-scrolled: rgba(242, 237, 228, 0.94);
+  --header-bg-top: rgba(242, 237, 228, 0.4);
+  --header-border-scrolled: rgba(224, 215, 204, 0.8);
+  --header-border-top: rgba(74, 62, 55, 0.08);
 }
 
 /* Light theme */
@@ -50,10 +50,10 @@
   --text-accent-soft: var(--light-accent-soft);
 
   /* Header variables for light theme */
-  --header-bg-scrolled: rgba(255, 255, 255, 0.92);
-  --header-bg-top: rgba(255, 255, 255, 0.35);
-  --header-border-scrolled: rgba(216, 216, 222, 0.9);
-  --header-border-top: rgba(0, 0, 0, 0.06);
+  --header-bg-scrolled: rgba(242, 237, 228, 0.94);
+  --header-bg-top: rgba(242, 237, 228, 0.4);
+  --header-border-scrolled: rgba(224, 215, 204, 0.8);
+  --header-border-top: rgba(74, 62, 55, 0.08);
   
   color-scheme: light;
 }
@@ -70,10 +70,10 @@
   --text-accent-soft: var(--dark-accent-soft);
 
   /* Header variables for dark theme */
-  --header-bg-scrolled: rgba(7, 7, 8, 0.92);
-  --header-bg-top: rgba(7, 7, 8, 0.35);
-  --header-border-scrolled: rgba(42, 42, 47, 0.9);
-  --header-border-top: rgba(255, 255, 255, 0.06);
+  --header-bg-scrolled: rgba(24, 20, 18, 0.94);
+  --header-bg-top: rgba(24, 20, 18, 0.4);
+  --header-border-scrolled: rgba(61, 52, 46, 0.8);
+  --header-border-top: rgba(242, 237, 228, 0.08);
   
   color-scheme: dark;
 }

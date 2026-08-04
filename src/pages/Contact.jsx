@@ -30,107 +30,98 @@ const Contact = () => {
   );
 
   return (
-    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+      <section className="mx-auto max-w-5xl space-y-12">
         <motion.div
-          className="mb-8 space-y-3 sm:mb-10"
+          className="text-center max-w-3xl mx-auto space-y-4"
           initial={reduceMotion ? "show" : "hidden"}
           animate="show"
           variants={fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            Contact Us
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+            BOOK US / GET IN TOUCH
           </p>
-          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            Visit, call or message Shubham Media & Digital Services.
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
+            Let's Capture Your Story or Build Your Vision
           </h1>
-          <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
-            We are happy to talk about weddings, albums, custom websites, digital marketing, or local DTP tasks. 
-            Calls and messages are answered by our core team directly.
+          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+            Reach out for wedding film bookings, pre-wedding couple shoots, custom web development, digital marketing, or local DTP tasks.
           </p>
         </motion.div>
 
         <motion.div
-          className="grid gap-6 md:grid-cols-[1.15fr,1.4fr]"
+          className="grid gap-8 md:grid-cols-[1.1fr,1.4fr]"
           initial={reduceMotion ? "show" : "hidden"}
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeUp}
         >
           <div className="space-y-6">
-            <div className="space-y-4 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted">
-              <h2 className="text-sm font-semibold text-brandTextPrimary">
-                Office & Studio contact details
+            <div className="space-y-5 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light shadow-sm">
+              <h2 className="font-serif text-xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+                Studio & Office Details
               </h2>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brandTextMuted">
-                  Phone
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C6B]">
+                  Direct Call / WhatsApp
                 </p>
-                <p className="mt-1 text-sm text-brandTextPrimary">
+                <p className="mt-1 text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
                   +91 92714 56749
                 </p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brandTextMuted">
-                  WhatsApp
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C6B]">
+                  Studio Address
                 </p>
-                <p className="mt-1 text-sm text-brandTextPrimary">
-                  +91 92714 56749
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brandTextMuted">
-                  Office & Studio address
-                </p>
-                <p className="mt-1 text-sm">
-                  Main bazaar road near bus stand, close to police chowki, saralgaon, murbad.
-                  Our physical photography division (Shubham Photos Studio) is on the 1st floor with clear signage.
+                <p className="mt-1 text-sm leading-relaxed">
+                  Main bazaar road near bus stand, opposite Saralgaon Police Chowki, Murbad.
                 </p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brandTextMuted">
-                  Working hours
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C6B]">
+                  Working Hours
                 </p>
                 <p className="mt-1 text-sm">
-                  Every day: <span className="text-brandTextPrimary">9:00 AM – 8:00 PM</span>
+                  Open Daily: <span className="text-[#1A1A1A] dark:text-[#F2EDE4]">9:00 AM – 8:00 PM</span>
                 </p>
               </div>
-              <div className="flex flex-wrap gap-3 pt-2 text-xs">
+              <div className="flex flex-wrap gap-3 pt-3">
                 <a
                   href="tel:9271456749"
-                  className="inline-flex flex-1 items-center justify-center rounded-full bg-brandAccent px-5 py-2 font-semibold text-white shadow-md shadow-brandAccent/30 hover:bg-brandAccentSoft"
+                  className="flex-1 text-center py-3 bg-[#1A1A1A] text-white text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-[#A67C6B]"
                 >
-                  Call Now
+                  Call Direct
                 </a>
                 <a
                   href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex flex-1 items-center justify-center rounded-full border border-brandAccent/60 bg-brandSurface px-5 py-2 font-semibold text-brandAccent hover:bg-brandSurfaceSoft"
+                  className="flex-1 text-center py-3 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-[#A67C6B] hover:text-[#A67C6B]"
                 >
-                  WhatsApp Us
+                  WhatsApp
                 </a>
               </div>
             </div>
           </div>
-          {/* Enquiry / booking form or Success Envelope */}
-          <div className="rounded-2xl border border-brandBorder bg-brandSurface p-6 text-sm text-brandTextMuted flex flex-col justify-start items-stretch min-h-[350px] self-start w-full">
+
+          {/* Form */}
+          <div className="rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] shadow-sm">
             {successMessage && submittedData ? (
               <div className="flex flex-col items-center justify-center text-center gap-6 py-4 w-full">
                 <div className="space-y-1">
-                  <h2 className="text-lg font-bold text-brandTextPrimary">
+                  <h2 className="font-serif text-2xl text-[#1A1A1A] dark:text-[#F2EDE4]">
                     Enquiry Sent Successfully!
                   </h2>
-                  <p className="text-xs text-brandTextMuted max-w-sm">
-                    Thank you! We've prepared a digital receipt envelope for you. Hover or tap to open it.
+                  <p className="text-xs text-[#4A4A4A] dark:text-[#B8ABA0]">
+                    We've received your request and will contact you shortly on WhatsApp.
                   </p>
                 </div>
                 
                 <EnvelopeCard
                   title="Thank You!"
-                  subtitle={`Hi ${submittedData.name}, we have received your request for ${submittedData.service} and will contact you on WhatsApp soon!`}
+                  subtitle={`Hi ${submittedData.name}, we have received your request for ${submittedData.service}!`}
                   body={`Mobile: +91 ${submittedData.phone}`}
-                  signature="SHUBHAM AGENCY"
+                  signature="SHUBHAM MEDIA"
                   useLogoSeal={true}
                 />
 
@@ -139,29 +130,25 @@ const Contact = () => {
                     setSuccessMessage("");
                     setSubmittedData(null);
                   }}
-                  className="mt-4 text-xs font-semibold text-brandAccent hover:text-brandAccentSoft underline"
+                  className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#A67C6B] underline"
                 >
                   Send another enquiry
                 </button>
               </div>
             ) : (
-              <div className="w-full space-y-4">
-                <h2 className="text-sm font-semibold text-brandTextPrimary">
-                  Booking & enquiry form
+              <div className="w-full space-y-5">
+                <h2 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+                  Send Us an Inquiry
                 </h2>
-                <p className="text-xs text-brandTextMuted">
-                  Share a few details and we will respond on call or WhatsApp with
-                  availability and pricing.
-                </p>
                 <form
-                  className="space-y-3"
+                  className="space-y-4"
                   onSubmit={async (e) => {
                     e.preventDefault();
                     setError("");
                     setSuccessMessage("");
                     
                     if (!form.name.trim() || !form.phone.trim()) {
-                      setError("Please fill your name and mobile number so we can contact you.");
+                      setError("Please fill your name and mobile number.");
                       return;
                     }
 
@@ -183,7 +170,7 @@ const Contact = () => {
                       setSubmittedData({
                         name: form.name,
                         phone: form.phone,
-                        service: form.service || "our agency services"
+                        service: form.service || "our services"
                       });
                       setSuccessMessage("Thank you for your enquiry!");
                       setForm({
@@ -194,11 +181,9 @@ const Contact = () => {
                         message: "",
                       });
                       
-                      // Also open WhatsApp as backup
                       const base = "https://wa.me/919271456749?text=";
                       const lines = [
-                        "New enquiry from Shubham Media & Digital Services website:",
-                        "",
+                        "New enquiry from Shubham Media website:",
                         `Name: ${form.name}`,
                         `Mobile: ${form.phone}`,
                         form.service ? `Interested in: ${form.service}` : "",
@@ -212,34 +197,35 @@ const Contact = () => {
                         window.open(url, "_blank");
                       }
                     } catch (err) {
-                      setError("Failed to submit enquiry. Please try again or contact us directly.");
-                      console.error('Lead submission error:', err);
+                      setError("Failed to submit enquiry. Please contact us directly.");
                     } finally {
                       setIsSubmitting(false);
                     }
                   }}
                 >
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="coolinput w-full">
-                      <label className="text">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
                         Your name *
                       </label>
                       <input
                         type="text"
-                        className="input"
+                        required
+                        className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
                         value={form.name}
                         onChange={(e) =>
                           setForm((f) => ({ ...f, name: e.target.value }))
                         }
                       />
                     </div>
-                    <div className="coolinput w-full">
-                      <label className="text">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
                         Mobile number *
                       </label>
                       <input
                         type="tel"
-                        className="input"
+                        required
+                        className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
                         value={form.phone}
                         onChange={(e) =>
                           setForm((f) => ({ ...f, phone: e.target.value }))
@@ -247,12 +233,12 @@ const Contact = () => {
                       />
                     </div>
                   </div>
-                  <div className="coolinput w-full">
-                    <label className="text">
-                      What do you want to book?
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
+                      Service interested in
                     </label>
                     <select
-                      className="input"
+                      className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
                       value={form.service}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, service: e.target.value }))
@@ -265,76 +251,53 @@ const Contact = () => {
                       <option>Digital Marketing & SEO Setup</option>
                       <option>Banners, cards & graphic branding</option>
                       <option>DTP, biodata & document services</option>
-                      <option>Other agency services</option>
                     </select>
                   </div>
-                  <div className="coolinput w-full">
-                    <label className="text">
-                      Preferred date (optional)
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
+                      Preferred Date
                     </label>
                     <input
                       type="date"
-                      className="input"
+                      className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
                       value={form.date}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, date: e.target.value }))
                       }
                     />
                   </div>
-                  <div className="coolinput w-full">
-                    <label className="text">
-                      Anything else we should know?
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
+                      Message
                     </label>
                     <textarea
                       rows={3}
-                      className="input"
+                      className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
                       value={form.message}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, message: e.target.value }))
                       }
-                      placeholder="Example: village name, number of days, timing, or special requirement."
+                      placeholder="Details about your event or project..."
                     />
                   </div>
                   {error && (
-                    <p className="text-xs font-medium text-amber-300">{error}</p>
+                    <p className="text-xs text-red-500">{error}</p>
                   )}
-                  <motion.button
+                  <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-brandAccent px-5 py-2.5 text-sm font-semibold text-black shadow-md shadow-brandAccent/40 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                    whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+                    className="w-full py-3.5 bg-[#4A3E37] text-white text-xs font-semibold uppercase tracking-[0.2em] transition-colors hover:bg-[#A67C6B] disabled:opacity-50"
                   >
-                    {isSubmitting ? "Submitting..." : "Send enquiry on WhatsApp"}
-                  </motion.button>
+                    {isSubmitting ? "Submitting..." : "Send Inquiry"}
+                  </button>
                 </form>
               </div>
             )}
           </div>
         </motion.div>
 
-        {/* Connect on Social Media Card */}
-        <motion.div
-          className="mt-6 flex justify-center"
-          initial={reduceMotion ? "show" : "hidden"}
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={fadeUp}
-        >
-          <div className="w-full max-w-xl rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted flex flex-col items-center justify-center gap-5">
-            <div className="w-full text-center">
-              <h2 className="text-sm font-semibold text-brandTextPrimary">
-                Connect on Social Media
-              </h2>
-              <p className="text-xs text-brandTextMuted mt-1 leading-relaxed">
-                Hover or tap the shutter below to reveal our physical and digital social presence.
-              </p>
-            </div>
-            <SocialFollowCard />
-          </div>
-        </motion.div>
-
-        {/* Map below on its own row for clarity */}
-        <div className="mt-8 overflow-hidden rounded-2xl border border-brandBorder bg-brandSurface">
+        {/* Map */}
+        <div className="overflow-hidden border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19]">
           <iframe
             title="Shubham Photos Studio map"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d231.69221193805333!2d73.49234646000684!3d19.28593803191094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdd6354ef9e4943%3A0xcf202aae594562d2!2sShubham%20photos%20studio%20%26%20printing%20press!5e1!3m2!1sen!2sin!4v1771245383413!5m2!1sen!2sin"
