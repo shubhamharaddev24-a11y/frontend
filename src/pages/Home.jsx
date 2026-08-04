@@ -7,6 +7,7 @@ import RevealOnScroll from "../components/RevealOnScroll";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
 import AnimatedServiceCard from "../components/AnimatedServiceCard";
+import { useContent } from "../contexts/ContentContext";
 import {
   Code,
   TrendingUp,
@@ -22,6 +23,7 @@ const Home = () => {
   const variants = useMotionVariants();
   const gridRef = useRef(null);
   const isGridInView = useInView(gridRef, { once: true, amount: 0.15 });
+  const { getSection, formatImageUrl } = useContent();
 
   const servicesList = useMemo(() => [
     {
@@ -139,37 +141,48 @@ const Home = () => {
         </div>
 
         {/* 3 Vertical Portrait Grid (Matching Viya Films couple portrait set) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {[
+        {(() => {
+          const defaultPortraits = [
             {
-              url: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1000&auto=format&fit=crop&q=85",
-              pos: "center 25%",
-              alt: "Groom and bride standing together at sunset"
+              imageUrl: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1000&auto=format&fit=crop&q=85",
+              objectPosition: "center 25%",
+              title: "Groom and bride standing together at sunset"
             },
             {
-              url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1000&auto=format&fit=crop&q=85",
-              pos: "center 20%",
-              alt: "Candid playful close portrait of couple laughing"
+              imageUrl: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1000&auto=format&fit=crop&q=85",
+              objectPosition: "center 20%",
+              title: "Candid playful close portrait of couple laughing"
             },
             {
-              url: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1000&auto=format&fit=crop&q=85",
-              pos: "center 20%",
-              alt: "Romantic couple embrace portrait at golden hour"
+              imageUrl: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1000&auto=format&fit=crop&q=85",
+              objectPosition: "center 20%",
+              title: "Romantic couple embrace portrait at golden hour"
             }
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="overflow-hidden rounded-lg shadow-md aspect-[3/4] group bg-[#FAF6F0] dark:bg-[#221C19]"
-            >
-              <img
-                src={item.url}
-                alt={item.alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                style={{ objectPosition: item.pos }}
-              />
+          ];
+
+          const showcaseData = getSection("home_showcase_portraits", { items: defaultPortraits });
+          const showcaseItems = (showcaseData.items && showcaseData.items.length > 0)
+            ? showcaseData.items
+            : defaultPortraits;
+
+          return (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+              {showcaseItems.slice(0, 3).map((item, idx) => (
+                <div
+                  key={item.id || item.imageUrl || idx}
+                  className="overflow-hidden rounded-lg shadow-md aspect-[3/4] group bg-[#FAF6F0] dark:bg-[#221C19]"
+                >
+                  <img
+                    src={formatImageUrl(item.imageUrl || item.url)}
+                    alt={item.title || item.alt || "Feature Portrait"}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ objectPosition: item.objectPosition || item.pos || "center 20%" }}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          );
+        })()}
       </section>
 
       {/* 4. Full-Width B&W Banner with Centered Quote Overlay (Matching Viya Films screenshot) */}

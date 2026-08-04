@@ -140,6 +140,31 @@ const DEFAULT_STUDIO = {
   },
 };
 
+const DEFAULT_SHOWCASE_PORTRAITS = {
+  sectionKey: 'home_showcase_portraits',
+  title: 'Home Showcase Portrait Cards (3 Cards)',
+  items: [
+    {
+      id: 'showcase-1',
+      title: 'Sunset Pre-Wedding Couple',
+      imageUrl: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1000&auto=format&fit=crop&q=85',
+      objectPosition: 'center 25%',
+    },
+    {
+      id: 'showcase-2',
+      title: 'Candid Playful Couple Portrait',
+      imageUrl: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1000&auto=format&fit=crop&q=85',
+      objectPosition: 'center 20%',
+    },
+    {
+      id: 'showcase-3',
+      title: 'Romantic Couple Embrace at Golden Hour',
+      imageUrl: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1000&auto=format&fit=crop&q=85',
+      objectPosition: 'center 20%',
+    },
+  ],
+};
+
 const AdminCMSManager = () => {
   const [activeSectionKey, setActiveSectionKey] = useState('hero_slides');
   const [currentSection, setCurrentSection] = useState(DEFAULT_HERO);
@@ -162,6 +187,7 @@ const AdminCMSManager = () => {
     if (key === 'portfolio_items') defaultSection = DEFAULT_PORTFOLIO;
     else if (key === 'testimonials') defaultSection = DEFAULT_TESTIMONIALS;
     else if (key === 'studio_info') defaultSection = DEFAULT_STUDIO;
+    else if (key === 'home_showcase_portraits') defaultSection = DEFAULT_SHOWCASE_PORTRAITS;
 
     try {
       const res = await contentService.getSectionByKey(key);
@@ -292,9 +318,10 @@ const AdminCMSManager = () => {
       <div className="flex flex-wrap gap-2 border-b border-brandBorder pb-3">
         {[
           { key: 'hero_slides', label: '1. Home Hero Slides' },
-          { key: 'portfolio_items', label: '2. Portfolio & Gallery' },
-          { key: 'testimonials', label: '3. Customer Stories' },
-          { key: 'studio_info', label: '4. Studio Address & Info' },
+          { key: 'home_showcase_portraits', label: '2. Home Feature Portraits (3 Cards)' },
+          { key: 'portfolio_items', label: '3. Portfolio & Gallery' },
+          { key: 'testimonials', label: '4. Customer Stories' },
+          { key: 'studio_info', label: '5. Studio Address & Info' },
         ].map((tab) => (
           <button
             key={tab.key}

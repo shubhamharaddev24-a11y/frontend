@@ -7,8 +7,8 @@ const categories = [
   { id: "wedding", label: "WEDDING FILMS & MOMENTS" },
   { id: "prewedding", label: "PRE-WEDDING & PORTRAITS" },
   { id: "banner", label: "FLEX & EVENT BANNERS" },
-  { id: "graphic", label: "BRANDING & DESIGN" },
-  { id: "development", label: "WEB DEVELOPMENT" },
+  // { id: "graphic", label: "BRANDING & DESIGN" },
+  // { id: "development", label: "WEB DEVELOPMENT" },
 ];
 
 const DEFAULT_IMAGES = [
@@ -66,11 +66,11 @@ const Gallery = () => {
 
   const filteredImages = activeCategory === "all"
     ? allImages
-    : allImages.filter((img) => 
-        img.category === activeCategory || 
-        (activeCategory === "wedding" && img.category === "weddings") ||
-        (activeCategory === "banner" && (img.category === "banners" || img.category === "banner"))
-      );
+    : allImages.filter((img) =>
+      img.category === activeCategory ||
+      (activeCategory === "wedding" && img.category === "weddings") ||
+      (activeCategory === "banner" && (img.category === "banners" || img.category === "banner"))
+    );
 
   return (
     <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
@@ -93,11 +93,10 @@ const Gallery = () => {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition-all ${
-                activeCategory === cat.id
+              className={`px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition-all ${activeCategory === cat.id
                   ? "bg-[#1A1A1A] text-white dark:bg-[#F2EDE4] dark:text-[#181412]"
                   : "bg-white/60 dark:bg-[#221C19] text-[#4A4A4A] dark:text-[#B8ABA0] hover:text-[#1A1A1A]"
-              }`}
+                }`}
             >
               {cat.label}
             </button>
