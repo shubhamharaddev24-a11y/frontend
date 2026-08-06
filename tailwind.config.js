@@ -12,13 +12,13 @@ export default {
         script: ["'Alex Brush'", "cursive"],
       },
       colors: {
-        viyaCream: "#F2EDE4",
-        viyaTaupe: "#1A1A1A",
-        viyaMuted: "#4A4A4A",
-        viyaAccent: "#A67C6B",
-        viyaBorder: "#E0D7CC",
-        viyaCardBg: "#FFFFFF",
-        viyaSurfaceSoft: "#FAF6F0",
+        sphCream: "#F2EDE4",
+        sphTaupe: "#1A1A1A",
+        sphMuted: "#4A4A4A",
+        sphAccent: "#A67C6B",
+        sphBorder: "#E0D7CC",
+        sphCardBg: "#FFFFFF",
+        sphSurfaceSoft: "#FAF6F0",
 
         // Theme-aware brand system (driven by CSS variables in `src/styles/themes.css`)
         brandBg: "var(--bg-primary)",

@@ -94,20 +94,20 @@ const Home = () => {
           {/* Left Column Text */}
           <div className="lg:col-span-6 space-y-6">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] leading-tight font-normal">
-              into unforgettable memories.
+              Preserving your legacy of love.
             </h2>
             <div className="space-y-5 text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
               <p>
-                Welcome to Shubham Media & Digital, where every image tells a heartfelt love story. We are passionate about capturing the true essence of each couple's journey, preserving their most cherished moments through timeless photography and film.
+                Welcome to Shubham Media & Digital, where we turn your most meaningful celebrations into lasting visual treasures. We are dedicated to documenting the authentic connection, joy, and unique chemistry of every couple we work with.
               </p>
               <p>
-                Our goal is simple: to document emotions that are raw, meaningful, and unforgettable. Whether it's a grand wedding celebration, sunset pre-wedding, or an intimate ceremony, we strive to portray your special day in a way that feels authentic to you.
+                Our approach is focused on real storytelling. We capture the genuine, unscripted moments—the quiet glances, the loud laughter, and the heartfelt tears—that make your wedding day uniquely yours, whether it's a grand multi-day celebration or an intimate family gathering.
               </p>
               <p>
-                Take a glimpse into our collection of stories and see the magic unfold. Each experience is a reflection of joy, laughter, and deep emotions that make their journey extraordinary. Let us inspire you with the beautiful memories we've helped create.
+                Explore our portfolio to see the couples, families, and milestones we've had the honor of documenting. Every chapter we capture is treated with the care, creativity, and editorial precision it deserves. Let us preserve your beautiful beginning.
               </p>
               <p className="pt-2 italic font-serif text-[#1A1A1A] dark:text-[#F2EDE4]">
-                Step into a world of storytelling through our lens, where every frame is a work of art.
+                Enter a space where memory meets cinema, and every photograph is a legacy to cherish.
               </p>
             </div>
           </div>
@@ -130,13 +130,13 @@ const Home = () => {
         {/* Editorial Text Block */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
           <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
-            the vows to the laughter, weaves a story of commitment and joy.
+            From the first look to the final dance, every moment is a piece of a beautiful journey.
           </p>
           <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light">
-            These are moments too precious to be forgotten.
+            These chapters deserve to be remembered just as they felt.
           </p>
           <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-[#1A1A1A] dark:text-[#F2EDE4] font-medium pt-2">
-            We ensure they live on forever, turning fleeting emotions into timeless memories.
+            We preserve the spirit of your celebration, transforming transient moments into an heirloom archive.
           </h3>
         </div>
 
@@ -198,7 +198,7 @@ const Home = () => {
         {/* Centered Quote Overlay Text (Floating over the image) */}
         <div className="absolute bottom-16 sm:bottom-24 inset-x-0 z-10 max-w-4xl mx-auto px-6 text-center space-y-4">
           <p className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-light leading-relaxed drop-shadow-md">
-            Time flies, and you can't relive moments once they're gone. But through our lens, we create a window for you to revisit them.
+            Time moves forward, but a photograph lets you pause. We build a bridge back to the true emotions of your most treasured day.
           </p>
           <p className="text-xs uppercase tracking-[0.35em] font-sans text-white/80 pt-2">
             SHUBHAM MEDIA & FILMS
@@ -212,17 +212,17 @@ const Home = () => {
           {[
             {
               title: "ABOUT",
-              subtitle: "GET TO KNOW US",
+              subtitle: "LEARN OUR STORY",
               link: "/about"
             },
             {
               title: "PORTFOLIO",
-              subtitle: "EXPLORE OUR WORK",
+              subtitle: "VIEW THE GALLERY",
               link: "/gallery"
             },
             {
               title: "BOOK US",
-              subtitle: "GET IN TOUCH",
+              subtitle: "CONNECT WITH US",
               link: "/contact"
             }
           ].map((card) => (
@@ -280,34 +280,46 @@ const Home = () => {
 
       {/* 9. Contact / Visit Studio Section */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="bg-white dark:bg-[#221C19] border border-[#E0D7CC]/60 dark:border-[#3D342E]/60 p-8 sm:p-12 rounded-xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
-              Visit Our Studio
-            </p>
-            <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] dark:text-[#F2EDE4]">
-              Shubham Photos Studio & Digital Center
-            </h3>
-            <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] leading-relaxed">
-              Located on the main bazaar road near the bus stand, opposite Saralgaon Police Chowki, Murbad. Open daily from 9:00 AM – 8:00 PM for photography bookings, digital services, and consultations.
-            </p>
-            <p className="text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
-              Phone / WhatsApp: <span className="font-semibold">+91 92714 56749</span>
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-end">
-            <Link
-              to="/contact"
-              className="px-8 py-3.5 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-[0.2em] text-center rounded-none hover:bg-[#A67C6B] transition-colors inline-block"
-            >
-              Book Us / Contact
-            </Link>
-            <a
-              href="tel:9271456749"
-              className="px-8 py-3.5 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-none hover:border-[#A67C6B] hover:text-[#A67C6B] transition-colors inline-block"
-            >
-              Call Studio
-            </a>
+        <div className="group relative p-[2px] rounded-2xl bg-gradient-to-r from-[#A67C6B]/40 via-[#D4AF37]/60 to-[#A67C6B]/40 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#D4AF37]/15">
+          <div className="relative bg-white dark:bg-[#221C19] border border-[#E0D7CC] dark:border-[#3D342E] p-8 sm:p-12 rounded-[14px] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center overflow-hidden">
+            {/* Ornate Decorative Corner Elements with Interactive Expand-on-Hover */}
+            <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:left-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+            <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:right-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+            <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:left-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+            <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:right-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+
+            {/* Subtle Gradient Glow Accent Top Line */}
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-80" />
+
+            <div className="space-y-4 relative z-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#A67C6B] dark:text-[#D4AF37] flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37]" />
+                Visit Our Studio
+              </p>
+              <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] dark:text-[#F2EDE4]">
+                Shubham Photos Studio & Digital Center
+              </h3>
+              <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] leading-relaxed">
+                Located on the main bazaar road near the bus stand, opposite Saralgaon Police Chowki, Murbad. Open daily from 9:00 AM – 8:00 PM for photography bookings, digital services, and consultations.
+              </p>
+              <p className="text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
+                Phone / WhatsApp: <span className="font-semibold text-[#A67C6B] dark:text-[#D4AF37]">+91 92714 56749</span>
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-end relative z-10">
+              <Link
+                to="/contact"
+                className="px-8 py-3.5 bg-[#1A1A1A] dark:bg-[#F2EDE4] text-white dark:text-[#181412] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-lg hover:bg-[#A67C6B] dark:hover:bg-[#D4AF37] transition-all shadow-sm hover:shadow-md inline-block"
+              >
+                Book Us / Contact
+              </Link>
+              <a
+                href="tel:9271456749"
+                className="px-8 py-3.5 border border-[#1A1A1A] dark:border-[#F2EDE4] text-[#1A1A1A] dark:text-[#F2EDE4] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-lg hover:border-[#A67C6B] hover:text-[#A67C6B] dark:hover:border-[#D4AF37] dark:hover:text-[#D4AF37] transition-all inline-block"
+              >
+                Call Studio
+              </a>
+            </div>
           </div>
         </div>
       </section>
