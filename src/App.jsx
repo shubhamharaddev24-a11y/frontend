@@ -9,6 +9,7 @@ import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
+import Booking from "./pages/Booking";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/booking" element={<Booking />} />
           </Routes>
         </main>
         <Footer />

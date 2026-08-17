@@ -16,7 +16,7 @@ const About = () => {
           variants={variants.fadeUp}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            About Shubham Photos Studio
+            About Shubham Photos
           </p>
           <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
             A neighbourhood studio built on long-term trust.
