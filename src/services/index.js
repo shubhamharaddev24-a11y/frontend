@@ -4,4 +4,5 @@ export { leadService } from './leadService';
 export { bookingService } from './bookingService';
 export { serviceService } from './serviceService';
 export { taskService } from './taskService';
+export { contentService } from './contentService';
 

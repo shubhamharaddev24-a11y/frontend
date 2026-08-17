@@ -19,55 +19,55 @@ const AppWithSEO = () => {
     switch (pathname) {
       case '/':
         return {
-          title: 'Professional Wedding Photography & Digital Services',
-          description: 'Shubham Photos Studio offers professional wedding photography, pre-wedding shoots, passport photos, DTP services, and custom banner design in Murbad, Maharashtra.',
+          title: 'Shubham Media & Digital Services | Custom Web Development & Cinematography Murbad',
+          description: 'Shubham Media & Digital Services delivers custom MERN stack websites, local SEO marketing, graphic branding, and premium wedding cinematography in Murbad, Maharashtra.',
           canonical: baseUrl,
-          keywords: 'wedding photography, passport photos, DTP services, photo studio Murbad, digital printing, banner design',
+          keywords: 'web development Murbad, digital marketing Thane, wedding cinematography, photo studio Saralgaon, local SEO, graphic design',
           type: 'website'
         };
 
       case '/about':
         return {
-          title: 'About Shubham Photos Studio - Murbad',
-          description: 'Learn about Shubham Photos Studio, your trusted local photography service center in Murbad offering professional photography and digital services since 2010.',
+          title: 'About Shubham Media & Digital Services - Murbad',
+          description: 'Learn how Shubham Media & Digital Services combines professional software development, local search engine optimization, and the trusted photography legacy of Shubham Photos Studio.',
           canonical: `${baseUrl}/about`,
-          keywords: 'about Shubham Photos, photo studio Murbad, professional photographer, digital services',
+          keywords: 'about Shubham Media, web agency Murbad, local photography legacy, digital solutions company',
           type: 'website'
         };
 
       case '/services':
         return {
-          title: 'Photography Services - Wedding, Passport & DTP',
-          description: 'Complete photography services including wedding photography, pre-wedding shoots, passport photos, digital printing, banner design, and DTP services in Murbad.',
+          title: 'Media, Web Development & Marketing Services - Murbad',
+          description: 'Explore our divisions: full-stack web applications, local SEO & marketing campaigns, custom print designs, and professional wedding photography (Shubham Photos Studio).',
           canonical: `${baseUrl}/services`,
-          keywords: 'photography services, wedding photography Murbad, passport photos, digital printing, banner design, DTP services',
+          keywords: 'MERN stack development, local SEO optimization, wedding photographer Murbad, banner printing, cyber desk services',
           type: 'website'
         };
 
       case '/gallery':
         return {
-          title: 'Photo Gallery - Wedding & Portrait Photography',
-          description: 'Browse our portfolio of wedding photography, pre-wedding shoots, portraits, and event photography from Shubham Photos Studio in Murbad.',
+          title: 'Portfolio & Gallery - Shubham Media & Digital Services',
+          description: 'Browse our projects including custom corporate web portals, local business marketing creatives, and professional wedding photography/cinematography.',
           canonical: `${baseUrl}/gallery`,
-          keywords: 'photo gallery, wedding photography portfolio, pre-wedding photos, portrait photography Murbad',
+          keywords: 'web portfolio, design gallery, wedding photo gallery Murbad, cinematic video highlights',
           type: 'website'
         };
 
       case '/contact':
         return {
-          title: 'Contact Shubham Photos Studio - Murbad',
-          description: 'Contact Shubham Photos Studio in Murbad for wedding photography, passport photos, digital printing, and custom banner design services. Call +91 92714 56749.',
+          title: 'Contact Shubham Media & Digital Services - Murbad',
+          description: 'Get in touch with us for full-stack web design, search marketing campaigns, or premium event shoots. Call +91 92714 56749 or chat on WhatsApp.',
           canonical: `${baseUrl}/contact`,
-          keywords: 'contact photo studio, Shubham Photos phone, wedding photographer Murbad, digital services contact',
+          keywords: 'contact web developer Murbad, hire digital marketing Thane, book wedding photographer, phone number',
           type: 'website'
         };
 
       default:
         return {
-          title: 'Shubham Photos Studio - Professional Photography Services',
-          description: 'Professional photography studio in Murbad offering wedding photography, passport photos, DTP services, digital printing, and custom banners.',
+          title: 'Shubham Media & Digital Services | Professional Digital & Media Solutions',
+          description: 'Creative digital agency in Thane offering MERN development, local SEO, and cinematic wedding photography.',
           canonical: baseUrl,
-          keywords: 'photo studio Murbad, wedding photography, digital services, passport photos',
+          keywords: 'digital solutions, web development, photography studio, marketing Thane',
           type: 'website'
         };
     }

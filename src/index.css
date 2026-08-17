@@ -29,6 +29,34 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
+
+  /* Reset Bootstrap's intrusive link styles globally */
+  a, a:hover, a:focus, a:active, a:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* Lenis smooth scroll optimization classes */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis-scrolling iframe {
+  pointer-events: none; /* Prevents iframes from stealing drag/wheel focus during scroll momentum */
 }
 
 @layer utilities {
@@ -41,3 +69,21 @@
     display: none;
   }
 }
+
+/* Infinite Marquee Scroll Animation */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 45s linear infinite;
+}
+
+.marquee-track:hover,
+.marquee-track.paused {
+  animation-play-state: paused;
+}
+

@@ -1,35 +1,41 @@
-/* Light and Dark Theme Variables */
+/* Light and Dark Theme Variables - SPH Premium Style */
 
 :root {
-  /* Light theme colors */
-  --light-bg: #ffffff;
-  --light-surface: #f7f7f8;
-  --light-surface-soft: #efeff1;
-  --light-border: #d8d8de;
-  --light-text-primary: #111113;
-  --light-text-muted: #5b5b64;
-  --light-accent: #ff7a18;       /* warm orange */
-  --light-accent-soft: #c24f00;  /* darker orange for hover */
+  /* SPH Luxury Light Theme (Default) */
+  --light-bg: #F2EDE4;          /* Warm luxury eggshell cream background */
+  --light-surface: #FFFFFF;     /* Pure clean elevated cards */
+  --light-surface-soft: #FAF6F0;/* Soft beige container */
+  --light-border: #E0D7CC;      /* Subtle warm taupe border */
+  --light-text-primary: #1A1A1A;/* Rich crisp dark black text */
+  --light-text-muted: #4A4A4A;  /* Crisp dark charcoal muted text */
+  --light-accent: #A67C6B;      /* Warm dusty terracotta / rose bronze */
+  --light-accent-soft: #7E5B4D; /* Darker warm terracotta for hover */
 
-  /* Dark luxury theme colors */
-  --dark-bg: #070708;
-  --dark-surface: #0f0f11;
-  --dark-surface-soft: #17171a;
-  --dark-border: #2a2a2f;
-  --dark-text-primary: #f7f7f8;
-  --dark-text-muted: #b0b0b7;
-  --dark-accent: #ff7a18;        /* warm orange */
-  --dark-accent-soft: #ffb26a;   /* soft highlight */
+  /* Luxury Dark Espresso Theme */
+  --dark-bg: #181412;
+  --dark-surface: #221C19;
+  --dark-surface-soft: #2C2521;
+  --dark-border: #3D342E;
+  --dark-text-primary: #F2EDE4;
+  --dark-text-muted: #B8ABA0;
+  --dark-accent: #D4A594;
+  --dark-accent-soft: #EABDAE;
 
-  /* Defaults (before JS/theme class runs): start in dark */
-  --bg-primary: var(--dark-bg);
-  --bg-surface: var(--dark-surface);
-  --bg-surface-soft: var(--dark-surface-soft);
-  --bg-border: var(--dark-border);
-  --text-primary: var(--dark-text-primary);
-  --text-muted: var(--dark-text-muted);
-  --text-accent: var(--dark-accent);
-  --text-accent-soft: var(--dark-accent-soft);
+  /* Defaults: start in SPH Light luxury cream theme */
+  --bg-primary: var(--light-bg);
+  --bg-surface: var(--light-surface);
+  --bg-surface-soft: var(--light-surface-soft);
+  --bg-border: var(--light-border);
+  --text-primary: var(--light-text-primary);
+  --text-muted: var(--light-text-muted);
+  --text-accent: var(--light-accent);
+  --text-accent-soft: var(--light-accent-soft);
+
+  /* Header variables default (light cream) */
+  --header-bg-scrolled: rgba(242, 237, 228, 0.94);
+  --header-bg-top: rgba(242, 237, 228, 0.4);
+  --header-border-scrolled: rgba(224, 215, 204, 0.8);
+  --header-border-top: rgba(74, 62, 55, 0.08);
 }
 
 /* Light theme */
@@ -42,6 +48,12 @@
   --text-muted: var(--light-text-muted);
   --text-accent: var(--light-accent);
   --text-accent-soft: var(--light-accent-soft);
+
+  /* Header variables for light theme */
+  --header-bg-scrolled: rgba(242, 237, 228, 0.94);
+  --header-bg-top: rgba(242, 237, 228, 0.4);
+  --header-border-scrolled: rgba(224, 215, 204, 0.8);
+  --header-border-top: rgba(74, 62, 55, 0.08);
   
   color-scheme: light;
 }
@@ -56,6 +68,12 @@
   --text-muted: var(--dark-text-muted);
   --text-accent: var(--dark-accent);
   --text-accent-soft: var(--dark-accent-soft);
+
+  /* Header variables for dark theme */
+  --header-bg-scrolled: rgba(24, 20, 18, 0.94);
+  --header-bg-top: rgba(24, 20, 18, 0.4);
+  --header-border-scrolled: rgba(61, 52, 46, 0.8);
+  --header-border-top: rgba(242, 237, 228, 0.08);
   
   color-scheme: dark;
 }
@@ -93,16 +111,16 @@
   color: var(--text-accent-soft);
 }
 
-/* Theme transitions */
-* {
+/* Optimized theme transitions to avoid universal layout recalculation overhead */
+body, 
+header, footer, nav, section, main,
+h1, h2, h3, h4, h5, h6, p, a, button, input, textarea, select,
+.brandBg, .brandSurface, .brandSurfaceSoft, .brandBorder, 
+.brandTextPrimary, .brandTextMuted, .brandAccent, .brandAccentSoft {
   transition: background-color 0.3s ease, 
               border-color 0.3s ease, 
-              color 0.3s ease;
-}
-
-/* Smooth theme switching */
-html {
-  transition: background-color 0.3s ease, color 0.3s ease;
+              color 0.3s ease,
+              box-shadow 0.3s ease;
 }
 
 /* Scrollbar styling for both themes */
@@ -149,4 +167,240 @@ html {
 
 .dark .shadow-xl {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
+}
+
+/* Custom Uiverse input style (lovely-fly-87) adapted for our theme system */
+.coolinput {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+
+.coolinput label.text {
+  font-size: 0.75rem;
+  color: var(--text-muted); /* muted gray by default for clean look */
+  font-weight: 700;
+  position: relative;
+  top: 0.5rem;
+  margin: 0 0 0 10px;
+  padding: 0 5px;
+  background: var(--bg-surface); /* matches card background */
+  width: fit-content;
+  z-index: 10;
+  pointer-events: none; /* passes clicks to input underneath */
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Variant for soft background containers */
+.coolinput-soft-bg label.text {
+  background: var(--bg-surface-soft);
+}
+
+.coolinput input.input,
+.coolinput textarea.input,
+.coolinput select.input {
+  padding: 11px 12px;
+  font-size: 0.875rem;
+  border: 2px var(--bg-border) solid;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  width: 100%;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+/* Select specific styling overrides for arrow centering/padding */
+.coolinput select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23b0b0b7'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 36px;
+}
+
+.light .coolinput select.input {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235b5b64'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+}
+
+/* Ensure select option text and background display clearly according to theme */
+.coolinput select.input option {
+  background-color: var(--bg-surface-soft);
+  color: var(--text-primary);
+}
+
+/* Focus state triggers */
+.coolinput input.input:focus,
+.coolinput textarea.input:focus,
+.coolinput select.input:focus {
+  border-color: var(--text-accent);
+  box-shadow: 0 0 0 3px rgba(255, 122, 24, 0.15); /* subtle orange shadow glow */
+}
+
+/* Style label text as accent color when container is focused */
+.coolinput:focus-within label.text {
+  color: var(--text-accent);
+}
+
+/* Custom Uiverse slimy-pug-17 card styling adapted for our theme */
+.slimy-card {
+  --slimy-white: var(--text-primary);
+  --slimy-black: var(--bg-surface);
+  --slimy-paragraph: var(--text-muted);
+  --slimy-line: var(--bg-border);
+  --slimy-primary: var(--text-accent);
+  
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background-color: var(--bg-surface);
+  background-image: radial-gradient(
+    at 88% 40%,
+    var(--bg-surface) 0px,
+    transparent 85%
+  ),
+  radial-gradient(at 49% 30%, var(--bg-surface) 0px, transparent 85%),
+  radial-gradient(at 14% 26%, var(--bg-surface) 0px, transparent 85%),
+  radial-gradient(at 0% 64%, rgba(255, 122, 24, 0.15) 0px, transparent 85%),
+  radial-gradient(at 41% 94%, rgba(255, 122, 24, 0.2) 0px, transparent 85%),
+  radial-gradient(at 100% 99%, rgba(255, 122, 24, 0.1) 0px, transparent 85%);
+  border-radius: 1.25rem;
+  box-shadow: 0px -12px 20px 0px rgba(255, 255, 255, 0.05) inset;
+  border: 1px solid var(--bg-border);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.slimy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 8px 30px rgba(255, 122, 24, 0.12),
+              0px -12px 20px 0px rgba(255, 255, 255, 0.08) inset;
+}
+
+.slimy-card .card__border {
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 1.25rem;
+}
+
+.slimy-card .card__border::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(
+    transparent,
+    rgba(255, 122, 24, 0.1) 30%,
+    var(--text-accent) 50%,
+    rgba(255, 122, 24, 0.1) 70%,
+    transparent
+  );
+  animation: rotate-conic 6s linear infinite;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.slimy-card:hover .card__border::before {
+  opacity: 1;
+  animation-duration: 4s;
+}
+
+@keyframes rotate-conic {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.slimy-card::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  background-color: var(--bg-surface);
+  border-radius: 1.2rem;
+  pointer-events: none;
+  transition: background-color 0.3s ease;
+}
+
+.slimy-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.slimy-card .card_title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.slimy-card .card_paragraph {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.slimy-card .line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--bg-border);
+  border: none;
+  margin: 0.5rem 0;
+}
+
+.slimy-card .card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.slimy-card .card__list .card__list_item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.slimy-card .card__list .card__list_item .check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  background-color: var(--text-accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.slimy-card .card__list .card__list_item .check .check_svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  fill: #000000;
+}
+
+.slimy-card .card__list .card__list_item .list_text {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.4;
 }

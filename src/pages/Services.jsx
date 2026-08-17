@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
 import { serviceService } from "../services";
@@ -6,82 +6,70 @@ import { serviceService } from "../services";
 const sections = [
   {
     id: "photography",
-    title: "Photography & Videography",
+    title: "Media Services (Shubham Photos Studio)",
     description:
-      "Complete wedding, pre-wedding and event coverage with edited photos, films and albums.",
+      "Timeless memories, wedding films, and professional photography captured by our dedicated studio branch.",
     items: [
-      "Wedding photography and videography for village and city ceremonies",
-      "Pre-wedding shoots at farms, riverside and local locations",
-      "Passport size photos with instant print and soft copy",
-      "Album designing, printing and gift photo frames",
-      "Event photography for birthdays, engagements and school functions",
-      "Photo scanning and restoration of old family prints",
+      "Wedding photography and videography (Traditional & Cinematic)",
+      "Pre-wedding shoots at scenic outdoor locations near Murbad",
+      "Event coverage (Engagements, birthdays, and celebrations)",
+      "Passport and visa photos with instant studio printing",
+      "Custom album design, photo framing, and laminations",
+      "Scanning and restoration of old, damaged family photos",
     ],
   },
   {
-    id: "cards",
-    title: "Wedding Cards (लग्नपत्रिका)",
+    id: "web-dev",
+    title: "Web Development Division",
     description:
-      "Traditional and modern invitations for every function around the wedding.",
+      "Modern, fast, and responsive websites to establish your business online.",
     items: [
-      "Lagna-patrika in classic Marathi designs",
-      "Engagement and reception invitations",
-      "Modern photo-based cards and premium papers",
-      "Custom colours, fonts and layouts as per family choice",
-      "Bulk printing with envelopes and numbering",
+      "Custom Full-Stack web applications (MERN Stack)",
+      "Business and corporate portfolio websites",
+      "High-converting landing pages and product funnels",
+      "Digital wedding invitation websites with maps and RSVP",
+      "E-commerce stores and custom customer portals",
+      "Website maintenance, speed optimization, and hosting setup",
     ],
   },
   {
-    id: "banners",
-    title: "Banners & Posters",
+    id: "digital-marketing",
+    title: "Digital Marketing Division",
     description:
-      "Design and printing for political work, functions and business promotion.",
+      "Drive traffic, build authority, and acquire local customers for your brand.",
     items: [
-      "Political banners for meetings, rallies and greetings",
-      "Wedding welcome boards and stage backdrops",
-      "Birthday and naming ceremony flex designs",
-      "Business posters, shop boards and offer banners",
-      "Various sizes and materials with fast delivery",
+      "Google Business Profile (GMB) setup and local search optimization",
+      "Search Engine Optimization (SEO) to rank #1 on Google",
+      "Social Media Management (Instagram, YouTube, Facebook)",
+      "Lead generation campaigns and Google/Meta advertisement setups",
+      "WhatsApp Business automation and customer relationship tools",
     ],
   },
   {
-    id: "dtp",
-    title: "DTP & Document Design",
+    id: "design-branding",
+    title: "Design & Graphic Branding",
     description:
-      "Clean, professional designs for your documents, applications and IDs.",
+      "Professional visual assets for your offline promotions and branding.",
     items: [
-      "Biodata and marriage profile creation",
-      "CV / Resume design for students and job seekers",
-      "Application forms, notice designs and certificates",
-      "ID cards for schools, coaching classes and events",
-      "Pamphlets and flyers with clear layout and print",
+      "Political banners, rally posters, and flex designs",
+      "Shop front board designs and corporate identity assets",
+      "Wedding welcome boards, backdrops, and Marathi Lagna-Patrika",
+      "Visiting cards, brochures, and promotional pamphlets",
+      "Custom logo designs and social media post templates",
     ],
   },
   {
-    id: "stationery",
-    title: "School Stationery & Copies",
+    id: "cyber-dtp",
+    title: "Cyber Desk & DTP Services",
     description:
-      "Everyday study support for students and parents visiting the studio.",
+      "Your physical point of contact in Saralgaon for essential digital document tasks.",
     items: [
-      "Printouts and photocopies for homework and projects",
-      "Notebooks, files and basic school stationery",
-      "Lamination for ID cards, mark-sheets and certificates",
-      "Scanning of documents for online submission",
+      "Professional biodata and marriage CV creation",
+      "Student resumes and job application documents",
+      "Aadhaar updates, eKYC assistance, and PAN card services",
+      "Online college admissions and government scholarship forms",
+      "High-volume document printing, copying, and laminations",
     ],
-  },
-  {
-    id: "cyber",
-    title: "Cyber Services (Coming Soon)",
-    description:
-      "Preparing a separate desk for secure online government and banking work.",
-    items: [
-      "Aadhaar updates and eKYC assistance",
-      "PAN card related services",
-      "Government and scholarship forms",
-      "Online exam and admission forms",
-      "Other e-governance services as they become available",
-    ],
-    comingSoon: true,
   },
 ];
 
@@ -89,8 +77,7 @@ const Services = () => {
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
   const { fadeUp } = variants;
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [services, setServices] = useState(sections);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -108,105 +95,85 @@ const Services = () => {
             comingSoon: !s.isActive
           }));
           setServices(mappedServices);
-        } else {
-          // Fallback to static sections if database list is empty
-          setServices(sections);
         }
       } catch (err) {
         console.error('Failed to fetch services, using static fallback:', err);
-        // Fallback to static sections if API fails
-        setServices(sections);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchServices();
   }, []);
+
   return (
-    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+      <section className="mx-auto max-w-7xl space-y-12">
         <motion.div
-          className="mb-8 space-y-3 sm:mb-10"
+          className="text-center max-w-3xl mx-auto space-y-4"
           initial={reduceMotion ? "show" : "hidden"}
           animate="show"
           variants={fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            Our services
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+            DIVISIONS & SERVICES
           </p>
-          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            One studio for photography, printing and digital services.
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
+            Media, Technology & Graphic Branding
           </h1>
-          <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
-            Whether you are planning a wedding, preparing documents or printing
-            school projects, Shubham Photos Studio is designed to handle
-            everything calmly at one counter.
+          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+            From professional cinematography and wedding albums at our local studio, to custom web applications, local SEO marketing, and digital document desk.
           </p>
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          {loading ? (
-            <div className="col-span-2 text-center py-8">
-              <p className="text-brandTextMuted">Loading services...</p>
-            </div>
-          ) : error ? (
-            <div className="col-span-2 text-center py-8">
-              <p className="text-red-400">{error}</p>
-            </div>
-          ) : (
-            services.map((section) => (
-              <motion.article
-                key={section.id || section._id}
-                className="flex h-full flex-col rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md"
-                initial={reduceMotion ? "show" : "hidden"}
-                whileInView="show"
-                viewport={{ once: true, amount: 0.25 }}
-                variants={variants.fadeUpShort}
-                {...variants.cardHover}
-              >
-                <div className="flex items-center gap-3">
-                  <h2 className="text-base font-semibold text-brandTextPrimary">
-                    {section.title}
-                  </h2>
-                  {section.comingSoon && (
-                    <span className="rounded-full bg-brandAccent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent">
-                      Coming soon
-                    </span>
-                  )}
-                </div>
-                <p className="mt-2 text-sm text-brandTextMuted">
-                  {section.description}
-                </p>
-                <ul className="mt-3 flex-1 space-y-2 text-xs text-brandTextMuted">
-                  {(section.items || []).map((item, index) => (
-                    <li key={index} className="flex gap-2">
-                      <span className="mt-1 h-1 w-1 rounded-full bg-brandAccent" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                  <a
-                    href="https://wa.me/919271456749?text=Hi%20Shubham%20Photos%20Studio%2C%20I%20want%20to%20enquire%20about%20your%20services."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center rounded-full bg-brandAccent px-4 py-1.5 font-semibold text-black shadow-sm shadow-brandAccent/40 hover:bg-amber-400"
-                    {...variants.buttonHover}
-                  >
-                    WhatsApp enquiry
-                  </a>
-                  <a
-                    href="tel:9271456749"
-                    className="inline-flex items-center rounded-full border border-brandAccent/60 bg-brandSurface px-4 py-1.5 font-semibold text-brandAccent hover:bg-brandSurfaceSoft"
-                    {...variants.buttonHover}
-                  >
-                    Call studio
-                  </a>
-                </div>
-              </motion.article>
-            ))
-          )}
+        <div className="grid gap-8 lg:grid-cols-2">
+          {services.map((section) => (
+            <motion.article
+              key={section.id || section._id}
+              className="bg-white dark:bg-[#221C19] border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 p-8 sm:p-10 rounded-none space-y-5 shadow-sm hover:shadow-md transition-all duration-300"
+              initial={reduceMotion ? "show" : "hidden"}
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              variants={variants.fadeUpShort}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+                  {section.title}
+                </h2>
+                {section.comingSoon && (
+                  <span className="rounded-full bg-[#A67C6B]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A67C6B]">
+                    Coming soon
+                  </span>
+                )}
+              </div>
+              <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+                {section.description}
+              </p>
+              <hr className="border-[#E0D7CC]/60 dark:border-[#3D342E]/60" />
+              <ul className="space-y-3 text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light">
+                {(section.items || []).map((item, index) => (
+                  <li key={index} className="flex gap-2.5 items-start">
+                    <span className="text-[#A67C6B]">•</span>
+                    <span className="leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-4 flex flex-wrap gap-3">
+                <a
+                  href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2.5 bg-[#1A1A1A] text-white text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-[#A67C6B]"
+                >
+                  WhatsApp Enquiry
+                </a>
+                <a
+                  href="tel:9271456749"
+                  className="px-6 py-2.5 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-[#A67C6B] hover:text-[#A67C6B]"
+                >
+                  Call Team
+                </a>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </section>
     </div>

@@ -1,281 +1,371 @@
-import React, { useMemo } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useMemo, useState, useRef } from "react";
+import { motion, useReducedMotion, AnimatePresence, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMotionVariants } from "../utils/motion";
 import AnimatedHero from "../components/AnimatedHero";
-import ParallaxSection from "../components/ParallaxSection";
-import MagneticButton from "../components/MagneticButton";
 import RevealOnScroll from "../components/RevealOnScroll";
-import OptimizedImage from "../components/OptimizedImage";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
+import AnimatedServiceCard from "../components/AnimatedServiceCard";
+import { useContent } from "../contexts/ContentContext";
+import {
+  Code,
+  TrendingUp,
+  Camera,
+  Palette,
+  Laptop,
+  ArrowRight
+} from "lucide-react";
 
 const Home = () => {
+  const [activeService, setActiveService] = useState(null);
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
+  const gridRef = useRef(null);
+  const isGridInView = useInView(gridRef, { once: true, amount: 0.15 });
+  const { getSection, formatImageUrl } = useContent();
+
+  const servicesList = useMemo(() => [
+    {
+      name: "Web Development Division",
+      points: [
+        "Custom Full-Stack web applications (MERN)",
+        "Corporate portfolio websites & high-converting landing pages",
+        "Digital wedding invitation sites with RSVP and maps",
+      ],
+      mainIcon: Code,
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
+    },
+    {
+      name: "Digital Marketing & SEO",
+      points: [
+        "Google Business Profile optimization and local map ranking",
+        "On-page & Off-page SEO to drive organic Google search traffic",
+        "Social media growth & production (Instagram Reels & YouTube)",
+      ],
+      mainIcon: TrendingUp,
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
+    },
+    {
+      name: "Media Division (Shubham Photos Studio)",
+      points: [
+        "Cinematic wedding films, trailers, and traditional photography",
+        "Scenic sunset outdoor pre-wedding & baby portraits",
+        "Instant passport printing, photo scanning & framing in Saralgaon",
+      ],
+      mainIcon: Camera,
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
+    },
+    {
+      name: "Graphic Design & Branding",
+      points: [
+        "Political campaign banners, rally posters & flex designs",
+        "Marathi Lagna-Patrika and event cards (traditional & modern)",
+        "Visiting cards, brochures, and corporate brand designs",
+      ],
+      mainIcon: Palette,
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
+    },
+    {
+      name: "Cyber Desk & DTP Services",
+      points: [
+        "Professional biodata and marriage resume creation",
+        "Student CV/resumes and online job applications",
+        "Aadhaar, PAN, and local e-governance service support",
+      ],
+      mainIcon: Laptop,
+      themeColor: "#A67C6B",
+      shadowColor: "rgba(166, 124, 107, 0.2)"
+    }
+  ], []);
 
   return (
-    <div className="bg-brandBg text-brandTextPrimary">
-      {/* Animated Hero Section */}
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] font-sans selection:bg-[#A67C6B]/20">
+      {/* 1. Full-Bleed Animated Hero Carousel */}
       <AnimatedHero />
 
-      {/* Quick service highlights with parallax */}
-      <ParallaxSection 
-        className="border-y border-brandBorder/70 bg-brandSurfaceSoft/60 py-12"
-        speed={0.2}
-      >
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
+      {/* 2. Philosophy & Welcome Intro Section (2-Column Layout matching Viya Films screenshot 2) */}
+      <section className="py-20 md:py-28 px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column Text */}
+          <div className="lg:col-span-6 space-y-6">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] leading-tight font-normal">
+              Preserving your legacy of love.
+            </h2>
+            <div className="space-y-5 text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+              <p>
+                Welcome to Shubham Media & Digital, where we turn your most meaningful celebrations into lasting visual treasures. We are dedicated to documenting the authentic connection, joy, and unique chemistry of every couple we work with.
+              </p>
+              <p>
+                Our approach is focused on real storytelling. We capture the genuine, unscripted moments—the quiet glances, the loud laughter, and the heartfelt tears—that make your wedding day uniquely yours, whether it's a grand multi-day celebration or an intimate family gathering.
+              </p>
+              <p>
+                Explore our portfolio to see the couples, families, and milestones we've had the honor of documenting. Every chapter we capture is treated with the care, creativity, and editorial precision it deserves. Let us preserve your beautiful beginning.
+              </p>
+              <p className="pt-2 italic font-serif text-[#1A1A1A] dark:text-[#F2EDE4]">
+                Enter a space where memory meets cinema, and every photograph is a legacy to cherish.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column Portrait Image */}
+          <div className="lg:col-span-6">
+            <div className="relative overflow-hidden rounded-xl shadow-xl aspect-[4/5] max-w-md mx-auto lg:max-w-none">
+              <img
+                src="/images/marathi-wedding-ritual.jpg"
+                alt="Marathi wedding ritual of groom and bride"
+                className="w-full h-full object-cover object-[center_15%] brightness-95 hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Precious Moments Showcase Grid (Matching Viya Films screenshot 3) */}
+      <section className="py-16 md:py-24 px-6 sm:px-12 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
+        {/* Editorial Text Block */}
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
+          <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+            From the first look to the final dance, every moment is a piece of a beautiful journey.
+          </p>
+          <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light">
+            These chapters deserve to be remembered just as they felt.
+          </p>
+          <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-[#1A1A1A] dark:text-[#F2EDE4] font-medium pt-2">
+            We preserve the spirit of your celebration, transforming transient moments into an heirloom archive.
+          </h3>
+        </div>
+
+        {/* 3 Vertical Portrait Grid (Matching Viya Films couple portrait set) */}
+        {(() => {
+          const defaultPortraits = [
+            {
+              imageUrl: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1000&auto=format&fit=crop&q=85",
+              objectPosition: "center 25%",
+              title: "Groom and bride standing together at sunset"
+            },
+            {
+              imageUrl: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1000&auto=format&fit=crop&q=85",
+              objectPosition: "center 20%",
+              title: "Candid playful close portrait of couple laughing"
+            },
+            {
+              imageUrl: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1000&auto=format&fit=crop&q=85",
+              objectPosition: "center 20%",
+              title: "Romantic couple embrace portrait at golden hour"
+            }
+          ];
+
+          const showcaseData = getSection("home_showcase_portraits", { items: defaultPortraits });
+          const showcaseItems = (showcaseData.items && showcaseData.items.length > 0)
+            ? showcaseData.items
+            : defaultPortraits;
+
+          return (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+              {showcaseItems.slice(0, 3).map((item, idx) => (
+                <div
+                  key={item.id || item.imageUrl || idx}
+                  className="overflow-hidden rounded-lg shadow-md aspect-[3/4] group bg-[#FAF6F0] dark:bg-[#221C19]"
+                >
+                  <img
+                    src={formatImageUrl(item.imageUrl || item.url)}
+                    alt={item.title || item.alt || "Feature Portrait"}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ objectPosition: item.objectPosition || item.pos || "center 20%" }}
+                  />
+                </div>
+              ))}
+            </div>
+          );
+        })()}
+      </section>
+
+      {/* 4. Full-Width B&W Banner with Centered Quote Overlay (Matching Viya Films screenshot) */}
+      <section className="w-full relative h-screen min-h-[600px] overflow-hidden bg-black flex items-end justify-center">
+        <img
+          src="/images/bw-couple-sunburst-banner.png"
+          alt="Cinematic B&W sunburst couple pre-wedding portrait banner"
+          className="w-full h-full object-cover object-[center_30%] brightness-100"
+        />
+        {/* Soft luxury dark gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15" />
+
+        {/* Centered Quote Overlay Text (Floating over the image) */}
+        <div className="absolute bottom-16 sm:bottom-24 inset-x-0 z-10 max-w-4xl mx-auto px-6 text-center space-y-4">
+          <p className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-light leading-relaxed drop-shadow-md">
+            Time moves forward, but a photograph lets you pause. We build a bridge back to the true emotions of your most treasured day.
+          </p>
+          <p className="text-xs uppercase tracking-[0.35em] font-sans text-white/80 pt-2">
+            SHUBHAM MEDIA & FILMS
+          </p>
+        </div>
+      </section>
+
+      {/* 5. Signature White Navigation Cards (Matching Viya Films screenshot 5) */}
+      <section className="py-16 md:py-24 px-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              title: "Wedding photography & films",
-              body: "Full-day coverage, village baraat, traditional rituals and cinematic couple moments.",
+              title: "ABOUT",
+              subtitle: "LEARN OUR STORY",
+              link: "/about"
             },
             {
-              title: "Prints, albums & DTP",
-              body: "Passport photos, instant prints, album design, biodata and resume creation.",
+              title: "PORTFOLIO",
+              subtitle: "VIEW THE GALLERY",
+              link: "/gallery"
             },
             {
-              title: "Banners, cards & digital",
-              body: "Wedding cards, political banners, flex posters and future-ready cyber desk.",
-            },
-          ].map((item, index) => (
-            <RevealOnScroll
-              key={item.title}
-              delay={index * 0.1}
-              direction="up"
-              className="flex-1 space-y-1"
+              title: "BOOK US",
+              subtitle: "CONNECT WITH US",
+              link: "/contact"
+            }
+          ].map((card) => (
+            <Link
+              key={card.title}
+              to={card.link}
+              className="bg-white dark:bg-[#221C19] p-10 sm:p-14 rounded-none border border-[#E0D7CC]/60 dark:border-[#3D342E]/60 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccentSoft">
-                {item.title}
+              <h4 className="font-sans text-lg sm:text-xl font-medium tracking-[0.25em] text-[#1A1A1A] dark:text-[#F2EDE4] uppercase group-hover:text-[#A67C6B] transition-colors">
+                {card.title}
+              </h4>
+              <p className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#4A4A4A] dark:text-[#B8ABA0] mt-3">
+                {card.subtitle}
               </p>
-              <p className="text-xs text-brandTextMuted">{item.body}</p>
-            </RevealOnScroll>
+            </Link>
           ))}
         </div>
-      </ParallaxSection>
+      </section>
 
-      {/* Services summary */}
-      <section className="bg-brandBg py-12 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll delay={0.2} direction="up" className="mb-8 text-center sm:mb-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            Services
+      {/* 6. Company Divisions & Services Showcase */}
+      <section className="py-16 px-6 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <p className="text-xs uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+            Full Capabilities
           </p>
-          <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            Everything you expect from a complete photo studio.
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#1A1A1A] dark:text-[#F2EDE4] mt-2">
+            Media, Technology & Digital Divisions
           </h2>
-          <p className="mt-3 text-sm text-brandTextMuted sm:text-base">
-            Wedding coverage, day-to-day studio work and digital support for your
-            family, business and studies.
+          <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] mt-3">
+            From high-end wedding films and portraits to full-stack web applications, local SEO, and print designs.
           </p>
-        </RevealOnScroll>
+        </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                name: "Wedding photography & videography",
-                points: [
-                  "Village and city weddings, haldi, sangeet and reception",
-                  "Edited highlight films and long coverage",
-                  "Custom album designing and prints",
-                ],
-              },
-              {
-                name: "Pre-wedding & portraits",
-                points: [
-                  "Outdoor pre-wedding concepts close to nature",
-                  "Family portraits and kids' shoots",
-                  "Studio lighting for formal photos",
-                ],
-              },
-              {
-                name: "Passport & print studio",
-                points: [
-                  "Passport, visa and ID photos with instant print",
-                  "Photo lamination, enlargement and framing support",
-                  "Scanning and old photo restoration",
-                ],
-              },
-              {
-                name: "Wedding cards & stationery",
-                points: [
-                  "Traditional Marathi lagna-patrika and modern invitations",
-                  "Engagement, reception and baby naming cards",
-                  "School forms, files and notebooks support",
-                ],
-              },
-              {
-                name: "Banners, posters & flex",
-                points: [
-                  "Political banners and meeting flex boards",
-                  "Wedding, birthday and opening ceremony backdrops",
-                  "Business posters and shop front branding",
-                ],
-              },
-              {
-                name: "DTP & future cyber desk",
-                points: [
-                  "Biodata, CV and resume design with printing",
-                  "Pamphlets, ID cards and application forms",
-                  "Aadhaar, PAN and online forms – coming soon",
-                ],
-              },
-            ].map((service, index) => (
-              <RevealOnScroll
-                key={service.name}
-                delay={0.3 + index * 0.05}
-                direction="up"
-                className="flex h-full flex-col rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md hover:shadow-xl transition-shadow"
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {servicesList.map((service, index) => (
+            <AnimatedServiceCard
+              key={service.name}
+              index={index}
+              name={service.name}
+              points={service.points}
+              mainIcon={service.mainIcon}
+              themeColor={service.themeColor}
+              shadowColor={service.shadowColor}
+              onClick={() => setActiveService(service)}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* 7. Counter Section */}
+      <PhotoCounter />
+
+      {/* 8. Video Testimonials */}
+      <VideoTestimonials />
+
+      {/* 9. Contact / Visit Studio Section */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="group relative p-[2px] rounded-2xl bg-gradient-to-r from-[#A67C6B]/40 via-[#D4AF37]/60 to-[#A67C6B]/40 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#D4AF37]/15">
+          <div className="relative bg-white dark:bg-[#221C19] border border-[#E0D7CC] dark:border-[#3D342E] p-8 sm:p-12 rounded-[14px] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center overflow-hidden">
+            {/* Ornate Decorative Corner Elements with Interactive Expand-on-Hover */}
+            <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:left-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+            <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:right-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+            <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:left-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+            <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:right-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+
+            {/* Subtle Gradient Glow Accent Top Line */}
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-80" />
+
+            <div className="space-y-4 relative z-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#A67C6B] dark:text-[#D4AF37] flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37]" />
+                Visit Our Studio
+              </p>
+              <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] dark:text-[#F2EDE4]">
+                Shubham Photos Studio & Digital Center
+              </h3>
+              <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] leading-relaxed">
+                Located on the main bazaar road near the bus stand, opposite Saralgaon Police Chowki, Murbad. Open daily from 9:00 AM – 8:00 PM for photography bookings, digital services, and consultations.
+              </p>
+              <p className="text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
+                Phone / WhatsApp: <span className="font-semibold text-[#A67C6B] dark:text-[#D4AF37]">+91 92714 56749</span>
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-end relative z-10">
+              <Link
+                to="/contact"
+                className="px-8 py-3.5 bg-[#1A1A1A] dark:bg-[#F2EDE4] text-white dark:text-[#181412] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-lg hover:bg-[#A67C6B] dark:hover:bg-[#D4AF37] transition-all shadow-sm hover:shadow-md inline-block"
               >
-                <h3 className="mb-3 text-base font-semibold text-brandTextPrimary">
-                  {service.name}
+                Book Us / Contact
+              </Link>
+              <a
+                href="tel:9271456749"
+                className="px-8 py-3.5 border border-[#1A1A1A] dark:border-[#F2EDE4] text-[#1A1A1A] dark:text-[#F2EDE4] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-lg hover:border-[#A67C6B] hover:text-[#A67C6B] dark:hover:border-[#D4AF37] dark:hover:text-[#D4AF37] transition-all inline-block"
+              >
+                Call Studio
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Morphing Detail Modal for Services */}
+      <AnimatePresence>
+        {activeService && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+            <div className="absolute inset-0" onClick={() => setActiveService(null)} />
+            <motion.div
+              layoutId={`service-card-${activeService.name}`}
+              className="relative w-full max-w-lg rounded-2xl border border-[#E0D7CC] bg-white dark:bg-[#221C19] p-8 shadow-2xl z-10 text-[#1A1A1A] dark:text-[#F2EDE4]"
+            >
+              <button
+                onClick={() => setActiveService(null)}
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-[#FAF6F0] dark:hover:bg-[#2C2521] text-[#4A4A4A]"
+                aria-label="Close modal"
+              >
+                ✕
+              </button>
+              <div className="space-y-4">
+                <h3 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+                  {activeService.name}
                 </h3>
-                <ul className="flex-1 space-y-2 text-xs text-brandTextMuted">
-                  {service.points.map((p) => (
-                    <li key={p} className="flex gap-2">
-                      <span className="mt-1 h-1 w-1 rounded-full bg-brandAccent" />
-                      <span>{p}</span>
+                <hr className="border-[#E0D7CC]/60" />
+                <ul className="space-y-3 text-sm text-[#4A4A4A] dark:text-[#B8ABA0]">
+                  {activeService.points.map((pt, i) => (
+                    <li key={i} className="flex gap-2 items-start">
+                      <span className="text-[#A67C6B]">•</span>
+                      <span>{pt}</span>
                     </li>
                   ))}
                 </ul>
-                <Link
-                  to="/services"
-                  className="mt-4 inline-flex text-xs font-semibold text-brandAccent hover:text-brandAccentSoft"
-                >
-                  View full service details →
-                </Link>
-              </RevealOnScroll>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Photo Counter Section */}
-      <PhotoCounter />
-
-      {/* Featured work preview */}
-      <section className="bg-brandSurface py-12 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll delay={0.4} direction="up" className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-                Featured work
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-                Real couples, real village stories.
-              </h2>
-              <p className="mt-3 text-sm text-brandTextMuted sm:max-w-md">
-                A quick glimpse of weddings, pre-wedding shoots and banner designs
-                captured by our team.
-              </p>
-            </div>
-            <Link
-              to="/gallery"
-              className="text-xs font-semibold text-brandAccent hover:text-brandAccentSoft"
-            >
-              Open full gallery →
-            </Link>
-          </RevealOnScroll>
-
-          <div className="grid gap-4 sm:grid-cols-3">
-            {[
-              {
-                title: "Evening wedding in the village temple",
-                image:
-                  "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&auto=format&fit=crop&q=80",
-              },
-              {
-                title: "Pre-wedding by the fields at sunset",
-                image:
-                  "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=900&auto=format&fit=crop&q=80",
-              },
-              {
-                title: "Colourful flex banners for local events",
-                image:
-                  "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=900&auto=format&fit=crop&q=80",
-              },
-            ].map((item, index) => (
-              <RevealOnScroll
-                key={item.title}
-                delay={0.5 + index * 0.1}
-                direction="scale"
-                className="group relative overflow-hidden rounded-2xl border border-brandBorder/70 bg-black"
-              >
-                <motion.img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-56 w-full object-cover"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 + index * 0.1, duration: 0.6 }}
-                  whileHover={{ scale: 1.05 }}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4">
-                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-brandAccentSoft">
-                    Featured frame
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-white">
-                    {item.title}
-                  </p>
+                <div className="pt-4 flex gap-4">
+                  <Link
+                    to="/contact"
+                    className="flex-1 py-3 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-wider text-center"
+                  >
+                    Inquire Now
+                  </Link>
                 </div>
-              </RevealOnScroll>
-            ))}
+              </div>
+            </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* Video Testimonials Section */}
-      <VideoTestimonials />
-
-      {/* Trust + contact CTA */}
-      <section className="bg-brandBg py-12 sm:py-16">
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8">
-          <RevealOnScroll delay={0.7} direction="left" className="flex-1 space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-              Local studio · Long-term trust
-            </p>
-            <h2 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-              A studio that answers every day – not only on wedding day.
-            </h2>
-            <p className="text-sm text-brandTextMuted sm:text-base">
-              Walk in for passport photos, school projects or important wedding
-              decisions. We keep your files safe, guide you through forms and
-              deliver prints on time.
-            </p>
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.8} direction="right" className="flex flex-1 flex-col gap-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm shadow-md">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandTextMuted">
-              Visit or call
-            </p>
-            <p className="text-sm text-brandTextMuted">
-              Located on the main bazaar , near the bus stand, opposite to saralgaon police chowki ,murbad- easy to reach
-              by foot..
-            </p>
-            <p className="text-sm">
-              Phone:{" "}
-              <span className="font-semibold text-brandTextPrimary">+91 92714 56749</span>
-            </p>
-            <p className="text-sm text-brandTextMuted">
-              Everyday studio timings: <span className="text-brandTextPrimary">9:00 AM – 8:00 PM</span>
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <MagneticButton
-                href="tel:9271456749"
-                className="flex-1 items-center justify-center rounded-full bg-brandAccent px-6 py-2.5 text-xs font-semibold text-black shadow-md shadow-brandAccent/30 hover:bg-brandAccentSoft sm:text-sm"
-              >
-                Call Shubham Photos Studio
-              </MagneticButton>
-              <MagneticButton
-                href="/contact"
-                className="flex-1 items-center justify-center rounded-full border border-brandAccent/60 bg-brandSurface px-6 py-2.5 text-xs font-semibold text-brandAccent hover:bg-brandSurfaceSoft sm:text-sm"
-              >
-                Open contact details
-              </MagneticButton>
-            </div>
-          </RevealOnScroll>
-        </div>
-      </section>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

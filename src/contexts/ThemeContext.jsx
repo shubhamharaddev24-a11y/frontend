@@ -11,43 +11,22 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(() => {
-    // Check localStorage and system preference
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme');
-      if (saved) {
-        return saved === 'dark';
-      }
-      // Default to dark for the premium cinematic look
-      return true;
-    }
-    return true; // Default to dark
-  });
+  const [isDark] = useState(false);
 
   useEffect(() => {
-    // Toggle theme class on html element (Tailwind + CSS variables)
+    // Enforce light theme on html element (Tailwind + CSS variables)
     const root = document.documentElement;
-    
-    if (isDark) {
-      root.classList.add('dark');
-      root.classList.remove('light');
-    } else {
-      root.classList.remove('dark');
-      root.classList.add('light');
-    }
-    
-    // Save to localStorage
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }, [isDark]);
+    root.classList.remove('dark');
+    root.classList.add('light');
+    localStorage.setItem('theme', 'light');
+  }, []);
 
-  const toggleTheme = () => {
-    setIsDark(prev => !prev);
-  };
+  const toggleTheme = () => {};
 
   const value = {
-    isDark,
+    isDark: false,
     toggleTheme,
-    theme: isDark ? 'dark' : 'light'
+    theme: 'light'
   };
 
   return (

@@ -1,120 +1,135 @@
-import React, { useMemo } from "react";
+import React, { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useContent } from "../contexts/ContentContext";
 
 const categories = [
-  { id: "weddings", label: "Wedding Moments" },
-  { id: "prewedding", label: "Pre-Wedding" },
-  { id: "banners", label: "Banners & Posters" },
+  { id: "all", label: "ALL WORK" },
+  { id: "wedding", label: "WEDDING FILMS & MOMENTS" },
+  { id: "prewedding", label: "PRE-WEDDING & PORTRAITS" },
+  { id: "banner", label: "FLEX & EVENT BANNERS" },
+  // { id: "graphic", label: "BRANDING & DESIGN" },
+  // { id: "development", label: "WEB DEVELOPMENT" },
 ];
 
-const images = [
+const DEFAULT_IMAGES = [
   {
-    category: "weddings",
-    src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&auto=format&fit=crop&q=80",
-    alt: "Couple during evening wedding rituals under lights.",
+    category: "wedding",
+    imageUrl: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1200&auto=format&fit=crop&q=85",
+    title: "Grand Indian wedding mandap ceremony.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
-    category: "weddings",
-    src: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=900&auto=format&fit=crop&q=80",
-    alt: "Bride getting ready with jewellery and traditional attire.",
+    category: "wedding",
+    imageUrl: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1200&auto=format&fit=crop&q=85",
+    title: "Bride getting ready in traditional gold attire & saree.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
+  },
+  {
+    category: "wedding",
+    imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&q=85",
+    title: "Evening wedding rituals under golden festive lights.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
     category: "prewedding",
-    src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=900&auto=format&fit=crop&q=80",
-    alt: "Couple posing in a cinematic pre-wedding shoot.",
+    imageUrl: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&auto=format&fit=crop&q=85",
+    title: "Sunset pre-wedding shoot by open fields.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
     category: "prewedding",
-    src: "https://images.unsplash.com/photo-1525286116112-b59af11adad1?w=900&auto=format&fit=crop&q=80",
-    alt: "Couple enjoying a walk in nature.",
+    imageUrl: "https://images.unsplash.com/photo-1525286116112-b59af11adad1?w=1200&auto=format&fit=crop&q=85",
+    title: "Candid couple walk in natural landscape.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
   {
-    category: "banners",
-    src: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=900&auto=format&fit=crop&q=80",
-    alt: "Colourful political and event banners displayed outdoors.",
-  },
-  {
-    category: "banners",
-    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&auto=format&fit=crop&q=80",
-    alt: "Business poster design on a street billboard.",
+    category: "banner",
+    imageUrl: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&auto=format&fit=crop&q=85",
+    title: "Colourful flex banners for local events & political branding.",
+    aspectRatio: "4/5",
+    objectPosition: "center 20%",
   },
 ];
 
 const Gallery = () => {
+  const [activeCategory, setActiveCategory] = useState("all");
   const reduceMotion = useReducedMotion();
-  const fadeUp = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 20 },
-      show: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] },
-      },
-    }),
-    [],
-  );
+  const { getSection, formatImageUrl } = useContent();
+
+  const cmsData = getSection("portfolio_items", { items: DEFAULT_IMAGES });
+  const allImages = (cmsData.items && cmsData.items.length > 0) ? cmsData.items : DEFAULT_IMAGES;
+
+  const filteredImages = activeCategory === "all"
+    ? allImages
+    : allImages.filter((img) =>
+      img.category === activeCategory ||
+      (activeCategory === "wedding" && img.category === "weddings") ||
+      (activeCategory === "banner" && (img.category === "banners" || img.category === "banner"))
+    );
 
   return (
-    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mb-8 space-y-3 sm:mb-10"
-          initial={reduceMotion ? "show" : "hidden"}
-          animate="show"
-          variants={fadeUp}
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            Gallery
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+      <section className="mx-auto max-w-7xl space-y-12">
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+            PORTFOLIO & GALLERY
           </p>
-          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            A small preview of the stories we capture.
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
+            Timeless Love Stories & Visual Collections
           </h1>
-          <p className="max-w-2xl text-sm text-brandTextMuted sm:text-base">
-            Here is a glimpse of weddings, pre-wedding shoots and banner work
-            from Shubham Photos Studio. Full albums and sample designs are
-            available at the studio.
+          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+            A curated glimpse into our wedding films, pre-wedding couple shoots, and branding design work.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Category labels */}
-        <div className="mb-5 flex flex-wrap gap-3 text-xs text-brandTextMuted">
+        {/* Filter Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-3 border-b border-[#E0D7CC]/60 pb-6">
           {categories.map((cat) => (
-            <span
+            <button
               key={cat.id}
-              className="rounded-full border border-brandBorder bg-brandSurface/80 px-3 py-1"
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition-all ${activeCategory === cat.id
+                  ? "bg-[#1A1A1A] text-white dark:bg-[#F2EDE4] dark:text-[#181412]"
+                  : "bg-white/60 dark:bg-[#221C19] text-[#4A4A4A] dark:text-[#B8ABA0] hover:text-[#1A1A1A]"
+                }`}
             >
               {cat.label}
-            </span>
+            </button>
           ))}
         </div>
 
-        {/* Image grid */}
-        <motion.div
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          initial={reduceMotion ? "show" : "hidden"}
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeUp}
-        >
-          {images.map((img) => (
-            <motion.figure
-              key={img.src}
-              className="group relative overflow-hidden rounded-2xl border border-brandBorder/70 bg-black"
-              whileHover={
-                reduceMotion ? undefined : { scale: 1.01, transition: { duration: 0.4 } }
-              }
+        {/* Masonry / Grid */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredImages.map((img, idx) => (
+            <div
+              key={img.id || img.imageUrl || img.src || idx}
+              className="group relative overflow-hidden bg-white dark:bg-[#221C19] aspect-[4/5] shadow-sm hover:shadow-md rounded-xl transition-all duration-300 transform-gpu"
+              style={{
+                contentVisibility: "auto",
+                containIntrinsicSize: "300px 400px",
+              }}
             >
-              <motion.img
-                src={img.src}
-                alt={img.alt}
-                className="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              <img
+                src={formatImageUrl(img.imageUrl || img.src)}
+                alt={img.title || img.alt || "Portfolio image"}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                style={{ objectPosition: img.objectPosition || "center 20%" }}
               />
-              <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 text-xs text-brandTextMuted">
-                {img.alt}
-              </figcaption>
-            </motion.figure>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 pointer-events-none">
+                <p className="text-xs text-white/90 font-serif leading-snug">
+                  {img.title || img.alt}
+                </p>
+              </div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </section>
     </div>
   );

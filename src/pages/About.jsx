@@ -1,75 +1,84 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
+import EnvelopeCard from "../components/EnvelopeCard";
 
 const About = () => {
   const reduceMotion = useReducedMotion();
   const variants = useMotionVariants();
 
   return (
-    <div className="bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+      <section className="mx-auto max-w-5xl space-y-12">
         <motion.div
-          className="space-y-4"
+          className="space-y-4 text-center max-w-3xl mx-auto"
           initial={reduceMotion ? "show" : "hidden"}
           animate="show"
           variants={variants.fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft">
-            About Shubham Photos
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+            ABOUT SHUBHAM MEDIA & DIGITAL
           </p>
-          <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
-            A neighbourhood studio built on long-term trust.
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
+            A creative agency rooted in local trust and digital excellence.
           </h1>
-          <p className="text-sm text-brandTextMuted sm:text-base">
-            Shubham Photos Studio started as a small passport photo counter and
-            has grown into a complete photo and digital service centre for our
-            village. We capture weddings, design albums, print banners and help
-            people with the documents that matter in daily life.
+          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed pt-2">
+            Shubham Media & Digital Services combines high-end photography, cinematic wedding films, and modern software engineering. Through our physical division,
+            <strong className="font-medium text-[#1A1A1A] dark:text-[#F2EDE4]"> Shubham Photos Studio</strong> in Saralgaon, we serve the local Murbad community with timeless photo stories, prints, and e-governance services, alongside enterprise web applications and SEO.
           </p>
         </motion.div>
 
         <motion.div
-          className="mt-8 grid gap-6 md:grid-cols-2"
+          className="grid gap-8 md:grid-cols-2"
           initial={reduceMotion ? "show" : "hidden"}
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
           variants={variants.staggerContainer}
         >
-          <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
-            <h2 className="text-sm font-semibold text-brandTextPrimary">
-              Our story & experience
+          <motion.div className="space-y-3 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed" variants={variants.fadeUpShort}>
+            <h2 className="font-serif text-xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+              Our Story & Journey
             </h2>
             <p>
-              Over the years, Shubham Photos Studio has covered hundreds of
-              wedding functions, village processions, school events and small
-              ceremonies. Many families now have our photos in every important
-              album at home.
+              We started as a local neighborhood studio near Murbad. Over the years, we covered hundreds of traditional Indian weddings, Marathi rituals, and family milestones, earning the lifelong trust of local families.
             </p>
             <p>
-              We understand how precious wedding moments are for parents,
-              couples and relatives. That is why we keep backups, deliver
-              albums carefully and never compromise on print quality.
+              Integrating modern web development, search engine marketing, and digital branding, we act as a single point of contact for families needing timeless memories and businesses demanding digital growth.
             </p>
           </motion.div>
-          <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface/80 p-5 text-sm text-brandTextMuted" variants={variants.fadeUpShort} {...variants.cardHoverSubtle}>
-            <h2 className="text-sm font-semibold text-brandTextPrimary">
-              What we believe in
+          <motion.div className="space-y-3 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed" variants={variants.fadeUpShort}>
+            <h2 className="font-serif text-xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+              Our Core Philosophy
             </h2>
             <ul className="space-y-2">
-              <li>
-                • Clear communication about shoots, prices and delivery dates.
-              </li>
-              <li>
-                • Blending traditional village style with modern cameras,
-                lenses and editing.
-              </li>
-              <li>
-                • Treating every client – whether for a single passport photo or
-                a large wedding – with the same respect.
-              </li>
+              <li>• Preserving raw emotions and authentic couple moments with cinematic clarity.</li>
+              <li>• Seamless communication regarding event coverage, delivery timelines, and pricing.</li>
+              <li>• Blending traditional warmth with state-of-the-art camera gear, color grading, and clean web architecture.</li>
             </ul>
           </motion.div>
+        </motion.div>
+
+        {/* Centered Thank You Envelope Section */}
+        <motion.div
+          className="mt-16 flex flex-col items-center justify-center text-center gap-5"
+          variants={variants.fadeUp}
+          initial={reduceMotion ? "show" : "hidden"}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+        >
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#A67C6B]">
+            A Special Note
+          </p>
+          <EnvelopeCard
+            title="Thank You"
+            subtitle="It's so nice that you took the time to read our story."
+            body="Wishing you a fantastic day ahead!"
+            signature="SHUBHAM MEDIA"
+            useLogoSeal={true}
+          />
+          <p className="text-xs text-[#88796E] dark:text-[#B8ABA0] italic font-light">
+            Hover or tap the envelope seal to open the letter.
+          </p>
         </motion.div>
       </section>
     </div>

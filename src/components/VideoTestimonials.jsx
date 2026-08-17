@@ -1,14 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Volume2, Maximize2 } from 'lucide-react';
+import { Play, Star, MapPin, X, Quote } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const VideoTestimonials = () => {
   const [activeVideo, setActiveVideo] = useState(null);
-  const [isPlaying, setIsPlaying] = useState({});
   const [isPaused, setIsPaused] = useState(false);
-  const videoRefs = useRef({});
-  const sectionRef = useRef(null);
-  const trackRef = useRef(null);
 
   const testimonials = [
     {
@@ -17,9 +14,10 @@ const VideoTestimonials = () => {
       weddingDate: "December 2023",
       thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "Shubham captured our wedding perfectly! The traditional rituals, the emotional moments, everything was documented beautifully.",
+      quote: "Shubham captured our wedding perfectly! The traditional rituals and emotional moments were documented so beautifully.",
       rating: 5,
-      location: "Murbad, Maharashtra"
+      location: "Murbad, Maharashtra",
+      duration: "3:45"
     },
     {
       id: 2,
@@ -27,19 +25,21 @@ const VideoTestimonials = () => {
       weddingDate: "November 2023",
       thumbnail: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "Amazing photography and videography! The team was so professional and captured every detail. Our wedding video is like a Bollywood movie!",
+      quote: "Amazing photography & film! The team captured every single detail. Our wedding highlight feel like a Bollywood movie!",
       rating: 5,
-      location: "Kalyan, Maharashtra"
+      location: "Kalyan, Maharashtra",
+      duration: "4:20"
     },
     {
       id: 3,
       customerName: "Anjali & Vikram",
       weddingDate: "October 2023",
-      thumbnail: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=800&auto=format&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "Shubham Photos Studio made our pre-wedding shoot so much fun! The outdoor locations he suggested were absolutely stunning.",
+      quote: "Shubham Studio made our pre-wedding shoot so comfortable and fun! The drone shots and location recommendations were top notch.",
       rating: 5,
-      location: "Karjat, Maharashtra"
+      location: "Karjat, Maharashtra",
+      duration: "2:50"
     },
     {
       id: 4,
@@ -47,217 +47,191 @@ const VideoTestimonials = () => {
       weddingDate: "September 2023",
       thumbnail: "https://images.unsplash.com/photo-1519225420620-d01200d87631?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "From passport photos to our wedding album, Shubham has been our trusted photographer for years. Quality and professionalism at its best!",
+      quote: "From our engagement photos to the royal wedding film, Shubham has been our family's trusted photography studio for years.",
       rating: 5,
-      location: "Murbad, Maharashtra"
+      location: "Murbad, Maharashtra",
+      duration: "5:10"
     },
     {
       id: 5,
       customerName: "Sneha & Rohan",
       weddingDate: "August 2023",
-      thumbnail: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "We had a destination wedding in Karjat and the team traveled with us to capture every beautiful moment. Truly outstanding work!",
+      quote: "We had a destination wedding in Karjat and the team traveled with us to capture every priceless moment with total passion.",
       rating: 5,
-      location: "Karjat, Maharashtra"
+      location: "Karjat, Maharashtra",
+      duration: "3:15"
     },
     {
       id: 6,
       customerName: "Meera & Akash",
       weddingDate: "July 2023",
-      thumbnail: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "The candid photos are absolutely stunning. Shubham has an eye for capturing genuine emotions. Our family loves every single shot!",
+      quote: "The candid portraits are breathtaking. Shubham has a rare eye for capturing raw emotion and genuine smiles.",
       rating: 5,
-      location: "Badlapur, Maharashtra"
+      location: "Badlapur, Maharashtra",
+      duration: "4:05"
     },
     {
       id: 7,
       customerName: "Pooja & Nikhil",
       weddingDate: "June 2023",
-      thumbnail: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "We booked Shubham for our engagement and were blown away. Immediately rebooked for the wedding. Simply the best in the area!",
+      quote: "We booked Shubham for our engagement and were blown away. Rebooked immediately for our big wedding day!",
       rating: 5,
-      location: "Ambernath, Maharashtra"
+      location: "Ambernath, Maharashtra",
+      duration: "3:30"
     },
     {
       id: 8,
       customerName: "Trupti & Suresh",
       weddingDate: "May 2023",
-      thumbnail: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?w=800&auto=format&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "The drone shots of our mandap ceremony gave us goosebumps! Every frame looks like it's from a film. Highly recommend Shubham Studio.",
+      quote: "The cinematic drone coverage of our mandap ceremony gave everyone goosebumps. Exceptional professionalism!",
       rating: 5,
-      location: "Ulhasnagar, Maharashtra"
+      location: "Ulhasnagar, Maharashtra",
+      duration: "4:45"
     },
     {
       id: 9,
       customerName: "Sarika & Deepak",
       weddingDate: "April 2023",
-      thumbnail: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&auto=format&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "Our wedding album is the most treasured thing we own. The way Shubham narrated our love story through photos is truly heartwarming.",
+      quote: "Our wedding album is our most prized possession. The way Shubham narrated our love story through photos is heartwarming.",
       rating: 5,
-      location: "Titwala, Maharashtra"
+      location: "Titwala, Maharashtra",
+      duration: "3:55"
     },
     {
       id: 10,
       customerName: "Nisha & Gaurav",
       weddingDate: "March 2023",
-      thumbnail: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=800&auto=format&fit=crop&q=80",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      quote: "Professional, punctual and incredibly talented. Shubham made us both so comfortable in front of the camera. Best decision ever!",
+      quote: "Punctual, super talented, and creative. Shubham made us feel completely relaxed in front of the lens.",
       rating: 5,
-      location: "Bhivpuri, Maharashtra"
+      location: "Bhivpuri, Maharashtra",
+      duration: "2:40"
     },
   ];
 
-  // Duplicate for seamless infinite loop
+  // Duplicated list for infinite seamless marquee loop
   const duplicated = [...testimonials, ...testimonials];
 
-  const openVideoModal = (testimonial) => {
-    setActiveVideo(testimonial);
-  };
-
-  const closeModal = () => {
-    setActiveVideo(null);
-    setIsPlaying({});
-  };
+  const closeModal = () => setActiveVideo(null);
 
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape' && activeVideo) closeModal();
     };
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
   }, [activeVideo]);
 
   const StarRating = ({ rating }) => (
-    <div className="flex gap-0.5">
-      {[...Array(5)].map((_, i) => (
-        <svg
-          key={i}
-          className={`w-3.5 h-3.5 ${i < rating ? 'text-amber-400 fill-current' : 'text-gray-600'}`}
-          viewBox="0 0 20 20"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
+    <div className="flex items-center gap-0.5 text-amber-500">
+      {[...Array(rating)].map((_, i) => (
+        <Star key={i} className="w-3.5 h-3.5 fill-current" />
       ))}
     </div>
   );
 
-  // Inject keyframes for infinite scroll animation
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes marquee-scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-      }
-      .marquee-track {
-        display: flex;
-        width: max-content;
-        animation: marquee-scroll 40s linear infinite;
-      }
-      .marquee-track:hover {
-        animation-play-state: paused;
-      }
-      .marquee-track.paused {
-        animation-play-state: paused;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => document.head.removeChild(style);
-  }, []);
-
   return (
-    <div ref={sectionRef} className="py-12 sm:py-16 bg-brandBg overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-10">
+    <section className="py-20 bg-[#F2EDE4] overflow-hidden relative border-t border-[#E0D7CC]/60">
+      <div className="mx-auto max-w-7xl px-6 md:px-12 mb-12">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-12"
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center max-w-3xl mx-auto space-y-3"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccentSoft mb-2">
-            Testimonials
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#A67C6B]">
+            Client Stories & Reviews
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Customer Stories
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#4A3E37] font-normal leading-tight">
+            Loved by Couples & Families
           </h2>
-          <p className="text-lg text-brandTextMuted max-w-3xl mx-auto">
-            Hear directly from our happy couples about their experience with Shubham Photos Studio
+          <p className="text-sm sm:text-base text-[#88796E] font-light leading-relaxed">
+            Hear directly from our happy couples and business clients about their experience with Shubham Studio.
           </p>
         </motion.div>
       </div>
 
-      {/* Infinite Scroll Slider — full bleed outside container */}
+      {/* Infinite Scroll Slider */}
       <div className="relative w-full">
-        {/* Left fade */}
-        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 sm:w-40 z-10"
-          style={{ background: 'linear-gradient(to right, var(--color-brandBg, #0f0f0f), transparent)' }} />
-        {/* Right fade */}
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 sm:w-40 z-10"
-          style={{ background: 'linear-gradient(to left, var(--color-brandBg, #0f0f0f), transparent)' }} />
+        {/* Left Gradient Fade */}
+        <div 
+          className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-36 z-10"
+          style={{ background: 'linear-gradient(to right, #F2EDE4 0%, rgba(242,237,228,0) 100%)' }} 
+        />
 
-        {/* Scrolling Track */}
+        {/* Right Gradient Fade */}
+        <div 
+          className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-36 z-10"
+          style={{ background: 'linear-gradient(to left, #F2EDE4 0%, rgba(242,237,228,0) 100%)' }} 
+        />
+
+        {/* Marquee Track */}
         <div
-          className={`marquee-track ${isPaused ? 'paused' : ''}`}
-          ref={trackRef}
+          className={`marquee-track flex gap-6 ${isPaused ? 'paused' : ''}`}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
         >
           {duplicated.map((testimonial, index) => (
             <div
               key={`${testimonial.id}-${index}`}
-              className="flex-shrink-0 w-64 sm:w-72 mx-3 group relative cursor-pointer overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-white/10"
-              style={{ background: 'rgba(255,255,255,0.04)' }}
-              onClick={() => openVideoModal(testimonial)}
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
+              onClick={() => setActiveVideo(testimonial)}
+              className="group flex-shrink-0 w-72 sm:w-80 bg-white border border-[#E0D7CC]/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
             >
-              {/* Thumbnail */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-black">
+              {/* Thumbnail Container */}
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#221C19]">
                 <img
                   src={testimonial.thumbnail}
-                  alt={`${testimonial.customerName} wedding testimonial`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  alt={`${testimonial.customerName} wedding film`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
                 />
-                {/* Dark overlay */}
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/55 transition-colors duration-300" />
+                {/* Subtle Overlay */}
+                <div className="absolute inset-0 bg-black/25 group-hover:bg-black/40 transition-colors duration-300" />
 
-                {/* Play Button */}
+                {/* Glowing Play Button */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    className="w-12 h-12 rounded-full bg-brandAccent flex items-center justify-center shadow-lg shadow-brandAccent/40"
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Play className="w-5 h-5 text-black ml-1" />
-                  </motion.div>
+                  <div className="w-12 h-12 rounded-full bg-[#4A3E37]/90 text-white border border-white/30 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:bg-[#A67C6B] group-hover:scale-110 transition-all duration-300">
+                    <Play className="w-5 h-5 ml-0.5 fill-current" />
+                  </div>
                 </div>
 
-                {/* Duration Badge */}
-                <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded font-medium">
-                  3:45
+                {/* Video Duration Badge */}
+                <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-medium px-2.5 py-0.5 rounded-full tracking-wider">
+                  {testimonial.duration}
                 </div>
               </div>
 
-              {/* Info Panel */}
-              <div className="p-4 border-t border-white/10">
-                <div className="flex items-start justify-between mb-1.5">
-                  <div>
-                    <h3 className="font-semibold text-white text-sm leading-tight">
+              {/* Info & Review Body */}
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="font-serif text-base font-medium text-[#4A3E37] group-hover:text-[#A67C6B] transition-colors leading-tight">
                       {testimonial.customerName}
                     </h3>
-                    <p className="text-xs text-brandTextMuted mt-0.5">
-                      {testimonial.weddingDate} · {testimonial.location}
-                    </p>
+                    <StarRating rating={testimonial.rating} />
                   </div>
-                  <StarRating rating={testimonial.rating} />
+                  <div className="flex items-center gap-1 text-[11px] text-[#88796E] font-light mt-1">
+                    <MapPin className="w-3 h-3 text-[#A67C6B]" />
+                    <span>{testimonial.location}</span>
+                    <span className="mx-1">•</span>
+                    <span>{testimonial.weddingDate}</span>
+                  </div>
                 </div>
 
-                <p className="text-xs text-brandTextMuted line-clamp-2 leading-relaxed">
+                <p className="text-xs text-[#88796E] italic font-light leading-relaxed pt-3 border-t border-[#E0D7CC]/60 line-clamp-2">
                   "{testimonial.quote}"
                 </p>
               </div>
@@ -266,97 +240,88 @@ const VideoTestimonials = () => {
         </div>
       </div>
 
-      {/* View More Button */}
+      {/* CTA Button */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.6 }}
-        className="text-center mt-12 px-4"
+        viewport={{ once: true }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="text-center mt-12 px-6"
       >
-        <button className="inline-flex items-center px-8 py-3 rounded-full bg-brandAccent text-black font-semibold hover:bg-amber-400 transition-colors shadow-lg shadow-brandAccent/40 hover:shadow-xl transform hover:scale-105 duration-200">
-          View More Testimonials
-          <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </button>
+        <Link
+          to="/gallery"
+          className="px-8 py-3.5 bg-[#4A3E37] text-white hover:bg-[#A67C6B] text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-md hover:shadow-lg inline-flex items-center gap-2 rounded-none"
+        >
+          Explore Full Portfolio & Films
+        </Link>
       </motion.div>
 
-      {/* Video Modal */}
+      {/* Video Modal Popup */}
       <AnimatePresence>
         {activeVideo && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
             onClick={closeModal}
           >
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="relative w-full max-w-4xl bg-black rounded-xl overflow-hidden border border-white/10"
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-3xl bg-[#181412] text-white rounded-xl overflow-hidden shadow-2xl border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close */}
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/60 flex items-center justify-center text-white hover:bg-black/80 transition-colors border border-white/10"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+              {/* Modal Header */}
+              <div className="p-4 sm:p-5 flex items-center justify-between border-b border-white/10 bg-[#221C19]">
+                <div>
+                  <h3 className="font-serif text-lg font-medium text-[#F2EDE4]">
+                    {activeVideo.customerName}
+                  </h3>
+                  <p className="text-xs text-[#B8ABA0] font-light">
+                    {activeVideo.weddingDate} · {activeVideo.location}
+                  </p>
+                </div>
+                <button
+                  onClick={closeModal}
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                  aria-label="Close modal"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
 
-              {/* Video */}
-              <div className="relative aspect-video">
+              {/* Video iFrame */}
+              <div className="relative aspect-video w-full bg-black">
                 <iframe
                   src={activeVideo.videoUrl}
-                  title={`${activeVideo.customerName} Wedding Testimonial`}
+                  title={`${activeVideo.customerName} Wedding Film`}
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
-                {/* Controls bar */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => setIsPlaying(prev => ({ ...prev, [activeVideo.id]: !prev[activeVideo.id] }))}
-                        className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-                      >
-                        {isPlaying[activeVideo.id] ? (
-                          <Pause className="w-4 h-4" />
-                        ) : (
-                          <Play className="w-4 h-4 ml-0.5" />
-                        )}
-                      </button>
-                      <button className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                        <Volume2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                    <button className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                      <Maximize2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
               </div>
 
-              {/* Info strip */}
-              <div className="absolute top-4 left-4 right-16 text-white">
-                <h3 className="text-lg font-semibold mb-0.5">{activeVideo.customerName}</h3>
-                <p className="text-sm opacity-75">{activeVideo.weddingDate} · {activeVideo.location}</p>
-                <div className="mt-1">
-                  <StarRating rating={activeVideo.rating} />
+              {/* Review Quote Banner */}
+              <div className="p-4 sm:p-5 bg-[#221C19] border-t border-white/10 flex items-start gap-3">
+                <Quote className="w-5 h-5 text-[#D4A594] shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs sm:text-sm text-[#F2EDE4] italic font-light leading-relaxed">
+                    "{activeVideo.quote}"
+                  </p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <StarRating rating={activeVideo.rating} />
+                    <span className="text-[11px] text-[#B8ABA0] font-medium">5.0 Star Rating</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </section>
   );
 };
 

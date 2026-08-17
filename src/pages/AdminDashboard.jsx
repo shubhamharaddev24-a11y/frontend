@@ -15,7 +15,8 @@ import {
   FileCode,
   PlusCircle,
   Paperclip,
-  ExternalLink
+  ExternalLink,
+  Sliders
 } from "lucide-react";
 import { 
   bookingService, 
@@ -23,6 +24,7 @@ import {
   authService,
   taskService
 } from "../services";
+import AdminCMSManager from "../components/AdminCMSManager";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("bookings"); // bookings, leads, staff, or tasks
@@ -377,7 +379,7 @@ const AdminDashboard = () => {
         <div className="flex flex-col justify-between gap-4 border-b border-brandBorder pb-6 sm:flex-row sm:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccent">
-              Shubham Photos Studio
+              Shubham Media & Digital Services
             </p>
             <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
               Admin Workspace
@@ -472,16 +474,29 @@ const AdminDashboard = () => {
             Website Tasks ({tasks.length})
           </button>
           {isAdmin && (
-            <button
-              onClick={() => setActiveTab("staff")}
-              className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${
-                activeTab === "staff" 
-                  ? "border-b-2 border-brandAccent text-brandAccent" 
-                  : "text-brandTextMuted hover:text-brandTextPrimary"
-              }`}
-            >
-              Staff Directory ({staff.length})
-            </button>
+            <>
+              <button
+                onClick={() => setActiveTab("staff")}
+                className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${
+                  activeTab === "staff" 
+                    ? "border-b-2 border-brandAccent text-brandAccent" 
+                    : "text-brandTextMuted hover:text-brandTextPrimary"
+                }`}
+              >
+                Staff Directory ({staff.length})
+              </button>
+              <button
+                onClick={() => setActiveTab("cms")}
+                className={`pb-2 text-sm font-semibold tracking-wider transition-colors flex items-center gap-1.5 ${
+                  activeTab === "cms" 
+                    ? "border-b-2 border-brandAccent text-brandAccent" 
+                    : "text-brandTextMuted hover:text-brandTextPrimary"
+                }`}
+              >
+                <Sliders size={15} />
+                <span>Website CMS & Media</span>
+              </button>
+            </>
           )}
         </div>
 
@@ -491,6 +506,9 @@ const AdminDashboard = () => {
             <div className="py-12 text-center text-brandTextMuted">
               Loading dashboard details...
             </div>
+          ) : activeTab === "cms" ? (
+            /* Master CMS Tab */
+            <AdminCMSManager />
           ) : activeTab === "bookings" ? (
             /* Bookings Tab */
             <div className="overflow-x-auto">
@@ -670,11 +688,11 @@ const AdminDashboard = () => {
                       </div>
                     )}
 
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-medium text-brandTextMuted">Task Title</label>
+                    <div className="coolinput coolinput-soft-bg w-full">
+                      <label className="text">Task Title</label>
                       <input
                         type="text"
-                        className="w-full rounded border border-brandBorder bg-brandSurfaceSoft px-3 py-1.5 text-xs text-brandTextPrimary outline-none focus:border-brandAccent"
+                        className="input"
                         value={newTask.title}
                         onChange={(e) => setNewTask(prev => ({ ...prev, title: e.target.value }))}
                         placeholder="e.g. Build Gallery Lightbox"
@@ -682,11 +700,11 @@ const AdminDashboard = () => {
                       />
                     </div>
 
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-medium text-brandTextMuted">Description</label>
+                    <div className="coolinput coolinput-soft-bg w-full">
+                      <label className="text">Description</label>
                       <textarea
                         rows={2}
-                        className="w-full rounded border border-brandBorder bg-brandSurfaceSoft px-3 py-1.5 text-xs text-brandTextPrimary outline-none focus:border-brandAccent"
+                        className="input"
                         value={newTask.description}
                         onChange={(e) => setNewTask(prev => ({ ...prev, description: e.target.value }))}
                         placeholder="Explain the work required..."
@@ -694,10 +712,10 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="grid gap-3 sm:grid-cols-2">
-                      <div className="space-y-1">
-                        <label className="text-[11px] font-medium text-brandTextMuted">Priority</label>
+                      <div className="coolinput coolinput-soft-bg w-full">
+                        <label className="text">Priority</label>
                         <select
-                          className="w-full rounded border border-brandBorder bg-brandSurfaceSoft px-2.5 py-1.5 text-xs text-brandTextPrimary outline-none focus:border-brandAccent"
+                          className="input"
                           value={newTask.priority}
                           onChange={(e) => setNewTask(prev => ({ ...prev, priority: e.target.value }))}
                         >
@@ -707,21 +725,21 @@ const AdminDashboard = () => {
                         </select>
                       </div>
 
-                      <div className="space-y-1">
-                        <label className="text-[11px] font-medium text-brandTextMuted">Due Date</label>
+                      <div className="coolinput coolinput-soft-bg w-full">
+                        <label className="text">Due Date</label>
                         <input
                           type="date"
-                          className="w-full rounded border border-brandBorder bg-brandSurfaceSoft px-2 py-1.2 text-xs text-brandTextPrimary outline-none focus:border-brandAccent"
+                          className="input"
                           value={newTask.dueDate}
                           onChange={(e) => setNewTask(prev => ({ ...prev, dueDate: e.target.value }))}
                         />
                       </div>
                     </div>
 
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-medium text-brandTextMuted">Assign To Staff Member</label>
+                    <div className="coolinput coolinput-soft-bg w-full">
+                      <label className="text">Assign To Staff Member</label>
                       <select
-                        className="w-full rounded border border-brandBorder bg-brandSurfaceSoft px-3 py-1.5 text-xs text-brandTextPrimary outline-none focus:border-brandAccent"
+                        className="input"
                         value={newTask.assignedTo}
                         onChange={(e) => setNewTask(prev => ({ ...prev, assignedTo: e.target.value }))}
                       >
@@ -910,11 +928,11 @@ const AdminDashboard = () => {
                       </div>
                     )}
                     
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-medium text-brandTextMuted">Name</label>
+                    <div className="coolinput coolinput-soft-bg w-full">
+                      <label className="text">Name</label>
                       <input
                         type="text"
-                        className="w-full rounded border border-brandBorder bg-brandSurfaceSoft px-3 py-1.5 text-xs text-brandTextPrimary outline-none focus:border-brandAccent"
+                        className="input"
                         value={newStaff.name}
                         onChange={(e) => setNewStaff(prev => ({ ...prev, name: e.target.value }))}
                         placeholder="e.g. Rahul Sharma"
@@ -922,11 +940,11 @@ const AdminDashboard = () => {
                       />
                     </div>
 
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-medium text-brandTextMuted">Email Address</label>
+                    <div className="coolinput coolinput-soft-bg w-full">
+                      <label className="text">Email Address</label>
                       <input
                         type="email"
-                        className="w-full rounded border border-brandBorder bg-brandSurfaceSoft px-3 py-1.5 text-xs text-brandTextPrimary outline-none focus:border-brandAccent"
+                        className="input"
                         value={newStaff.email}
                         onChange={(e) => setNewStaff(prev => ({ ...prev, email: e.target.value }))}
                         placeholder="rahul@shubhambackend.com"
@@ -934,11 +952,11 @@ const AdminDashboard = () => {
                       />
                     </div>
 
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-medium text-brandTextMuted">Password</label>
+                    <div className="coolinput coolinput-soft-bg w-full">
+                      <label className="text">Password</label>
                       <input
                         type="password"
-                        className="w-full rounded border border-brandBorder bg-brandSurfaceSoft px-3 py-1.5 text-xs text-brandTextPrimary outline-none focus:border-brandAccent"
+                        className="input"
                         value={newStaff.password}
                         onChange={(e) => setNewStaff(prev => ({ ...prev, password: e.target.value }))}
                         placeholder="Min 6 chars (Upper, Lower & Num)"
