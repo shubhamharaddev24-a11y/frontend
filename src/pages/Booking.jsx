@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Booking.css";
+// import "./Booking.css";
 
 export default function Booking() {
   const [formData, setFormData] = useState({
@@ -44,9 +44,8 @@ export default function Booking() {
               {dates.map((date) => (
                 <button
                   key={date}
-                  className={`date-btn ${
-                    formData.date === date ? "active" : ""
-                  }`}
+                  className={`date-btn ${formData.date === date ? "active" : ""
+                    }`}
                   onClick={() =>
                     setFormData({ ...formData, date })
                   }
@@ -63,9 +62,8 @@ export default function Booking() {
             {slots.map((slot) => (
               <button
                 key={slot}
-                className={`slot-btn ${
-                  formData.time === slot ? "active" : ""
-                }`}
+                className={`slot-btn ${formData.time === slot ? "active" : ""
+                  }`}
                 onClick={() =>
                   setFormData({ ...formData, time: slot })
                 }
