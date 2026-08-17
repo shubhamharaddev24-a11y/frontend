@@ -17,7 +17,7 @@ const About = () => {
           variants={variants.fadeUp}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
-            ABOUT SHUBHAM MEDIA & DIGITAL
+            ABOUT SHUBHAM MEDIA &
           </p>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
             A creative agency rooted in local trust and digital excellence.
