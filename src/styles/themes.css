@@ -1,7 +1,7 @@
-/* Light and Dark Theme Variables - Viya Films Style */
+/* Light and Dark Theme Variables - SPH Premium Style */
 
 :root {
-  /* Viya Luxury Light Theme (Default) */
+  /* SPH Luxury Light Theme (Default) */
   --light-bg: #F2EDE4;          /* Warm luxury eggshell cream background */
   --light-surface: #FFFFFF;     /* Pure clean elevated cards */
   --light-surface-soft: #FAF6F0;/* Soft beige container */
@@ -21,7 +21,7 @@
   --dark-accent: #D4A594;
   --dark-accent-soft: #EABDAE;
 
-  /* Defaults: start in Viya Light luxury cream theme */
+  /* Defaults: start in SPH Light luxury cream theme */
   --bg-primary: var(--light-bg);
   --bg-surface: var(--light-surface);
   --bg-surface-soft: var(--light-surface-soft);
