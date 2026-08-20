@@ -17,13 +17,13 @@ const About = () => {
           variants={variants.fadeUp}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
-            ABOUT SHUBHAM MEDIA & DIGITAL
+            ABOUT SHUBHAM MEDIA &
           </p>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
             A creative agency rooted in local trust and digital excellence.
           </h1>
           <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed pt-2">
-            Shubham Media & Digital Services combines high-end photography, cinematic wedding films, and modern software engineering. Through our physical division, 
+            Shubham Media & Digital Services combines high-end photography, cinematic wedding films, and modern software engineering. Through our physical division,
             <strong className="font-medium text-[#1A1A1A] dark:text-[#F2EDE4]"> Shubham Photos Studio</strong> in Saralgaon, we serve the local Murbad community with timeless photo stories, prints, and e-governance services, alongside enterprise web applications and SEO.
           </p>
         </motion.div>
