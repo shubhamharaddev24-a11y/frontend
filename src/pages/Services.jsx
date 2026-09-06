@@ -6,9 +6,10 @@ import { serviceService } from "../services";
 const sections = [
   {
     id: "photography",
-    title: "Media Services (Shubham Photos Studio)",
+    pillar: "CREATE",
+    title: "Media Services & Visual Arts",
     description:
-      "Timeless memories, wedding films, and professional photography captured by our dedicated studio branch.",
+      "Timeless memories, wedding films, and professional photography captured with cinematic elegance.",
     items: [
       "Wedding photography and videography (Traditional & Cinematic)",
       "Pre-wedding shoots at scenic outdoor locations near Murbad",
@@ -19,10 +20,25 @@ const sections = [
     ],
   },
   {
+    id: "design-branding",
+    pillar: "CREATE",
+    title: "Design & Graphic Branding",
+    description:
+      "Professional visual assets for your offline promotions, print media, and corporate branding.",
+    items: [
+      "Political banners, rally posters, and flex designs",
+      "Shop front board designs and corporate identity assets",
+      "Wedding welcome boards, backdrops, and Marathi Lagna-Patrika",
+      "Visiting cards, brochures, and promotional pamphlets",
+      "Custom logo designs and social media post templates",
+    ],
+  },
+  {
     id: "web-dev",
+    pillar: "INNOVATE",
     title: "Web Development Division",
     description:
-      "Modern, fast, and responsive websites to establish your business online.",
+      "Modern, fast, and responsive websites to establish your business authority online.",
     items: [
       "Custom Full-Stack web applications (MERN Stack)",
       "Business and corporate portfolio websites",
@@ -34,7 +50,8 @@ const sections = [
   },
   {
     id: "digital-marketing",
-    title: "Digital Marketing Division",
+    pillar: "INNOVATE",
+    title: "Digital Marketing & Growth",
     description:
       "Drive traffic, build authority, and acquire local customers for your brand.",
     items: [
@@ -46,23 +63,11 @@ const sections = [
     ],
   },
   {
-    id: "design-branding",
-    title: "Design & Graphic Branding",
-    description:
-      "Professional visual assets for your offline promotions and branding.",
-    items: [
-      "Political banners, rally posters, and flex designs",
-      "Shop front board designs and corporate identity assets",
-      "Wedding welcome boards, backdrops, and Marathi Lagna-Patrika",
-      "Visiting cards, brochures, and promotional pamphlets",
-      "Custom logo designs and social media post templates",
-    ],
-  },
-  {
     id: "cyber-dtp",
-    title: "Cyber Desk & DTP Services",
+    pillar: "CONNECT",
+    title: "Cyber Desk & Citizen Services",
     description:
-      "Your physical point of contact in Saralgaon for essential digital document tasks.",
+      "Your physical point of contact in Saralgaon for essential digital document tasks and citizen services.",
     items: [
       "Professional biodata and marriage CV creation",
       "Student resumes and job application documents",
@@ -117,10 +122,10 @@ const Services = () => {
             DIVISIONS & SERVICES
           </p>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
-            Media, Technology & Graphic Branding
+            Create • Innovate • Connect
           </h1>
           <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
-            From professional cinematography and wedding albums at our local studio, to custom web applications, local SEO marketing, and digital document desk.
+            From professional cinematography and wedding albums, to custom full-stack web applications, local SEO marketing, and digital citizen desk services.
           </p>
         </motion.div>
 
@@ -135,9 +140,16 @@ const Services = () => {
               variants={variants.fadeUpShort}
             >
               <div className="flex items-center justify-between gap-3">
-                <h2 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
-                  {section.title}
-                </h2>
+                <div className="space-y-1">
+                  {section.pillar && (
+                    <span className="inline-block text-[10px] font-mono uppercase tracking-widest font-bold text-[#A67C6B] bg-[#A67C6B]/10 dark:bg-[#A67C6B]/20 px-2.5 py-0.5 rounded">
+                      Pillar: {section.pillar}
+                    </span>
+                  )}
+                  <h2 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+                    {section.title}
+                  </h2>
+                </div>
                 {section.comingSoon && (
                   <span className="rounded-full bg-[#A67C6B]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A67C6B]">
                     Coming soon

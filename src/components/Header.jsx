@@ -51,7 +51,7 @@ const Header = () => {
         <NavLink
           to="/"
           className="flex shrink-0 items-center gap-2 rounded-lg outline-none"
-          aria-label="Shubham Media & Digital Services — Home"
+          aria-label="CREAONNECT — Home"
         >
           <Logo />
         </NavLink>
@@ -99,7 +99,7 @@ const Header = () => {
 
           {/* WhatsApp Button */}
           <motion.a
-            href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20photography%2C%20development%20or%20marketing%20services."
+            href="https://wa.me/919271456749?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brandBorder bg-brandSurfaceSoft/40 text-brandTextPrimary hover:text-[#25D366] hover:bg-[#25D366]/10 hover:border-[#25D366]/40 transition-colors active:scale-95"
@@ -179,7 +179,7 @@ const Header = () => {
                   <span>Call Now</span>
                 </a>
                 <a
-                  href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20photography%2C%20development%20or%20marketing%20services."
+                  href="https://wa.me/919271456749?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 rounded-xl border border-brandBorder bg-brandSurfaceSoft/60 py-2.5 text-xs font-bold text-brandTextPrimary hover:text-[#25D366] hover:border-[#25D366]/40 active:scale-95 transition-all"

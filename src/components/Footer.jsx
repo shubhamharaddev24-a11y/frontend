@@ -54,8 +54,8 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60 pt-6 text-xs text-[#4A4A4A] dark:text-[#B8ABA0] sm:flex-row">
-          <p>© {new Date().getFullYear()} Shubham Media & Digital Services. All rights reserved.</p>
-          <p className="font-serif italic">Capturing raw emotions, scenic landscapes, and unforgettable moments.</p>
+          <p>© {new Date().getFullYear()} CREAONNECT. All rights reserved.</p>
+          <p className="font-sans uppercase tracking-[0.2em] text-[#A67C6B] text-[11px] font-semibold">Create • Innovate • Connect</p>
         </div>
       </div>
     </footer>

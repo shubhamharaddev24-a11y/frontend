@@ -7,6 +7,7 @@ import RevealOnScroll from "../components/RevealOnScroll";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
 import AnimatedServiceCard from "../components/AnimatedServiceCard";
+import ThreePillarsSection from "../components/ThreePillarsSection";
 import { useContent } from "../contexts/ContentContext";
 import {
   Code,
@@ -98,7 +99,7 @@ const Home = () => {
             </h2>
             <div className="space-y-5 text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
               <p>
-                Welcome to Shubham Media & Digital, where we turn your most meaningful celebrations into lasting visual treasures. We are dedicated to documenting the authentic connection, joy, and unique chemistry of every couple we work with.
+                Welcome to CREAONNECT, where we turn your most meaningful celebrations into lasting visual treasures and power your business through modern digital solutions. We are dedicated to documenting the authentic connection, joy, and unique chemistry of every project and couple we work with.
               </p>
               <p>
                 Our approach is focused on real storytelling. We capture the genuine, unscripted moments—the quiet glances, the loud laughter, and the heartfelt tears—that make your wedding day uniquely yours, whether it's a grand multi-day celebration or an intimate family gathering.
@@ -124,6 +125,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* 2.5. The Three Pillars Framework (CREATE • INNOVATE • CONNECT) */}
+      <ThreePillarsSection />
 
       {/* 3. Precious Moments Showcase Grid (Matching Viya Films screenshot 3) */}
       <section className="py-16 md:py-24 px-6 sm:px-12 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
@@ -201,7 +205,7 @@ const Home = () => {
             Time moves forward, but a photograph lets you pause. We build a bridge back to the true emotions of your most treasured day.
           </p>
           <p className="text-xs uppercase tracking-[0.35em] font-sans text-white/80 pt-2">
-            SHUBHAM MEDIA & FILMS
+            CREAONNECT STUDIOS & FILMS
           </p>
         </div>
       </section>

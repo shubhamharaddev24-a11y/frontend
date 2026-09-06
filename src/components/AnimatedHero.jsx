@@ -7,6 +7,7 @@ const DEFAULT_SLIDES = [
   {
     id: 1,
     image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=2400&auto=format&fit=crop&q=85",
+    videoUrl: "https://vjs.zencdn.net/v/oceans.mp4",
     objectPosition: "center 30%",
     isMonochrome: false,
     title: "Destination Pre-Weddings & Editorial Stories",
@@ -15,6 +16,7 @@ const DEFAULT_SLIDES = [
   {
     id: 2,
     image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=2400&auto=format&fit=crop&q=85",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     objectPosition: "center 20%",
     isMonochrome: false,
     title: "Sacred Indian Vows & Joyful Moments",
@@ -23,6 +25,7 @@ const DEFAULT_SLIDES = [
   {
     id: 3,
     image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=2400&auto=format&fit=crop&q=85",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     objectPosition: "center 25%",
     isMonochrome: false,
     title: "Authentic Celebrations & Wedding Cinema",
@@ -32,6 +35,7 @@ const DEFAULT_SLIDES = [
 
 const AnimatedHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [videoError, setVideoError] = useState(false);
   const reduceMotion = useReducedMotion();
   const { getSection } = useContent();
 
@@ -45,6 +49,10 @@ const AnimatedHero = () => {
     return () => clearInterval(timer);
   }, [slides.length]);
 
+  useEffect(() => {
+    setVideoError(false);
+  }, [currentIndex]);
+
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
   };
@@ -57,7 +65,7 @@ const AnimatedHero = () => {
 
   return (
     <section className="relative w-full h-screen min-h-[650px] overflow-hidden bg-[#181412]">
-      {/* Background Image Carousel Slider */}
+      {/* Background Image/Video Carousel Slider */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -67,13 +75,27 @@ const AnimatedHero = () => {
           transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
           className="absolute inset-0 w-full h-full"
         >
-          <img
-            src={currentSlide.imageUrl || currentSlide.image}
-            alt={currentSlide.title || "Shubham Media"}
-            className={`w-full h-full object-cover brightness-105 contrast-[1.02] ${currentSlide.isMonochrome ? "grayscale contrast-125" : ""
+          {(currentSlide.mediaType === 'video' || (!currentSlide.mediaType && currentSlide.videoUrl)) && !videoError ? (
+            <video
+              src={currentSlide.videoUrl}
+              autoPlay
+              loop
+              muted
+              playsInline
+              onError={() => setVideoError(true)}
+              className="w-full h-full object-cover brightness-95"
+              style={{ objectPosition: currentSlide.objectPosition || "center 20%" }}
+            />
+          ) : (
+            <img
+              src={currentSlide.imageUrl || currentSlide.image}
+              alt={currentSlide.title || "Shubham Media"}
+              className={`w-full h-full object-cover brightness-105 contrast-[1.02] ${
+                currentSlide.isMonochrome ? "grayscale contrast-125" : ""
               }`}
-            style={{ objectPosition: currentSlide.objectPosition || "center 20%" }}
-          />
+              style={{ objectPosition: currentSlide.objectPosition || "center 20%" }}
+            />
+          )}
           {/* Soft luxury gradient overlay - bright and luminous */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
         </motion.div>

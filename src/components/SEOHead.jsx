@@ -10,16 +10,16 @@ const SEOHead = ({
   keywords,
   jsonLd 
 }) => {
-  const siteTitle = 'Shubham Media & Digital Services';
+  const siteTitle = 'CREAONNECT | Create • Innovate • Connect';
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-  const siteUrl = 'https://smediadigitalservices.com';
-  const siteDescription = 'Shubham Media & Digital Services offers professional web development (MERN stack), local digital marketing/SEO, graphic design, and premium cinematic photography through Shubham Photos Studio in Murbad.';
-  const defaultImage = 'https://smediadigitalservices.com/images/og-image.jpg';
+  const siteUrl = 'https://creaonnect.com';
+  const siteDescription = 'CREAONNECT brings together premium photography, cinematic wedding films, full-stack web development, AI digital solutions, and creative branding across three pillars: Create, Innovate, Connect.';
+  const defaultImage = 'https://creaonnect.com/images/og-image.jpg';
 
   const structuredData = jsonLd || {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Shubham Media & Digital Services",
+    "name": "CREAONNECT",
     "description": siteDescription,
     "url": siteUrl,
     "telephone": "+91 92714 56749",
@@ -80,7 +80,7 @@ const SEOHead = ({
       <meta name="twitter:site" content="@shubhamphotos" />
       
       {/* Additional SEO Meta */}
-      <meta name="author" content="Shubham Media & Digital Services" />
+      <meta name="author" content="CREAONNECT" />
       <meta name="language" content="English" />
       <meta name="geo.region" content="IN-MH" />
       <meta name="geo.placename" content="Murbad, Maharashtra" />

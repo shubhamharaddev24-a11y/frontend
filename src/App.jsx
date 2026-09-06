@@ -6,6 +6,7 @@ import SEOHead from "./components/SEOHead";
 import Starfield from "./components/Starfield";
 import Lenis from "lenis";
 import "./App.css";
+import Practice from "./pages/Practice";
 
 // Lazy loaded page components for optimal initial bundle sizes
 const Home = lazy(() => import("./pages/Home"));
@@ -66,24 +67,24 @@ const AppContent = () => {
   }, [location.pathname]);
 
   const getSEOConfig = (pathname) => {
-    const baseUrl = "https://smediadigitalservices.com";
+    const baseUrl = "https://creaonnect.com";
 
     switch (pathname) {
       case "/":
         return {
-          title: "Custom Web Development & Cinematography Murbad",
-          description: "Shubham Media & Digital Services delivers custom MERN stack websites, local SEO marketing, graphic branding, and premium wedding cinematography in Murbad, Maharashtra.",
+          title: "CREAONNECT | Create • Innovate • Connect",
+          description: "CREAONNECT delivers custom MERN stack websites, local SEO marketing, graphic branding, and premium wedding cinematography across three pillars: Create, Innovate, Connect.",
           canonical: baseUrl,
-          keywords: "web development Murbad, digital marketing Thane, wedding cinematography, photo studio Saralgaon, local SEO, graphic design",
+          keywords: "creaonnect, create innovate connect, web development Murbad, digital marketing Thane, wedding cinematography, photo studio Saralgaon, local SEO, graphic design",
           type: "website"
         };
 
       case "/about":
         return {
-          title: "About Us - Web Agency & Photo Studio",
-          description: "Learn how Shubham Media & Digital Services combines professional software development, local search engine optimization, and the trusted photography legacy of Shubham Photos Studio.",
+          title: "About Us | CREAONNECT Three Pillars",
+          description: "Learn how CREAONNECT combines professional software development, local search engine optimization, and timeless cinematic photography.",
           canonical: `${baseUrl}/about`,
-          keywords: "about Shubham Media, web agency Murbad, local photography legacy, digital solutions company",
+          keywords: "about creaonnect, create innovate connect, web agency Murbad, digital solutions company",
           type: "website"
         };
 
@@ -156,6 +157,7 @@ const AppContent = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/practice" element={<Practice />} /> 
               <Route path="/services" element={<Services />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/contact" element={<Contact />} />

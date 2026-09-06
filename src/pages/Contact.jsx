@@ -121,7 +121,7 @@ const Contact = () => {
                   title="Thank You!"
                   subtitle={`Hi ${submittedData.name}, we have received your request for ${submittedData.service}!`}
                   body={`Mobile: +91 ${submittedData.phone}`}
-                  signature="SHUBHAM MEDIA"
+                  signature="CREAONNECT"
                   useLogoSeal={true}
                 />
 
@@ -183,7 +183,7 @@ const Contact = () => {
                       
                       const base = "https://wa.me/919271456749?text=";
                       const lines = [
-                        "New enquiry from Shubham Media website:",
+                        "New enquiry from CREAONNECT website:",
                         `Name: ${form.name}`,
                         `Mobile: ${form.phone}`,
                         form.service ? `Interested in: ${form.service}` : "",
