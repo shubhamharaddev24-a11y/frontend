@@ -2,7 +2,8 @@ import React, { useMemo, useState, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMotionVariants } from "../utils/motion";
-import AnimatedHero from "../components/AnimatedHero";
+import CreaonnectUniqueHero from "../components/CreaonnectUniqueHero";
+import MarketplaceNetworkSection from "../components/MarketplaceNetworkSection";
 import RevealOnScroll from "../components/RevealOnScroll";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
@@ -91,8 +92,8 @@ const Home = () => {
 
   return (
     <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] font-sans selection:bg-[#A67C6B]/20">
-      {/* 1. Full-Bleed Animated Hero Carousel */}
-      <AnimatedHero />
+      {/* 1. CREAONNECT Unique Hero (Image ↔ Animated Interactive Content Card) */}
+      <CreaonnectUniqueHero />
 
       {/* 2. Philosophy & Welcome Intro Section (2-Column Layout matching Viya Films screenshot 2) */}
       <section className="py-20 md:py-28 px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto">
@@ -133,6 +134,9 @@ const Home = () => {
 
       {/* 2.5. The Three Pillars Framework (CREATE • INNOVATE • CONNECT) */}
       <ThreePillarsSection />
+
+      {/* 2.6. CONNECT — The Marketplace Flow (CLIENT → CREAONNECT → TALENT) */}
+      {/* <MarketplaceNetworkSection /> */}
 
       {/* 3. Precious Moments Showcase Grid (Matching Viya Films screenshot 3) */}
       <section className="py-16 md:py-24 px-6 sm:px-12 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
