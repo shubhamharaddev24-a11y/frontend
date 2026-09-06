@@ -6,8 +6,8 @@ import AnimatedHero from "../components/AnimatedHero";
 import RevealOnScroll from "../components/RevealOnScroll";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
-import AnimatedServiceCard from "../components/AnimatedServiceCard";
 import ThreePillarsSection from "../components/ThreePillarsSection";
+import GSAPStackedCards from "../components/GSAPStackedCards";
 import { useContent } from "../contexts/ContentContext";
 import {
   Code,
@@ -28,6 +28,7 @@ const Home = () => {
 
   const servicesList = useMemo(() => [
     {
+      id: "division-web-dev",
       name: "Web Development Division",
       points: [
         "Custom Full-Stack web applications (MERN)",
@@ -39,6 +40,7 @@ const Home = () => {
       shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
+      id: "division-digital-marketing",
       name: "Digital Marketing & SEO",
       points: [
         "Google Business Profile optimization and local map ranking",
@@ -50,6 +52,7 @@ const Home = () => {
       shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
+      id: "division-media-studio",
       name: "Media Division (Shubham Photos Studio)",
       points: [
         "Cinematic wedding films, trailers, and traditional photography",
@@ -61,6 +64,7 @@ const Home = () => {
       shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
+      id: "division-graphic-design",
       name: "Graphic Design & Branding",
       points: [
         "Political campaign banners, rally posters & flex designs",
@@ -72,6 +76,7 @@ const Home = () => {
       shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
+      id: "division-cyber-desk",
       name: "Cyber Desk & DTP Services",
       points: [
         "Professional biodata and marriage resume creation",
@@ -246,35 +251,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 6. Company Divisions & Services Showcase */}
-      <section className="py-16 px-6 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
-            Full Capabilities
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#1A1A1A] dark:text-[#F2EDE4] mt-2">
-            Media, Technology & Digital Divisions
-          </h2>
-          <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] mt-3">
-            From high-end wedding films and portraits to full-stack web applications, local SEO, and print designs.
-          </p>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {servicesList.map((service, index) => (
-            <AnimatedServiceCard
-              key={service.name}
-              index={index}
-              name={service.name}
-              points={service.points}
-              mainIcon={service.mainIcon}
-              themeColor={service.themeColor}
-              shadowColor={service.shadowColor}
-              onClick={() => setActiveService(service)}
-            />
-          ))}
-        </div>
-      </section>
+      {/* 6. Company Divisions & Services Showcase (14. GSAP Stacked Cards Animation) */}
+      <GSAPStackedCards
+        services={servicesList}
+        onSelectService={(service) => setActiveService(service)}
+      />
 
       {/* 7. Counter Section */}
       <PhotoCounter />
