@@ -1,68 +1,81 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Camera, Code2, Users2, Sparkles, Cpu, Handshake } from "lucide-react";
+import {
+  Camera,
+  Film,
+  Code2,
+  Sparkles,
+  Users2,
+  Handshake,
+  CheckCircle2,
+  Layers,
+  Zap,
+} from "lucide-react";
 import "./ThreePillarsSection.css";
 
 const pillars = [
   {
     id: "create",
-    badge: "Pillar 01",
+    number: "01",
     name: "CREATE",
-    tagline: "Photography • Video • Design • Branding",
-    desc: "Capturing cinematic wedding films, timeless heirloom photography, and high-impact graphic branding that moves people.",
+    badge: "Media Studio • Visual Arts",
+    tagline: "Photography • Films • Traditional Design",
+    desc: "Preserving human emotion and heritage through cinematic wedding films, portraiture, and high-impact traditional and modern graphic art.",
     points: [
-      "Traditional & Cinematic Wedding Films",
-      "Scenic Outdoor Pre-Wedding Sessions",
-      "Brand Identity, Logo & Print Stationery",
-      "Heirloom Photo Framing & Restoration",
+      "Cinematic 4K Wedding Films & Drone Cinematography",
+      "Sunset Outdoor Pre-Wedding & Candid Couple Portraits",
+      "Traditional Marathi Lagna-Patrika, Banners & Flex Design",
+      "Studio Portraits, Passport Printing & Archival Framing",
     ],
     icon: Camera,
-    accentIcon: Sparkles,
-    route: "/services#photography",
+    accentIcon: Film,
+    route: "/gallery",
     color: "#A67C6B",
-    mediaImage: "/images/prewedding-palace-arch.jpg",
-    mediaBadge: "Cinematography & Heirloom Photography",
-    mediaHeadline: "Preserving Moments That Echo Forever",
-    objectPosition: "center 28%",
+    mediaImage: "/images/wedding-varmala-moment.png",
+    mediaBadge: "4K Cinema & Film Studio",
+    mediaHeadline: "Heirloom Stories Captured with Artistic Soul",
+    objectPosition: "center 20%",
   },
   {
     id: "innovate",
-    badge: "Pillar 02",
+    number: "02",
     name: "INNOVATE",
+    badge: "Tech Division • Software Systems",
     tagline: "Web Development • AI • Digital Solutions • Marketing",
     desc: "Architecting modern full-stack web applications, AI-assisted tools, local SEO ranking, and data-driven lead generation.",
     points: [
-      "MERN Stack & React Web Applications",
-      "Local SEO & Google Business Rank #1",
-      "Social Media Growth & Ad Campaigns",
-      "Interactive Digital Wedding Invitations",
+      "Custom MERN Stack Web Applications with sub-second loads",
+      "Local SEO Optimization & Google Business Profile #1 Rank",
+      "Targeted Social Media Ad Production (Reels & Shorts)",
+      "Interactive Digital Wedding Invitation Portals with RSVP",
     ],
     icon: Code2,
-    accentIcon: Cpu,
-    route: "/services#web-dev",
-    color: "#8C6A5A",
+    accentIcon: Sparkles,
+    route: "/services",
+    color: "#D4A373",
     mediaImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=85",
     mediaBadge: "Full-Stack Technology & SEO",
     mediaHeadline: "High-Performance Modern Web Systems",
-    objectPosition: "center 35%",
+    objectPosition: "center 30%",
   },
   {
     id: "connect",
-    badge: "Pillar 03",
+    number: "03",
     name: "CONNECT",
-    tagline: "Clients ↔ Creators ↔ Businesses",
-    desc: "The seamless bridge between clients, creative directors, and growing enterprises, backed by our trusted local digital desk.",
+    badge: "Ecosystem • Marketplace Exchange",
+    tagline: "Marketplace • Creators • Businesses • Cyber Desk",
+    desc: "Bridging local talent with commercial demand through verified freelancer matching, milestone escrow protection, and community cyber support.",
     points: [
-      "Direct Creative Collaboration & Consultation",
-      "B2B Growth & Local Business Partnerships",
-      "Cyber Desk & Essential e-Governance Services",
-      "End-to-End Delivery & Transparent Communication",
+      "Decentralized Creator Exchange connecting clients with talent",
+      "100% Secure Milestone Escrow Payments with zero early fees",
+      "Cyber Desk & DTP Services (Biodata, CVs & E-Governance)",
+      "Collaborative creator studios for Thane & Murbad artists",
     ],
     icon: Users2,
     accentIcon: Handshake,
     route: "/contact",
     color: "#725345",
-    mediaImage: "https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?w=1200&auto=format&fit=crop&q=85",
+    mediaImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=85",
     mediaBadge: "Creative Consultation & Partnerships",
     mediaHeadline: "Connecting Passion, Vision & Community",
     objectPosition: "center 25%",
@@ -71,8 +84,10 @@ const pillars = [
 
 const ThreePillarsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const activeIndexRef = useRef(0);
   const trackRef = useRef(null);
+  const sliderRef = useRef(null);
+  const progressFillRef = useRef(null);
   const PIN_TOP = 92; // Synchronized with CSS sticky top: 92px
 
   useEffect(() => {
@@ -81,32 +96,40 @@ const ThreePillarsSection = () => {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          if (!trackRef.current) return;
+          if (!trackRef.current || !sliderRef.current) return;
 
           const rect = trackRef.current.getBoundingClientRect();
           const windowHeight = window.innerHeight;
           const totalScrollDistance = rect.height - windowHeight;
 
-          // Effective scroll distance once card pins at top: PIN_TOP
+          // Effective scroll distance once track pins at top: PIN_TOP
           const scrollDistance = PIN_TOP - rect.top;
 
+          let progress = 0;
           if (scrollDistance <= 0) {
-            setActiveIndex(0);
-            setScrollProgress(0);
+            progress = 0;
           } else if (scrollDistance >= totalScrollDistance) {
-            setActiveIndex(pillars.length - 1);
-            setScrollProgress(1);
+            progress = 1;
           } else {
-            const progress = Math.min(Math.max(scrollDistance / totalScrollDistance, 0), 1);
-            setScrollProgress(progress);
+            progress = Math.min(Math.max(scrollDistance / totalScrollDistance, 0), 1);
+          }
 
-            if (progress < 0.33) {
-              setActiveIndex(0);
-            } else if (progress < 0.67) {
-              setActiveIndex(1);
-            } else {
-              setActiveIndex(2);
-            }
+          // Direct hardware-accelerated horizontal translation of the container
+          const parentWidth = sliderRef.current.parentElement ? sliderRef.current.parentElement.clientWidth : window.innerWidth;
+          const maxSlide = Math.max(0, sliderRef.current.scrollWidth - parentWidth);
+          const currentTranslateX = progress * maxSlide;
+          sliderRef.current.style.transform = `translate3d(-${currentTranslateX}px, 0, 0)`;
+
+          // Progress fill line
+          if (progressFillRef.current) {
+            progressFillRef.current.style.transform = `scaleX(${progress})`;
+          }
+
+          // Active pillar index for pill navigation
+          const nextIndex = progress < 0.35 ? 0 : progress < 0.70 ? 1 : 2;
+          if (nextIndex !== activeIndexRef.current) {
+            activeIndexRef.current = nextIndex;
+            setActiveIndex(nextIndex);
           }
 
           ticking = false;
@@ -115,27 +138,28 @@ const ThreePillarsSection = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
-
     const lenis = window.lenis;
     if (lenis) {
       lenis.on("scroll", handleScroll);
+    } else {
+      window.addEventListener("scroll", handleScroll, { passive: true });
     }
+    window.addEventListener("resize", handleScroll, { passive: true });
 
     handleScroll();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
       if (lenis) {
         lenis.off("scroll", handleScroll);
+      } else {
+        window.removeEventListener("scroll", handleScroll);
       }
+      window.removeEventListener("resize", handleScroll);
     };
   }, []);
 
   const handlePillClick = (index) => {
-    setActiveIndex(index); // Instant responsive visual feedback
+    setActiveIndex(index);
 
     if (!trackRef.current) return;
     const rect = trackRef.current.getBoundingClientRect();
@@ -173,123 +197,114 @@ const ThreePillarsSection = () => {
         </p>
       </div>
 
-      {/* 2. Desktop Sticky Scroll Section Runway */}
+      {/* 2. Desktop Sticky Scroll Section Runway with Horizontal Sliding Containers */}
       <div className="pillars-sticky-track" ref={trackRef}>
         <div className="pillars-sticky-window">
-          <div className="pillars-card-shell">
-            {/* Top Subtle Scroll Progress Line */}
-            <div className="pillar-progress-track">
-              <div
-                className="pillar-progress-fill"
-                style={{ width: `${Math.round(scrollProgress * 100)}%` }}
-              />
-            </div>
+          {/* Top Subtle Scroll Progress Line */}
+          <div className="pillar-progress-track">
+            <div
+              ref={progressFillRef}
+              className="pillar-progress-fill"
+            />
+          </div>
 
-            {/* Left Column: Interactive Content Tabs */}
-            <div className="pillar-left-panel">
-              {/* Step Navigation Pills & Status */}
-              <div className="pillar-pills-row">
-                <div className="pillar-pills-group">
-                  {pillars.map((pillar, idx) => (
-                    <button
-                      key={pillar.id}
-                      type="button"
-                      onClick={() => handlePillClick(idx)}
-                      className={`pillar-pill-btn ${
-                        activeIndex === idx ? "is-active" : ""
-                      }`}
-                      aria-label={`Jump to ${pillar.name}`}
-                    >
-                      <span>0{idx + 1}</span>
-                      <span>{pillar.name}</span>
-                    </button>
-                  ))}
-                </div>
-                <span className="pillar-scroll-hint">
-                  0{activeIndex + 1} / 03
-                </span>
-              </div>
-
-              {/* Morphing Tab Content */}
-              <div className="pillar-tab-stage">
-                {pillars.map((pillar, idx) => (
-                  <div
-                    key={pillar.id}
-                    className={`pillar-tab-slide ${
-                      activeIndex === idx ? "is-active" : ""
-                    }`}
-                  >
-                    <span className="pillar-badge-tag">{pillar.badge}</span>
-                    <h3 className="pillar-title">{pillar.name}</h3>
-                    <p className="pillar-tagline">{pillar.tagline}</p>
-                    <div className="pillar-divider" />
-                    <p className="pillar-desc">{pillar.desc}</p>
-                    <ul className="pillar-points-list">
-                      {pillar.points.map((pt, i) => (
-                        <li key={i} className="pillar-point-item">
-                          <span className="pillar-point-dot">•</span>
-                          <span>{pt}</span>
-                        </li>
+          {/* HORIZONTAL SLIDING TRACK: Containers slide smoothly to the side as you scroll */}
+          <div className="pillars-slider-track" ref={sliderRef}>
+            {pillars.map((pillar, idx) => (
+              <div key={pillar.id} className="pillars-card-shell">
+                {/* Left Column: Interactive Content Tabs */}
+                <div className="pillar-left-panel">
+                  {/* Step Navigation Pills & Status */}
+                  <div className="pillar-pills-row">
+                    <div className="pillar-pills-group">
+                      {pillars.map((p, pIdx) => (
+                        <button
+                          key={p.id}
+                          type="button"
+                          onClick={() => handlePillClick(pIdx)}
+                          className={`pillar-pill-btn ${
+                            activeIndex === pIdx ? "is-active" : ""
+                          }`}
+                          aria-label={`Jump to ${p.name}`}
+                        >
+                          <span>0{pIdx + 1}</span>
+                          <span>{p.name}</span>
+                        </button>
                       ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-
-              {/* Dynamic CTA Button with Dual-Arrow Micro-Animation */}
-              <div className="pillar-bottom-bar">
-                <Link
-                  to={pillars[activeIndex].route}
-                  className="pillar-cta-btn"
-                >
-                  <span className="pillar-cta-text">
-                    Explore {pillars[activeIndex].name}
-                  </span>
-                  <div className="pillar-cta-icon-wrap">
-                    <div className="pillar-cta-icon _1">
-                      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
                     </div>
-                    <div className="pillar-cta-icon _2">
-                      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="pillar-cta-bg-bubble" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Right Column: Morphing Media Visual Canvas */}
-            <div className="pillar-right-panel">
-              {pillars.map((pillar, idx) => (
-                <div
-                  key={pillar.id}
-                  className={`pillar-media-slide ${
-                    activeIndex === idx ? "is-active" : ""
-                  }`}
-                >
-                  <img
-                    src={pillar.mediaImage}
-                    alt={pillar.name}
-                    className="pillar-media-img"
-                    style={{ objectPosition: pillar.objectPosition || "center center" }}
-                  />
-                  <div className="pillar-media-overlay">
-                    <span className="pillar-media-badge">
-                      {pillar.mediaBadge}
+                    <span className="pillar-scroll-hint">
+                      0{idx + 1} / 03
                     </span>
-                    <h4 className="pillar-media-headline">
-                      {pillar.mediaHeadline}
-                    </h4>
+                  </div>
+
+                  {/* Pillar Card Content */}
+                  <div className="pillar-tab-stage">
+                    <div className="pillar-tab-slide is-active">
+                      <span className="pillar-badge-tag">{pillar.badge}</span>
+                      <h3 className="pillar-title">{pillar.name}</h3>
+                      <p className="pillar-tagline">{pillar.tagline}</p>
+                      <div className="pillar-divider" />
+                      <p className="pillar-desc">{pillar.desc}</p>
+                      <ul className="pillar-points-list">
+                        {pillar.points.map((pt, i) => (
+                          <li key={i} className="pillar-point-item">
+                            <span className="pillar-point-dot">•</span>
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Dynamic CTA Button with Dual-Arrow Animation */}
+                  <div className="pillar-bottom-bar">
+                    <Link
+                      to={pillar.route}
+                      className="pillar-cta-btn"
+                    >
+                      <span className="pillar-cta-text">
+                        Explore {pillar.name}
+                      </span>
+                      <div className="pillar-cta-icon-wrap">
+                        <div className="pillar-cta-icon _1">
+                          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </div>
+                        <div className="pillar-cta-icon _2">
+                          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="pillar-cta-bg-bubble" />
+                    </Link>
                   </div>
                 </div>
-              ))}
-            </div>
+
+                {/* Right Column: High-Res Media Visual Canvas */}
+                <div className="pillar-right-panel">
+                  <div className="pillar-media-slide is-active">
+                    <img
+                      src={pillar.mediaImage}
+                      alt={pillar.name}
+                      className="pillar-media-img"
+                      style={{ objectPosition: pillar.objectPosition || "center center" }}
+                    />
+                    <div className="pillar-media-overlay">
+                      <span className="pillar-media-badge">
+                        {pillar.mediaBadge}
+                      </span>
+                      <h4 className="pillar-media-headline">
+                        {pillar.mediaHeadline}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
