@@ -4,8 +4,10 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SEOHead from "./components/SEOHead";
 import Starfield from "./components/Starfield";
+import FloatingContactButtons from "./components/FloatingContactButtons";
 import Lenis from "lenis";
 import "./App.css";
+
 import Practice from "./pages/Practice";
 
 // Lazy loaded page components for optimal initial bundle sizes
@@ -167,9 +169,11 @@ const AppContent = () => {
           </Suspense>
         </main>
         <Footer />
+        {!location.pathname.startsWith("/admin") && <FloatingContactButtons />}
       </div>
     </>
   );
+
 };
 
 function App() {
