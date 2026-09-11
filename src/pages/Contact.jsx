@@ -30,7 +30,7 @@ const Contact = () => {
   );
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+    <div className="bg-brandBg text-brandTextPrimary min-h-screen pb-20 pt-32 px-6 sm:px-12">
       <section className="mx-auto max-w-5xl space-y-12">
         <motion.div
           className="text-center max-w-3xl mx-auto space-y-4"
@@ -38,13 +38,13 @@ const Contact = () => {
           animate="show"
           variants={fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brandAccent">
             BOOK US / GET IN TOUCH
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brandTextPrimary font-normal leading-tight">
             Let's Capture Your Story or Build Your Vision
           </h1>
-          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-brandTextMuted font-light leading-relaxed">
             Reach out for wedding film bookings, pre-wedding couple shoots, custom web development, digital marketing, or local DTP tasks.
           </p>
         </motion.div>
@@ -57,38 +57,38 @@ const Contact = () => {
           variants={fadeUp}
         >
           <div className="space-y-6">
-            <div className="space-y-5 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light shadow-sm">
-              <h2 className="font-serif text-xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+            <div className="space-y-5 rounded-2xl border border-brandBorder bg-brandSurface p-8 text-sm text-brandTextMuted font-light shadow-sm">
+              <h2 className="font-serif text-xl font-normal text-brandTextPrimary">
                 Studio & Office Details
               </h2>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C6B]">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccent">
                   Direct Call / WhatsApp
                 </p>
-                <p className="mt-1 text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
+                <p className="mt-1 text-sm font-medium text-brandTextPrimary">
                   +91 92714 56749
                 </p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C6B]">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccent">
                   Studio Address
                 </p>
-                <p className="mt-1 text-sm leading-relaxed">
+                <p className="mt-1 text-sm leading-relaxed text-brandTextMuted">
                   Main bazaar road near bus stand, opposite Saralgaon Police Chowki, Murbad.
                 </p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C6B]">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brandAccent">
                   Working Hours
                 </p>
-                <p className="mt-1 text-sm">
-                  Open Daily: <span className="text-[#1A1A1A] dark:text-[#F2EDE4]">9:00 AM – 8:00 PM</span>
+                <p className="mt-1 text-sm text-brandTextMuted">
+                  Open Daily: <span className="text-brandTextPrimary font-medium">9:00 AM – 8:00 PM</span>
                 </p>
               </div>
               <div className="flex flex-wrap gap-3 pt-3">
                 <a
                   href="tel:9271456749"
-                  className="flex-1 text-center py-3 bg-[#1A1A1A] text-white text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-[#A67C6B]"
+                  className="flex-1 text-center py-3 bg-brandTextPrimary !text-brandBg text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-brandAccent hover:!text-white rounded-xl !no-underline"
                 >
                   Call Direct
                 </a>
@@ -96,7 +96,7 @@ const Contact = () => {
                   href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 text-center py-3 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-[#A67C6B] hover:text-[#A67C6B]"
+                  className="flex-1 text-center py-3 border border-brandBorder !text-brandTextPrimary text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-brandAccent hover:!text-brandAccent rounded-xl !no-underline"
                 >
                   WhatsApp
                 </a>
@@ -105,7 +105,7 @@ const Contact = () => {
           </div>
 
           {/* Form */}
-          <div className="rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] shadow-sm">
+          <div className="rounded-2xl border border-brandBorder bg-brandSurface p-8 text-sm text-brandTextMuted shadow-sm">
             {successMessage && submittedData ? (
               <div className="flex flex-col items-center justify-center text-center gap-6 py-4 w-full">
                 <div className="space-y-1">
@@ -205,13 +205,13 @@ const Contact = () => {
                 >
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
+                      <label className="text-xs uppercase tracking-wider text-brandTextMuted">
                         Your name *
                       </label>
                       <input
                         type="text"
                         required
-                        className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
+                        className="p-3 border border-brandBorder bg-brandSurfaceSoft text-brandTextPrimary outline-none focus:border-brandAccent rounded-xl transition-colors"
                         value={form.name}
                         onChange={(e) =>
                           setForm((f) => ({ ...f, name: e.target.value }))
@@ -219,13 +219,13 @@ const Contact = () => {
                       />
                     </div>
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
+                      <label className="text-xs uppercase tracking-wider text-brandTextMuted">
                         Mobile number *
                       </label>
                       <input
                         type="tel"
                         required
-                        className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
+                        className="p-3 border border-brandBorder bg-brandSurfaceSoft text-brandTextPrimary outline-none focus:border-brandAccent rounded-xl transition-colors"
                         value={form.phone}
                         onChange={(e) =>
                           setForm((f) => ({ ...f, phone: e.target.value }))
@@ -234,11 +234,11 @@ const Contact = () => {
                     </div>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
+                    <label className="text-xs uppercase tracking-wider text-brandTextMuted">
                       Service interested in
                     </label>
                     <select
-                      className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
+                      className="p-3 border border-brandBorder bg-brandSurfaceSoft text-brandTextPrimary outline-none focus:border-brandAccent rounded-xl transition-colors"
                       value={form.service}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, service: e.target.value }))
@@ -254,25 +254,26 @@ const Contact = () => {
                     </select>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
+                    <label className="text-xs uppercase tracking-wider text-brandTextMuted">
                       Preferred Date
                     </label>
                     <input
                       type="date"
-                      className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
+                      className="p-3 border border-brandBorder bg-brandSurfaceSoft text-brandTextPrimary outline-none focus:border-brandAccent rounded-xl transition-colors"
                       value={form.date}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, date: e.target.value }))
                       }
-                    />
+                    >
+                    </input>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs uppercase tracking-wider text-[#88796E] dark:text-[#B8ABA0]">
+                    <label className="text-xs uppercase tracking-wider text-brandTextMuted">
                       Message
                     </label>
                     <textarea
                       rows={3}
-                      className="p-3 border border-[#E0D7CC] dark:border-[#3D342E] bg-[#FAF6F0] dark:bg-[#181412] text-[#4A3E37] dark:text-[#F2EDE4] outline-none focus:border-[#A67C6B]"
+                      className="p-3 border border-brandBorder bg-brandSurfaceSoft text-brandTextPrimary outline-none focus:border-brandAccent rounded-xl transition-colors"
                       value={form.message}
                       onChange={(e) =>
                         setForm((f) => ({ ...f, message: e.target.value }))
@@ -286,7 +287,7 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3.5 bg-[#4A3E37] text-white text-xs font-semibold uppercase tracking-[0.2em] transition-colors hover:bg-[#A67C6B] disabled:opacity-50"
+                    className="w-full py-3.5 bg-gradient-to-r from-[#C49B89] via-[#D4AF37] to-[#A67C6B] text-[#0C0A09] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-md hover:opacity-95 active:scale-[0.99] transition-all disabled:opacity-50"
                   >
                     {isSubmitting ? "Submitting..." : "Send Inquiry"}
                   </button>
@@ -297,7 +298,7 @@ const Contact = () => {
         </motion.div>
 
         {/* Map */}
-        <div className="overflow-hidden border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19]">
+        <div className="overflow-hidden border border-brandBorder bg-brandSurface rounded-2xl shadow-sm">
           <iframe
             title="Shubham Photos Studio map"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d231.69221193805333!2d73.49234646000684!3d19.28593803191094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdd6354ef9e4943%3A0xcf202aae594562d2!2sShubham%20photos%20studio%20%26%20printing%20press!5e1!3m2!1sen!2sin!4v1771245383413!5m2!1sen!2sin"

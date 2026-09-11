@@ -199,18 +199,18 @@ const CreaonnectUniqueHero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-1">
             <Link
               to="/gallery"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full bg-[#1A1A1A] hover:bg-[#A67C6B] dark:bg-white dark:hover:bg-[#D4A373] text-white dark:text-[#0B0908] font-medium text-sm sm:text-base px-8 py-4 transition-all shadow-md active:scale-95 group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full bg-[#1A1A1A] hover:bg-[#A67C6B] dark:bg-gradient-to-r dark:from-[#C49B89] dark:via-[#D4AF37] dark:to-[#A67C6B] dark:hover:opacity-95 !text-white dark:!text-[#0C0A09] font-semibold text-sm sm:text-base px-8 py-4 transition-all shadow-md active:scale-95 group !no-underline"
             >
-              <span>Explore Portfolio</span>
-              <ArrowDown size={16} className="group-hover:translate-y-0.5 transition-transform" />
+              <span className="!text-inherit">Explore Portfolio</span>
+              <ArrowDown size={16} className="group-hover:translate-y-0.5 transition-transform !text-inherit" />
             </Link>
 
             <Link
               to="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white/80 hover:bg-white dark:bg-white/5 dark:hover:bg-white/10 border border-[#DCD2C6] dark:border-white/15 text-[#1A1A1A] dark:text-white font-medium text-sm sm:text-base px-7 py-4 transition-all shadow-sm active:scale-95"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white/80 hover:bg-white dark:bg-white/5 dark:hover:bg-white/10 border border-[#DCD2C6] dark:border-white/15 !text-[#1A1A1A] dark:!text-white font-medium text-sm sm:text-base px-7 py-4 transition-all shadow-sm active:scale-95 !no-underline"
             >
-              <span>Start a Project</span>
-              <ArrowRight size={16} />
+              <span className="!text-inherit">Start a Project</span>
+              <ArrowRight size={16} className="!text-inherit" />
             </Link>
           </div>
 
@@ -222,14 +222,14 @@ const CreaonnectUniqueHero = () => {
                 onClick={() => handleManualSelect(idx)}
                 className={`group flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono transition-all ${
                   currentIdx === idx
-                    ? "bg-[#1A1A1A] text-white dark:bg-white dark:text-black font-semibold shadow-sm"
+                    ? "bg-[#1A1A1A] !text-white dark:bg-[#C49B89] dark:!text-[#0C0A09] font-bold shadow-sm"
                     : "bg-[#E8DFD5]/60 dark:bg-white/5 text-[#55504A] dark:text-white/60 hover:text-black dark:hover:text-white"
                 }`}
               >
                 <span>0{idx + 1}</span>
                 <span className="hidden sm:inline">{slide.category}</span>
                 {currentIdx === idx && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4A373] dark:bg-[#A67C6B]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4A373] dark:bg-[#0C0A09]" />
                 )}
               </button>
             ))}

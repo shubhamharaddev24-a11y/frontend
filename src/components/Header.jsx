@@ -4,7 +4,10 @@ import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X } from "lucide-react";
 import { useMotionVariants, useReducedMotionProps } from "../utils/motion";
 import logoShubham from "../assets/logo-shubham-photos-studio.png";
+import ThemeToggle from "./ThemeToggle";
 import Logo from "./Logo";
+
+
 const navItems = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
@@ -42,7 +45,7 @@ const Header = () => {
     <motion.header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#F2EDE4]/95 dark:bg-[#181412]/95 backdrop-blur-md border-b border-brandBorder/60 shadow-sm py-2"
+          ? "bg-[#FAF6F0]/90 dark:bg-[#0C0A09]/90 backdrop-blur-md border-b border-[#E0D7CC]/70 dark:border-[#362B24]/70 shadow-sm py-2.5"
           : "bg-transparent py-4"
       }`}
     >
@@ -85,11 +88,30 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Mobile menu toggle */}
-        <div className="flex items-center gap-2 md:hidden">
+        {/* Right Action Cluster: ThemeToggle + CTA + Mobile Toggle */}
+        <div className="flex items-center gap-3">
+          {/* Desktop Theme Toggle */}
+          <div className="hidden sm:flex items-center">
+            <ThemeToggle />
+          </div>
+
+          {/* Book Consultation CTA Button */}
+          <NavLink
+            to="/contact"
+            className="hidden lg:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#A67C6B] via-[#BD9280] to-[#8C6252] text-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] shadow-md shadow-[#A67C6B]/25 hover:shadow-lg hover:shadow-[#A67C6B]/40 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 !no-underline select-none"
+          >
+            <span>Book Us</span>
+          </NavLink>
+
+          {/* Mobile Theme Toggle */}
+          <div className="sm:hidden flex items-center">
+            <ThemeToggle />
+          </div>
+
+          {/* Mobile menu toggle */}
           <motion.button
             type="button"
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brandBorder bg-brandSurface text-brandTextPrimary"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brandBorder bg-brandSurface text-brandTextPrimary md:hidden"
             aria-label="Toggle navigation"
             onClick={() => setOpen((prev) => !prev)}
             {...variants.buttonTap}
@@ -97,9 +119,8 @@ const Header = () => {
             {open ? <X size={18} /> : <Menu size={18} />}
           </motion.button>
         </div>
-
-
       </div>
+
 
       {/* Mobile menu panel */}
       <AnimatePresence>
@@ -133,6 +154,12 @@ const Header = () => {
                   </NavLink>
                 </motion.div>
               ))}
+
+              {/* Theme Mode Switcher in mobile drawer */}
+              <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-brandSurfaceSoft/40 border border-brandBorder/40 mt-1">
+                <span className="text-xs font-semibold uppercase tracking-wider text-brandTextSecondary">Appearance</span>
+                <ThemeToggle />
+              </div>
 
               {/* Call & WhatsApp actions inside mobile menu */}
               <motion.div

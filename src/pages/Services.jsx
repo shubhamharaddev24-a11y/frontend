@@ -110,7 +110,7 @@ const Services = () => {
   }, []);
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+    <div className="bg-brandBg text-brandTextPrimary min-h-screen pb-20 pt-32 px-6 sm:px-12">
       <section className="mx-auto max-w-7xl space-y-12">
         <motion.div
           className="text-center max-w-3xl mx-auto space-y-4"
@@ -118,13 +118,13 @@ const Services = () => {
           animate="show"
           variants={fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brandAccent">
             DIVISIONS & SERVICES
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brandTextPrimary font-normal leading-tight">
             Create • Innovate • Connect
           </h1>
-          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-brandTextMuted font-light leading-relaxed">
             From professional cinematography and wedding albums, to custom full-stack web applications, local SEO marketing, and digital citizen desk services.
           </p>
         </motion.div>
@@ -133,7 +133,7 @@ const Services = () => {
           {services.map((section) => (
             <motion.article
               key={section.id || section._id}
-              className="bg-white dark:bg-[#221C19] border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 p-8 sm:p-10 rounded-none space-y-5 shadow-sm hover:shadow-md transition-all duration-300"
+              className="bg-brandSurface border border-brandBorder p-8 sm:p-10 rounded-2xl space-y-5 shadow-sm hover:shadow-md transition-all duration-300"
               initial={reduceMotion ? "show" : "hidden"}
               whileInView="show"
               viewport={{ once: true, amount: 0.25 }}
@@ -142,28 +142,28 @@ const Services = () => {
               <div className="flex items-center justify-between gap-3">
                 <div className="space-y-1">
                   {section.pillar && (
-                    <span className="inline-block text-[10px] font-mono uppercase tracking-widest font-bold text-[#A67C6B] bg-[#A67C6B]/10 dark:bg-[#A67C6B]/20 px-2.5 py-0.5 rounded">
+                    <span className="inline-block text-[10px] font-mono uppercase tracking-widest font-bold text-brandAccent bg-brandAccent/10 px-2.5 py-0.5 rounded">
                       Pillar: {section.pillar}
                     </span>
                   )}
-                  <h2 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+                  <h2 className="font-serif text-2xl font-normal text-brandTextPrimary">
                     {section.title}
                   </h2>
                 </div>
                 {section.comingSoon && (
-                  <span className="rounded-full bg-[#A67C6B]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A67C6B]">
+                  <span className="rounded-full bg-brandAccent/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent">
                     Coming soon
                   </span>
                 )}
               </div>
-              <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+              <p className="text-xs sm:text-sm text-brandTextMuted font-light leading-relaxed">
                 {section.description}
               </p>
-              <hr className="border-[#E0D7CC]/60 dark:border-[#3D342E]/60" />
-              <ul className="space-y-3 text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light">
+              <hr className="border-brandBorder/60" />
+              <ul className="space-y-3 text-xs sm:text-sm text-brandTextMuted font-light">
                 {(section.items || []).map((item, index) => (
                   <li key={index} className="flex gap-2.5 items-start">
-                    <span className="text-[#A67C6B]">•</span>
+                    <span className="text-brandAccent">•</span>
                     <span className="leading-relaxed">{item}</span>
                   </li>
                 ))}
@@ -173,13 +173,13 @@ const Services = () => {
                   href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-2.5 bg-[#1A1A1A] text-white text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-[#A67C6B]"
+                  className="px-6 py-2.5 bg-brandTextPrimary !text-brandBg text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-brandAccent hover:!text-white rounded-xl !no-underline"
                 >
                   WhatsApp Enquiry
                 </a>
                 <a
                   href="tel:9271456749"
-                  className="px-6 py-2.5 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-[#A67C6B] hover:text-[#A67C6B]"
+                  className="px-6 py-2.5 border border-brandBorder !text-brandTextPrimary text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-brandAccent hover:!text-brandAccent rounded-xl !no-underline"
                 >
                   Call Team
                 </a>

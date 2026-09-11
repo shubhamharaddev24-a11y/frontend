@@ -142,7 +142,7 @@ const VideoTestimonials = () => {
   );
 
   return (
-    <section className="py-20 bg-[#F2EDE4] overflow-hidden relative border-t border-[#E0D7CC]/60">
+    <section className="py-20 bg-brandBg overflow-hidden relative border-t border-brandBorder/60 transition-colors duration-300">
       <div className="mx-auto max-w-7xl px-6 md:px-12 mb-12">
         {/* Section Header */}
         <motion.div
@@ -152,13 +152,13 @@ const VideoTestimonials = () => {
           transition={{ duration: 0.7 }}
           className="text-center max-w-3xl mx-auto space-y-3"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#A67C6B]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brandAccent">
             Client Stories & Reviews
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#4A3E37] font-normal leading-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brandTextPrimary font-normal leading-tight">
             Loved by Couples & Families
           </h2>
-          <p className="text-sm sm:text-base text-[#88796E] font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-brandTextMuted font-light leading-relaxed">
             Hear directly from our happy couples and business clients about their experience with Shubham Studio.
           </p>
         </motion.div>
@@ -168,14 +168,12 @@ const VideoTestimonials = () => {
       <div className="relative w-full">
         {/* Left Gradient Fade */}
         <div 
-          className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-36 z-10"
-          style={{ background: 'linear-gradient(to right, #F2EDE4 0%, rgba(242,237,228,0) 100%)' }} 
+          className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-36 z-10 bg-gradient-to-r from-brandBg to-transparent"
         />
 
         {/* Right Gradient Fade */}
         <div 
-          className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-36 z-10"
-          style={{ background: 'linear-gradient(to left, #F2EDE4 0%, rgba(242,237,228,0) 100%)' }} 
+          className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-36 z-10 bg-gradient-to-l from-brandBg to-transparent"
         />
 
         {/* Marquee Track */}
@@ -188,10 +186,10 @@ const VideoTestimonials = () => {
             <div
               key={`${testimonial.id}-${index}`}
               onClick={() => setActiveVideo(testimonial)}
-              className="group flex-shrink-0 w-72 sm:w-80 bg-white border border-[#E0D7CC]/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
+              className="group flex-shrink-0 w-72 sm:w-80 bg-brandSurface border border-brandBorder rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-brandAccent/40 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
             >
               {/* Thumbnail Container */}
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#221C19]">
+              <div className="relative aspect-[16/10] overflow-hidden bg-black/40">
                 <img
                   src={testimonial.thumbnail}
                   alt={`${testimonial.customerName} wedding film`}
@@ -203,13 +201,13 @@ const VideoTestimonials = () => {
 
                 {/* Glowing Play Button */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-[#4A3E37]/90 text-white border border-white/30 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:bg-[#A67C6B] group-hover:scale-110 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-full bg-[#0C0A09]/80 text-brandAccent border border-white/20 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:bg-brandAccent group-hover:text-black group-hover:scale-110 transition-all duration-300">
                     <Play className="w-5 h-5 ml-0.5 fill-current" />
                   </div>
                 </div>
 
                 {/* Video Duration Badge */}
-                <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-medium px-2.5 py-0.5 rounded-full tracking-wider">
+                <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-medium px-2.5 py-0.5 rounded-full tracking-wider">
                   {testimonial.duration}
                 </div>
               </div>
@@ -218,20 +216,20 @@ const VideoTestimonials = () => {
               <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                 <div>
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-serif text-base font-medium text-[#4A3E37] group-hover:text-[#A67C6B] transition-colors leading-tight">
+                    <h3 className="font-serif text-base font-medium text-brandTextPrimary group-hover:text-brandAccent transition-colors leading-tight">
                       {testimonial.customerName}
                     </h3>
                     <StarRating rating={testimonial.rating} />
                   </div>
-                  <div className="flex items-center gap-1 text-[11px] text-[#88796E] font-light mt-1">
-                    <MapPin className="w-3 h-3 text-[#A67C6B]" />
+                  <div className="flex items-center gap-1 text-[11px] text-brandTextMuted font-light mt-1">
+                    <MapPin className="w-3 h-3 text-brandAccent" />
                     <span>{testimonial.location}</span>
                     <span className="mx-1">•</span>
                     <span>{testimonial.weddingDate}</span>
                   </div>
                 </div>
 
-                <p className="text-xs text-[#88796E] italic font-light leading-relaxed pt-3 border-t border-[#E0D7CC]/60 line-clamp-2">
+                <p className="text-xs text-brandTextMuted italic font-light leading-relaxed pt-3 border-t border-brandBorder/60 line-clamp-2">
                   "{testimonial.quote}"
                 </p>
               </div>
@@ -250,7 +248,7 @@ const VideoTestimonials = () => {
       >
         <Link
           to="/gallery"
-          className="px-8 py-3.5 bg-[#4A3E37] text-white hover:bg-[#A67C6B] text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-md hover:shadow-lg inline-flex items-center gap-2 rounded-none"
+          className="px-8 py-3.5 bg-brandTextPrimary !text-brandBg dark:bg-gradient-to-r dark:from-[#C49B89] dark:via-[#D4AF37] dark:to-[#A67C6B] dark:!text-[#0C0A09] text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-md hover:shadow-lg inline-flex items-center gap-2 rounded-full !no-underline hover:scale-105 active:scale-95"
         >
           Explore Full Portfolio & Films
         </Link>

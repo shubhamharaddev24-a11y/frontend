@@ -8,7 +8,7 @@ const About = () => {
   const variants = useMotionVariants();
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+    <div className="bg-brandBg text-brandTextPrimary min-h-screen pb-20 pt-32 px-6 sm:px-12">
       <section className="mx-auto max-w-5xl space-y-12">
         <motion.div
           className="space-y-4 text-center max-w-3xl mx-auto"
@@ -16,13 +16,13 @@ const About = () => {
           animate="show"
           variants={variants.fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brandAccent">
             ABOUT CREAONNECT
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brandTextPrimary font-normal leading-tight">
             A creative & digital agency powered by three pillars of excellence.
           </h1>
-          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed pt-2">
+          <p className="text-sm sm:text-base text-brandTextMuted font-light leading-relaxed pt-2">
             <strong>CREAONNECT</strong> brings together high-end photography, cinematic wedding films, modern software engineering, and community-driven digital services. Built on the three pillars of <strong>CREATE</strong>, <strong>INNOVATE</strong>, and <strong>CONNECT</strong>, we serve families with timeless memories while empowering businesses with modern digital tools.
           </p>
         </motion.div>
@@ -34,8 +34,8 @@ const About = () => {
           viewport={{ once: true, amount: 0.3 }}
           variants={variants.staggerContainer}
         >
-          <motion.div className="space-y-3 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed" variants={variants.fadeUpShort}>
-            <h2 className="font-serif text-xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+          <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface p-8 text-sm text-brandTextMuted font-light leading-relaxed shadow-sm" variants={variants.fadeUpShort}>
+            <h2 className="font-serif text-xl font-normal text-brandTextPrimary">
               Our Story & Evolution
             </h2>
             <p>
@@ -45,8 +45,8 @@ const About = () => {
               As technology evolved, we expanded our creative studio into <strong>CREAONNECT</strong>: integrating modern full-stack web development, search engine marketing, and digital branding to act as a single point of contact for families needing priceless memories and businesses demanding digital growth.
             </p>
           </motion.div>
-          <motion.div className="space-y-3 rounded-none border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 bg-white dark:bg-[#221C19] p-8 text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed" variants={variants.fadeUpShort}>
-            <h2 className="font-serif text-xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
+          <motion.div className="space-y-3 rounded-2xl border border-brandBorder bg-brandSurface p-8 text-sm text-brandTextMuted font-light leading-relaxed shadow-sm" variants={variants.fadeUpShort}>
+            <h2 className="font-serif text-xl font-normal text-brandTextPrimary">
               The Three Pillars Philosophy
             </h2>
             <ul className="space-y-2">

@@ -11,31 +11,31 @@
   --light-accent: #A67C6B;      /* Warm dusty terracotta / rose bronze */
   --light-accent-soft: #7E5B4D; /* Darker warm terracotta for hover */
 
-  /* Luxury Dark Espresso Theme */
-  --dark-bg: #181412;
-  --dark-surface: #221C19;
-  --dark-surface-soft: #2C2521;
-  --dark-border: #3D342E;
-  --dark-text-primary: #F2EDE4;
-  --dark-text-muted: #B8ABA0;
-  --dark-accent: #D4A594;
-  --dark-accent-soft: #EABDAE;
+  /* Luxury Dark Obsidian & Warm Bronze Theme */
+  --dark-bg: #0C0A09;
+  --dark-surface: #171311;
+  --dark-surface-soft: #221B17;
+  --dark-border: #362B24;
+  --dark-text-primary: #FAF6F0;
+  --dark-text-muted: #ABA096;
+  --dark-accent: #C49B89;
+  --dark-accent-soft: #D9B3A2;
 
-  /* Defaults: start in SPH Light luxury cream theme */
-  --bg-primary: var(--light-bg);
-  --bg-surface: var(--light-surface);
-  --bg-surface-soft: var(--light-surface-soft);
-  --bg-border: var(--light-border);
-  --text-primary: var(--light-text-primary);
-  --text-muted: var(--light-text-muted);
-  --text-accent: var(--light-accent);
-  --text-accent-soft: var(--light-accent-soft);
+  /* Defaults */
+  --bg-primary: var(--dark-bg);
+  --bg-surface: var(--dark-surface);
+  --bg-surface-soft: var(--dark-surface-soft);
+  --bg-border: var(--dark-border);
+  --text-primary: var(--dark-text-primary);
+  --text-muted: var(--dark-text-muted);
+  --text-accent: var(--dark-accent);
+  --text-accent-soft: var(--dark-accent-soft);
 
-  /* Header variables default (light cream) */
-  --header-bg-scrolled: rgba(242, 237, 228, 0.94);
-  --header-bg-top: rgba(242, 237, 228, 0.4);
-  --header-border-scrolled: rgba(224, 215, 204, 0.8);
-  --header-border-top: rgba(74, 62, 55, 0.08);
+  /* Header variables default */
+  --header-bg-scrolled: rgba(18, 15, 13, 0.92);
+  --header-bg-top: rgba(18, 15, 13, 0.6);
+  --header-border-scrolled: rgba(56, 44, 37, 0.8);
+  --header-border-top: rgba(250, 246, 240, 0.08);
 }
 
 /* Light theme */
@@ -70,13 +70,14 @@
   --text-accent-soft: var(--dark-accent-soft);
 
   /* Header variables for dark theme */
-  --header-bg-scrolled: rgba(24, 20, 18, 0.94);
-  --header-bg-top: rgba(24, 20, 18, 0.4);
-  --header-border-scrolled: rgba(61, 52, 46, 0.8);
-  --header-border-top: rgba(242, 237, 228, 0.08);
+  --header-bg-scrolled: rgba(18, 15, 13, 0.92);
+  --header-bg-top: rgba(18, 15, 13, 0.6);
+  --header-border-scrolled: rgba(56, 44, 37, 0.8);
+  --header-border-top: rgba(250, 246, 240, 0.08);
   
   color-scheme: dark;
 }
+
 
 /* Custom CSS variables for existing Tailwind classes */
 .brandBg {

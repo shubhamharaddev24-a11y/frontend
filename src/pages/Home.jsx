@@ -92,7 +92,7 @@ const Home = () => {
   ], []);
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] font-sans selection:bg-[#A67C6B]/20">
+    <div className="bg-brandBg text-brandTextPrimary font-sans selection:bg-brandAccent/20">
       {/* 1. CREAONNECT Unique Hero (Image ↔ Animated Interactive Content Card) */}
       <CreaonnectUniqueHero />
 
@@ -245,12 +245,12 @@ const Home = () => {
             <Link
               key={card.title}
               to={card.link}
-              className="bg-white dark:bg-[#221C19] p-10 sm:p-14 rounded-none border border-[#E0D7CC]/60 dark:border-[#3D342E]/60 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
+              className="bg-brandSurface p-10 sm:p-14 rounded-2xl border border-brandBorder flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1 !no-underline"
             >
-              <h4 className="font-sans text-lg sm:text-xl font-medium tracking-[0.25em] text-[#1A1A1A] dark:text-[#F2EDE4] uppercase group-hover:text-[#A67C6B] transition-colors">
+              <h4 className="font-sans text-lg sm:text-xl font-medium tracking-[0.25em] text-brandTextPrimary uppercase group-hover:text-brandAccent transition-colors">
                 {card.title}
               </h4>
-              <p className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#4A4A4A] dark:text-[#B8ABA0] mt-3">
+              <p className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-brandTextMuted mt-3">
                 {card.subtitle}
               </p>
             </Link>
@@ -273,41 +273,41 @@ const Home = () => {
       {/* 9. Contact / Visit Studio Section */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="group relative p-[2px] rounded-2xl bg-gradient-to-r from-[#A67C6B]/40 via-[#D4AF37]/60 to-[#A67C6B]/40 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#D4AF37]/15">
-          <div className="relative bg-white dark:bg-[#221C19] border border-[#E0D7CC] dark:border-[#3D342E] p-8 sm:p-12 rounded-[14px] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center overflow-hidden">
+          <div className="relative bg-brandSurface border border-brandBorder p-8 sm:p-12 rounded-[14px] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center overflow-hidden">
             {/* Ornate Decorative Corner Elements with Interactive Expand-on-Hover */}
-            <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:left-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
-            <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:right-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
-            <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:left-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
-            <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:right-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+            <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-brandAccent/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:left-2 group-hover:border-brandAccent" />
+            <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-brandAccent/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:right-2 group-hover:border-brandAccent" />
+            <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-brandAccent/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:left-2 group-hover:border-brandAccent" />
+            <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-brandAccent/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:right-2 group-hover:border-brandAccent" />
 
             {/* Subtle Gradient Glow Accent Top Line */}
             <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-80" />
 
             <div className="space-y-4 relative z-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#A67C6B] dark:text-[#D4AF37] flex items-center gap-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brandAccent flex items-center gap-2">
                 <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37]" />
                 Visit Our Studio
               </p>
-              <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] dark:text-[#F2EDE4]">
+              <h3 className="font-serif text-2xl sm:text-3xl text-brandTextPrimary">
                 Shubham Photos Studio & Digital Center
               </h3>
-              <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] leading-relaxed">
+              <p className="text-sm text-brandTextMuted leading-relaxed">
                 Located on the main bazaar road near the bus stand, opposite Saralgaon Police Chowki, Murbad. Open daily from 9:00 AM – 8:00 PM for photography bookings, digital services, and consultations.
               </p>
-              <p className="text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
-                Phone / WhatsApp: <span className="font-semibold text-[#A67C6B] dark:text-[#D4AF37]">+91 92714 56749</span>
+              <p className="text-sm font-medium text-brandTextPrimary">
+                Phone / WhatsApp: <span className="font-semibold text-brandAccent">+91 92714 56749</span>
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-end relative z-10">
               <Link
                 to="/contact"
-                className="px-8 py-3.5 bg-[#1A1A1A] dark:bg-[#F2EDE4] text-white dark:text-[#181412] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-lg hover:bg-[#A67C6B] dark:hover:bg-[#D4AF37] transition-all shadow-sm hover:shadow-md inline-block"
+                className="px-8 py-3.5 bg-brandTextPrimary !text-brandBg dark:bg-gradient-to-r dark:from-[#C49B89] dark:via-[#D4AF37] dark:to-[#A67C6B] dark:!text-[#0C0A09] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-xl shadow-md hover:scale-105 active:scale-95 transition-all !no-underline inline-block"
               >
                 Book Us / Contact
               </Link>
               <a
                 href="tel:9271456749"
-                className="px-8 py-3.5 border border-[#1A1A1A] dark:border-[#F2EDE4] text-[#1A1A1A] dark:text-[#F2EDE4] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-lg hover:border-[#A67C6B] hover:text-[#A67C6B] dark:hover:border-[#D4AF37] dark:hover:text-[#D4AF37] transition-all inline-block"
+                className="px-8 py-3.5 border border-brandBorder !text-brandTextPrimary text-xs font-bold uppercase tracking-[0.2em] text-center rounded-xl hover:border-brandAccent hover:!text-brandAccent transition-all !no-underline inline-block"
               >
                 Call Studio
               </a>
