@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
 import { serviceService } from "../services";
@@ -90,7 +91,7 @@ const Services = () => {
       try {
         const servicesData = await serviceService.getAllServices();
         const servicesList = servicesData.data?.services;
-        
+
         if (Array.isArray(servicesList) && servicesList.length > 0) {
           const mappedServices = servicesList.map(s => ({
             id: s._id,
@@ -187,6 +188,41 @@ const Services = () => {
             </motion.article>
           ))}
         </div>
+
+        {/* Live Marketplace & Creator Opportunity Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative mt-16 overflow-hidden rounded-3xl border border-brandAccent/40 bg-gradient-to-r from-brandAccent/15 via-brandSurface to-brandSurfaceSoft/40 p-8 shadow-xl"
+        >
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-brandAccent/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brandAccent">
+                <span>⚡ Live Creator Marketplace & Gigs</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-brandTextPrimary">
+                Book Orders with 24h Expiry or Make Money as a Photographer
+              </h3>
+              <p className="text-xs sm:text-sm text-brandTextMuted">
+                Post custom photoshoot orders (Person 1) or claim open gigs in your city (Person 2). Enjoy transparent 10% platform commission with guaranteed direct connections.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to="/dashboard"
+                className="rounded-full bg-brandAccent px-6 py-3 text-xs font-bold uppercase tracking-wider text-black shadow-lg shadow-brandAccent/30 hover:bg-amber-400 !no-underline transition-all"
+              >
+                Explore Gig Board
+              </Link>
+              <Link
+                to="/login"
+                className="rounded-full border border-brandBorder px-6 py-3 text-xs font-bold uppercase tracking-wider text-brandTextPrimary hover:border-brandAccent !no-underline transition-all"
+              >
+                Sign In to Earn
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </section>
     </div>
   );

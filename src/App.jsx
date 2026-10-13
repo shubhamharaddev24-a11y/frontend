@@ -18,6 +18,7 @@ const Gallery = lazy(() => import("./pages/Gallery"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Login = lazy(() => import("./pages/Login"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const UserDashboard = lazy(() => import("./pages/UserDashboard"));
 
 // Sleek and premium visual loader for dynamic page transition states
 const PageLoader = () => (
@@ -135,6 +136,16 @@ const AppContent = () => {
           type: "website"
         };
 
+      case "/dashboard":
+      case "/gigs":
+        return {
+          title: "Marketplace Gig Dashboard & Creator Earnings | CREAONNECT",
+          description: "Browse live photoshoot gig orders with countdown expiry, earn money as a creator, or post custom creative orders.",
+          canonical: `${baseUrl}/dashboard`,
+          keywords: "photography gigs, earn money photographer, photoshoot booking marketplace, pre-wedding shoot gigs",
+          type: "website"
+        };
+
       default:
         return {
           title: "Professional Digital & Media Solutions",
@@ -148,12 +159,14 @@ const AppContent = () => {
 
   const seoConfig = getSEOConfig(location.pathname);
 
+  const isDashboardRoute = location.pathname.startsWith("/dashboard") || location.pathname.startsWith("/gigs");
+
   return (
     <>
       <SEOHead {...seoConfig} />
       <div className="flex min-h-screen flex-col bg-brandBg text-brandTextPrimary">
-        <Starfield />
-        <Header />
+        {!isDashboardRoute && <Starfield />}
+        {!isDashboardRoute && <Header />}
         <main className="flex-1">
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -165,11 +178,13 @@ const AppContent = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/dashboard" element={<UserDashboard />} />
+              <Route path="/gigs" element={<UserDashboard />} />
             </Routes>
           </Suspense>
         </main>
-        <Footer />
-        {!location.pathname.startsWith("/admin") && <FloatingContactButtons />}
+        {!isDashboardRoute && <Footer />}
+        {!location.pathname.startsWith("/admin") && !isDashboardRoute && <FloatingContactButtons />}
       </div>
     </>
   );

@@ -16,10 +16,12 @@ export default {
         sphCream: "#F2EDE4",
         sphTaupe: "#1A1A1A",
         sphMuted: "#4A4A4A",
-        sphAccent: "#A67C6B",
-        sphBorder: "#E0D7CC",
+        sphAccent: "#76B900",
+        sphBorder: "#E5E7EB",
         sphCardBg: "#FFFFFF",
-        sphSurfaceSoft: "#FAF6F0",
+        sphSurfaceSoft: "#F5F6F8",
+        nvidiaGreen: "#76B900",
+        nvidiaGreenHover: "#68A500",
 
         // Theme-aware brand system (driven by CSS variables in `src/styles/themes.css`)
         brandBg: "var(--bg-primary)",

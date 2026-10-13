@@ -47,5 +47,41 @@ export const bookingService = {
   getAvailableSlots: async (date) => {
     const response = await api.get(`/bookings/available-slots?date=${date}`);
     return response.data;
+  },
+
+  // === CREAONNECT GIG MARKETPLACE METHODS ===
+  getAvailableOrders: async (params = {}) => {
+    const response = await api.get('/bookings/marketplace/available', { params });
+    return response.data;
+  },
+
+  postMarketplaceOrder: async (orderData) => {
+    const response = await api.post('/bookings/marketplace/order', orderData);
+    return response.data;
+  },
+
+  claimOrder: async (id) => {
+    const response = await api.post(`/bookings/marketplace/${id}/claim`);
+    return response.data;
+  },
+
+  getMyClientOrders: async () => {
+    const response = await api.get('/bookings/marketplace/my-client-orders');
+    return response.data;
+  },
+
+  getMyFreelancerOrders: async () => {
+    const response = await api.get('/bookings/marketplace/my-claimed-orders');
+    return response.data;
+  },
+
+  completeOrder: async (id) => {
+    const response = await api.patch(`/bookings/marketplace/${id}/complete`);
+    return response.data;
+  },
+
+  cancelOrder: async (id) => {
+    const response = await api.patch(`/bookings/marketplace/${id}/cancel`);
+    return response.data;
   }
 };

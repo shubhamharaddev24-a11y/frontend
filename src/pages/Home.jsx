@@ -2,7 +2,7 @@ import React, { useMemo, useState, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMotionVariants } from "../utils/motion";
-import CreaonnectUniqueHero from "../components/CreaonnectUniqueHero";
+import CreaonnectNvidiaHero from "../components/CreaonnectNvidiaHero";
 import MarketplaceNetworkSection from "../components/MarketplaceNetworkSection";
 import WeddingCrackerSparks from "../components/WeddingCrackerSparks";
 import RevealOnScroll from "../components/RevealOnScroll";
@@ -93,8 +93,8 @@ const Home = () => {
 
   return (
     <div className="bg-brandBg text-brandTextPrimary font-sans selection:bg-brandAccent/20">
-      {/* 1. CREAONNECT Unique Hero (Image ↔ Animated Interactive Content Card) */}
-      <CreaonnectUniqueHero />
+      {/* 1. CREAONNECT NVIDIA-Style Progress Hero (Auto-advancing progress tabs) */}
+      <CreaonnectNvidiaHero />
 
       {/* 2. Philosophy & Welcome Intro Section (2-Column Layout matching Viya Films screenshot 2) */}
       <section className="py-20 md:py-28 px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto">

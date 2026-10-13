@@ -13,6 +13,7 @@ const navItems = [
   { label: "About", to: "/about" },
   { label: "Portfolio", to: "/gallery" },
   { label: "Services", to: "/services" },
+  { label: "Gig Market ⚡", to: "/dashboard" },
   { label: "Book Us", to: "/contact" },
 ];
 
@@ -45,7 +46,7 @@ const Header = () => {
     <motion.header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#FAF6F0]/90 dark:bg-[#0C0A09]/90 backdrop-blur-md border-b border-[#E0D7CC]/70 dark:border-[#362B24]/70 shadow-sm py-2.5"
+          ? "bg-white/95 dark:bg-[#0C0A09]/95 backdrop-blur-md border-b border-[#E5E7EB] dark:border-[#362B24]/70 shadow-sm py-2.5"
           : "bg-transparent py-4"
       }`}
     >
@@ -66,7 +67,7 @@ const Header = () => {
               <NavLink
                 to={item.to}
                 className={({ isActive }) =>
-                  `relative text-xs font-medium uppercase tracking-[0.18em] transition-colors !no-underline ${isActive ? "!text-brandAccent" : "!text-brandTextPrimary/70 hover:!text-brandTextPrimary"
+                  `relative text-xs font-medium uppercase tracking-[0.18em] transition-colors !no-underline ${isActive ? "!text-brandAccent font-bold" : "!text-brandTextPrimary/80 hover:!text-brandTextPrimary"
                   }`
                 }
               >
@@ -75,7 +76,7 @@ const Header = () => {
                     {item.label}
                     {isActive && (
                       <motion.div
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brandAccent"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#76B900]"
                         layoutId="activeNavIndicator"
                         initial={false}
                         transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -95,10 +96,19 @@ const Header = () => {
             <ThemeToggle />
           </div>
 
-          {/* Book Consultation CTA Button */}
+          {/* Sign In / Dashboard CTA */}
+          <NavLink
+            to={localStorage.getItem("token") ? "/dashboard" : "/login"}
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-brandBorder/80 bg-brandSurfaceSoft/60 text-brandTextPrimary px-3.5 py-1.5 text-xs font-semibold hover:border-[#76B900] hover:text-[#76B900] transition-all !no-underline"
+          >
+            <span>{localStorage.getItem("token") ? "Dashboard" : "Sign In / Earn"}</span>
+          </NavLink>
+
+          {/* Book Consultation CTA Button (NVIDIA Style Green Accent) */}
           <NavLink
             to="/contact"
-            className="hidden lg:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#A67C6B] via-[#BD9280] to-[#8C6252] text-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] shadow-md shadow-[#A67C6B]/25 hover:shadow-lg hover:shadow-[#A67C6B]/40 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 !no-underline select-none"
+            className="hidden lg:inline-flex items-center gap-2 bg-[#76B900] hover:bg-[#68A500] text-black px-4 py-2 text-xs font-extrabold uppercase tracking-wider shadow-sm transition-all duration-200 !no-underline select-none"
+            style={{ borderRadius: "2px" }}
           >
             <span>Book Us</span>
           </NavLink>
