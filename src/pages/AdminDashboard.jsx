@@ -379,7 +379,7 @@ const AdminDashboard = () => {
         <div className="flex flex-col justify-between gap-4 border-b border-brandBorder pb-6 sm:flex-row sm:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccent">
-              Shubham Media & Digital Services
+              CREAONNECT Studios & Digital
             </p>
             <h1 className="text-2xl font-semibold text-brandTextPrimary sm:text-3xl">
               Admin Workspace

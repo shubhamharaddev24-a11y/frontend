@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMotionVariants } from "../utils/motion";
 import { serviceService } from "../services";
@@ -6,9 +7,10 @@ import { serviceService } from "../services";
 const sections = [
   {
     id: "photography",
-    title: "Media Services (Shubham Photos Studio)",
+    pillar: "CREATE",
+    title: "Media Services & Visual Arts",
     description:
-      "Timeless memories, wedding films, and professional photography captured by our dedicated studio branch.",
+      "Timeless memories, wedding films, and professional photography captured with cinematic elegance.",
     items: [
       "Wedding photography and videography (Traditional & Cinematic)",
       "Pre-wedding shoots at scenic outdoor locations near Murbad",
@@ -19,10 +21,25 @@ const sections = [
     ],
   },
   {
+    id: "design-branding",
+    pillar: "CREATE",
+    title: "Design & Graphic Branding",
+    description:
+      "Professional visual assets for your offline promotions, print media, and corporate branding.",
+    items: [
+      "Political banners, rally posters, and flex designs",
+      "Shop front board designs and corporate identity assets",
+      "Wedding welcome boards, backdrops, and Marathi Lagna-Patrika",
+      "Visiting cards, brochures, and promotional pamphlets",
+      "Custom logo designs and social media post templates",
+    ],
+  },
+  {
     id: "web-dev",
+    pillar: "INNOVATE",
     title: "Web Development Division",
     description:
-      "Modern, fast, and responsive websites to establish your business online.",
+      "Modern, fast, and responsive websites to establish your business authority online.",
     items: [
       "Custom Full-Stack web applications (MERN Stack)",
       "Business and corporate portfolio websites",
@@ -34,7 +51,8 @@ const sections = [
   },
   {
     id: "digital-marketing",
-    title: "Digital Marketing Division",
+    pillar: "INNOVATE",
+    title: "Digital Marketing & Growth",
     description:
       "Drive traffic, build authority, and acquire local customers for your brand.",
     items: [
@@ -46,23 +64,11 @@ const sections = [
     ],
   },
   {
-    id: "design-branding",
-    title: "Design & Graphic Branding",
-    description:
-      "Professional visual assets for your offline promotions and branding.",
-    items: [
-      "Political banners, rally posters, and flex designs",
-      "Shop front board designs and corporate identity assets",
-      "Wedding welcome boards, backdrops, and Marathi Lagna-Patrika",
-      "Visiting cards, brochures, and promotional pamphlets",
-      "Custom logo designs and social media post templates",
-    ],
-  },
-  {
     id: "cyber-dtp",
-    title: "Cyber Desk & DTP Services",
+    pillar: "CONNECT",
+    title: "Cyber Desk & Citizen Services",
     description:
-      "Your physical point of contact in Saralgaon for essential digital document tasks.",
+      "Your physical point of contact in Saralgaon for essential digital document tasks and citizen services.",
     items: [
       "Professional biodata and marriage CV creation",
       "Student resumes and job application documents",
@@ -85,7 +91,7 @@ const Services = () => {
       try {
         const servicesData = await serviceService.getAllServices();
         const servicesList = servicesData.data?.services;
-        
+
         if (Array.isArray(servicesList) && servicesList.length > 0) {
           const mappedServices = servicesList.map(s => ({
             id: s._id,
@@ -105,7 +111,7 @@ const Services = () => {
   }, []);
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] min-h-screen pb-20 pt-32 px-6 sm:px-12">
+    <div className="bg-brandBg text-brandTextPrimary min-h-screen pb-20 pt-32 px-6 sm:px-12">
       <section className="mx-auto max-w-7xl space-y-12">
         <motion.div
           className="text-center max-w-3xl mx-auto space-y-4"
@@ -113,14 +119,14 @@ const Services = () => {
           animate="show"
           variants={fadeUp}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brandAccent">
             DIVISIONS & SERVICES
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
-            Media, Technology & Graphic Branding
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brandTextPrimary font-normal leading-tight">
+            Create • Innovate • Connect
           </h1>
-          <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
-            From professional cinematography and wedding albums at our local studio, to custom web applications, local SEO marketing, and digital document desk.
+          <p className="text-sm sm:text-base text-brandTextMuted font-light leading-relaxed">
+            From professional cinematography and wedding albums, to custom full-stack web applications, local SEO marketing, and digital citizen desk services.
           </p>
         </motion.div>
 
@@ -128,30 +134,37 @@ const Services = () => {
           {services.map((section) => (
             <motion.article
               key={section.id || section._id}
-              className="bg-white dark:bg-[#221C19] border border-[#E0D7CC]/70 dark:border-[#3D342E]/70 p-8 sm:p-10 rounded-none space-y-5 shadow-sm hover:shadow-md transition-all duration-300"
+              className="bg-brandSurface border border-brandBorder p-8 sm:p-10 rounded-2xl space-y-5 shadow-sm hover:shadow-md transition-all duration-300"
               initial={reduceMotion ? "show" : "hidden"}
               whileInView="show"
               viewport={{ once: true, amount: 0.25 }}
               variants={variants.fadeUpShort}
             >
               <div className="flex items-center justify-between gap-3">
-                <h2 className="font-serif text-2xl font-normal text-[#1A1A1A] dark:text-[#F2EDE4]">
-                  {section.title}
-                </h2>
+                <div className="space-y-1">
+                  {section.pillar && (
+                    <span className="inline-block text-[10px] font-mono uppercase tracking-widest font-bold text-brandAccent bg-brandAccent/10 px-2.5 py-0.5 rounded">
+                      Pillar: {section.pillar}
+                    </span>
+                  )}
+                  <h2 className="font-serif text-2xl font-normal text-brandTextPrimary">
+                    {section.title}
+                  </h2>
+                </div>
                 {section.comingSoon && (
-                  <span className="rounded-full bg-[#A67C6B]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A67C6B]">
+                  <span className="rounded-full bg-brandAccent/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-brandAccent">
                     Coming soon
                   </span>
                 )}
               </div>
-              <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
+              <p className="text-xs sm:text-sm text-brandTextMuted font-light leading-relaxed">
                 {section.description}
               </p>
-              <hr className="border-[#E0D7CC]/60 dark:border-[#3D342E]/60" />
-              <ul className="space-y-3 text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light">
+              <hr className="border-brandBorder/60" />
+              <ul className="space-y-3 text-xs sm:text-sm text-brandTextMuted font-light">
                 {(section.items || []).map((item, index) => (
                   <li key={index} className="flex gap-2.5 items-start">
-                    <span className="text-[#A67C6B]">•</span>
+                    <span className="text-brandAccent">•</span>
                     <span className="leading-relaxed">{item}</span>
                   </li>
                 ))}
@@ -161,13 +174,13 @@ const Services = () => {
                   href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-2.5 bg-[#1A1A1A] text-white text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-[#A67C6B]"
+                  className="px-6 py-2.5 bg-brandTextPrimary !text-brandBg text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-brandAccent hover:!text-white rounded-xl !no-underline"
                 >
                   WhatsApp Enquiry
                 </a>
                 <a
                   href="tel:9271456749"
-                  className="px-6 py-2.5 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-[#A67C6B] hover:text-[#A67C6B]"
+                  className="px-6 py-2.5 border border-brandBorder !text-brandTextPrimary text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-brandAccent hover:!text-brandAccent rounded-xl !no-underline"
                 >
                   Call Team
                 </a>
@@ -175,6 +188,41 @@ const Services = () => {
             </motion.article>
           ))}
         </div>
+
+        {/* Live Marketplace & Creator Opportunity Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative mt-16 overflow-hidden rounded-3xl border border-brandAccent/40 bg-gradient-to-r from-brandAccent/15 via-brandSurface to-brandSurfaceSoft/40 p-8 shadow-xl"
+        >
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-brandAccent/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brandAccent">
+                <span>⚡ Live Creator Marketplace & Gigs</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-brandTextPrimary">
+                Book Orders with 24h Expiry or Make Money as a Photographer
+              </h3>
+              <p className="text-xs sm:text-sm text-brandTextMuted">
+                Post custom photoshoot orders (Person 1) or claim open gigs in your city (Person 2). Enjoy transparent 10% platform commission with guaranteed direct connections.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to="/dashboard"
+                className="rounded-full bg-brandAccent px-6 py-3 text-xs font-bold uppercase tracking-wider text-black shadow-lg shadow-brandAccent/30 hover:bg-amber-400 !no-underline transition-all"
+              >
+                Explore Gig Board
+              </Link>
+              <Link
+                to="/login"
+                className="rounded-full border border-brandBorder px-6 py-3 text-xs font-bold uppercase tracking-wider text-brandTextPrimary hover:border-brandAccent !no-underline transition-all"
+              >
+                Sign In to Earn
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </section>
     </div>
   );

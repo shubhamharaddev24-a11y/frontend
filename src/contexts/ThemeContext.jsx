@@ -10,23 +10,68 @@ export const useTheme = () => {
   return context;
 };
 
-export const ThemeProvider = ({ children }) => {
-  const [isDark] = useState(false);
+const applyThemeToDOM = (themeName) => {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement;
+  const body = document.body;
 
-  useEffect(() => {
-    // Enforce light theme on html element (Tailwind + CSS variables)
-    const root = document.documentElement;
+  if (themeName === 'dark') {
+    root.classList.remove('light');
+    root.classList.add('dark');
+    root.setAttribute('data-theme', 'dark');
+    if (body) {
+      body.classList.remove('light');
+      body.classList.add('dark');
+    }
+  } else {
     root.classList.remove('dark');
     root.classList.add('light');
-    localStorage.setItem('theme', 'light');
-  }, []);
+    root.setAttribute('data-theme', 'light');
+    if (body) {
+      body.classList.remove('dark');
+      body.classList.add('light');
+    }
+  }
+};
 
-  const toggleTheme = () => {};
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        applyThemeToDOM(savedTheme);
+        return savedTheme;
+      }
+    } catch {
+      // ignore
+    }
+    applyThemeToDOM('light');
+    return 'light';
+  });
+
+  const isDark = theme === 'dark';
+
+  useEffect(() => {
+    applyThemeToDOM(theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      // ignore
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => {
+      const nextTheme = prevTheme === 'dark' ? 'light' : 'dark';
+      applyThemeToDOM(nextTheme);
+      return nextTheme;
+    });
+  };
 
   const value = {
-    isDark: false,
+    isDark,
+    theme,
     toggleTheme,
-    theme: 'light'
   };
 
   return (

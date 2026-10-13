@@ -104,7 +104,7 @@ const DEFAULT_TESTIMONIALS = {
       id: 'test-1',
       title: 'Rohini & Sanket',
       subtitle: 'December 2023 · Murbad, Maharashtra',
-      quote: 'Shubham captured our wedding perfectly! The traditional rituals and emotional moments were documented so beautifully.',
+      quote: 'CREAONNECT captured our wedding perfectly! The traditional rituals and emotional moments were documented so beautifully.',
       imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
       videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1',
       rating: 5,
@@ -122,7 +122,7 @@ const DEFAULT_TESTIMONIALS = {
       id: 'test-3',
       title: 'Anjali & Vikram',
       subtitle: 'October 2023 · Karjat, Maharashtra',
-      quote: 'Shubham Studio made our pre-wedding shoot so comfortable and fun! The drone shots and location recommendations were top notch.',
+      quote: 'The CREAONNECT team made our pre-wedding shoot so comfortable and fun! The drone shots and location recommendations were top notch.',
       imageUrl: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80',
       videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1',
       rating: 5,
@@ -219,11 +219,33 @@ const AdminCMSManager = () => {
           updatedItems[itemIndex].imageUrl = res.imageUrl;
         }
         setCurrentSection({ ...currentSection, items: updatedItems });
-        setMessage('Image uploaded successfully! Remember to save changes.');
       }
     } catch (err) {
       console.error(err);
       const serverMsg = err.response?.data?.message || 'Image upload failed. Ensure file size is under 50MB.';
+      setError(serverMsg);
+    } finally {
+      setUploadingIndex(null);
+    }
+  };
+
+  const handleVideoUpload = async (file, itemIndex) => {
+    if (!file) return;
+    setUploadingIndex(itemIndex);
+    setError('');
+    try {
+      const res = await contentService.uploadImage(file);
+      if (res?.success && res?.imageUrl) {
+        const updatedItems = [...(currentSection.items || [])];
+        if (updatedItems[itemIndex]) {
+          updatedItems[itemIndex].videoUrl = res.imageUrl;
+        }
+        setCurrentSection({ ...currentSection, items: updatedItems });
+        setMessage('Video uploaded successfully! Remember to save changes.');
+      }
+    } catch (err) {
+      console.error(err);
+      const serverMsg = err.response?.data?.message || 'Video upload failed. Ensure file size is under 50MB.';
       setError(serverMsg);
     } finally {
       setUploadingIndex(null);
@@ -399,42 +421,118 @@ const AdminCMSManager = () => {
                     </button>
                   </div>
 
-                  {/* Image Preview & Upload Control */}
-                  <div className="space-y-2">
-                    <label className="block text-[11px] font-semibold uppercase text-brandTextMuted">
-                      Item Media Image
-                    </label>
-                    <div className="flex gap-4 items-center">
-                      <div className="w-24 h-24 rounded-lg overflow-hidden bg-black/40 border border-brandBorder shrink-0 relative">
-                        <img
-                          src={formatImageUrl(item.imageUrl)}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                          style={{ objectPosition: item.objectPosition || 'center' }}
-                        />
-                      </div>
-                      <div className="space-y-2 flex-1">
-                        <label className="inline-flex items-center gap-2 bg-brandAccent hover:bg-amber-400 text-black px-4 py-2 rounded-lg font-bold text-xs cursor-pointer transition-colors shadow-sm">
-                          <Upload size={14} />
-                          <span>{uploadingIndex === index ? 'Uploading...' : 'Upload Image'}</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageUpload(e.target.files[0], index)}
-                            className="hidden"
-                            disabled={uploadingIndex === index}
-                          />
-                        </label>
-                        <input
-                          type="text"
-                          value={item.imageUrl || ''}
-                          onChange={(e) => handleItemChange(index, 'imageUrl', e.target.value)}
-                          placeholder="Or paste image URL directly..."
-                          className="w-full p-2 text-xs bg-brandSurface border border-brandBorder rounded text-brandTextPrimary"
-                        />
+                  {/* Media Type Selector (Only for Hero Slides) */}
+                  {activeSectionKey === 'hero_slides' && (
+                    <div className="space-y-1 mb-4 pb-3 border-b border-brandBorder/40">
+                      <label className="block text-[11px] font-semibold uppercase text-brandTextMuted">
+                        Media Type
+                      </label>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleItemChange(index, 'mediaType', 'image')}
+                          className={`flex-1 py-2 text-xs font-bold rounded-lg border transition-all ${
+                            (item.mediaType || (item.videoUrl && !item.mediaType ? 'video' : 'image')) === 'image'
+                              ? 'bg-brandAccent text-black border-brandAccent shadow-sm'
+                              : 'bg-brandSurfaceSoft text-brandTextMuted border-brandBorder hover:text-brandTextPrimary'
+                          }`}
+                        >
+                          Image Slide
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleItemChange(index, 'mediaType', 'video')}
+                          className={`flex-1 py-2 text-xs font-bold rounded-lg border transition-all ${
+                            (item.mediaType || (item.videoUrl && !item.mediaType ? 'video' : 'image')) === 'video'
+                              ? 'bg-brandAccent text-black border-brandAccent shadow-sm'
+                              : 'bg-brandSurfaceSoft text-brandTextMuted border-brandBorder hover:text-brandTextPrimary'
+                          }`}
+                        >
+                          Video Slide
+                        </button>
                       </div>
                     </div>
-                  </div>
+                  )}
+
+                  {/* Image Preview & Upload Control */}
+                  {(activeSectionKey !== 'hero_slides' || (item.mediaType || (item.videoUrl && !item.mediaType ? 'video' : 'image')) === 'image') && (
+                    <div className="space-y-2 mb-4">
+                      <label className="block text-[11px] font-semibold uppercase text-brandTextMuted">
+                        Item Media Image
+                      </label>
+                      <div className="flex gap-4 items-center">
+                        <div className="w-24 h-24 rounded-lg overflow-hidden bg-black/40 border border-brandBorder shrink-0 relative">
+                          <img
+                            src={formatImageUrl(item.imageUrl)}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                            style={{ objectPosition: item.objectPosition || 'center' }}
+                          />
+                        </div>
+                        <div className="space-y-2 flex-1">
+                          <label className="inline-flex items-center gap-2 bg-brandAccent hover:bg-amber-400 text-black px-4 py-2 rounded-lg font-bold text-xs cursor-pointer transition-colors shadow-sm">
+                            <Upload size={14} />
+                            <span>{uploadingIndex === index ? 'Uploading...' : 'Upload Image'}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleImageUpload(e.target.files[0], index)}
+                              className="hidden"
+                              disabled={uploadingIndex === index}
+                            />
+                          </label>
+                          <input
+                            type="text"
+                            value={item.imageUrl || ''}
+                            onChange={(e) => handleItemChange(index, 'imageUrl', e.target.value)}
+                            placeholder="Or paste image URL directly..."
+                            className="w-full p-2 text-xs bg-brandSurface border border-brandBorder rounded text-brandTextPrimary"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Video Upload Control (Only for Hero Slides) */}
+                  {activeSectionKey === 'hero_slides' && (item.mediaType || (item.videoUrl && !item.mediaType ? 'video' : 'image')) === 'video' && (
+                    <div className="space-y-2 mb-4">
+                      <label className="block text-[11px] font-semibold uppercase text-brandTextMuted">
+                        Item Video Background
+                      </label>
+                      <div className="flex gap-4 items-center">
+                        <div className="w-24 h-24 rounded-lg overflow-hidden bg-black/40 border border-brandBorder shrink-0 flex items-center justify-center relative">
+                          {item.videoUrl ? (
+                            <video
+                              src={formatImageUrl(item.videoUrl)}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <span className="text-[10px] text-brandTextMuted uppercase tracking-wider text-center px-2">No Video</span>
+                          )}
+                        </div>
+                        <div className="space-y-2 flex-1">
+                          <label className="inline-flex items-center gap-2 bg-brandAccent hover:bg-amber-400 text-black px-4 py-2 rounded-lg font-bold text-xs cursor-pointer transition-colors shadow-sm">
+                            <Upload size={14} />
+                            <span>{uploadingIndex === index ? 'Uploading...' : 'Upload Video'}</span>
+                            <input
+                              type="file"
+                              accept="video/*"
+                              onChange={(e) => handleVideoUpload(e.target.files[0], index)}
+                              className="hidden"
+                              disabled={uploadingIndex === index}
+                            />
+                          </label>
+                          <input
+                            type="text"
+                            value={item.videoUrl || ''}
+                            onChange={(e) => handleItemChange(index, 'videoUrl', e.target.value)}
+                            placeholder="Or paste video URL directly..."
+                            className="w-full p-2 text-xs bg-brandSurface border border-brandBorder rounded text-brandTextPrimary"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Text Fields */}
                   <div className="grid gap-3 sm:grid-cols-2">

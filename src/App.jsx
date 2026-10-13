@@ -4,8 +4,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SEOHead from "./components/SEOHead";
 import Starfield from "./components/Starfield";
+import FloatingContactButtons from "./components/FloatingContactButtons";
 import Lenis from "lenis";
 import "./App.css";
+
+import Practice from "./pages/Practice";
 
 // Lazy loaded page components for optimal initial bundle sizes
 const Home = lazy(() => import("./pages/Home"));
@@ -15,6 +18,7 @@ const Gallery = lazy(() => import("./pages/Gallery"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Login = lazy(() => import("./pages/Login"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const UserDashboard = lazy(() => import("./pages/UserDashboard"));
 
 // Sleek and premium visual loader for dynamic page transition states
 const PageLoader = () => (
@@ -66,24 +70,24 @@ const AppContent = () => {
   }, [location.pathname]);
 
   const getSEOConfig = (pathname) => {
-    const baseUrl = "https://smediadigitalservices.com";
+    const baseUrl = "https://creaonnect.com";
 
     switch (pathname) {
       case "/":
         return {
-          title: "Custom Web Development & Cinematography Murbad",
-          description: "Shubham Media & Digital Services delivers custom MERN stack websites, local SEO marketing, graphic branding, and premium wedding cinematography in Murbad, Maharashtra.",
+          title: "CREAONNECT | Create • Innovate • Connect",
+          description: "CREAONNECT delivers custom MERN stack websites, local SEO marketing, graphic branding, and premium wedding cinematography across three pillars: Create, Innovate, Connect.",
           canonical: baseUrl,
-          keywords: "web development Murbad, digital marketing Thane, wedding cinematography, photo studio Saralgaon, local SEO, graphic design",
+          keywords: "creaonnect, create innovate connect, web development Murbad, digital marketing Thane, wedding cinematography, photo studio Saralgaon, local SEO, graphic design",
           type: "website"
         };
 
       case "/about":
         return {
-          title: "About Us - Web Agency & Photo Studio",
-          description: "Learn how Shubham Media & Digital Services combines professional software development, local search engine optimization, and the trusted photography legacy of Shubham Photos Studio.",
+          title: "About Us | CREAONNECT Three Pillars",
+          description: "Learn how CREAONNECT combines professional software development, local search engine optimization, and timeless cinematic photography.",
           canonical: `${baseUrl}/about`,
-          keywords: "about Shubham Media, web agency Murbad, local photography legacy, digital solutions company",
+          keywords: "about creaonnect, create innovate connect, web agency Murbad, digital solutions company",
           type: "website"
         };
 
@@ -132,6 +136,16 @@ const AppContent = () => {
           type: "website"
         };
 
+      case "/dashboard":
+      case "/gigs":
+        return {
+          title: "Marketplace Gig Dashboard & Creator Earnings | CREAONNECT",
+          description: "Browse live photoshoot gig orders with countdown expiry, earn money as a creator, or post custom creative orders.",
+          canonical: `${baseUrl}/dashboard`,
+          keywords: "photography gigs, earn money photographer, photoshoot booking marketplace, pre-wedding shoot gigs",
+          type: "website"
+        };
+
       default:
         return {
           title: "Professional Digital & Media Solutions",
@@ -145,29 +159,36 @@ const AppContent = () => {
 
   const seoConfig = getSEOConfig(location.pathname);
 
+  const isDashboardRoute = location.pathname.startsWith("/dashboard") || location.pathname.startsWith("/gigs");
+
   return (
     <>
       <SEOHead {...seoConfig} />
       <div className="flex min-h-screen flex-col bg-brandBg text-brandTextPrimary">
-        <Starfield />
-        <Header />
+        {!isDashboardRoute && <Starfield />}
+        {!isDashboardRoute && <Header />}
         <main className="flex-1">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/practice" element={<Practice />} /> 
               <Route path="/services" element={<Services />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/dashboard" element={<UserDashboard />} />
+              <Route path="/gigs" element={<UserDashboard />} />
             </Routes>
           </Suspense>
         </main>
-        <Footer />
+        {!isDashboardRoute && <Footer />}
+        {!location.pathname.startsWith("/admin") && !isDashboardRoute && <FloatingContactButtons />}
       </div>
     </>
   );
+
 };
 
 function App() {

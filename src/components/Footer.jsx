@@ -15,7 +15,7 @@ const Footer = () => {
           </div>
 
           <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#A67C6B]">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#76B900]">
               Navigation
             </p>
             <nav className="flex flex-col gap-2 text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] uppercase tracking-[0.15em]">
@@ -41,7 +41,7 @@ const Footer = () => {
           </div>
 
           <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#A67C6B]">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#76B900]">
               Connect & Visit
             </p>
             <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
@@ -54,8 +54,8 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60 pt-6 text-xs text-[#4A4A4A] dark:text-[#B8ABA0] sm:flex-row">
-          <p>© {new Date().getFullYear()} Shubham Media & Digital Services. All rights reserved.</p>
-          <p className="font-serif italic">Capturing raw emotions, scenic landscapes, and unforgettable moments.</p>
+          <p>© {new Date().getFullYear()} CREAONNECT. All rights reserved.</p>
+          <p className="font-sans uppercase tracking-[0.2em] text-black dark:text-neutral-300 text-[11px] font-bold">Create • Innovate • Connect</p>
         </div>
       </div>
     </footer>

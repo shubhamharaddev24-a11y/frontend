@@ -1,8 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /login
 
 # Sitemap
-Sitemap: https://frontend-smoky-eight-54.vercel.app/sitemap.xml
+Sitemap: https://creaonnect.com/sitemap.xml
+
 
 # Block unnecessary crawlers
 User-agent: AhrefsBot

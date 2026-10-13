@@ -2,11 +2,14 @@ import React, { useMemo, useState, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMotionVariants } from "../utils/motion";
-import AnimatedHero from "../components/AnimatedHero";
+import CreaonnectNvidiaHero from "../components/CreaonnectNvidiaHero";
+import MarketplaceNetworkSection from "../components/MarketplaceNetworkSection";
+import WeddingCrackerSparks from "../components/WeddingCrackerSparks";
 import RevealOnScroll from "../components/RevealOnScroll";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
-import AnimatedServiceCard from "../components/AnimatedServiceCard";
+import ThreePillarsSection from "../components/ThreePillarsSection";
+import GSAPStackedCards from "../components/GSAPStackedCards";
 import { useContent } from "../contexts/ContentContext";
 import {
   Code,
@@ -27,6 +30,7 @@ const Home = () => {
 
   const servicesList = useMemo(() => [
     {
+      id: "division-web-dev",
       name: "Web Development Division",
       points: [
         "Custom Full-Stack web applications (MERN)",
@@ -38,6 +42,7 @@ const Home = () => {
       shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
+      id: "division-digital-marketing",
       name: "Digital Marketing & SEO",
       points: [
         "Google Business Profile optimization and local map ranking",
@@ -49,6 +54,7 @@ const Home = () => {
       shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
+      id: "division-media-studio",
       name: "Media Division (Shubham Photos Studio)",
       points: [
         "Cinematic wedding films, trailers, and traditional photography",
@@ -60,6 +66,7 @@ const Home = () => {
       shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
+      id: "division-graphic-design",
       name: "Graphic Design & Branding",
       points: [
         "Political campaign banners, rally posters & flex designs",
@@ -71,6 +78,7 @@ const Home = () => {
       shadowColor: "rgba(166, 124, 107, 0.2)"
     },
     {
+      id: "division-cyber-desk",
       name: "Cyber Desk & DTP Services",
       points: [
         "Professional biodata and marriage resume creation",
@@ -84,9 +92,9 @@ const Home = () => {
   ], []);
 
   return (
-    <div className="bg-[#F2EDE4] dark:bg-[#181412] text-[#1A1A1A] dark:text-[#F2EDE4] font-sans selection:bg-[#A67C6B]/20">
-      {/* 1. Full-Bleed Animated Hero Carousel */}
-      <AnimatedHero />
+    <div className="bg-brandBg text-brandTextPrimary font-sans selection:bg-brandAccent/20">
+      {/* 1. CREAONNECT NVIDIA-Style Progress Hero (Auto-advancing progress tabs) */}
+      <CreaonnectNvidiaHero />
 
       {/* 2. Philosophy & Welcome Intro Section (2-Column Layout matching Viya Films screenshot 2) */}
       <section className="py-20 md:py-28 px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto">
@@ -98,7 +106,7 @@ const Home = () => {
             </h2>
             <div className="space-y-5 text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
               <p>
-                Welcome to Shubham Media & Digital, where we turn your most meaningful celebrations into lasting visual treasures. We are dedicated to documenting the authentic connection, joy, and unique chemistry of every couple we work with.
+                Welcome to CREAONNECT, where we turn your most meaningful celebrations into lasting visual treasures and power your business through modern digital solutions. We are dedicated to documenting the authentic connection, joy, and unique chemistry of every project and couple we work with.
               </p>
               <p>
                 Our approach is focused on real storytelling. We capture the genuine, unscripted moments—the quiet glances, the loud laughter, and the heartfelt tears—that make your wedding day uniquely yours, whether it's a grand multi-day celebration or an intimate family gathering.
@@ -125,8 +133,16 @@ const Home = () => {
         </div>
       </section>
 
+      {/* 2.5. The Three Pillars Framework (CREATE • INNOVATE • CONNECT) */}
+      <ThreePillarsSection />
+
+      {/* 2.6. CONNECT — The Marketplace Flow (CLIENT → CREAONNECT → TALENT) */}
+      {/* <MarketplaceNetworkSection /> */}
+
       {/* 3. Precious Moments Showcase Grid (Matching Viya Films screenshot 3) */}
-      <section className="py-16 md:py-24 px-6 sm:px-12 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
+      <section className="relative py-16 md:py-24 px-6 sm:px-12 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60 overflow-hidden">
+        {/* Celebratory Wedding Cracker Sparks & Petal Burst Animation */}
+        <WeddingCrackerSparks />
         {/* Editorial Text Block */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
           <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
@@ -201,7 +217,7 @@ const Home = () => {
             Time moves forward, but a photograph lets you pause. We build a bridge back to the true emotions of your most treasured day.
           </p>
           <p className="text-xs uppercase tracking-[0.35em] font-sans text-white/80 pt-2">
-            SHUBHAM MEDIA & FILMS
+            CREAONNECT STUDIOS & FILMS
           </p>
         </div>
       </section>
@@ -229,12 +245,12 @@ const Home = () => {
             <Link
               key={card.title}
               to={card.link}
-              className="bg-white dark:bg-[#221C19] p-10 sm:p-14 rounded-none border border-[#E0D7CC]/60 dark:border-[#3D342E]/60 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
+              className="bg-brandSurface p-10 sm:p-14 rounded-2xl border border-brandBorder flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1 !no-underline"
             >
-              <h4 className="font-sans text-lg sm:text-xl font-medium tracking-[0.25em] text-[#1A1A1A] dark:text-[#F2EDE4] uppercase group-hover:text-[#A67C6B] transition-colors">
+              <h4 className="font-sans text-lg sm:text-xl font-medium tracking-[0.25em] text-brandTextPrimary uppercase group-hover:text-brandAccent transition-colors">
                 {card.title}
               </h4>
-              <p className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#4A4A4A] dark:text-[#B8ABA0] mt-3">
+              <p className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-brandTextMuted mt-3">
                 {card.subtitle}
               </p>
             </Link>
@@ -242,35 +258,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 6. Company Divisions & Services Showcase */}
-      <section className="py-16 px-6 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#4A4A4A] dark:text-[#B8ABA0]">
-            Full Capabilities
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#1A1A1A] dark:text-[#F2EDE4] mt-2">
-            Media, Technology & Digital Divisions
-          </h2>
-          <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] mt-3">
-            From high-end wedding films and portraits to full-stack web applications, local SEO, and print designs.
-          </p>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {servicesList.map((service, index) => (
-            <AnimatedServiceCard
-              key={service.name}
-              index={index}
-              name={service.name}
-              points={service.points}
-              mainIcon={service.mainIcon}
-              themeColor={service.themeColor}
-              shadowColor={service.shadowColor}
-              onClick={() => setActiveService(service)}
-            />
-          ))}
-        </div>
-      </section>
+      {/* 6. Company Divisions & Services Showcase (14. GSAP Stacked Cards Animation) */}
+      <GSAPStackedCards
+        services={servicesList}
+        onSelectService={(service) => setActiveService(service)}
+      />
 
       {/* 7. Counter Section */}
       <PhotoCounter />
@@ -281,41 +273,41 @@ const Home = () => {
       {/* 9. Contact / Visit Studio Section */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="group relative p-[2px] rounded-2xl bg-gradient-to-r from-[#A67C6B]/40 via-[#D4AF37]/60 to-[#A67C6B]/40 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#D4AF37]/15">
-          <div className="relative bg-white dark:bg-[#221C19] border border-[#E0D7CC] dark:border-[#3D342E] p-8 sm:p-12 rounded-[14px] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center overflow-hidden">
+          <div className="relative bg-brandSurface border border-brandBorder p-8 sm:p-12 rounded-[14px] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center overflow-hidden">
             {/* Ornate Decorative Corner Elements with Interactive Expand-on-Hover */}
-            <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:left-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
-            <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:right-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
-            <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:left-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
-            <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-[#A67C6B]/60 dark:border-[#D4AF37]/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:right-2 group-hover:border-[#A67C6B] dark:group-hover:border-[#D4AF37]" />
+            <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-brandAccent/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:left-2 group-hover:border-brandAccent" />
+            <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-brandAccent/60 pointer-events-none transition-all duration-300 group-hover:top-2 group-hover:right-2 group-hover:border-brandAccent" />
+            <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-brandAccent/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:left-2 group-hover:border-brandAccent" />
+            <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-brandAccent/60 pointer-events-none transition-all duration-300 group-hover:bottom-2 group-hover:right-2 group-hover:border-brandAccent" />
 
             {/* Subtle Gradient Glow Accent Top Line */}
             <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-80" />
 
             <div className="space-y-4 relative z-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#A67C6B] dark:text-[#D4AF37] flex items-center gap-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brandAccent flex items-center gap-2">
                 <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37]" />
                 Visit Our Studio
               </p>
-              <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] dark:text-[#F2EDE4]">
+              <h3 className="font-serif text-2xl sm:text-3xl text-brandTextPrimary">
                 Shubham Photos Studio & Digital Center
               </h3>
-              <p className="text-sm text-[#4A4A4A] dark:text-[#B8ABA0] leading-relaxed">
+              <p className="text-sm text-brandTextMuted leading-relaxed">
                 Located on the main bazaar road near the bus stand, opposite Saralgaon Police Chowki, Murbad. Open daily from 9:00 AM – 8:00 PM for photography bookings, digital services, and consultations.
               </p>
-              <p className="text-sm font-medium text-[#1A1A1A] dark:text-[#F2EDE4]">
-                Phone / WhatsApp: <span className="font-semibold text-[#A67C6B] dark:text-[#D4AF37]">+91 92714 56749</span>
+              <p className="text-sm font-medium text-brandTextPrimary">
+                Phone / WhatsApp: <span className="font-semibold text-brandAccent">+91 92714 56749</span>
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-end relative z-10">
               <Link
                 to="/contact"
-                className="px-8 py-3.5 bg-[#1A1A1A] dark:bg-[#F2EDE4] text-white dark:text-[#181412] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-lg hover:bg-[#A67C6B] dark:hover:bg-[#D4AF37] transition-all shadow-sm hover:shadow-md inline-block"
+                className="px-8 py-3.5 bg-brandTextPrimary !text-brandBg dark:bg-gradient-to-r dark:from-[#C49B89] dark:via-[#D4AF37] dark:to-[#A67C6B] dark:!text-[#0C0A09] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-xl shadow-md hover:scale-105 active:scale-95 transition-all !no-underline inline-block"
               >
                 Book Us / Contact
               </Link>
               <a
                 href="tel:9271456749"
-                className="px-8 py-3.5 border border-[#1A1A1A] dark:border-[#F2EDE4] text-[#1A1A1A] dark:text-[#F2EDE4] text-xs font-bold uppercase tracking-[0.2em] text-center rounded-lg hover:border-[#A67C6B] hover:text-[#A67C6B] dark:hover:border-[#D4AF37] dark:hover:text-[#D4AF37] transition-all inline-block"
+                className="px-8 py-3.5 border border-brandBorder !text-brandTextPrimary text-xs font-bold uppercase tracking-[0.2em] text-center rounded-xl hover:border-brandAccent hover:!text-brandAccent transition-all !no-underline inline-block"
               >
                 Call Studio
               </a>
