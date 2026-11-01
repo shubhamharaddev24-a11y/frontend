@@ -3,21 +3,33 @@ import React from "react";
 const Logo = ({ className = "h-11", showTagline = true, iconOnly = false }) => {
   if (iconOnly) {
     return (
-      <img
-        src="/logo-emblem.png"
-        alt="CREAONNECT"
-        className={`object-contain ${className}`}
-      />
+      <div className="inline-flex items-center">
+        <img
+          src="/logo-emblem.png"
+          alt="CREAONNECT"
+          className={`object-contain dark:hidden ${className}`}
+        />
+        <img
+          src="/logo-emblem-dark.png"
+          alt="CREAONNECT"
+          className={`object-contain hidden dark:block ${className}`}
+        />
+      </div>
     );
   }
 
   return (
     <div className={`flex items-center gap-2.5 sm:gap-3 shrink-0 select-none ${className}`}>
-      {/* Official CREAONNECT Stylized C-Chevron Emblem */}
+      {/* Official CREAONNECT Stylized C-Chevron Emblem (Adaptive Light/Dark Mode) */}
       <img
         src="/logo-emblem.png"
         alt="CREAONNECT"
-        className="h-8 sm:h-9 w-auto object-contain transition-transform duration-300 hover:scale-105 shrink-0"
+        className="h-8 sm:h-9 w-auto object-contain transition-transform duration-300 hover:scale-105 shrink-0 dark:hidden"
+      />
+      <img
+        src="/logo-emblem-dark.png"
+        alt="CREAONNECT"
+        className="h-8 sm:h-9 w-auto object-contain transition-transform duration-300 hover:scale-105 shrink-0 hidden dark:block"
       />
 
       {/* Brand Wordmark & Official 3 Pillars Tagline */}

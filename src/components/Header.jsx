@@ -14,36 +14,41 @@ const navItems = [
   { label: "Gig Market", to: "/dashboard" },
 ];
 
-// Continuous running announcement ticker item matching GSAP & NVIDIA highlight style
-const TickerItem = () => (
-  <div className="inline-flex items-center text-[11px] sm:text-xs font-bold tracking-wide text-black shrink-0 px-5">
+// Clean & minimal announcement marquee ticker matching GSAP style (1-2 clean lines, comfortable height, no bold)
+const TickerItemOne = () => (
+  <div className="inline-flex items-center text-xs sm:text-[12.5px] font-normal text-black tracking-normal shrink-0 px-10 sm:px-14">
     <span className="mr-2 text-sm leading-none select-none">📢</span>
-    <span className="font-black uppercase tracking-wider text-[9.5px] bg-black text-[#76B900] px-1.5 py-0.5 rounded mr-2 select-none">
-      Global Marketplace
-    </span>
-    <span>Want to</span>
+    <span className="text-black">CREAONNECT is now live worldwide — </span>
     <NavLink
       to="/dashboard"
-      className="mx-1.5 font-black text-black underline decoration-black decoration-[2px] underline-offset-2 hover:bg-black hover:text-[#76B900] px-1.5 py-0.5 rounded transition-all !no-underline inline-flex items-center gap-0.5"
+      className="mx-1 underline underline-offset-2 decoration-black/50 hover:decoration-black hover:opacity-80 transition-all font-medium !text-black"
     >
-      <span>Earn 90% Take-Home on Gigs</span>
-      <ArrowUpRight size={11} className="stroke-[3]" />
+      earn with creative gigs
     </NavLink>
-    <span className="opacity-60 mx-1">or</span>
+    <span className="text-black/75 mx-1">or</span>
     <NavLink
       to="/dashboard"
-      className="mx-1.5 font-black text-black underline decoration-black decoration-[2px] underline-offset-2 hover:bg-black hover:text-[#76B900] px-1.5 py-0.5 rounded transition-all !no-underline inline-flex items-center gap-0.5"
+      className="mx-1 underline underline-offset-2 decoration-black/50 hover:decoration-black hover:opacity-80 transition-all font-medium !text-black"
     >
-      <span>Book Photoshoot / Post Order</span>
-      <ArrowUpRight size={11} className="stroke-[3]" />
+      book a photoshoot order
     </NavLink>
-    <span className="mx-3 opacity-40 font-bold">•</span>
-    <span>⚡ 10% Flat Facilitation Fee</span>
-    <span className="mx-3 opacity-40 font-bold">•</span>
-    <span>100% Escrow Guarantee</span>
-    <span className="mx-3 opacity-40 font-bold">•</span>
-    <span>Pre-Wedding • Full Wedding • Viral Reels • Video Editing • Web Dev</span>
-    <span className="mx-4 font-black">✦</span>
+    <span className="text-black ml-1">with 100% escrow protection.</span>
+    <span className="mx-10 sm:mx-14 text-black/35 font-light select-none">•</span>
+  </div>
+);
+
+const TickerItemTwo = () => (
+  <div className="inline-flex items-center text-xs sm:text-[12.5px] font-normal text-black tracking-normal shrink-0 px-10 sm:px-14">
+    <span className="mr-2 text-sm leading-none select-none">✦</span>
+    <span className="text-black">On-demand photography, reels, design & digital services worldwide — </span>
+    <NavLink
+      to="/services"
+      className="mx-1 underline underline-offset-2 decoration-black/50 hover:decoration-black hover:opacity-80 transition-all font-medium !text-black"
+    >
+      explore services
+    </NavLink>
+    <span className="text-black ml-1">with 10% flat platform fee.</span>
+    <span className="mx-10 sm:mx-14 text-black/35 font-light select-none">•</span>
   </div>
 );
 
@@ -83,100 +88,97 @@ const Header = () => {
       {/* ======================================================== */}
       {/* GSAP-STYLE RUNNING TICKER ANNOUNCEMENT BAR AT VERY TOP */}
       {/* ======================================================== */}
-      <div className="w-full bg-[#76B900] text-black border-b border-black/15 overflow-hidden py-1 px-2 relative z-20 group shadow-inner">
-        <div className="flex w-max animate-top-ticker select-none">
-          <TickerItem />
-          <TickerItem />
-          <TickerItem />
-          <TickerItem />
+      <div className="w-full bg-[#76B900] text-black border-b border-black/10 overflow-hidden h-8 sm:h-[34px] flex items-center px-4 relative z-20 group">
+        <div className="flex w-max animate-top-ticker select-none items-center">
+          <TickerItemOne />
+          <TickerItemTwo />
+          <TickerItemOne />
+          <TickerItemTwo />
         </div>
       </div>
 
-      {/* Main Navbar */}
-      <div className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 md:px-10 h-12 transition-all duration-300 ${scrolled ? "py-1" : "py-2"}`}>
-        {/* Logo / Brand */}
-        <NavLink
-          to="/"
-          className="flex shrink-0 items-center gap-2 rounded-lg outline-none"
-          aria-label="CREAONNECT — Home"
-        >
-          <Logo />
-        </NavLink>
+      {/* Main Navbar: Exact spacing & distance matching GSAP reference */}
+      <div className="mx-auto flex max-w-7xl items-center px-6 lg:px-8 h-14 sm:h-[58px] transition-all duration-300">
+        {/* Left Side: Logo + Nav Items with exact GSAP distance */}
+        <div className="flex items-center gap-8 lg:gap-10 shrink-0">
+          {/* Logo / Brand */}
+          <NavLink
+            to="/"
+            className="flex shrink-0 items-center gap-2 outline-none"
+            aria-label="CREAONNECT — Home"
+          >
+            <Logo />
+          </NavLink>
 
-        {/* Navigation - desktop (Perfect horizontal alignment, zero text wrapping) */}
-        <nav className="hidden items-center gap-5 lg:gap-7 xl:gap-8 md:flex shrink-0">
-          {navItems.map((item) => (
-            <motion.div key={item.to} {...variants.navLinkHover} className="shrink-0">
-              <NavLink
-                to={item.to}
-                className={({ isActive }) =>
-                  `relative text-[11px] lg:text-xs font-semibold uppercase tracking-[0.14em] whitespace-nowrap transition-colors !no-underline py-1.5 flex items-center ${
-                    isActive
-                      ? "!text-brandAccent font-bold"
-                      : "!text-brandTextPrimary/80 hover:!text-brandTextPrimary"
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    <span>{item.label}</span>
-                    {isActive && (
-                      <motion.div
-                        className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-[#76B900]"
-                        layoutId="activeNavIndicator"
-                        initial={false}
-                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                      />
-                    )}
-                  </>
-                )}
-              </NavLink>
-            </motion.div>
-          ))}
-        </nav>
+          {/* Navigation - desktop (Spaced exactly like GSAP: Tools, Showcase, Community, ...) */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-7 shrink-0">
+            {navItems.map((item) => (
+              <motion.div key={item.to} {...variants.navLinkHover} className="shrink-0">
+                <NavLink
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `relative text-xs sm:text-[13px] font-medium transition-colors !no-underline py-1 flex items-center ${
+                      isActive
+                        ? "!text-[#76B900] font-semibold"
+                        : "text-stone-600 dark:text-[#A1A1AA] hover:text-black dark:hover:text-white"
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <span>{item.label}</span>
+                      {isActive && (
+                        <motion.div
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#76B900]"
+                          layoutId="activeNavIndicator"
+                          initial={false}
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              </motion.div>
+            ))}
+          </nav>
+        </div>
 
-        {/* Right Action Cluster: ThemeToggle + CTAs (Consistent height, perfectly centered) */}
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-          {/* Desktop Theme Toggle */}
-          <div className="hidden sm:flex items-center justify-center shrink-0">
+        {/* Right Action Cluster: Login link + Pill Button (identical to Login/Create Account + Get GSAP) */}
+        <div className="ml-auto flex items-center gap-3.5 sm:gap-4 shrink-0">
+          {/* Theme Toggle */}
+          <div className="flex items-center justify-center shrink-0">
             <ThemeToggle />
           </div>
 
-          {/* Conditional CTAs based on login state */}
+          {/* Clean text link: Dashboard or Sign In (Matching 'Login/Create Account') */}
           {localStorage.getItem("token") ? (
             <NavLink
               to="/dashboard"
-              className="hidden sm:inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-xl border border-[#76B900]/50 bg-[#76B900]/10 text-[#76B900] dark:text-[#76B900] text-xs font-bold hover:bg-[#76B900] hover:text-black transition-all whitespace-nowrap shrink-0 !no-underline"
+              className="hidden sm:inline-flex items-center text-xs sm:text-[13px] font-medium text-stone-600 dark:text-[#A1A1AA] hover:text-black dark:hover:text-white transition-colors !no-underline"
             >
               <span>Dashboard</span>
             </NavLink>
           ) : (
             <NavLink
               to="/login"
-              className="hidden sm:inline-flex items-center justify-center h-9 px-4 rounded-xl border border-brandBorder/80 bg-brandSurfaceSoft/60 text-brandTextPrimary text-xs font-semibold hover:border-[#76B900] hover:text-[#76B900] transition-all whitespace-nowrap shrink-0 !no-underline"
+              className="hidden sm:inline-flex items-center text-xs sm:text-[13px] font-medium text-stone-600 dark:text-[#A1A1AA] hover:text-black dark:hover:text-white transition-colors !no-underline"
             >
-              <span>Sign In</span>
+              <span>Login / Sign In</span>
             </NavLink>
           )}
 
-          {/* Primary Action Button: Book Shoot */}
+          {/* Primary Action Button: Pill Button (Matching 'Get GSAP') */}
           <NavLink
             to="/contact"
-            className="hidden sm:inline-flex items-center justify-center h-9 px-4 bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-black uppercase tracking-wider shadow-sm transition-all whitespace-nowrap shrink-0 !no-underline select-none"
-            style={{ borderRadius: "2px" }}
+            className="hidden sm:inline-flex items-center justify-center rounded-full px-4 sm:px-5 py-1.5 text-xs font-semibold border border-black/80 dark:border-white/80 text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all whitespace-nowrap shrink-0 !no-underline select-none"
           >
             <span>Book Shoot</span>
           </NavLink>
 
-          {/* Mobile Theme Toggle */}
-          <div className="sm:hidden flex items-center shrink-0">
-            <ThemeToggle />
-          </div>
-
           {/* Mobile menu toggle */}
           <motion.button
             type="button"
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-brandBorder bg-brandSurface text-brandTextPrimary md:hidden"
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-brandBorder bg-brandSurface text-brandTextPrimary md:hidden"
             aria-label="Toggle navigation"
             onClick={() => setOpen((prev) => !prev)}
             {...variants.buttonTap}

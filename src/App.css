@@ -495,7 +495,7 @@
 .animate-top-ticker {
   display: flex;
   width: max-content;
-  animation: topTickerMarquee 30s linear infinite;
+  animation: topTickerMarquee 35s linear infinite;
   will-change: transform;
 }
 
