@@ -48,7 +48,7 @@ const Footer = () => {
               Main bazaar road near bus stand, opposite Saralgaon Police Chowki, Murbad.
             </p>
             <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0]">
-              Direct: <span className="font-semibold text-[#1A1A1A] dark:text-[#F2EDE4]">+91 92714 56749</span>
+              Direct: <span className="font-semibold text-[#1A1A1A] dark:text-[#F2EDE4]">+91 88303 31309</span>
             </p>
           </div>
         </div>

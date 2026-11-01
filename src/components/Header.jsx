@@ -254,14 +254,14 @@ const Header = () => {
                 className="mt-3 grid grid-cols-2 gap-2.5 border-t border-brandBorder/60 pt-4 px-1"
               >
                 <a
-                  href="tel:9271456749"
+                  href="tel:8830331309"
                   className="flex items-center justify-center gap-2 rounded-xl bg-brandAccent py-2.5 text-xs font-bold text-black hover:bg-amber-400 active:scale-95 transition-all !no-underline"
                 >
                   <Phone size={14} />
                   <span>Call Now</span>
                 </a>
                 <a
-                  href="https://wa.me/919271456749?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
+                  href="https://wa.me/918830331309?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 rounded-xl border border-brandBorder bg-brandSurfaceSoft/60 py-2.5 text-xs font-bold text-brandTextPrimary hover:text-[#25D366] hover:border-[#25D366]/40 active:scale-95 transition-all !no-underline"

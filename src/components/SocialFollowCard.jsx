@@ -40,7 +40,7 @@ const SocialFollowCard = () => {
             <Youtube size={20} />
           </a>
           <a
-            href="https://wa.me/919271456749"
+            href="https://wa.me/918830331309"
             target="_blank"
             rel="noopener noreferrer"
             className="shutter-btn whatsapp"

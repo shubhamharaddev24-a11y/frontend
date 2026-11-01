@@ -13,7 +13,7 @@ const FloatingContactButtons = () => {
         {/* Tooltip on Hover (Desktop) */}
         <div className="hidden sm:flex items-center gap-2 rounded-full bg-[#181412]/95 backdrop-blur-md px-3.5 py-1.5 text-xs font-semibold text-white shadow-xl border border-white/15 whitespace-nowrap opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 pointer-events-none">
           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Call +91 92714 56749</span>
+          <span>Call +91 88303 31309</span>
         </div>
 
         {/* Pulsing Ripple Wave for Phone */}
@@ -23,8 +23,8 @@ const FloatingContactButtons = () => {
 
           {/* Actual Call Button */}
           <motion.a
-            href="tel:9271456749"
-            aria-label="Call +91 92714 56749"
+            href="tel:8830331309"
+            aria-label="Call +91 88303 31309"
             animate={{
               scale: [1, 1.07, 1],
             }}
@@ -58,7 +58,7 @@ const FloatingContactButtons = () => {
 
           {/* Actual WhatsApp Button */}
           <motion.a
-            href="https://wa.me/919271456749?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
+            href="https://wa.me/918830331309?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat with CREAONNECT on WhatsApp"

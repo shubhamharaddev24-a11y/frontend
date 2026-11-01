@@ -56,7 +56,7 @@ const AppWithSEO = () => {
       case '/contact':
         return {
           title: 'Contact CREAONNECT | Connect With Us',
-          description: 'Get in touch with CREAONNECT for full-stack web design, search marketing campaigns, or premium wedding cinematography. Call +91 92714 56749 or chat on WhatsApp.',
+          description: 'Get in touch with CREAONNECT for full-stack web design, search marketing campaigns, or premium wedding cinematography. Call +91 88303 31309 or chat on WhatsApp.',
           canonical: `${baseUrl}/contact`,
           keywords: 'contact creaonnect, hire web developer, digital marketing Thane, book wedding photographer, phone number',
           type: 'website'

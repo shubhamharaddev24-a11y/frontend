@@ -52,10 +52,10 @@ const GoogleMapsEmbed = ({
               <h3 style="margin: 0 0 10px 0; color: #333; font-size: 16px;">${title}</h3>
               <p style="margin: 0; color: #666; font-size: 14px;">${address}</p>
               <p style="margin: 10px 0 0 0;">
-                <strong>Phone:</strong> +91 92714 56749<br>
+                <strong>Phone:</strong> +91 88303 31309<br>
                 <strong>Hours:</strong> Mon-Sun 9:00 AM - 8:00 PM
               </p>
-              <a href="tel:+919271456749" 
+              <a href="tel:+918830331309" 
                  style="display: inline-block; margin-top: 10px; padding: 8px 16px; background: #f97316; color: white; text-decoration: none; border-radius: 4px;">
                 Call Now
               </a>
@@ -121,7 +121,7 @@ const GoogleMapsEmbed = ({
             "latitude": 19.1508,
             "longitude": 73.3426
           },
-          "telephone": "+91 92714 56749",
+          "telephone": "+91 88303 31309",
           "openingHours": "Mo-Su 09:00-20:00"
         })}
       </script>

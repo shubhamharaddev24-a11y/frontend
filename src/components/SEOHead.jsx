@@ -22,7 +22,7 @@ const SEOHead = ({
     "name": "CREAONNECT",
     "description": siteDescription,
     "url": siteUrl,
-    "telephone": "+91 92714 56749",
+    "telephone": "+91 88303 31309",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Main Bazaar, Near Bus Stand, Opposite Saralgaon Police Chowki",
@@ -35,7 +35,7 @@ const SEOHead = ({
     "image": defaultImage,
     "priceRange": "$$",
     "sameAs": [
-      "https://wa.me/919271456749",
+      "https://wa.me/918830331309",
       "https://instagram.com/shubhammedia"
     ],
     "services": [

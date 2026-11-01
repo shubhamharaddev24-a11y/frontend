@@ -34,7 +34,7 @@ const SLIDES = [
     objectPosition: "center 8%",
     floatingBadge: "🎬 4K Cinema ProRes • Sony FX3",
     statBadge: { value: "100%", label: "Cinematic Color Grade" },
-    secondaryImage: "/images/prewedding-palace-arch.jpg"
+    secondaryImage: "/images/wedding-marathi-tika.png"
   },
   {
     id: "marketplace",
@@ -48,8 +48,8 @@ const SLIDES = [
     secondaryLink: "/dashboard",
     tabCategory: "Creator Marketplace",
     tabTitle: "Take Photoshoot Orders & Make Money",
-    image: "/images/marathi-wedding-ritual.jpg",
-    objectPosition: "center top",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1200&auto=format&fit=crop&q=85",
+    objectPosition: "center 40%",
     floatingBadge: "⚡ 10% Commission • Instant Payout",
     statBadge: { value: "₹16,200", label: "Average Creator Take-Home" },
     isMarketplaceCard: true
@@ -83,8 +83,8 @@ const SLIDES = [
     secondaryLink: "/contact",
     tabCategory: "Commercial & Studio",
     tabTitle: "Brand Identity, Lookbooks & Flex",
-    image: "/images/bw-couple-sunburst-banner.png",
-    objectPosition: "center 12%",
+    image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1200&auto=format&fit=crop&q=85",
+    objectPosition: "center 25%",
     floatingBadge: "📸 High-Fashion Studio Lighting",
     statBadge: { value: "+240%", label: "Brand Inquiries Growth" }
   }

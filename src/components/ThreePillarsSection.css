@@ -64,7 +64,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: rgba(166, 124, 107, 0.15);
+  background: rgba(118, 185, 0, 0.15);
   overflow: hidden;
   z-index: 30;
 }
@@ -74,7 +74,7 @@
   width: 100%;
   transform-origin: left;
   transform: scaleX(0);
-  background: linear-gradient(90deg, #A67C6B, #D4A373);
+  background: #76B900;
   will-change: transform;
 }
 
@@ -111,7 +111,7 @@
   border-radius: 1.5rem;
   background-color: #ffffff;
   border: 1px solid rgba(224, 215, 204, 0.85);
-  box-shadow: 0 20px 50px -15px rgba(26, 26, 26, 0.12), 0 0 0 1px rgba(166, 124, 107, 0.08);
+  box-shadow: 0 20px 50px -15px rgba(26, 26, 26, 0.12), 0 0 0 1px rgba(118, 185, 0, 0.08);
   display: grid;
   grid-template-columns: 0.44fr 1fr;
   overflow: hidden;
@@ -120,9 +120,9 @@
 }
 
 .dark .pillars-card-shell {
-  background-color: #221C19;
+  background-color: #141416;
   border-color: rgba(61, 52, 46, 0.85);
-  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(166, 124, 107, 0.15);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(118, 185, 0, 0.15);
 }
 
 @media (max-width: 992px) {
@@ -145,13 +145,13 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: rgba(166, 124, 107, 0.15);
+  background: rgba(118, 185, 0, 0.15);
   z-index: 10;
 }
 
 .pillar-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #A67C6B, #D4AF37);
+  background: #76B900;
   transition: width 0.15s ease-out;
 }
 
@@ -161,7 +161,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #FAF6F0;
+  background: #F9FAFB;
   border-right: 1px solid rgba(224, 215, 204, 0.6);
   position: relative;
   overflow: hidden;
@@ -169,7 +169,7 @@
 }
 
 .dark .pillar-left-panel {
-  background: #1C1715;
+  background: #101012;
   border-right-color: rgba(61, 52, 46, 0.6);
 }
 
@@ -195,8 +195,8 @@
 }
 
 .pillar-pill-btn {
-  background: rgba(166, 124, 107, 0.08);
-  border: 1px solid rgba(166, 124, 107, 0.2);
+  background: rgba(118, 185, 0, 0.08);
+  border: 1px solid rgba(118, 185, 0, 0.2);
   color: #4A4A4A;
   font-size: 0.72rem;
   font-weight: 600;
@@ -211,13 +211,13 @@
 }
 
 .dark .pillar-pill-btn {
-  color: #B8ABA0;
-  background: rgba(166, 124, 107, 0.12);
-  border-color: rgba(166, 124, 107, 0.25);
+  color: #A1A1AA;
+  background: rgba(118, 185, 0, 0.12);
+  border-color: rgba(118, 185, 0, 0.25);
 }
 
 .pillar-pill-btn:hover {
-  background: rgba(166, 124, 107, 0.18);
+  background: rgba(118, 185, 0, 0.18);
   color: #1A1A1A;
 }
 
@@ -226,17 +226,18 @@
 }
 
 .pillar-pill-btn.is-active {
-  background: #A67C6B;
-  color: #ffffff;
-  border-color: #A67C6B;
-  box-shadow: 0 4px 10px rgba(166, 124, 107, 0.35);
+  background: #76B900;
+  color: #000000;
+  font-weight: 700;
+  border-color: #76B900;
+  box-shadow: 0 4px 10px rgba(118, 185, 0, 0.35);
 }
 
 .pillar-scroll-hint {
   font-size: 0.7rem;
   font-family: monospace;
   font-weight: 600;
-  color: #A67C6B;
+  color: #76B900;
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -274,8 +275,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: #A67C6B;
-  background: rgba(166, 124, 107, 0.12);
+  color: #76B900;
+  background: rgba(118, 185, 0, 0.12);
   padding: 0.2rem 0.6rem;
   border-radius: 0.375rem;
   margin-bottom: 0.5rem;
@@ -300,14 +301,14 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #A67C6B;
+  color: #76B900;
   margin-bottom: 1rem;
 }
 
 .pillar-divider {
   width: 100%;
   height: 1px;
-  background: rgba(166, 124, 107, 0.2);
+  background: rgba(118, 185, 0, 0.2);
   margin-bottom: 1rem;
 }
 
@@ -320,7 +321,7 @@
 }
 
 .dark .pillar-desc {
-  color: #B8ABA0;
+  color: #A1A1AA;
 }
 
 .pillar-points-list {
@@ -343,11 +344,11 @@
 }
 
 .dark .pillar-point-item {
-  color: #B8ABA0;
+  color: #A1A1AA;
 }
 
 .pillar-point-dot {
-  color: #A67C6B;
+  color: #76B900;
   font-weight: 700;
   line-height: 1;
   margin-top: 0.15rem;
@@ -367,7 +368,7 @@
   width: 100%;
   padding: 0.75rem 1.25rem;
   border-radius: 0.75rem;
-  border: 1px solid #A67C6B;
+  border: 1px solid #76B900;
   background: transparent;
   color: #1A1A1A;
   font-size: 0.78rem;
@@ -427,13 +428,7 @@
 }
 
 .pillar-cta-bg-bubble {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 9999px;
-  background-color: #A67C6B;
+  background-color: #76B900;
   transform: translate(-50%, -50%) scale(0);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
@@ -441,7 +436,8 @@
 }
 
 .pillar-cta-btn:hover {
-  color: #ffffff;
+  color: #000000;
+  font-weight: 700;
 }
 
 .pillar-cta-btn:hover .pillar-cta-bg-bubble {
@@ -542,7 +538,7 @@
   }
 
   .dark .pillar-mobile-card {
-    background: #221C19;
+    background: #141416;
     border-color: rgba(61, 52, 46, 0.8);
   }
 

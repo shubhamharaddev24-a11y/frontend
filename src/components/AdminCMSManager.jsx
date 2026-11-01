@@ -135,7 +135,7 @@ const DEFAULT_STUDIO = {
   title: 'Studio Address & Contact Details',
   description: 'Main bazaar road near bus stand, opposite Saralgaon Police Chowki, Murbad.',
   metadata: {
-    phone: '+91 92714 56749',
+    phone: '+91 88303 31309',
     hours: 'Open Daily: 9:00 AM – 8:00 PM',
   },
 };

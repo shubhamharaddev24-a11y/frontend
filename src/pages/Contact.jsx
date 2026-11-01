@@ -66,7 +66,7 @@ const Contact = () => {
                   Direct Call / WhatsApp
                 </p>
                 <p className="mt-1 text-sm font-medium text-brandTextPrimary">
-                  +91 92714 56749
+                  +91 88303 31309
                 </p>
               </div>
               <div>
@@ -87,13 +87,13 @@ const Contact = () => {
               </div>
               <div className="flex flex-wrap gap-3 pt-3">
                 <a
-                  href="tel:9271456749"
+                  href="tel:8830331309"
                   className="flex-1 text-center py-3 bg-brandTextPrimary !text-brandBg text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-brandAccent hover:!text-white rounded-xl !no-underline"
                 >
                   Call Direct
                 </a>
                 <a
-                  href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
+                  href="https://wa.me/918830331309?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 text-center py-3 border border-brandBorder !text-brandTextPrimary text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-brandAccent hover:!text-brandAccent rounded-xl !no-underline"
@@ -181,7 +181,7 @@ const Contact = () => {
                         message: "",
                       });
                       
-                      const base = "https://wa.me/919271456749?text=";
+                      const base = "https://wa.me/918830331309?text=";
                       const lines = [
                         "New enquiry from CREAONNECT website:",
                         `Name: ${form.name}`,

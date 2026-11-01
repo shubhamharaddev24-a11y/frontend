@@ -30,8 +30,8 @@ const pillars = [
     icon: Camera,
     accentIcon: Film,
     route: "/gallery",
-    color: "#A67C6B",
-    mediaImage: "/images/wedding-varmala-moment.png",
+    color: "#76B900",
+    mediaImage: "/images/prewedding-temple-steps.jpg",
     mediaBadge: "4K Cinema & Film Studio",
     mediaHeadline: "Heirloom Stories Captured with Artistic Soul",
     objectPosition: "center 20%",
@@ -52,8 +52,8 @@ const pillars = [
     icon: Code2,
     accentIcon: Sparkles,
     route: "/services",
-    color: "#D4A373",
-    mediaImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=85",
+    color: "#76B900",
+    mediaImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=85",
     mediaBadge: "Full-Stack Technology & SEO",
     mediaHeadline: "High-Performance Modern Web Systems",
     objectPosition: "center 30%",
@@ -74,7 +74,7 @@ const pillars = [
     icon: Users2,
     accentIcon: Handshake,
     route: "/contact",
-    color: "#725345",
+    color: "#76B900",
     mediaImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=85",
     mediaBadge: "Creative Consultation & Partnerships",
     mediaHeadline: "Connecting Passion, Vision & Community",
@@ -186,13 +186,13 @@ const ThreePillarsSection = () => {
     <section className="pillars-section-wrapper border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60">
       {/* 1. Framework Intro Header */}
       <div className="pillars-intro">
-        <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-semibold tracking-[0.2em] uppercase bg-[#A67C6B]/15 text-[#A67C6B] border border-[#A67C6B]/25 mb-3">
+        <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-semibold tracking-[0.2em] uppercase bg-[#76B900]/15 text-[#76B900] border border-[#76B900]/25 mb-3">
           The CREAONNECT Framework • (CREATE + CONNECT)
         </span>
         <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#F2EDE4] font-normal leading-tight">
           Three Pillars of Modern Excellence
         </h2>
-        <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed mt-3 max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base text-[#4A4A4A] dark:text-[#A1A1AA] font-light leading-relaxed mt-3 max-w-2xl mx-auto">
           We bring together artistic imagination, cutting-edge software engineering, and authentic community connections under one unified creative ecosystem.
         </p>
       </div>
@@ -222,9 +222,8 @@ const ThreePillarsSection = () => {
                           key={p.id}
                           type="button"
                           onClick={() => handlePillClick(pIdx)}
-                          className={`pillar-pill-btn ${
-                            activeIndex === pIdx ? "is-active" : ""
-                          }`}
+                          className={`pillar-pill-btn ${activeIndex === pIdx ? "is-active" : ""
+                            }`}
                           aria-label={`Jump to ${p.name}`}
                         >
                           <span>0{pIdx + 1}</span>
@@ -268,14 +267,14 @@ const ThreePillarsSection = () => {
                       <div className="pillar-cta-icon-wrap">
                         <div className="pillar-cta-icon _1">
                           <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </div>
                         <div className="pillar-cta-icon _2">
                           <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </div>
                       </div>
@@ -327,29 +326,29 @@ const ThreePillarsSection = () => {
               </div>
             </div>
             <div className="pillar-mobile-content-wrap">
-              <span className="text-[11px] font-mono font-bold text-[#A67C6B] uppercase tracking-wider">
+              <span className="text-[11px] font-mono font-bold text-[#76B900] uppercase tracking-wider">
                 {pillar.badge}
               </span>
               <h3 className="font-serif text-2xl text-[#1A1A1A] dark:text-[#F2EDE4] mt-1">
                 {pillar.name}
               </h3>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#A67C6B] mt-0.5 mb-3">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#76B900] mt-0.5 mb-3">
                 {pillar.tagline}
               </p>
-              <p className="text-xs text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed mb-4">
+              <p className="text-xs text-[#4A4A4A] dark:text-[#A1A1AA] font-light leading-relaxed mb-4">
                 {pillar.desc}
               </p>
               <ul className="space-y-2 mb-5 border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60 pt-3">
                 {pillar.points.map((pt, i) => (
-                  <li key={i} className="text-xs text-[#4A4A4A] dark:text-[#B8ABA0] flex items-start gap-1.5 font-light">
-                    <span className="text-[#A67C6B]">•</span>
+                  <li key={i} className="text-xs text-[#4A4A4A] dark:text-[#A1A1AA] flex items-start gap-1.5 font-light">
+                    <span className="text-[#76B900]">•</span>
                     <span>{pt}</span>
                   </li>
                 ))}
               </ul>
               <Link
                 to={pillar.route}
-                className="inline-flex items-center justify-between w-full px-4 py-2.5 border border-[#A67C6B] text-[#1A1A1A] dark:text-[#F2EDE4] rounded-lg text-xs font-semibold uppercase tracking-wider hover:bg-[#A67C6B] hover:text-white transition-colors"
+                className="inline-flex items-center justify-between w-full px-4 py-2.5 border border-[#76B900] text-[#1A1A1A] dark:text-[#F2EDE4] rounded-lg text-xs font-semibold uppercase tracking-wider hover:bg-[#76B900] hover:text-black transition-colors"
               >
                 <span>Explore {pillar.name}</span>
                 <span>→</span>

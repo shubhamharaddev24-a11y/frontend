@@ -112,7 +112,7 @@ const AppContent = () => {
       case "/contact":
         return {
           title: "Contact Us - Hire Developers & Book Photographers",
-          description: "Get in touch with us for full-stack web design, search marketing campaigns, or premium event shoots. Call +91 92714 56749 or chat on WhatsApp.",
+          description: "Get in touch with us for full-stack web design, search marketing campaigns, or premium event shoots. Call +91 88303 31309 or chat on WhatsApp.",
           canonical: `${baseUrl}/contact`,
           keywords: "contact web developer Murbad, hire digital marketing Thane, book wedding photographer, phone number",
           type: "website"

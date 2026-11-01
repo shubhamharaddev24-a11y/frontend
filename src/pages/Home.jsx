@@ -124,8 +124,8 @@ const Home = () => {
           <div className="lg:col-span-6">
             <div className="relative overflow-hidden rounded-xl shadow-xl aspect-[4/5] max-w-md mx-auto lg:max-w-none">
               <img
-                src="/images/marathi-wedding-ritual.jpg"
-                alt="Marathi wedding ritual of groom and bride"
+                src="/images/prewedding-palace-arch.jpg"
+                alt="Cinematic pre-wedding shoot under royal palace archways"
                 className="w-full h-full object-cover object-[center_15%] brightness-95 hover:scale-105 transition-transform duration-700"
               />
             </div>
@@ -295,7 +295,7 @@ const Home = () => {
                 Located on the main bazaar road near the bus stand, opposite Saralgaon Police Chowki, Murbad. Open daily from 9:00 AM – 8:00 PM for photography bookings, digital services, and consultations.
               </p>
               <p className="text-sm font-medium text-brandTextPrimary">
-                Phone / WhatsApp: <span className="font-semibold text-brandAccent">+91 92714 56749</span>
+                Phone / WhatsApp: <span className="font-semibold text-brandAccent">+91 88303 31309</span>
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-end relative z-10">
@@ -306,7 +306,7 @@ const Home = () => {
                 Book Us / Contact
               </Link>
               <a
-                href="tel:9271456749"
+                href="tel:8830331309"
                 className="px-8 py-3.5 border border-brandBorder !text-brandTextPrimary text-xs font-bold uppercase tracking-[0.2em] text-center rounded-xl hover:border-brandAccent hover:!text-brandAccent transition-all !no-underline inline-block"
               >
                 Call Studio

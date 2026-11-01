@@ -171,7 +171,7 @@ const Services = () => {
               </ul>
               <div className="pt-4 flex flex-wrap gap-3">
                 <a
-                  href="https://wa.me/919271456749?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
+                  href="https://wa.me/918830331309?text=Hi%20Shubham%20Media%20%26%20Digital%20Services%2C%20I%20want%20to%20enquire%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-2.5 bg-brandTextPrimary !text-brandBg text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:bg-brandAccent hover:!text-white rounded-xl !no-underline"
@@ -179,7 +179,7 @@ const Services = () => {
                   WhatsApp Enquiry
                 </a>
                 <a
-                  href="tel:9271456749"
+                  href="tel:8830331309"
                   className="px-6 py-2.5 border border-brandBorder !text-brandTextPrimary text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-brandAccent hover:!text-brandAccent rounded-xl !no-underline"
                 >
                   Call Team
