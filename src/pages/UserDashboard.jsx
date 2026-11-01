@@ -83,10 +83,11 @@ const OrderCountdown = ({ expiresAt, onExpired }) => {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono tracking-tight transition-colors ${isUrgent
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono tracking-tight transition-colors ${
+        isUrgent
           ? "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40 animate-pulse"
           : "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/40"
-        }`}
+      }`}
     >
       <Clock size={11} className={isUrgent ? "text-amber-600" : "text-indigo-600"} />
       <span>
@@ -620,8 +621,9 @@ const UserDashboard = () => {
       {/* ========================================================================= */}
       {/* 1. LEFT SIDEBAR (ADAPTIVE TO CREATOR MODE vs CLIENT MODE) */}
       {/* ========================================================================= */}
-      <aside className={`w-64 bg-white dark:bg-[#12100E] border-r border-[#E2E8F0] dark:border-[#262626] shrink-0 flex flex-col justify-between z-40 transition-transform duration-300 md:translate-x-0 sticky top-0 h-screen ${mobileSidebarOpen ? "fixed inset-y-0 left-0 translate-x-0 flex shadow-2xl" : "hidden md:flex"
-        }`}>
+      <aside className={`w-64 bg-white dark:bg-[#12100E] border-r border-[#E2E8F0] dark:border-[#262626] shrink-0 flex flex-col justify-between z-40 transition-transform duration-300 md:translate-x-0 sticky top-0 h-screen ${
+        mobileSidebarOpen ? "fixed inset-y-0 left-0 translate-x-0 flex shadow-2xl" : "hidden md:flex"
+      }`}>
         <div>
           {/* Brand Logo header */}
           <div className="h-20 flex items-center justify-between px-6 border-b border-[#F1F5F9] dark:border-[#262626]">
@@ -659,10 +661,11 @@ const UserDashboard = () => {
                 <button
                   type="button"
                   onClick={() => handleSwitchMode("creator")}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${dashboardMode === "creator"
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+                    dashboardMode === "creator"
                       ? "bg-[#76B900] text-black shadow-sm"
                       : "text-[#64748B] dark:text-[#94A3B8]"
-                    }`}
+                  }`}
                 >
                   <Camera size={12} />
                   <span>Creator</span>
@@ -670,10 +673,11 @@ const UserDashboard = () => {
                 <button
                   type="button"
                   onClick={() => handleSwitchMode("client")}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${dashboardMode === "client"
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+                    dashboardMode === "client"
                       ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
                       : "text-[#64748B] dark:text-[#94A3B8]"
-                    }`}
+                  }`}
                 >
                   <Briefcase size={12} />
                   <span>Client</span>
@@ -717,10 +721,11 @@ const UserDashboard = () => {
                       setActiveMenu("dashboard");
                       setMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${activeMenu === "dashboard"
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      activeMenu === "dashboard"
                         ? "bg-[#76B900]/15 text-black dark:text-white font-bold border-l-4 border-[#76B900]"
                         : "text-[#64748B] hover:bg-[#F8FAFC] dark:hover:bg-[#1C1816] hover:text-[#1E293B] dark:hover:text-white"
-                      }`}
+                    }`}
                   >
                     <LayoutDashboard size={16} className={activeMenu === "dashboard" ? "text-[#76B900]" : "text-[#94A3B8]"} />
                     <span>Dashboard</span>
@@ -733,10 +738,11 @@ const UserDashboard = () => {
                       setActiveMenu("marketplace");
                       setMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${activeMenu === "marketplace"
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      activeMenu === "marketplace"
                         ? "bg-[#76B900]/15 text-black dark:text-white font-bold border-l-4 border-[#76B900]"
                         : "text-[#64748B] hover:bg-[#F8FAFC] dark:hover:bg-[#1C1816] hover:text-[#1E293B] dark:hover:text-white"
-                      }`}
+                    }`}
                   >
                     <div className="flex items-center gap-3">
                       <ShoppingBag size={16} className={activeMenu === "marketplace" ? "text-[#76B900]" : "text-[#94A3B8]"} />
@@ -756,10 +762,11 @@ const UserDashboard = () => {
                       setActiveMenu("my-gigs");
                       setMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${activeMenu === "my-gigs"
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      activeMenu === "my-gigs"
                         ? "bg-[#76B900]/15 text-black dark:text-white font-bold border-l-4 border-[#76B900]"
                         : "text-[#64748B] hover:bg-[#F8FAFC] dark:hover:bg-[#1C1816] hover:text-[#1E293B] dark:hover:text-white"
-                      }`}
+                    }`}
                   >
                     <div className="flex items-center gap-3">
                       <Camera size={16} className={activeMenu === "my-gigs" ? "text-[#76B900]" : "text-[#94A3B8]"} />
@@ -801,10 +808,11 @@ const UserDashboard = () => {
                       setActiveMenu("client-dashboard");
                       setMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${activeMenu === "client-dashboard"
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      activeMenu === "client-dashboard"
                         ? "bg-[#76B900]/15 text-black dark:text-white font-bold border-l-4 border-[#76B900]"
                         : "text-[#64748B] hover:bg-[#F8FAFC] dark:hover:bg-[#1C1816] hover:text-[#1E293B] dark:hover:text-white"
-                      }`}
+                    }`}
                   >
                     <LayoutDashboard size={16} className={activeMenu === "client-dashboard" ? "text-[#76B900]" : "text-[#94A3B8]"} />
                     <span>Client Dashboard</span>
@@ -817,10 +825,11 @@ const UserDashboard = () => {
                       setActiveMenu("my-orders");
                       setMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${activeMenu === "my-orders"
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      activeMenu === "my-orders"
                         ? "bg-[#76B900]/15 text-black dark:text-white font-bold border-l-4 border-[#76B900]"
                         : "text-[#64748B] hover:bg-[#F8FAFC] dark:hover:bg-[#1C1816] hover:text-[#1E293B] dark:hover:text-white"
-                      }`}
+                    }`}
                   >
                     <div className="flex items-center gap-3">
                       <Briefcase size={16} className={activeMenu === "my-orders" ? "text-[#76B900]" : "text-[#94A3B8]"} />
@@ -850,10 +859,11 @@ const UserDashboard = () => {
                       setActiveMenu("marketplace");
                       setMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${activeMenu === "marketplace"
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      activeMenu === "marketplace"
                         ? "bg-[#76B900]/15 text-black dark:text-white font-bold border-l-4 border-[#76B900]"
                         : "text-[#64748B] hover:bg-[#F8FAFC] dark:hover:bg-[#1C1816] hover:text-[#1E293B] dark:hover:text-white"
-                      }`}
+                    }`}
                   >
                     <ShoppingBag size={16} className={activeMenu === "marketplace" ? "text-[#76B900]" : "text-[#94A3B8]"} />
                     <span>Browse Live Gigs</span>
@@ -875,10 +885,11 @@ const UserDashboard = () => {
                       setActiveMenu("earnings");
                       setMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${activeMenu === "earnings"
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      activeMenu === "earnings"
                         ? "bg-[#76B900]/15 text-black dark:text-white font-bold border-l-4 border-[#76B900]"
                         : "text-[#64748B] hover:bg-[#F8FAFC] dark:hover:bg-[#1C1816] hover:text-[#1E293B] dark:hover:text-white"
-                      }`}
+                    }`}
                   >
                     <CreditCard size={16} className={activeMenu === "earnings" ? "text-[#76B900]" : "text-[#94A3B8]"} />
                     <span>Payouts & Commission</span>
@@ -890,10 +901,11 @@ const UserDashboard = () => {
                       setActiveMenu("invoices");
                       setMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${activeMenu === "invoices"
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      activeMenu === "invoices"
                         ? "bg-[#76B900]/15 text-black dark:text-white font-bold border-l-4 border-[#76B900]"
                         : "text-[#64748B] hover:bg-[#F8FAFC] dark:hover:bg-[#1C1816] hover:text-[#1E293B] dark:hover:text-white"
-                      }`}
+                    }`}
                   >
                     <Receipt size={16} className={activeMenu === "invoices" ? "text-[#76B900]" : "text-[#94A3B8]"} />
                     <span>Invoices & Escrow</span>
@@ -984,10 +996,11 @@ const UserDashboard = () => {
               <button
                 type="button"
                 onClick={() => handleSwitchMode("creator")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${dashboardMode === "creator"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  dashboardMode === "creator"
                     ? "bg-[#76B900] text-black shadow-sm"
                     : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white"
-                  }`}
+                }`}
               >
                 <Camera size={13} />
                 <span>Creator Hub</span>
@@ -995,10 +1008,11 @@ const UserDashboard = () => {
               <button
                 type="button"
                 onClick={() => handleSwitchMode("client")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${dashboardMode === "client"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  dashboardMode === "client"
                     ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
                     : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white"
-                  }`}
+                }`}
               >
                 <Briefcase size={13} />
                 <span>Client Portal</span>
@@ -1637,14 +1651,15 @@ const UserDashboard = () => {
                       >
                         <div className="flex items-center justify-between gap-2">
                           <span className="text-sm font-bold text-black dark:text-white line-clamp-1">{order.title}</span>
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${isOpen
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                            isOpen
                               ? "bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300"
                               : isClaimed
-                                ? "bg-indigo-100 text-indigo-800 dark:bg-indigo-950/40 dark:text-indigo-300"
-                                : isCompleted
-                                  ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300"
-                                  : "bg-neutral-100 text-neutral-600"
-                            }`}>
+                              ? "bg-indigo-100 text-indigo-800 dark:bg-indigo-950/40 dark:text-indigo-300"
+                              : isCompleted
+                              ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300"
+                              : "bg-neutral-100 text-neutral-600"
+                          }`}>
                             {isOpen ? "Awaiting Photographer" : isClaimed ? "Photographer Assigned" : isCompleted ? "Completed" : "Cancelled"}
                           </span>
                         </div>
@@ -1829,10 +1844,11 @@ const UserDashboard = () => {
                     key={cat.key}
                     type="button"
                     onClick={() => setFilterCategory(cat.key)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${filterCategory === cat.key
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                      filterCategory === cat.key
                         ? "bg-[#76B900] text-black shadow-sm"
                         : "bg-[#F8FAFC] dark:bg-[#1A1614] text-[#64748B] dark:text-[#94A3B8] border border-[#E2E8F0] dark:border-[#333] hover:border-[#76B900]"
-                      }`}
+                    }`}
                   >
                     {cat.label}
                   </button>
@@ -2041,10 +2057,11 @@ const UserDashboard = () => {
                   key={tab.key}
                   type="button"
                   onClick={() => setMyGigsStatusFilter(tab.key)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${myGigsStatusFilter === tab.key
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                    myGigsStatusFilter === tab.key
                       ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
                       : "bg-white dark:bg-[#12100E] text-[#64748B] dark:text-[#94A3B8] border border-[#E2E8F0] dark:border-[#262626]"
-                    }`}
+                  }`}
                 >
                   {tab.label}
                 </button>
@@ -2083,10 +2100,11 @@ const UserDashboard = () => {
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-black text-black dark:text-white">{order.title}</span>
-                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${isCompleted
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                          isCompleted
                             ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300"
                             : "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300"
-                          }`}>
+                        }`}>
                           {isCompleted ? "✓ Completed & Paid" : "In Progress"}
                         </span>
                       </div>
@@ -2225,10 +2243,11 @@ const UserDashboard = () => {
                   key={tab.key}
                   type="button"
                   onClick={() => setClientOrdersFilter(tab.key)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${clientOrdersFilter === tab.key
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                    clientOrdersFilter === tab.key
                       ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
                       : "bg-white dark:bg-[#12100E] text-[#64748B] dark:text-[#94A3B8] border border-[#E2E8F0] dark:border-[#262626]"
-                    }`}
+                  }`}
                 >
                   {tab.label}
                 </button>
@@ -2266,14 +2285,15 @@ const UserDashboard = () => {
                     >
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-sm font-black text-black dark:text-white line-clamp-1">{order.title}</span>
-                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${isOpen
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                          isOpen
                             ? "bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300"
                             : isClaimed
-                              ? "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300"
-                              : isCompleted
-                                ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300"
-                                : "bg-neutral-100 dark:bg-neutral-800 text-[#64748B]"
-                          }`}>
+                            ? "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300"
+                            : isCompleted
+                            ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300"
+                            : "bg-neutral-100 dark:bg-neutral-800 text-[#64748B]"
+                        }`}>
                           {isOpen ? "Awaiting Creator" : isClaimed ? "Claimed by Creator" : isCompleted ? "Completed" : "Cancelled"}
                         </span>
                       </div>
@@ -2682,12 +2702,13 @@ const UserDashboard = () => {
                             ₹{(ord.totalPrice || ord.budget || 0).toLocaleString()}
                           </td>
                           <td className="py-3 text-right">
-                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${ord.status === "completed"
+                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                              ord.status === "completed"
                                 ? "bg-emerald-100 text-emerald-800"
                                 : ord.status === "claimed"
-                                  ? "bg-indigo-100 text-indigo-800"
-                                  : "bg-amber-100 text-amber-800"
-                              }`}>
+                                ? "bg-indigo-100 text-indigo-800"
+                                : "bg-amber-100 text-amber-800"
+                            }`}>
                               {ord.status === "completed" ? "Released" : ord.status === "claimed" ? "In Escrow" : "Awaiting Creator"}
                             </span>
                           </td>
@@ -2858,10 +2879,11 @@ const UserDashboard = () => {
                         key={item.h}
                         type="button"
                         onClick={() => setPostFormData({ ...postFormData, expiryHours: item.h })}
-                        className={`py-2 px-1 text-center rounded-xl text-xs font-semibold border transition-all ${postFormData.expiryHours === item.h
+                        className={`py-2 px-1 text-center rounded-xl text-xs font-semibold border transition-all ${
+                          postFormData.expiryHours === item.h
                             ? "bg-[#76B900]/20 border-[#76B900] text-[#76B900] font-bold"
                             : "bg-white dark:bg-[#1F1A17] border-[#CBD5E1] dark:border-[#382C24] text-[#64748B] dark:text-[#94A3B8]"
-                          }`}
+                        }`}
                       >
                         {item.label}
                       </button>
