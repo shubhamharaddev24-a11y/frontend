@@ -222,9 +222,8 @@ const ThreePillarsSection = () => {
                           key={p.id}
                           type="button"
                           onClick={() => handlePillClick(pIdx)}
-                          className={`pillar-pill-btn ${
-                            activeIndex === pIdx ? "is-active" : ""
-                          }`}
+                          className={`pillar-pill-btn ${activeIndex === pIdx ? "is-active" : ""
+                            }`}
                           aria-label={`Jump to ${p.name}`}
                         >
                           <span>0{pIdx + 1}</span>
@@ -268,14 +267,14 @@ const ThreePillarsSection = () => {
                       <div className="pillar-cta-icon-wrap">
                         <div className="pillar-cta-icon _1">
                           <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </div>
                         <div className="pillar-cta-icon _2">
                           <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M4.66699 11.3332L11.3337 4.6665" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M4.66699 4.6665H11.3337V11.3332" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </div>
                       </div>
