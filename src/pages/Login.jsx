@@ -1,12 +1,16 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Camera, Briefcase, ShieldCheck, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 import { authService } from "../services";
 
 const Login = () => {
-  const [isRegister, setIsRegister] = useState(false);
-  const [role, setRole] = useState("freelancer"); // "freelancer" or "client"
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const modeParam = searchParams.get("mode");
+
+  const [isRegister, setIsRegister] = useState(modeParam ? true : false);
+  const [role, setRole] = useState(modeParam === "client" ? "client" : "freelancer"); // "freelancer" or "client"
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +20,16 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (modeParam === "client") {
+      setIsRegister(true);
+      setRole("client");
+    } else if (modeParam === "freelancer" || modeParam === "creator") {
+      setIsRegister(true);
+      setRole("freelancer");
+    }
+  }, [modeParam]);
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -67,37 +81,18 @@ const Login = () => {
       }
     } catch (err) {
       console.error(err);
-      setError(
-        err.response?.data?.message ||
-        err.response?.data?.errors?.[0]?.msg ||
-        "Authentication failed. Please check your credentials."
-      );
+      const apiErrors = err.response?.data?.errors;
+      const apiMsg = err.response?.data?.message;
+      const displayMsg = (Array.isArray(apiErrors) && apiErrors.length > 0)
+        ? apiErrors.map((e) => e.msg).join(". ")
+        : (apiMsg || "Authentication failed. Please check your credentials.");
+      setError(displayMsg);
     } finally {
       setLoading(false);
     }
   };
 
-  // One-click demo logins for convenience
-  const handleQuickDemo = async (demoEmail, demoPass) => {
-    setError("");
-    setLoading(true);
-    try {
-      const data = await authService.login({ email: demoEmail, password: demoPass });
-      if (data?.data?.token && data?.data?.user) {
-        localStorage.setItem("token", data.data.token);
-        localStorage.setItem("user", JSON.stringify(data.data.user));
-        if (data.data.user.role === "admin") {
-          navigate("/admin");
-        } else {
-          navigate("/dashboard");
-        }
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || "Demo login failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-brandBg px-4 py-24 text-brandTextPrimary sm:pt-28">
@@ -185,8 +180,8 @@ const Login = () => {
                   >
                     <Camera size={22} />
                     <div>
-                      <div className="text-xs font-bold text-brandTextPrimary">Earn Money</div>
-                      <div className="text-[10px] text-brandTextMuted">Photographer / Creator</div>
+                      <div className="text-xs font-bold text-brandTextPrimary">Photographer / Studio</div>
+                      <div className="text-[10px] text-brandTextMuted">Manage Shoots & Gigs</div>
                     </div>
                   </button>
 
@@ -201,8 +196,8 @@ const Login = () => {
                   >
                     <Briefcase size={22} />
                     <div>
-                      <div className="text-xs font-bold text-brandTextPrimary">Hire Talent</div>
-                      <div className="text-[10px] text-brandTextMuted">Post Orders & Shoots</div>
+                      <div className="text-xs font-bold text-brandTextPrimary">Book Photoshoot</div>
+                      <div className="text-[10px] text-brandTextMuted">Weddings, Pre-Wedding & Events</div>
                     </div>
                   </button>
                 </div>
@@ -278,6 +273,11 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {isRegister && (
+              <p className="mt-1 text-[11px] text-brandTextMuted">
+                Must be at least 6 characters.
+              </p>
+            )}
           </div>
 
           {/* Submit CTA */}
@@ -298,35 +298,7 @@ const Login = () => {
           </motion.button>
         </form>
 
-        {/* Quick Test Accounts Bar */}
-        <div className="border-t border-brandBorder/60 pt-4">
-          <p className="text-center text-[11px] font-semibold uppercase tracking-wider text-brandTextMuted mb-2.5">
-            Quick 1-Click Demo Logins
-          </p>
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickDemo("creator@creaonnect.com", "CreatorPassword123")}
-              className="rounded-xl border border-brandBorder bg-brandSurfaceSoft/40 py-2 px-1 text-center text-[10px] font-medium text-brandTextPrimary hover:border-brandAccent hover:text-brandAccent transition-all"
-            >
-              📸 Photographer
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickDemo("client@creaonnect.com", "ClientPassword123")}
-              className="rounded-xl border border-brandBorder bg-brandSurfaceSoft/40 py-2 px-1 text-center text-[10px] font-medium text-brandTextPrimary hover:border-brandAccent hover:text-brandAccent transition-all"
-            >
-              💼 Client
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickDemo("admin@creaonnect.com", "AdminPassword123")}
-              className="rounded-xl border border-brandBorder bg-brandSurfaceSoft/40 py-2 px-1 text-center text-[10px] font-medium text-brandTextPrimary hover:border-brandAccent hover:text-brandAccent transition-all"
-            >
-              👑 Admin
-            </button>
-          </div>
-        </div>
+
       </motion.div>
     </div>
   );

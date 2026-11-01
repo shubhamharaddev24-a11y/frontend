@@ -31,6 +31,7 @@ const SLIDES = [
     tabCategory: "Wedding Cinematography",
     tabTitle: "4K Heirloom Films & Pre-Wedding Shoots",
     image: "/images/wedding-varmala-moment.png",
+    objectPosition: "center 8%",
     floatingBadge: "🎬 4K Cinema ProRes • Sony FX3",
     statBadge: { value: "100%", label: "Cinematic Color Grade" },
     secondaryImage: "/images/prewedding-palace-arch.jpg"
@@ -48,6 +49,7 @@ const SLIDES = [
     tabCategory: "Creator Marketplace",
     tabTitle: "Take Photoshoot Orders & Make Money",
     image: "/images/marathi-wedding-ritual.jpg",
+    objectPosition: "center top",
     floatingBadge: "⚡ 10% Commission • Instant Payout",
     statBadge: { value: "₹16,200", label: "Average Creator Take-Home" },
     isMarketplaceCard: true
@@ -65,6 +67,7 @@ const SLIDES = [
     tabCategory: "Full-Stack Web & SEO",
     tabTitle: "Engineered for Speed • MERN & SEO",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=85",
+    objectPosition: "center center",
     floatingBadge: "⚡ 99+ Core Web Vitals • MERN Architecture",
     statBadge: { value: "#1 Rank", label: "Google Local Search Pack" }
   },
@@ -81,6 +84,7 @@ const SLIDES = [
     tabCategory: "Commercial & Studio",
     tabTitle: "Brand Identity, Lookbooks & Flex",
     image: "/images/bw-couple-sunburst-banner.png",
+    objectPosition: "center 12%",
     floatingBadge: "📸 High-Fashion Studio Lighting",
     statBadge: { value: "+240%", label: "Brand Inquiries Growth" }
   }
@@ -234,15 +238,17 @@ const CreaonnectNvidiaHero = () => {
                       src={activeSlide.secondaryImage || activeSlide.image}
                       alt="Background preview"
                       className="w-full h-full object-cover filter blur-[0.5px]"
+                      style={{ objectPosition: activeSlide.objectPosition || "center top" }}
                     />
                   </div>
 
                   {/* Main Hero Card (Layered with metallic bevel like NVIDIA hardware screen) */}
-                  <div className="relative w-full sm:w-[92%] h-[280px] sm:h-[350px] lg:h-[380px] rounded-2xl overflow-hidden border-2 border-brandBorder shadow-2xl bg-brandSurface group">
+                  <div className="relative w-full sm:w-[92%] h-[290px] sm:h-[370px] lg:h-[400px] rounded-2xl overflow-hidden border-2 border-brandBorder shadow-2xl bg-brandSurface group">
                     <img
                       src={activeSlide.image}
                       alt={activeSlide.headline}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      style={{ objectPosition: activeSlide.objectPosition || "center top" }}
                     />
 
                     {/* Gradient Overlay for crisp text contrast */}

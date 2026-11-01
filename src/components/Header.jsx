@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import { Phone, Menu, X } from "lucide-react";
+import { Phone, Menu, X, ArrowUpRight } from "lucide-react";
 import { useMotionVariants, useReducedMotionProps } from "../utils/motion";
-import logoShubham from "../assets/logo-shubham-photos-studio.png";
 import ThemeToggle from "./ThemeToggle";
 import Logo from "./Logo";
-
 
 const navItems = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
   { label: "Portfolio", to: "/gallery" },
   { label: "Services", to: "/services" },
-  { label: "Gig Market ⚡", to: "/dashboard" },
-  { label: "Book Us", to: "/contact" },
+  { label: "Gig Market", to: "/dashboard" },
 ];
 
 const Header = () => {
@@ -38,8 +35,8 @@ const Header = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
   return (
@@ -50,7 +47,7 @@ const Header = () => {
           : "bg-transparent py-4"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 md:px-12">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 md:px-10 h-12">
         {/* Logo / Brand */}
         <NavLink
           to="/"
@@ -60,23 +57,26 @@ const Header = () => {
           <Logo />
         </NavLink>
 
-        {/* Navigation - desktop */}
-        <nav className="hidden items-center gap-6 md:flex">
+        {/* Navigation - desktop (Perfect horizontal alignment, zero text wrapping) */}
+        <nav className="hidden items-center gap-5 lg:gap-7 xl:gap-8 md:flex shrink-0">
           {navItems.map((item) => (
-            <motion.div key={item.to} {...variants.navLinkHover}>
+            <motion.div key={item.to} {...variants.navLinkHover} className="shrink-0">
               <NavLink
                 to={item.to}
                 className={({ isActive }) =>
-                  `relative text-xs font-medium uppercase tracking-[0.18em] transition-colors !no-underline ${isActive ? "!text-brandAccent font-bold" : "!text-brandTextPrimary/80 hover:!text-brandTextPrimary"
+                  `relative text-[11px] lg:text-xs font-semibold uppercase tracking-[0.14em] whitespace-nowrap transition-colors !no-underline py-1.5 flex items-center ${
+                    isActive
+                      ? "!text-brandAccent font-bold"
+                      : "!text-brandTextPrimary/80 hover:!text-brandTextPrimary"
                   }`
                 }
               >
                 {({ isActive }) => (
                   <>
-                    {item.label}
+                    <span>{item.label}</span>
                     {isActive && (
                       <motion.div
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#76B900]"
+                        className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-[#76B900]"
                         layoutId="activeNavIndicator"
                         initial={false}
                         transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -89,39 +89,48 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Right Action Cluster: ThemeToggle + CTA + Mobile Toggle */}
-        <div className="flex items-center gap-3">
+        {/* Right Action Cluster: ThemeToggle + CTAs (Consistent height, perfectly centered) */}
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
           {/* Desktop Theme Toggle */}
-          <div className="hidden sm:flex items-center">
+          <div className="hidden sm:flex items-center justify-center shrink-0">
             <ThemeToggle />
           </div>
 
-          {/* Sign In / Dashboard CTA */}
-          <NavLink
-            to={localStorage.getItem("token") ? "/dashboard" : "/login"}
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-brandBorder/80 bg-brandSurfaceSoft/60 text-brandTextPrimary px-3.5 py-1.5 text-xs font-semibold hover:border-[#76B900] hover:text-[#76B900] transition-all !no-underline"
-          >
-            <span>{localStorage.getItem("token") ? "Dashboard" : "Sign In / Earn"}</span>
-          </NavLink>
+          {/* Conditional CTAs based on login state */}
+          {localStorage.getItem("token") ? (
+            <NavLink
+              to="/dashboard"
+              className="hidden sm:inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-xl border border-[#76B900]/50 bg-[#76B900]/10 text-[#76B900] dark:text-[#76B900] text-xs font-bold hover:bg-[#76B900] hover:text-black transition-all whitespace-nowrap shrink-0 !no-underline"
+            >
+              <span>Dashboard</span>
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/login"
+              className="hidden sm:inline-flex items-center justify-center h-9 px-4 rounded-xl border border-brandBorder/80 bg-brandSurfaceSoft/60 text-brandTextPrimary text-xs font-semibold hover:border-[#76B900] hover:text-[#76B900] transition-all whitespace-nowrap shrink-0 !no-underline"
+            >
+              <span>Sign In</span>
+            </NavLink>
+          )}
 
-          {/* Book Consultation CTA Button (NVIDIA Style Green Accent) */}
+          {/* Primary Action Button: Book Shoot */}
           <NavLink
             to="/contact"
-            className="hidden lg:inline-flex items-center gap-2 bg-[#76B900] hover:bg-[#68A500] text-black px-4 py-2 text-xs font-extrabold uppercase tracking-wider shadow-sm transition-all duration-200 !no-underline select-none"
+            className="hidden sm:inline-flex items-center justify-center h-9 px-4 bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-black uppercase tracking-wider shadow-sm transition-all whitespace-nowrap shrink-0 !no-underline select-none"
             style={{ borderRadius: "2px" }}
           >
-            <span>Book Us</span>
+            <span>Book Shoot</span>
           </NavLink>
 
           {/* Mobile Theme Toggle */}
-          <div className="sm:hidden flex items-center">
+          <div className="sm:hidden flex items-center shrink-0">
             <ThemeToggle />
           </div>
 
           {/* Mobile menu toggle */}
           <motion.button
             type="button"
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brandBorder bg-brandSurface text-brandTextPrimary md:hidden"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-brandBorder bg-brandSurface text-brandTextPrimary md:hidden"
             aria-label="Toggle navigation"
             onClick={() => setOpen((prev) => !prev)}
             {...variants.buttonTap}
@@ -130,7 +139,6 @@ const Header = () => {
           </motion.button>
         </div>
       </div>
-
 
       {/* Mobile menu panel */}
       <AnimatePresence>
@@ -154,9 +162,10 @@ const Header = () => {
                     to={item.to}
                     onClick={() => setOpen(false)}
                     className={({ isActive }) =>
-                      `block rounded-lg px-3 py-2 text-sm font-medium transition-colors !no-underline ${isActive
-                        ? "bg-brandAccent/10 !text-brandAccent"
-                        : "!text-brandTextPrimary/70 hover:bg-brandSurfaceSoft hover:!text-brandTextPrimary"
+                      `block rounded-lg px-3 py-2 text-sm font-medium transition-colors !no-underline ${
+                        isActive
+                          ? "bg-brandAccent/10 !text-brandAccent"
+                          : "!text-brandTextPrimary/70 hover:bg-brandSurfaceSoft hover:!text-brandTextPrimary"
                       }`
                     }
                   >
@@ -164,6 +173,24 @@ const Header = () => {
                   </NavLink>
                 </motion.div>
               ))}
+
+              {/* Quick Actions in Mobile Drawer */}
+              <div className="pt-2 grid grid-cols-2 gap-2">
+                <NavLink
+                  to="/login"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-center h-10 rounded-xl border border-brandBorder bg-brandSurfaceSoft text-xs font-bold text-brandTextPrimary !no-underline"
+                >
+                  Sign In
+                </NavLink>
+                <NavLink
+                  to="/contact"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-center h-10 rounded-xl bg-[#76B900] text-black text-xs font-black uppercase !no-underline"
+                >
+                  Book Shoot
+                </NavLink>
+              </div>
 
               {/* Theme Mode Switcher in mobile drawer */}
               <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-brandSurfaceSoft/40 border border-brandBorder/40 mt-1">
@@ -180,7 +207,7 @@ const Header = () => {
               >
                 <a
                   href="tel:9271456749"
-                  className="flex items-center justify-center gap-2 rounded-xl bg-brandAccent py-2.5 text-xs font-bold text-black hover:bg-amber-400 active:scale-95 transition-all"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-brandAccent py-2.5 text-xs font-bold text-black hover:bg-amber-400 active:scale-95 transition-all !no-underline"
                 >
                   <Phone size={14} />
                   <span>Call Now</span>
@@ -189,7 +216,7 @@ const Header = () => {
                   href="https://wa.me/919271456749?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-xl border border-brandBorder bg-brandSurfaceSoft/60 py-2.5 text-xs font-bold text-brandTextPrimary hover:text-[#25D366] hover:border-[#25D366]/40 active:scale-95 transition-all"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-brandBorder bg-brandSurfaceSoft/60 py-2.5 text-xs font-bold text-brandTextPrimary hover:text-[#25D366] hover:border-[#25D366]/40 active:scale-95 transition-all !no-underline"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -212,4 +239,3 @@ const Header = () => {
 };
 
 export default Header;
-
