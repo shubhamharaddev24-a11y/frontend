@@ -103,7 +103,7 @@ const DEFAULT_TESTIMONIALS = {
     {
       id: 'test-1',
       title: 'Rohini & Sanket',
-      subtitle: 'December 2023 · Murbad, Maharashtra',
+      subtitle: 'December 2023 · Murbad, World',
       quote: 'CREAONNECT captured our wedding perfectly! The traditional rituals and emotional moments were documented so beautifully.',
       imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
       videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1',
@@ -112,7 +112,7 @@ const DEFAULT_TESTIMONIALS = {
     {
       id: 'test-2',
       title: 'Priya & Rahul',
-      subtitle: 'November 2023 · Kalyan, Maharashtra',
+      subtitle: 'November 2023 · Kalyan, World',
       quote: 'Amazing photography & film! The team captured every single detail. Our wedding highlight feels like a Bollywood movie!',
       imageUrl: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&auto=format&fit=crop&q=80',
       videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1',
@@ -121,7 +121,7 @@ const DEFAULT_TESTIMONIALS = {
     {
       id: 'test-3',
       title: 'Anjali & Vikram',
-      subtitle: 'October 2023 · Karjat, Maharashtra',
+      subtitle: 'October 2023 · Karjat, World',
       quote: 'The CREAONNECT team made our pre-wedding shoot so comfortable and fun! The drone shots and location recommendations were top notch.',
       imageUrl: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80',
       videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1',

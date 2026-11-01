@@ -14,6 +14,39 @@ const navItems = [
   { label: "Gig Market", to: "/dashboard" },
 ];
 
+// Continuous running announcement ticker item matching GSAP & NVIDIA highlight style
+const TickerItem = () => (
+  <div className="inline-flex items-center text-[11px] sm:text-xs font-bold tracking-wide text-black shrink-0 px-5">
+    <span className="mr-2 text-sm leading-none select-none">📢</span>
+    <span className="font-black uppercase tracking-wider text-[9.5px] bg-black text-[#76B900] px-1.5 py-0.5 rounded mr-2 select-none">
+      Global Marketplace
+    </span>
+    <span>Want to</span>
+    <NavLink
+      to="/dashboard"
+      className="mx-1.5 font-black text-black underline decoration-black decoration-[2px] underline-offset-2 hover:bg-black hover:text-[#76B900] px-1.5 py-0.5 rounded transition-all !no-underline inline-flex items-center gap-0.5"
+    >
+      <span>Earn 90% Take-Home on Gigs</span>
+      <ArrowUpRight size={11} className="stroke-[3]" />
+    </NavLink>
+    <span className="opacity-60 mx-1">or</span>
+    <NavLink
+      to="/dashboard"
+      className="mx-1.5 font-black text-black underline decoration-black decoration-[2px] underline-offset-2 hover:bg-black hover:text-[#76B900] px-1.5 py-0.5 rounded transition-all !no-underline inline-flex items-center gap-0.5"
+    >
+      <span>Book Photoshoot / Post Order</span>
+      <ArrowUpRight size={11} className="stroke-[3]" />
+    </NavLink>
+    <span className="mx-3 opacity-40 font-bold">•</span>
+    <span>⚡ 10% Flat Facilitation Fee</span>
+    <span className="mx-3 opacity-40 font-bold">•</span>
+    <span>100% Escrow Guarantee</span>
+    <span className="mx-3 opacity-40 font-bold">•</span>
+    <span>Pre-Wedding • Full Wedding • Viral Reels • Video Editing • Web Dev</span>
+    <span className="mx-4 font-black">✦</span>
+  </div>
+);
+
 const Header = () => {
   const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
@@ -43,11 +76,24 @@ const Header = () => {
     <motion.header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/95 dark:bg-[#0C0A09]/95 backdrop-blur-md border-b border-[#E5E7EB] dark:border-[#362B24]/70 shadow-sm py-2.5"
-          : "bg-transparent py-4"
+          ? "bg-white/95 dark:bg-[#0C0A09]/95 backdrop-blur-md border-b border-[#E5E7EB] dark:border-[#362B24]/70 shadow-sm"
+          : "bg-white/90 dark:bg-[#0C0A09]/90 backdrop-blur-sm border-b border-[#E5E7EB]/50 dark:border-[#362B24]/40"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 md:px-10 h-12">
+      {/* ======================================================== */}
+      {/* GSAP-STYLE RUNNING TICKER ANNOUNCEMENT BAR AT VERY TOP */}
+      {/* ======================================================== */}
+      <div className="w-full bg-[#76B900] text-black border-b border-black/15 overflow-hidden py-1 px-2 relative z-20 group shadow-inner">
+        <div className="flex w-max animate-top-ticker select-none">
+          <TickerItem />
+          <TickerItem />
+          <TickerItem />
+          <TickerItem />
+        </div>
+      </div>
+
+      {/* Main Navbar */}
+      <div className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 md:px-10 h-12 transition-all duration-300 ${scrolled ? "py-1" : "py-2"}`}>
         {/* Logo / Brand */}
         <NavLink
           to="/"

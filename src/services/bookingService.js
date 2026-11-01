@@ -49,7 +49,7 @@ export const bookingService = {
     return response.data;
   },
 
-  // === CREAONNECT GIG MARKETPLACE METHODS ===
+  // === CREAONNECT GIG MARKETPLACE & QUOTATIONS METHODS ===
   getAvailableOrders: async (params = {}) => {
     const response = await api.get('/bookings/marketplace/available', { params });
     return response.data;
@@ -62,6 +62,16 @@ export const bookingService = {
 
   claimOrder: async (id) => {
     const response = await api.post(`/bookings/marketplace/${id}/claim`);
+    return response.data;
+  },
+
+  submitQuotation: async (id, quoteData) => {
+    const response = await api.post(`/bookings/marketplace/${id}/quote`, quoteData);
+    return response.data;
+  },
+
+  acceptQuotation: async (id, quoteId) => {
+    const response = await api.patch(`/bookings/marketplace/${id}/accept-quote/${quoteId}`);
     return response.data;
   },
 
@@ -82,6 +92,11 @@ export const bookingService = {
 
   cancelOrder: async (id) => {
     const response = await api.patch(`/bookings/marketplace/${id}/cancel`);
+    return response.data;
+  },
+
+  getMarketplaceStats: async () => {
+    const response = await api.get('/bookings/marketplace/stats');
     return response.data;
   }
 };

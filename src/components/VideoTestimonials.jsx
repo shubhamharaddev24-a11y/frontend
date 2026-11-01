@@ -16,7 +16,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "Shubham captured our wedding perfectly! The traditional rituals and emotional moments were documented so beautifully.",
       rating: 5,
-      location: "Murbad, Maharashtra",
+      location: "Murbad, World",
       duration: "3:45"
     },
     {
@@ -27,7 +27,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "Amazing photography & film! The team captured every single detail. Our wedding highlight feel like a Bollywood movie!",
       rating: 5,
-      location: "Kalyan, Maharashtra",
+      location: "Kalyan, World",
       duration: "4:20"
     },
     {
@@ -38,7 +38,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "Shubham Studio made our pre-wedding shoot so comfortable and fun! The drone shots and location recommendations were top notch.",
       rating: 5,
-      location: "Karjat, Maharashtra",
+      location: "Karjat, World",
       duration: "2:50"
     },
     {
@@ -49,7 +49,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "From our engagement photos to the royal wedding film, Shubham has been our family's trusted photography studio for years.",
       rating: 5,
-      location: "Murbad, Maharashtra",
+      location: "Murbad, World",
       duration: "5:10"
     },
     {
@@ -60,7 +60,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "We had a destination wedding in Karjat and the team traveled with us to capture every priceless moment with total passion.",
       rating: 5,
-      location: "Karjat, Maharashtra",
+      location: "Karjat, World",
       duration: "3:15"
     },
     {
@@ -71,7 +71,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "The candid portraits are breathtaking. Shubham has a rare eye for capturing raw emotion and genuine smiles.",
       rating: 5,
-      location: "Badlapur, Maharashtra",
+      location: "Badlapur, World",
       duration: "4:05"
     },
     {
@@ -82,7 +82,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "We booked Shubham for our engagement and were blown away. Rebooked immediately for our big wedding day!",
       rating: 5,
-      location: "Ambernath, Maharashtra",
+      location: "Ambernath, World",
       duration: "3:30"
     },
     {
@@ -93,7 +93,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "The cinematic drone coverage of our mandap ceremony gave everyone goosebumps. Exceptional professionalism!",
       rating: 5,
-      location: "Ulhasnagar, Maharashtra",
+      location: "Ulhasnagar, World",
       duration: "4:45"
     },
     {
@@ -104,7 +104,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "Our wedding album is our most prized possession. The way Shubham narrated our love story through photos is heartwarming.",
       rating: 5,
-      location: "Titwala, Maharashtra",
+      location: "Titwala, World",
       duration: "3:55"
     },
     {
@@ -115,7 +115,7 @@ const VideoTestimonials = () => {
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       quote: "Punctual, super talented, and creative. Shubham made us feel completely relaxed in front of the lens.",
       rating: 5,
-      location: "Bhivpuri, Maharashtra",
+      location: "Bhivpuri, World",
       duration: "2:40"
     },
   ];

@@ -27,7 +27,7 @@ const SEOHead = ({
       "@type": "PostalAddress",
       "streetAddress": "Main Bazaar, Near Bus Stand, Opposite Saralgaon Police Chowki",
       "addressLocality": "Murbad",
-      "addressRegion": "Maharashtra",
+      "addressRegion": "World",
       "postalCode": "421401",
       "addressCountry": "India"
     },
@@ -83,8 +83,8 @@ const SEOHead = ({
       <meta name="author" content="CREAONNECT" />
       <meta name="language" content="English" />
       <meta name="geo.region" content="IN-MH" />
-      <meta name="geo.placename" content="Murbad, Maharashtra" />
-      <meta name="ICBM" content="Murbad, Maharashtra, India" />
+      <meta name="geo.placename" content="Murbad, World" />
+      <meta name="ICBM" content="Murbad, World, India" />
       
       {/* Structured Data */}
       <script type="application/ld+json">

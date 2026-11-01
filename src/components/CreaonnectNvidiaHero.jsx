@@ -39,7 +39,7 @@ const SLIDES = [
   {
     id: "marketplace",
     category: "Creative Gig Marketplace",
-    headline: "Earn Money With Your Camera Across Maharashtra",
+    headline: "Earn Money With Your Camera Across the World",
     description:
       "Browse live photoshoot gig orders with 12h–24h countdown expiry. Accept verified orders, connect with clients directly, and keep 90% of order value with transparent 10% platform commission.",
     ctaText: "Claim Gigs & Earn",

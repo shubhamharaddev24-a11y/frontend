@@ -16,7 +16,13 @@ import {
   PlusCircle,
   Paperclip,
   ExternalLink,
-  Sliders
+  Sliders,
+  DollarSign,
+  TrendingUp,
+  ShoppingBag,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowUpRight
 } from "lucide-react";
 import { 
   bookingService, 
@@ -32,6 +38,13 @@ const AdminDashboard = () => {
   const [leads, setLeads] = useState([]);
   const [staff, setStaff] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [marketplaceStats, setMarketplaceStats] = useState({
+    totalOrders: 0,
+    confirmedOrders: 0,
+    completedOrders: 0,
+    openOrders: 0,
+    financials: { grossMerchandiseValue: 0, totalPlatformCommission: 0, totalCreatorPayouts: 0 }
+  });
   const [currentUser, setCurrentUser] = useState(null);
   const [stats, setStats] = useState({
     bookings: { total: 0, confirmed: 0, pending: 0 },
@@ -96,6 +109,13 @@ const AdminDashboard = () => {
       const tasksRes = await taskService.getAllTasks();
       const tasksList = tasksRes?.data || [];
       setTasks(tasksList);
+
+      try {
+        const mktRes = await bookingService.getMarketplaceStats();
+        if (mktRes?.data) setMarketplaceStats(mktRes.data);
+      } catch (e) {
+        console.warn("Marketplace stats fetch err:", e);
+      }
 
       // Calculate Stats
       const confirmedBookings = bookingsList.filter(b => b.status === "confirmed").length;
@@ -505,6 +525,167 @@ const AdminDashboard = () => {
           {loading ? (
             <div className="py-12 text-center text-brandTextMuted">
               Loading dashboard details...
+            </div>
+          ) : activeTab === "marketplace" ? (
+            /* Master Marketplace & Commission Engine Tab */
+            <div className="space-y-6">
+              {/* Financial KPI Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="p-4 rounded-xl border border-brandBorder bg-brandSurfaceSoft/40">
+                  <p className="text-xs font-semibold text-brandTextMuted uppercase tracking-wider">Gross Merchandise Value (GMV)</p>
+                  <p className="text-2xl font-black text-brandTextPrimary mt-1">
+                    ₹{(marketplaceStats.financials?.grossMerchandiseValue || bookings.reduce((acc, b) => acc + (b.totalPrice || b.budget || 0), 0)).toLocaleString()}
+                  </p>
+                  <p className="text-[11px] text-brandTextMuted mt-1">Total value of creative enquiries & shoots</p>
+                </div>
+
+                <div className="p-4 rounded-xl border border-[#76B900]/40 bg-[#76B900]/10">
+                  <p className="text-xs font-semibold text-[#76B900] uppercase tracking-wider flex items-center gap-1">
+                    <TrendingUp size={13} />
+                    <span>CREAONNECT Revenue (10%)</span>
+                  </p>
+                  <p className="text-2xl font-black text-[#76B900] mt-1">
+                    ₹{(marketplaceStats.financials?.totalPlatformCommission || Math.round(bookings.reduce((acc, b) => acc + (b.totalPrice || b.budget || 0), 0) * 0.10)).toLocaleString()}
+                  </p>
+                  <p className="text-[11px] text-brandTextMuted mt-1">Platform facilitation fee earned</p>
+                </div>
+
+                <div className="p-4 rounded-xl border border-brandBorder bg-brandSurfaceSoft/40">
+                  <p className="text-xs font-semibold text-brandTextMuted uppercase tracking-wider">Creator Payouts Generated</p>
+                  <p className="text-2xl font-black text-brandTextPrimary mt-1">
+                    ₹{(marketplaceStats.financials?.totalCreatorPayouts || Math.round(bookings.reduce((acc, b) => acc + (b.totalPrice || b.budget || 0), 0) * 0.90)).toLocaleString()}
+                  </p>
+                  <p className="text-[11px] text-brandTextMuted mt-1">90% net take-home for verified partners</p>
+                </div>
+
+                <div className="p-4 rounded-xl border border-brandBorder bg-brandSurfaceSoft/40">
+                  <p className="text-xs font-semibold text-brandTextMuted uppercase tracking-wider">Marketplace Volume</p>
+                  <p className="text-2xl font-black text-brandTextPrimary mt-1">
+                    {marketplaceStats.totalOrders || bookings.length} <span className="text-sm font-normal text-brandTextMuted">Orders</span>
+                  </p>
+                  <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mt-1">
+                    {marketplaceStats.confirmedOrders || bookings.filter(b => b.status === "confirmed" || b.status === "claimed").length} Bookings Active/Closed
+                  </p>
+                </div>
+              </div>
+
+              {/* Commission & Escrow Policy Card */}
+              <div className="p-4 rounded-xl border border-brandBorder bg-brandSurfaceSoft/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <h4 className="text-sm font-bold text-brandTextPrimary flex items-center gap-2">
+                    <ShieldCheck size={16} className="text-[#76B900]" />
+                    <span>Platform Commission Policy: Transparent 10% Take-Rate</span>
+                  </h4>
+                  <p className="text-xs text-brandTextMuted max-w-2xl">
+                    CREAONNECT guarantees payment protection. Customers submit service enquiries across Photography, Video & Reels, Design, and Digital Services. Creators submit proposals or instant-claim. Contact details are unlocked upon quote confirmation, ensuring zero disintermediation leakage.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="px-3 py-1.5 rounded-lg bg-[#76B900]/20 text-[#76B900] border border-[#76B900]/40 text-xs font-bold">
+                    Active Take-Rate: 10%
+                  </span>
+                </div>
+              </div>
+
+              {/* Live Orders Table */}
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-brandTextPrimary flex items-center justify-between">
+                  <span>Registered Marketplace Orders & Quotes</span>
+                  <span className="text-xs font-normal text-brandTextMuted">{bookings.length} Total Enquiries</span>
+                </h4>
+                <div className="overflow-x-auto">
+                  {bookings.length === 0 ? (
+                    <div className="py-8 text-center text-xs text-brandTextMuted">No marketplace orders registered yet.</div>
+                  ) : (
+                    <table className="w-full text-left text-xs sm:text-sm">
+                      <thead>
+                        <tr className="border-b border-brandBorder/80 text-brandTextMuted">
+                          <th className="pb-3 font-semibold">Requirement / Category</th>
+                          <th className="pb-3 font-semibold">Client</th>
+                          <th className="pb-3 font-semibold">Assigned Provider</th>
+                          <th className="pb-3 font-semibold">Budget / GMV</th>
+                          <th className="pb-3 font-semibold">10% Platform Fee</th>
+                          <th className="pb-3 font-semibold">Status</th>
+                          <th className="pb-3 font-semibold text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-brandBorder/40">
+                        {bookings.map((ord) => {
+                          const budget = ord.totalPrice || ord.budget || 0;
+                          const fee = ord.platformFee || Math.round(budget * 0.10);
+                          const quotesCount = (ord.quotations || []).length;
+                          return (
+                            <tr key={ord._id} className="hover:bg-brandSurfaceSoft/10">
+                              <td className="py-3 pr-3">
+                                <p className="font-semibold text-brandTextPrimary line-clamp-1">{ord.title || "Creative Requirement"}</p>
+                                <span className="inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brandSurfaceSoft text-brandTextMuted border border-brandBorder">
+                                  {ord.eventType || ord.category || "photography"}
+                                </span>
+                              </td>
+                              <td className="py-3 pr-3">
+                                <p className="font-semibold text-brandTextPrimary">{ord.customerName}</p>
+                                <p className="text-xs text-brandTextMuted">{ord.customerPhone}</p>
+                              </td>
+                              <td className="py-3 pr-3">
+                                {ord.claimedBy ? (
+                                  <div>
+                                    <p className="font-semibold text-emerald-600 dark:text-emerald-400">{ord.claimedBy.name || "Assigned Creator"}</p>
+                                    <p className="text-xs text-brandTextMuted">{ord.claimedBy.phone || ord.claimedBy.email || "Verified Partner"}</p>
+                                  </div>
+                                ) : (
+                                  <div>
+                                    <span className="text-xs text-amber-600 dark:text-amber-400 font-medium">Open on Radar</span>
+                                    {quotesCount > 0 && (
+                                      <p className="text-[11px] text-[#76B900] font-semibold">{quotesCount} quote{quotesCount > 1 ? 's' : ''} received</p>
+                                    )}
+                                  </div>
+                                )}
+                              </td>
+                              <td className="py-3 pr-3 font-bold text-brandTextPrimary">
+                                ₹{budget.toLocaleString()}
+                              </td>
+                              <td className="py-3 pr-3 font-bold text-[#76B900]">
+                                ₹{fee.toLocaleString()}
+                              </td>
+                              <td className="py-3 pr-3">
+                                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                  ord.status === "completed"
+                                    ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300"
+                                    : ord.status === "confirmed" || ord.status === "claimed"
+                                    ? "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300"
+                                    : ord.status === "open"
+                                    ? "bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300"
+                                    : "bg-neutral-100 dark:bg-neutral-800 text-brandTextMuted"
+                                }`}>
+                                  {ord.status}
+                                </span>
+                              </td>
+                              <td className="py-3 pr-3 text-right space-x-1">
+                                {ord.status !== "completed" && (
+                                  <button
+                                    onClick={() => handleUpdateStatus(ord._id, "completed")}
+                                    className="px-2.5 py-1 rounded bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-bold transition-all"
+                                    title="Mark Completed & Settle Commission"
+                                  >
+                                    Complete
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() => handleDeleteBooking(ord._id)}
+                                  className="p-1 rounded text-red-400 hover:bg-red-500/10 inline-flex"
+                                  title="Delete order"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              </div>
             </div>
           ) : activeTab === "cms" ? (
             /* Master CMS Tab */

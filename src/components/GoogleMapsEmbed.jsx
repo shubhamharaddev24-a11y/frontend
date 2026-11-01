@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 const GoogleMapsEmbed = ({ 
-  address = "Main Bazaar, Near Bus Stand, Opposite Saralgaon Police Chowki, Murbad, Maharashtra 421401",
+  address = "Main Bazaar, Near Bus Stand, Opposite Saralgaon Police Chowki, Murbad, World 421401",
   title = "Shubham Photos Studio",
   zoom = 16,
   className = ""
@@ -112,7 +112,7 @@ const GoogleMapsEmbed = ({
             "@type": "PostalAddress",
             "streetAddress": "Main Bazaar, Near Bus Stand, Opposite Saralgaon Police Chowki",
             "addressLocality": "Murbad",
-            "addressRegion": "Maharashtra",
+            "addressRegion": "World",
             "postalCode": "421401",
             "addressCountry": "India"
           },

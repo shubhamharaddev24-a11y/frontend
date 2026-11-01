@@ -478,3 +478,28 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
+
+
+/* =================================================== */
+/* GSAP-STYLE TOP ANNOUNCEMENT RUNNING TICKER MARQUEE */
+/* =================================================== */
+@keyframes topTickerMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-top-ticker {
+  display: flex;
+  width: max-content;
+  animation: topTickerMarquee 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-top-ticker:hover,
+.group:hover .animate-top-ticker {
+  animation-play-state: paused;
+}

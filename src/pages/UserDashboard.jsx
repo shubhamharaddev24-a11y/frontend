@@ -39,7 +39,8 @@ import {
   Send,
   ArrowRight,
   Receipt,
-  FileText
+  FileText,
+  Lock
 } from "lucide-react";
 import { bookingService, authService } from "../services";
 import ThemeToggle from "../components/ThemeToggle";
@@ -151,6 +152,19 @@ const UserDashboard = () => {
   const [postingOrder, setPostingOrder] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
 
+  // Custom Quotation & Bidding States
+  const [selectedOrderToQuote, setSelectedOrderToQuote] = useState(null);
+  const [quoteFormData, setQuoteFormData] = useState({
+    quotedPrice: "",
+    deliverables: "4K Sony Cinema coverage, color-graded photos, 3 viral reels",
+    equipment: "Sony FX3 / A7IV + DJI Ronin Gimbal + Godox Lighting",
+    estimatedDays: 2,
+    message: "Experienced creative professional with 50+ successful projects. Guaranteed premium quality."
+  });
+  const [submittingQuote, setSubmittingQuote] = useState(false);
+  const [expandedQuotesOrderId, setExpandedQuotesOrderId] = useState(null);
+  const [acceptingQuoteId, setAcceptingQuoteId] = useState(null);
+
   // Payout withdrawal form state
   const [upiId, setUpiId] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
@@ -231,6 +245,51 @@ const UserDashboard = () => {
   }, [user, filterCategory]);
 
   // Handle Claim
+  // Handle Provider Custom Quotation Submission
+  const handleSubmitQuotation = async (e) => {
+    e.preventDefault();
+    if (!selectedOrderToQuote) return;
+    setSubmittingQuote(true);
+    setError("");
+
+    try {
+      await bookingService.submitQuotation(selectedOrderToQuote._id, quoteFormData);
+      setSuccessMsg(`Your quotation of ₹${Number(quoteFormData.quotedPrice).toLocaleString()} for "${selectedOrderToQuote.title}" was submitted! The client will review your bid.`);
+      setSelectedOrderToQuote(null);
+      setQuoteFormData({
+        quotedPrice: "",
+        deliverables: "4K Sony Cinema coverage, color-graded photos, 3 viral reels",
+        equipment: "Sony FX3 / A7IV + DJI Ronin Gimbal + Godox Lighting",
+        estimatedDays: 2,
+        message: "Experienced creative professional with 50+ successful projects. Guaranteed premium quality."
+      });
+      loadDashboardData();
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "Failed to submit quotation.");
+    } finally {
+      setSubmittingQuote(false);
+    }
+  };
+
+  // Handle Client Accepting a Provider Quotation
+  const handleAcceptQuotation = async (orderId, quoteId, providerName, price) => {
+    if (!window.confirm(`Accept quotation from ${providerName} for ₹${Number(price).toLocaleString()}? This confirms the booking and unlocks direct phone & WhatsApp contacts.`)) return;
+    setAcceptingQuoteId(quoteId);
+    setError("");
+
+    try {
+      await bookingService.acceptQuotation(orderId, quoteId);
+      setSuccessMsg(`Quotation accepted! Booking confirmed with ${providerName}. Contact details unlocked!`);
+      loadDashboardData();
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "Failed to accept quotation.");
+    } finally {
+      setAcceptingQuoteId(null);
+    }
+  };
+
   const handleConfirmClaim = async () => {
     if (!selectedOrderToClaim) return;
     setClaiming(true);
@@ -295,7 +354,7 @@ const UserDashboard = () => {
         customerPhone: user?.phone || "+91 99999 99999"
       });
 
-      setSuccessMsg("Order published live to marketplace! Photographers in Maharashtra can now claim it.");
+      setSuccessMsg("Order published live to marketplace! Creators across the World can now submit proposals and claim it.");
       setPostFormData({
         title: "",
         eventType: "pre-wedding",
@@ -569,19 +628,11 @@ const UserDashboard = () => {
           {/* Brand Logo header */}
           <div className="h-20 flex items-center justify-between px-6 border-b border-[#F1F5F9] dark:border-[#262626]">
             <Link to="/" className="flex items-center gap-3 !no-underline group">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#76B900]/20 via-[#76B900]/10 to-transparent border border-[#76B900]/50 shadow-sm text-[#76B900] group-hover:scale-105 transition-transform">
-                <svg viewBox="0 0 36 36" className="w-5 h-5 fill-none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11.5" cy="12.5" r="4" stroke="#76B900" strokeWidth="2.2" />
-                  <circle cx="11.5" cy="12.5" r="1.5" fill="#76B900" stroke="none" />
-                  <circle cx="24.5" cy="12.5" r="4" stroke="#76B900" strokeWidth="2.2" />
-                  <circle cx="24.5" cy="12.5" r="1.5" fill="#76B900" stroke="none" />
-                  <circle cx="18" cy="24.5" r="4" stroke="#76B900" strokeWidth="2.2" />
-                  <circle cx="18" cy="24.5" r="1.5" fill="#76B900" stroke="none" />
-                  <line x1="15.5" y1="12.5" x2="20.5" y2="12.5" stroke="#76B900" strokeWidth="1.8" strokeDasharray="1.5 1.5" />
-                  <line x1="13.5" y1="16" x2="16" y2="21" stroke="#76B900" strokeWidth="1.8" />
-                  <line x1="22.5" y1="16" x2="20" y2="21" stroke="#76B900" strokeWidth="1.8" />
-                </svg>
-              </div>
+              <img
+                src="/logo-emblem.png"
+                alt="CREAONNECT"
+                className="h-9 w-auto object-contain transition-transform group-hover:scale-105 shrink-0"
+              />
               <div className="flex flex-col text-left leading-tight">
                 <span className="font-extrabold text-base tracking-tight text-black dark:text-white">CREAONNECT</span>
                 <span className="block text-[10px] uppercase tracking-wider text-[#76B900] font-bold">
@@ -1320,7 +1371,7 @@ const UserDashboard = () => {
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-bold text-[#1E1B4B] dark:text-white">Popular Shoot Types</span>
                   </div>
-                  <p className="text-[11px] text-[#94A3B8]">High earning categories in Maharashtra</p>
+                  <p className="text-[11px] text-[#94A3B8]">High earning categories across the World</p>
                 </div>
 
                 <div className="my-4 space-y-3.5">
@@ -1665,7 +1716,7 @@ const UserDashboard = () => {
             {/* Popular Packages Quick-Booking Row */}
             <div className="space-y-4">
               <div>
-                <h2 className="text-lg font-black text-black dark:text-white">Popular Photoshoot Packages in Maharashtra</h2>
+                <h2 className="text-lg font-black text-black dark:text-white">Popular Packages & Shoots Across the World</h2>
                 <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">1-click curated shoots with verified professional photographers.</p>
               </div>
 
@@ -1755,7 +1806,7 @@ const UserDashboard = () => {
               <div>
                 <h1 className="text-2xl font-black text-black dark:text-white tracking-tight">Live Gig Orders (Marketplace)</h1>
                 <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-0.5">
-                  Live photoshoot requirements in Maharashtra. Claim gigs before expiry to unlock full client details.
+                  Live requirements and creative gigs across the World. Claim gigs before expiry to unlock full client details.
                 </p>
               </div>
 
@@ -1901,14 +1952,42 @@ const UserDashboard = () => {
                           Posted by You (Your Shoot)
                         </div>
                       ) : (
-                        <button
-                          type="button"
-                          onClick={() => setSelectedOrderToClaim(order)}
-                          className="mt-4 w-full h-10 bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-extrabold uppercase tracking-wide transition-all flex items-center justify-center gap-2 shadow-sm rounded"
-                        >
-                          <Camera size={14} />
-                          <span>Claim Order & Earn ₹{creatorPayout.toLocaleString()}</span>
-                        </button>
+                        <div className="mt-4 space-y-2">
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedOrderToQuote(order);
+                                setQuoteFormData({
+                                  quotedPrice: order.totalPrice || order.budget || "",
+                                  deliverables: "High-res outputs, color-graded delivery, 2-day turnaround",
+                                  equipment: "Cinema 4K Camera + Lighting",
+                                  estimatedDays: 2,
+                                  message: "Ready to take up this shoot with premium quality and reliable delivery."
+                                });
+                              }}
+                              className="h-10 px-2 bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-sm rounded"
+                            >
+                              <FileText size={13} />
+                              <span>Submit Quote</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedOrderToClaim(order)}
+                              className="h-10 px-2 bg-[#1E1B4B] dark:bg-[#221B17] hover:bg-black text-white text-xs font-bold transition-all flex items-center justify-center gap-1 rounded border border-[#382C24]"
+                            >
+                              <Check size={13} className="text-[#76B900]" />
+                              <span>Instant Claim</span>
+                            </button>
+                          </div>
+                          {(order.quotesCount > 0 || (order.quotations && order.quotations.length > 0)) && (
+                            <div className="text-[11px] text-center text-[#64748B] dark:text-[#94A3B8]">
+                              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                                {order.quotesCount || order.quotations.length} Proposal{(order.quotesCount || order.quotations.length) > 1 ? 's' : ''} submitted
+                              </span>
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
                   );
@@ -2232,6 +2311,96 @@ const UserDashboard = () => {
                         <span className="text-[#64748B] dark:text-[#94A3B8]">Your Budget:</span>
                         <span className="font-black text-black dark:text-white">₹{(order.totalPrice || order.budget || 0).toLocaleString()}</span>
                       </div>
+
+                      {/* QUOTATIONS RECEIVED COMPARISON DECK */}
+                      {isOpen && (
+                        <div className="space-y-3 pt-2 border-t border-[#F1F5F9] dark:border-[#262626]">
+                          {order.quotations && order.quotations.length > 0 ? (
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-black dark:text-white flex items-center gap-1.5">
+                                  <FileText size={13} className="text-[#76B900]" />
+                                  <span>{order.quotations.length} Proposal{order.quotations.length > 1 ? 's' : ''} Received</span>
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => setExpandedQuotesOrderId(expandedQuotesOrderId === order._id ? null : order._id)}
+                                  className="text-xs font-bold text-[#76B900] hover:underline flex items-center gap-1"
+                                >
+                                  <span>{expandedQuotesOrderId === order._id ? "Hide Proposals" : "Compare Proposals"}</span>
+                                  <ChevronDown size={14} className={`transform transition-transform ${expandedQuotesOrderId === order._id ? "rotate-180" : ""}`} />
+                                </button>
+                              </div>
+
+                              {expandedQuotesOrderId === order._id && (
+                                <div className="space-y-3 pt-2">
+                                  {order.quotations.map((quote) => (
+                                    <div
+                                      key={quote._id}
+                                      className="p-3.5 rounded-xl border border-brandBorder bg-[#F8FAFC] dark:bg-[#181513] space-y-2.5"
+                                    >
+                                      <div className="flex items-start justify-between gap-2">
+                                        <div>
+                                          <p className="text-xs font-black text-black dark:text-white flex items-center gap-1.5">
+                                            <span>{quote.providerName}</span>
+                                            <span className="text-[10px] px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded font-bold">★ 5.0</span>
+                                          </p>
+                                          <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">{quote.equipment || "Verified Creator"}</p>
+                                        </div>
+                                        <div className="text-right">
+                                          <p className="text-sm font-black text-[#76B900]">₹{quote.quotedPrice.toLocaleString()}</p>
+                                          <p className="text-[10px] text-[#64748B] dark:text-[#94A3B8]">Includes 10% fee</p>
+                                        </div>
+                                      </div>
+
+                                      {quote.message && (
+                                        <p className="text-xs text-[#4B5563] dark:text-neutral-300 bg-white dark:bg-[#12100E] p-2 rounded border border-brandBorder/40">
+                                          "{quote.message}"
+                                        </p>
+                                      )}
+
+                                      {quote.deliverables && quote.deliverables.length > 0 && (
+                                        <div className="flex flex-wrap gap-1">
+                                          {quote.deliverables.map((d, i) => (
+                                            <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-brandSurface text-brandTextMuted border border-brandBorder">
+                                              ✓ {d}
+                                            </span>
+                                          ))}
+                                        </div>
+                                      )}
+
+                                      <div className="pt-2 flex items-center justify-between border-t border-brandBorder/40">
+                                        <span className="text-[11px] text-[#64748B]">
+                                          Delivery in {quote.estimatedDays || 2} day{quote.estimatedDays > 1 ? 's' : ''}
+                                        </span>
+                                        {quote.status === "accepted" ? (
+                                          <span className="px-3 py-1 rounded bg-emerald-100 text-emerald-800 font-bold text-xs">
+                                            ✓ Accepted
+                                          </span>
+                                        ) : (
+                                          <button
+                                            type="button"
+                                            disabled={acceptingQuoteId === quote._id}
+                                            onClick={() => handleAcceptQuotation(order._id, quote._id, quote.providerName, quote.quotedPrice)}
+                                            className="px-3 py-1.5 rounded bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-black shadow-sm transition-all"
+                                          >
+                                            {acceptingQuoteId === quote._id ? "Confirming..." : "Accept & Confirm"}
+                                          </button>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="p-3 rounded-xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 text-xs text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                              <ShieldCheck size={14} className="shrink-0 text-[#76B900]" />
+                              <span>Live on Radar. Photographers are reviewing your enquiry. Direct phone & WhatsApp unlocked upon proposal acceptance.</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
 
                       {/* IF CLAIMED: SHOW PHOTOGRAPHER DETAILS */}
                       {isClaimed && photographer && (
@@ -2601,18 +2770,54 @@ const UserDashboard = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Category</label>
+                    <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Category & Service Type</label>
                     <select
-                      className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
+                      className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs font-semibold text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
                       value={postFormData.eventType}
-                      onChange={(e) => setPostFormData({ ...postFormData, eventType: e.target.value })}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        let autoBudget = 15000;
+                        if (val === "wedding") autoBudget = 50000;
+                        else if (val === "pre-wedding") autoBudget = 25000;
+                        else if (val === "reel-shoot") autoBudget = 8000;
+                        else if (val === "video-editing") autoBudget = 5000;
+                        else if (val === "logo-design") autoBudget = 7500;
+                        else if (val === "wedding-invitation") autoBudget = 4000;
+                        else if (val === "web-development") autoBudget = 25000;
+                        else if (val === "digital-marketing") autoBudget = 12000;
+                        setPostFormData({ ...postFormData, eventType: val, budget: autoBudget });
+                      }}
                     >
-                      <option value="pre-wedding">Pre-Wedding Shoot</option>
-                      <option value="wedding">Full Wedding Ceremony</option>
-                      <option value="cinematography">Cinematography</option>
-                      <option value="commercial">Commercial / Fashion</option>
-                      <option value="portrait">Maternity / Portrait</option>
-                      <option value="event">Birthday / Event</option>
+                      <optgroup label="📷 Photography & Events">
+                        <option value="pre-wedding">Pre-Wedding Shoot (Thane / Mumbai / Lonavala)</option>
+                        <option value="wedding">Full Wedding Ceremony (Varmala, Pheras & Reception)</option>
+                        <option value="engagement">Engagement / Roka Ceremony</option>
+                        <option value="birthday">Birthday & Family Function</option>
+                        <option value="maternity">Maternity & Baby Shoot</option>
+                        <option value="portrait">Fashion & Model Portrait</option>
+                        <option value="event">Corporate / Social Event</option>
+                      </optgroup>
+                      <optgroup label="🎬 Video & Viral Reels">
+                        <option value="reel-shoot">Instagram Reel Shoot & Creative Direction</option>
+                        <option value="promotional-video">Brand Promo / Commercial Ad Video</option>
+                        <option value="music-video">Music Video Production</option>
+                        <option value="video-editing">Video & Reel Editing (DaVinci Resolve)</option>
+                        <option value="cinematography">4K Drone & Cinematic Wedding Highlights</option>
+                      </optgroup>
+                      <optgroup label="🎨 Creative Design">
+                        <option value="logo-design">Logo & Brand Identity</option>
+                        <option value="wedding-invitation">Digital Wedding Cards & Marathi Patrika</option>
+                        <option value="banner-design">Social Media Banners & Event Flex</option>
+                        <option value="branding-deck">Corporate Branding Deck</option>
+                      </optgroup>
+                      <optgroup label="💻 Digital Services">
+                        <option value="web-development">Custom Website / Web App (MERN)</option>
+                        <option value="digital-marketing">Local SEO & Google Maps #1 Ranking</option>
+                        <option value="social-media-management">Social Media Growth & Production</option>
+                      </optgroup>
+                      <optgroup label="Other">
+                        <option value="other">Custom Creative Work</option>
+                      </optgroup>
                     </select>
                   </div>
 
@@ -2883,6 +3088,155 @@ const UserDashboard = () => {
           </div>
         )}
       </AnimatePresence>
+      {/* ========================================================================= */}
+      {/* SUBMIT QUOTATION MODAL FOR PROVIDERS / CREATORS */}
+      {/* ========================================================================= */}
+      <AnimatePresence>
+        {selectedOrderToQuote && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="w-full max-w-lg bg-white dark:bg-[#171311] rounded-2xl border border-[#E2E8F0] dark:border-[#2D2825] p-6 sm:p-8 space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex items-center justify-between pb-3 border-b border-[#F1F5F9] dark:border-[#262626]">
+                <div>
+                  <h3 className="text-lg font-black text-[#1E1B4B] dark:text-white">Submit Custom Quotation</h3>
+                  <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">
+                    For: <span className="font-bold text-black dark:text-white">{selectedOrderToQuote.title}</span>
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedOrderToQuote(null)}
+                  className="h-8 w-8 rounded-lg hover:bg-[#F1F5F9] dark:hover:bg-[#221B17] flex items-center justify-center text-[#64748B]"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <form onSubmit={handleSubmitQuotation} className="space-y-4">
+                <div className="p-3 bg-[#F8FAFC] dark:bg-[#12100E] border border-brandBorder rounded-xl flex justify-between text-xs">
+                  <span className="text-[#64748B] dark:text-[#94A3B8]">Client Target Budget:</span>
+                  <span className="font-bold text-black dark:text-white">
+                    ₹{(selectedOrderToQuote.totalPrice || selectedOrderToQuote.budget || 0).toLocaleString()}
+                  </span>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                    Your Quoted Price (₹ INR)
+                  </label>
+                  <input
+                    type="number"
+                    min="500"
+                    step="500"
+                    placeholder="Enter your bid amount"
+                    value={quoteFormData.quotedPrice}
+                    onChange={(e) => setQuoteFormData({ ...quoteFormData, quotedPrice: e.target.value })}
+                    className="w-full h-11 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-sm font-black text-black dark:text-white outline-none focus:border-[#76B900]"
+                    required
+                  />
+
+                  {Number(quoteFormData.quotedPrice) > 0 && (
+                    <div className="mt-2 p-3 bg-brandSurfaceSoft/40 border border-brandBorder rounded-xl text-xs space-y-1">
+                      <div className="flex justify-between text-[#64748B]">
+                        <span>Client Pays:</span>
+                        <span className="font-bold text-black dark:text-white">₹{Number(quoteFormData.quotedPrice).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-[#94A3B8] text-[11px]">
+                        <span>CREAONNECT Facilitation (10%):</span>
+                        <span>-₹{Math.round(Number(quoteFormData.quotedPrice) * 0.10).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between font-bold border-t border-brandBorder/60 pt-1 text-[#76B900]">
+                        <span>Your Take-Home Net Payout (90%):</span>
+                        <span className="text-sm font-black">
+                          ₹{Math.max(0, Number(quoteFormData.quotedPrice) - Math.round(Number(quoteFormData.quotedPrice) * 0.10)).toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                    Deliverables & Scope
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 50 Retouched photos, 3 Cinematic reels, Raw footage"
+                    value={quoteFormData.deliverables}
+                    onChange={(e) => setQuoteFormData({ ...quoteFormData, deliverables: e.target.value })}
+                    className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-black dark:text-white outline-none focus:border-[#76B900]"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                      Gear / Equipment
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Sony FX3 + Drone"
+                      value={quoteFormData.equipment}
+                      onChange={(e) => setQuoteFormData({ ...quoteFormData, equipment: e.target.value })}
+                      className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-black dark:text-white outline-none focus:border-[#76B900]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                      Turnaround (Days)
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="30"
+                      value={quoteFormData.estimatedDays}
+                      onChange={(e) => setQuoteFormData({ ...quoteFormData, estimatedDays: e.target.value })}
+                      className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs font-bold text-black dark:text-white outline-none focus:border-[#76B900]"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                    Cover Pitch / Note to Client
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Tell the client why your style is the best match for this shoot..."
+                    value={quoteFormData.message}
+                    onChange={(e) => setQuoteFormData({ ...quoteFormData, message: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-black dark:text-white outline-none focus:border-[#76B900] resize-none"
+                  />
+                </div>
+
+                <div className="pt-2 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedOrderToQuote(null)}
+                    className="flex-1 h-11 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] text-xs font-semibold text-[#64748B] hover:bg-[#F8FAFC]"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={submittingQuote}
+                    className="flex-1 h-11 rounded bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-black shadow-sm disabled:opacity-50"
+                  >
+                    {submittingQuote ? "Submitting..." : "Send Proposal"}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
 
     </div>
   );
