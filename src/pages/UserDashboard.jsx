@@ -97,6 +97,65 @@ const OrderCountdown = ({ expiresAt, onExpired }) => {
   );
 };
 
+
+// Animated Circular Progress Gauge for Creator Quality & Trust
+const CircularTrustGauge = ({ percentage, label, color, textColor, size = "md", delay = 0 }) => {
+  const radius = size === "lg" ? 34 : 28;
+  const strokeWidth = size === "lg" ? 5 : 4;
+  const circumference = 2 * Math.PI * radius;
+  const strokeOffset = circumference - (percentage / 100) * circumference;
+  const dim = size === "lg" ? "h-24 w-24" : "h-20 w-20";
+
+  return (
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: false, amount: 0.3 }}
+      transition={{ duration: 0.6, delay }}
+      whileHover={{ scale: 1.08 }}
+      className={`relative ${dim} rounded-full flex flex-col items-center justify-center text-center p-1 cursor-default group transition-transform`}
+    >
+      <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 80 80">
+        {/* Background track */}
+        <circle
+          cx="40"
+          cy="40"
+          r={radius}
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          fill="none"
+          className="text-stone-200 dark:text-stone-800"
+        />
+        {/* Animated Progress Ring */}
+        <motion.circle
+          cx="40"
+          cy="40"
+          r={radius}
+          stroke={color}
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          initial={{ strokeDashoffset: circumference }}
+          whileInView={{ strokeDashoffset: strokeOffset }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 1.4, delay: delay + 0.1, ease: [0.16, 1, 0.3, 1] }}
+          style={{ filter: `drop-shadow(0 0 4px ${color}60)` }}
+        />
+      </svg>
+      {/* Center Values */}
+      <div className="relative z-10 flex flex-col items-center leading-tight">
+        <span className={`font-black ${size === "lg" ? "text-base" : "text-sm"} ${textColor}`}>
+          {percentage}%
+        </span>
+        <span className="text-[9px] font-semibold text-[#64748B] dark:text-neutral-300">
+          {label}
+        </span>
+      </div>
+    </motion.div>
+  );
+};
+
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -1159,42 +1218,70 @@ const UserDashboard = () => {
                   </p>
                 </div>
 
-                {/* Dynamic 12-Month Bar Chart */}
+                {/* Dynamic 12-Month Bar Chart with Live Moment & Scroll Animation */}
                 <div className="mt-8 space-y-4">
-                  <div className="h-44 flex items-end justify-between gap-2 px-2 border-b border-[#F1F5F9] dark:border-[#262626] pb-2">
+                  <div className="h-44 flex items-end justify-between gap-1.5 sm:gap-2 px-2 border-b border-[#F1F5F9] dark:border-[#262626] pb-2">
                     {barChartData.map((bar, i) => (
                       <div key={i} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group relative">
                         {/* Hover Tooltip showing exact values */}
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-10 bg-black text-white text-[10px] px-2 py-1 rounded shadow pointer-events-none whitespace-nowrap z-20 border border-[#333]">
-                          Month {bar.label}: {bar.volume > 0 ? `₹${bar.volume.toLocaleString()} (${bar.count} orders)` : "Active pipeline"}
+                        <div className="opacity-0 group-hover:opacity-100 transition-all duration-200 absolute -top-12 bg-black text-white text-[10px] px-2.5 py-1.5 rounded-lg shadow-xl pointer-events-none whitespace-nowrap z-30 border border-[#333] transform -translate-y-1 group-hover:translate-y-0">
+                          <div className="font-bold text-[#76B900]">Month {bar.label}</div>
+                          <div>{bar.volume > 0 ? `₹${bar.volume.toLocaleString()} (${bar.count} orders)` : "Active pipeline"}</div>
                         </div>
 
                         <div className="w-full flex items-end justify-center gap-1 h-full">
-                          {/* Primary bar: Take-Home (90%) */}
-                          <div
-                            style={{ height: bar.h1 }}
-                            className="w-2 sm:w-2.5 bg-[#76B900] rounded-t-sm transition-all group-hover:bg-[#68A500]"
+                          {/* Primary bar: Take-Home (90%) - Animated from height 0% on scroll/run */}
+                          <motion.div
+                            initial={{ height: "0%" }}
+                            whileInView={{ height: bar.h1 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 85,
+                              damping: 14,
+                              delay: i * 0.045
+                            }}
+                            whileHover={{ y: -4, scaleX: 1.15 }}
+                            className="w-2 sm:w-2.5 bg-[#76B900] rounded-t-sm shadow-sm transition-colors group-hover:bg-[#68A500] cursor-pointer"
                           />
-                          {/* Secondary bar: Platform Fee (10%) */}
-                          <div
-                            style={{ height: bar.h2 }}
-                            className="w-2 sm:w-2.5 bg-[#E2E8F0] dark:bg-[#333] rounded-t-sm transition-all group-hover:bg-[#CBD5E1]"
+                          {/* Secondary bar: Platform Fee (10%) - Animated */}
+                          <motion.div
+                            initial={{ height: "0%" }}
+                            whileInView={{ height: bar.h2 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 80,
+                              damping: 14,
+                              delay: (i * 0.045) + 0.07
+                            }}
+                            whileHover={{ y: -3, scaleX: 1.15 }}
+                            className="w-2 sm:w-2.5 bg-[#CBD5E1] dark:bg-[#333] rounded-t-sm transition-colors group-hover:bg-[#94A3B8] cursor-pointer"
                           />
                         </div>
-                        <span className="text-[10px] text-[#94A3B8] font-medium">{bar.label}</span>
+                        <span className="text-[10px] text-[#94A3B8] font-medium group-hover:text-black dark:group-hover:text-white transition-colors">{bar.label}</span>
                       </div>
                     ))}
                   </div>
 
-                  {/* Legend */}
-                  <div className="flex items-center gap-6 text-xs text-[#64748B] dark:text-[#94A3B8]">
-                    <div className="flex items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#76B900]" />
-                      <span>Active Orders (Take-Home Pay 90%)</span>
+                  {/* Legend with Live Animation Pulse */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[#64748B] dark:text-[#94A3B8]">
+                    <div className="flex items-center gap-6">
+                      <div className="flex items-center gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#76B900]" />
+                        <span>Active Orders (Take-Home Pay 90%)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0] dark:bg-[#333]" />
+                        <span>Platform Commission (10%)</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0] dark:bg-[#333]" />
-                      <span>Platform Commission (10%)</span>
+                    <div className="flex items-center gap-1.5 text-[10px] font-semibold text-[#76B900]">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#76B900] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#76B900]"></span>
+                      </span>
+                      <span>Live Pipeline Active</span>
                     </div>
                   </div>
                 </div>
@@ -1212,13 +1299,20 @@ const UserDashboard = () => {
                   <p className="text-[11px] text-[#94A3B8]">Calculated across {allKnownOrders.length} total active & posted shoots</p>
                 </div>
 
-                {/* Dynamic SVG Doughnut with Top Category Badge */}
+                {/* Dynamic SVG Doughnut with Animated Draw-in */}
                 <div className="my-6 relative flex items-center justify-center">
-                  <svg className="w-48 h-48 -rotate-90" viewBox="0 0 100 100">
+                  <motion.svg
+                    className="w-48 h-48 -rotate-90"
+                    viewBox="0 0 100 100"
+                    initial={{ rotate: -180, opacity: 0.6 }}
+                    whileInView={{ rotate: -90, opacity: 1 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  >
                     <circle cx="50" cy="50" r="38" stroke="#F1F5F9" strokeWidth="12" fill="none" className="dark:stroke-[#262626]" />
 
                     {doughnutSlices.map((slice, idx) => (
-                      <circle
+                      <motion.circle
                         key={idx}
                         cx="50"
                         cy="50"
@@ -1226,20 +1320,38 @@ const UserDashboard = () => {
                         stroke={slice.color}
                         strokeWidth="12"
                         strokeDasharray={slice.dashArray}
-                        strokeDashoffset={slice.dashOffset}
                         fill="none"
                         strokeLinecap="round"
-                        className="transition-all duration-700"
+                        initial={{ strokeDashoffset: 239 }}
+                        whileInView={{ strokeDashoffset: slice.dashOffset }}
+                        viewport={{ once: false, amount: 0.3 }}
+                        transition={{
+                          duration: 1.3,
+                          delay: idx * 0.15,
+                          ease: [0.16, 1, 0.3, 1]
+                        }}
+                        className="transition-all hover:stroke-[14] cursor-pointer"
+                        style={{ filter: `drop-shadow(0 0 3px ${slice.color}50)` }}
                       />
                     ))}
-                  </svg>
+                  </motion.svg>
 
-                  {/* Dynamic Top Category floating badge */}
-                  <div className="absolute -top-1 -right-2 bg-black text-white p-2.5 rounded-xl shadow-lg text-[11px] z-10 border border-[#333]">
+                  {/* Dynamic Top Category floating badge with animated breathing float */}
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0, y: 10 }}
+                    whileInView={{ scale: 1, opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{
+                      y: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+                      scale: { type: "spring", stiffness: 260, damping: 20, delay: 0.4 }
+                    }}
+                    className="absolute -top-1 -right-2 bg-black text-white p-2.5 rounded-xl shadow-xl text-[11px] z-10 border border-[#333]"
+                  >
                     <div className="text-[#94A3B8] text-[9px] uppercase tracking-wider">Top Category</div>
                     <div className="font-bold">{topCategory.label}</div>
                     <div className="font-extrabold text-[#76B900] text-xs">{topCategory.percentage}% of Shoots</div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Dynamic Category Breakdown legend */}
@@ -1258,11 +1370,16 @@ const UserDashboard = () => {
 
             </div>
 
-            {/* ROW 2: 4 QUICK-STAT KPI TILES WITH DYNAMIC COUNTS */}
+            {/* ROW 2: 4 QUICK-STAT KPI TILES WITH ANIMATED ENTRANCE & HOVER */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setActiveMenu("marketplace")}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.45, delay: 0.05 }}
+                whileHover={{ y: -3 }}
                 className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] text-left hover:border-[#76B900]/70 transition-all shadow-sm group"
               >
                 <div className="flex items-center justify-between">
@@ -1274,11 +1391,16 @@ const UserDashboard = () => {
                   <span>Available to claim</span>
                   <ArrowRight size={11} />
                 </div>
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setActiveMenu("my-gigs")}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.45, delay: 0.12 }}
+                whileHover={{ y: -3 }}
                 className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] text-left hover:border-[#76B900]/70 transition-all shadow-sm group"
               >
                 <div className="flex items-center justify-between">
@@ -1289,12 +1411,17 @@ const UserDashboard = () => {
                 <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8] font-bold mt-0.5">
                   {activeClaimed.length} Active • {completedClaimed.length} Done
                 </div>
-              </button>
+              </motion.button>
 
               {user?.role === "admin" ? (
-                <button
+                <motion.button
                   type="button"
                   onClick={() => handleSwitchMode("client")}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: 0.19 }}
+                  whileHover={{ y: -3 }}
                   className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] text-left hover:border-[#76B900]/70 transition-all shadow-sm group"
                 >
                   <div className="flex items-center justify-between">
@@ -1306,9 +1433,15 @@ const UserDashboard = () => {
                     <span>Switch to Client Mode</span>
                     <ArrowRight size={11} />
                   </div>
-                </button>
+                </motion.button>
               ) : (
-                <div className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] text-left shadow-sm">
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: 0.19 }}
+                  className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] text-left shadow-sm"
+                >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-[#64748B] dark:text-[#94A3B8]">Escrow In-Progress</span>
                     <ShieldCheck size={18} className="text-[#76B900]" />
@@ -1317,12 +1450,17 @@ const UserDashboard = () => {
                   <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8] font-bold mt-0.5">
                     Secured for active shoots
                   </div>
-                </div>
+                </motion.div>
               )}
 
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setActiveMenu("earnings")}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.45, delay: 0.26 }}
+                whileHover={{ y: -3 }}
                 className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] text-left hover:border-[#76B900]/70 transition-all shadow-sm group"
               >
                 <div className="flex items-center justify-between">
@@ -1333,8 +1471,10 @@ const UserDashboard = () => {
                 <div className="text-[11px] text-[#76B900] font-bold mt-0.5">
                   Instant UPI withdrawal
                 </div>
-              </button>
+              </motion.button>
             </div>
+
+            
 
             {/* ROW 3: REVIEWS/TRUST, POPULAR SHOOTS, PLATFORM ORDERS */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1349,20 +1489,30 @@ const UserDashboard = () => {
                 </div>
 
                 <div className="my-6 flex items-center justify-center gap-3">
-                  <div className="h-20 w-20 rounded-full bg-[#818CF8]/15 border-2 border-[#6366F1] flex flex-col items-center justify-center text-center p-1">
-                    <span className="font-extrabold text-sm text-[#4F46E5] dark:text-indigo-400">98%</span>
-                    <span className="text-[9px] font-semibold text-[#64748B] dark:text-neutral-300">Delivery</span>
-                  </div>
-
-                  <div className="h-24 w-24 rounded-full bg-[#FB923C]/15 border-2 border-[#F97316] flex flex-col items-center justify-center text-center p-1 shadow-sm">
-                    <span className="font-extrabold text-base text-[#EA580C] dark:text-orange-400">95%</span>
-                    <span className="text-[10px] font-semibold text-[#64748B] dark:text-neutral-300">Client Trust</span>
-                  </div>
-
-                  <div className="h-20 w-20 rounded-full bg-[#2DD4BF]/15 border-2 border-[#0D9488] flex flex-col items-center justify-center text-center p-1">
-                    <span className="font-extrabold text-sm text-[#0D9488] dark:text-teal-400">94%</span>
-                    <span className="text-[9px] font-semibold text-[#64748B] dark:text-neutral-300">Gear Score</span>
-                  </div>
+                  <CircularTrustGauge
+                    percentage={98}
+                    label="Delivery"
+                    color="#6366F1"
+                    textColor="text-[#4F46E5] dark:text-indigo-400"
+                    size="md"
+                    delay={0}
+                  />
+                  <CircularTrustGauge
+                    percentage={95}
+                    label="Client Trust"
+                    color="#F97316"
+                    textColor="text-[#EA580C] dark:text-orange-400"
+                    size="lg"
+                    delay={0.15}
+                  />
+                  <CircularTrustGauge
+                    percentage={94}
+                    label="Gear Score"
+                    color="#0D9488"
+                    textColor="text-[#0D9488] dark:text-teal-400"
+                    size="md"
+                    delay={0.3}
+                  />
                 </div>
 
                 <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8] text-center border-t border-[#F1F5F9] dark:border-[#262626] pt-3">
@@ -1426,24 +1576,74 @@ const UserDashboard = () => {
                   <p className="text-[11px] text-[#94A3B8]">Orders in circulation across creators</p>
                 </div>
 
-                {/* Trend Line SVG */}
-                <div className="my-6">
-                  <svg className="w-full h-20" viewBox="0 0 200 60">
-                    <path
+                {/* Trend Line SVG with Animated Draw-in, Gradient Area Glow & Pulsing Radar Dot */}
+                <div className="my-6 relative">
+                  <svg className="w-full h-20 overflow-visible" viewBox="0 0 200 60">
+                    <defs>
+                      <linearGradient id="trendGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#76B900" stopOpacity="0.32" />
+                        <stop offset="100%" stopColor="#76B900" stopOpacity="0.0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Area fill under curve that fades in smoothly */}
+                    <motion.path
+                      d="M 0 45 Q 30 50, 60 25 T 120 30 T 160 15 T 200 50 L 200 58 L 0 58 Z"
+                      fill="url(#trendGradient)"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: false, amount: 0.3 }}
+                      transition={{ duration: 1.2, delay: 0.3 }}
+                    />
+
+                    {/* Base dotted reference line */}
+                    <line x1="0" y1="58" x2="200" y2="58" stroke="#F1F5F9" strokeDasharray="3 3" className="dark:stroke-[#262626]" />
+
+                    {/* Animated primary trend line */}
+                    <motion.path
                       d="M 0 45 Q 30 50, 60 25 T 120 30 T 160 15 T 200 50"
                       fill="none"
                       stroke="#76B900"
                       strokeWidth="2.5"
                       strokeLinecap="round"
+                      initial={{ pathLength: 0 }}
+                      whileInView={{ pathLength: 1 }}
+                      viewport={{ once: false, amount: 0.3 }}
+                      transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ filter: "drop-shadow(0 2px 6px rgba(118, 185, 0, 0.35))" }}
                     />
-                    <line x1="0" y1="58" x2="200" y2="58" stroke="#F1F5F9" strokeDasharray="3 3" className="dark:stroke-[#262626]" />
+
+                    {/* Expanding radar pulse wave at peak (W5: X=160, Y=15) */}
+                    <motion.circle
+                      cx="160"
+                      cy="15"
+                      r="8"
+                      fill="none"
+                      stroke="#76B900"
+                      strokeWidth="1.5"
+                      animate={{ scale: [1, 2.3], opacity: [0.85, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                    />
+
+                    {/* Center solid glowing point at peak */}
+                    <motion.circle
+                      cx="160"
+                      cy="15"
+                      r="4"
+                      fill="#76B900"
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: false, amount: 0.3 }}
+                      transition={{ delay: 0.8, type: "spring", stiffness: 300, damping: 15 }}
+                      style={{ filter: "drop-shadow(0 0 6px #76B900)" }}
+                    />
                   </svg>
-                  <div className="flex justify-between text-[10px] text-[#94A3B8] px-1">
+                  <div className="flex justify-between text-[10px] text-[#94A3B8] px-1 mt-1">
                     <span>W1</span>
                     <span>W2</span>
                     <span>W3</span>
                     <span>W4</span>
-                    <span>W5</span>
+                    <span className="text-[#76B900] font-bold">W5 (Peak)</span>
                     <span>W6</span>
                   </div>
                 </div>
