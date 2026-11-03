@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
@@ -40,9 +40,19 @@ import {
   ArrowRight,
   Receipt,
   FileText,
-  Lock
+  Lock,
+  Users,
+  Inbox,
+  ListTodo,
+  FileCode,
+  Trash2,
+  UserPlus,
+  Sliders,
+  Paperclip,
+  ExternalLink
 } from "lucide-react";
-import { bookingService, authService } from "../services";
+import { bookingService, authService, leadService, taskService } from "../services";
+import AdminWorkspaceContent from "../components/AdminWorkspaceContent";
 import ThemeToggle from "../components/ThemeToggle";
 
 // Helper component for live real-time countdown timer
@@ -158,6 +168,7 @@ const CircularTrustGauge = ({ percentage, label, color, textColor, size = "md", 
 
 const UserDashboard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState(null);
 
   // Active Perspective Mode: "creator" (Earn Money) vs "client" (Book Shoots)
@@ -229,6 +240,252 @@ const UserDashboard = () => {
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawing, setWithdrawing] = useState(false);
 
+  // Admin Data states
+  const [adminBookings, setAdminBookings] = useState([]);
+  const [adminLeads, setAdminLeads] = useState([]);
+  const [adminStaff, setAdminStaff] = useState([]);
+  const [adminTasks, setAdminTasks] = useState([]);
+  const [adminMarketplaceStats, setAdminMarketplaceStats] = useState({
+    totalOrders: 0,
+    confirmedOrders: 0,
+    completedOrders: 0,
+    openOrders: 0,
+    financials: { grossMerchandiseValue: 0, totalPlatformCommission: 0, totalCreatorPayouts: 0 }
+  });
+  const [adminStats, setAdminStats] = useState({
+    bookings: { total: 0, confirmed: 0, pending: 0 },
+    leads: { total: 0, new: 0 },
+    tasks: { total: 0, todo: 0, in_progress: 0, completed: 0 }
+  });
+  const [loadingAdminData, setLoadingAdminData] = useState(false);
+
+  // Admin New Staff Form State
+  const [newStaff, setNewStaff] = useState({ name: "", email: "", password: "" });
+  const [regError, setRegError] = useState("");
+  const [regSuccess, setRegSuccess] = useState("");
+  const [registeringStaff, setRegisteringStaff] = useState(false);
+
+  // Admin New Task Form State
+  const [newTask, setNewTask] = useState({
+    title: "",
+    description: "",
+    priority: "medium",
+    assignedTo: "",
+    dueDate: ""
+  });
+  const [selectedTaskFiles, setSelectedTaskFiles] = useState([]);
+  const [taskError, setTaskError] = useState("");
+  const [taskSuccess, setTaskSuccess] = useState("");
+  const [creatingTask, setCreatingTask] = useState(false);
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  };
+
+  const loadAdminData = async () => {
+    setLoadingAdminData(true);
+    try {
+      const [bookingsRes, leadsRes, staffRes, tasksRes, mktRes] = await Promise.allSettled([
+        bookingService.getAllBookings({ limit: 100 }),
+        leadService.getAllLeads({ limit: 100 }),
+        authService.getAllUsers(),
+        taskService.getAllTasks(),
+        bookingService.getMarketplaceStats()
+      ]);
+
+      const bList = bookingsRes.status === "fulfilled" ? (bookingsRes.value?.data?.bookings || []) : [];
+      const lList = leadsRes.status === "fulfilled" ? (leadsRes.value?.data?.leads || []) : [];
+      const sList = staffRes.status === "fulfilled" ? (staffRes.value?.data || []) : [];
+      const tList = tasksRes.status === "fulfilled" ? (tasksRes.value?.data || []) : [];
+      const mStats = mktRes.status === "fulfilled" ? (mktRes.value?.data || {}) : {};
+
+      setAdminBookings(bList);
+      setAdminLeads(lList);
+      setAdminStaff(sList);
+      setAdminTasks(tList);
+      if (mStats && mStats.totalOrders !== undefined) {
+        setAdminMarketplaceStats(mStats);
+      }
+
+      setAdminStats({
+        bookings: {
+          total: bList.length,
+          confirmed: bList.filter(b => b.status === "confirmed").length,
+          pending: bList.filter(b => b.status === "pending").length
+        },
+        leads: {
+          total: lList.length,
+          new: lList.filter(l => l.status === "new").length
+        },
+        tasks: {
+          total: tList.length,
+          todo: tList.filter(t => t.status === "todo").length,
+          in_progress: tList.filter(t => t.status === "in_progress").length,
+          completed: tList.filter(t => t.status === "completed").length
+        }
+      });
+    } catch (e) {
+      console.warn("Failed to load admin data:", e);
+    } finally {
+      setLoadingAdminData(false);
+    }
+  };
+
+  const handleAssignBooking = async (bookingId, userId) => {
+    try {
+      await bookingService.updateBooking(bookingId, { assignedTo: userId || null });
+      setAdminBookings(prev => prev.map(b => {
+        if (b._id === bookingId) {
+          const assignedUser = adminStaff.find(s => s._id === userId);
+          return { ...b, assignedTo: assignedUser ? { _id: userId, name: assignedUser.name, email: assignedUser.email } : null };
+        }
+        return b;
+      }));
+      setSuccessMsg("Booking staff assignment updated.");
+    } catch {
+      setError("Failed to assign staff to booking.");
+    }
+  };
+
+  const handleUpdateBookingStatus = async (bookingId, status) => {
+    try {
+      await bookingService.updateBookingStatus(bookingId, status);
+      setAdminBookings(prev => prev.map(b => b._id === bookingId ? { ...b, status } : b));
+      setSuccessMsg(`Booking status updated to ${status}.`);
+    } catch {
+      setError("Failed to update booking status.");
+    }
+  };
+
+  const handleAssignLead = async (leadId, userId) => {
+    try {
+      await leadService.updateLead(leadId, { assignedTo: userId || null });
+      setAdminLeads(prev => prev.map(l => {
+        if (l._id === leadId) {
+          const assignedUser = adminStaff.find(s => s._id === userId);
+          return { ...l, assignedTo: assignedUser ? { _id: userId, name: assignedUser.name, email: assignedUser.email } : null };
+        }
+        return l;
+      }));
+      setSuccessMsg("Enquiry assigned successfully.");
+    } catch {
+      setError("Failed to assign lead.");
+    }
+  };
+
+  const handleUpdateLeadStatus = async (leadId, status) => {
+    try {
+      await leadService.updateLeadStatus(leadId, status);
+      setAdminLeads(prev => prev.map(l => l._id === leadId ? { ...l, status } : l));
+      setSuccessMsg(`Enquiry marked as ${status}.`);
+    } catch {
+      setError("Failed to update enquiry status.");
+    }
+  };
+
+  const handleCreateTask = async (e) => {
+    e.preventDefault();
+    setTaskError("");
+    setTaskSuccess("");
+    setCreatingTask(true);
+    if (!newTask.title.trim()) {
+      setTaskError("Task title is required.");
+      setCreatingTask(false);
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append("title", newTask.title);
+      formData.append("description", newTask.description);
+      formData.append("priority", newTask.priority);
+      if (newTask.assignedTo) formData.append("assignedTo", newTask.assignedTo);
+      if (newTask.dueDate) formData.append("dueDate", newTask.dueDate);
+      selectedTaskFiles.forEach((f) => formData.append("attachments", f));
+
+      await taskService.createTask(formData);
+      setTaskSuccess("New task created successfully!");
+      setNewTask({ title: "", description: "", priority: "medium", assignedTo: "", dueDate: "" });
+      setSelectedTaskFiles([]);
+      loadAdminData();
+    } catch {
+      setTaskError("Failed to create task.");
+    } finally {
+      setCreatingTask(false);
+    }
+  };
+
+  const handleUpdateTaskStatus = async (taskId, status) => {
+    try {
+      await taskService.updateTask(taskId, { status });
+      setAdminTasks(prev => prev.map(t => t._id === taskId ? { ...t, status } : t));
+      setSuccessMsg("Task status updated.");
+    } catch {
+      setError("Failed to update task status.");
+    }
+  };
+
+  const handleAssignTask = async (taskId, userId) => {
+    try {
+      await taskService.updateTask(taskId, { assignedTo: userId || null });
+      setAdminTasks(prev => prev.map(t => {
+        if (t._id === taskId) {
+          const assignedUser = adminStaff.find(s => s._id === userId);
+          return { ...t, assignedTo: assignedUser ? { _id: userId, name: assignedUser.name, email: assignedUser.email } : null };
+        }
+        return b;
+      }));
+      setSuccessMsg("Task assignment updated.");
+    } catch {
+      setError("Failed to assign task.");
+    }
+  };
+
+  const handleDeleteTask = async (taskId) => {
+    if (!window.confirm("Delete this development task?")) return;
+    try {
+      await taskService.deleteTask(taskId);
+      setAdminTasks(prev => prev.filter(t => t._id !== taskId));
+      setSuccessMsg("Task removed.");
+    } catch {
+      setError("Failed to delete task.");
+    }
+  };
+
+  const handleRegisterStaff = async (e) => {
+    e.preventDefault();
+    setRegError("");
+    setRegSuccess("");
+    setRegisteringStaff(true);
+    try {
+      await authService.register(newStaff);
+      setRegSuccess("Staff member added successfully!");
+      setNewStaff({ name: "", email: "", password: "" });
+      const staffRes = await authService.getAllUsers();
+      setAdminStaff(staffRes?.data || []);
+    } catch (err) {
+      setRegError(err.response?.data?.message || "Failed to register staff.");
+    } finally {
+      setRegisteringStaff(false);
+    }
+  };
+
+  const handleDeleteStaff = async (staffId) => {
+    if (!window.confirm("Remove this staff member?")) return;
+    try {
+      await authService.deleteUser(staffId);
+      setAdminStaff(prev => prev.filter(s => s._id !== staffId));
+      setSuccessMsg("Staff member removed.");
+    } catch {
+      setError("Failed to remove staff member.");
+    }
+  };
+
   // Authentication check & Initial Mode setup
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -243,26 +500,63 @@ const UserDashboard = () => {
       const parsedUser = JSON.parse(userStr);
       setUser(parsedUser);
 
-      // Auto-set mode according to user role
-      if (parsedUser.role === "client") {
+      // Set initial mode
+      const params = new URLSearchParams(window.location.search);
+      const urlMode = params.get("mode");
+
+      if (urlMode === "admin" || (parsedUser.role === "admin" && !urlMode)) {
+        setDashboardMode("admin");
+        setActiveMenu("admin-overview");
+        loadAdminData();
+      } else if (urlMode === "client" || urlMode === "customer") {
+        setDashboardMode("client");
+        setActiveMenu("client-dashboard");
+      } else if (urlMode === "creator") {
+        setDashboardMode("creator");
+        setActiveMenu("dashboard");
+      } else if (parsedUser.role === "client") {
         setDashboardMode("client");
         setActiveMenu("client-dashboard");
       } else {
         setDashboardMode("creator");
         setActiveMenu("dashboard");
       }
+
+      if (parsedUser.role === "admin") {
+        loadAdminData();
+      }
     } catch {
       navigate("/login");
     }
   }, [navigate]);
 
-  // Mode Switcher Handler (Strictly restricted to admin)
+  // React to URL query search params (?mode=admin / client / creator)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const urlMode = params.get("mode");
+    if (urlMode === "admin") {
+      setDashboardMode("admin");
+      setActiveMenu("admin-overview");
+      loadAdminData();
+    } else if (urlMode === "client" || urlMode === "customer") {
+      setDashboardMode("client");
+      setActiveMenu("client-dashboard");
+    } else if (urlMode === "creator") {
+      setDashboardMode("creator");
+      setActiveMenu("dashboard");
+    }
+  }, [location.search]);
+
+  // Mode Switcher Handler (Unified across Admin, Client, and Creator)
   const handleSwitchMode = (mode) => {
     if (user?.role && user.role !== "admin") {
       return;
     }
     setDashboardMode(mode);
-    if (mode === "client") {
+    if (mode === "admin") {
+      setActiveMenu("admin-overview");
+      loadAdminData();
+    } else if (mode === "client") {
       setActiveMenu("client-dashboard");
     } else {
       setActiveMenu("dashboard");
@@ -700,7 +994,7 @@ const UserDashboard = () => {
               <div className="flex flex-col text-left leading-tight">
                 <span className="font-extrabold text-base tracking-tight text-black dark:text-white">CREAONNECT</span>
                 <span className="block text-[10px] uppercase tracking-wider text-[#76B900] font-bold">
-                  {dashboardMode === "creator" ? "Creator Hub" : "Client Portal"}
+                  {dashboardMode === "admin" ? "Admin Workspace" : dashboardMode === "creator" ? "Creator Hub" : "Client Portal"}
                 </span>
               </div>
             </Link>
@@ -715,31 +1009,49 @@ const UserDashboard = () => {
 
           {/* Quick Mode Toggle inside Sidebar: Admin Only Switcher or Non-Admin Role Badge */}
           {user?.role === "admin" ? (
-            <div className="px-4 pt-4">
-              <div className="flex rounded-xl bg-[#F1F5F9] dark:bg-[#1A1614] p-1 border border-[#E2E8F0] dark:border-[#2D2825]">
+            <div className="px-4 pt-4 space-y-2">
+              <div className="text-[10px] uppercase font-bold tracking-wider text-[#94A3B8]">
+                Switch Workspace
+              </div>
+              <div className="grid grid-cols-3 gap-1 rounded-xl bg-[#F1F5F9] dark:bg-[#1A1614] p-1 border border-[#E2E8F0] dark:border-[#2D2825]">
                 <button
                   type="button"
-                  onClick={() => handleSwitchMode("creator")}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
-                    dashboardMode === "creator"
+                  onClick={() => handleSwitchMode("admin")}
+                  className={`flex items-center justify-center gap-1 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+                    dashboardMode === "admin"
                       ? "bg-[#76B900] text-black shadow-sm"
-                      : "text-[#64748B] dark:text-[#94A3B8]"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white"
                   }`}
+                  title="Switch to Admin Workspace"
                 >
-                  <Camera size={12} />
-                  <span>Creator</span>
+                  <ShieldCheck size={12} />
+                  <span>Admin</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => handleSwitchMode("client")}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+                  className={`flex items-center justify-center gap-1 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
                     dashboardMode === "client"
-                      ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
-                      : "text-[#64748B] dark:text-[#94A3B8]"
+                      ? "bg-[#76B900] text-black shadow-sm"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white"
                   }`}
+                  title="Switch to Client & Customer Dashboard"
                 >
                   <Briefcase size={12} />
                   <span>Client</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSwitchMode("creator")}
+                  className={`flex items-center justify-center gap-1 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+                    dashboardMode === "creator"
+                      ? "bg-[#76B900] text-black shadow-sm"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white"
+                  }`}
+                  title="Switch to Creator Hub Dashboard"
+                >
+                  <Camera size={12} />
+                  <span>Creator</span>
                 </button>
               </div>
             </div>
@@ -763,6 +1075,138 @@ const UserDashboard = () => {
 
           {/* Navigation Section */}
           <div className="px-4 py-4 space-y-6">
+
+            {/* ==================================================== */}
+            {/* 0) ADMIN WORKSPACE SIDEBAR NAVIGATION */}
+            {/* ==================================================== */}
+            {dashboardMode === "admin" && (
+              <div className="space-y-1">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] px-3 py-1">
+                  Admin Master Menu
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveMenu("admin-overview")}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    activeMenu === "admin-overview"
+                      ? "bg-[#76B900]/15 text-[#76B900] border border-[#76B900]/30"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F1F5F9] dark:hover:bg-[#1A1614] hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <LayoutDashboard size={15} />
+                    <span>Overview</span>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveMenu("admin-bookings")}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    activeMenu === "admin-bookings"
+                      ? "bg-[#76B900]/15 text-[#76B900] border border-[#76B900]/30"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F1F5F9] dark:hover:bg-[#1A1614] hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Calendar size={15} />
+                    <span>Bookings List</span>
+                  </div>
+                  {adminBookings.length > 0 && (
+                    <span className="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#76B900] text-black">
+                      {adminBookings.length}
+                    </span>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveMenu("admin-leads")}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    activeMenu === "admin-leads"
+                      ? "bg-[#76B900]/15 text-[#76B900] border border-[#76B900]/30"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F1F5F9] dark:hover:bg-[#1A1614] hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Inbox size={15} />
+                    <span>Customer Enquiries</span>
+                  </div>
+                  {adminStats.leads.new > 0 && (
+                    <span className="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500 text-black">
+                      {adminStats.leads.new}
+                    </span>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveMenu("admin-tasks")}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    activeMenu === "admin-tasks"
+                      ? "bg-[#76B900]/15 text-[#76B900] border border-[#76B900]/30"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F1F5F9] dark:hover:bg-[#1A1614] hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <FileCode size={15} />
+                    <span>Website Tasks</span>
+                  </div>
+                  {adminTasks.length > 0 && (
+                    <span className="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#333] text-white">
+                      {adminTasks.length}
+                    </span>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveMenu("admin-staff")}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    activeMenu === "admin-staff"
+                      ? "bg-[#76B900]/15 text-[#76B900] border border-[#76B900]/30"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F1F5F9] dark:hover:bg-[#1A1614] hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Users size={15} />
+                    <span>Staff Directory</span>
+                  </div>
+                  <span className="text-[10px] text-[#94A3B8]">{adminStaff.length}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveMenu("admin-cms")}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    activeMenu === "admin-cms"
+                      ? "bg-[#76B900]/15 text-[#76B900] border border-[#76B900]/30"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F1F5F9] dark:hover:bg-[#1A1614] hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Sliders size={15} />
+                    <span>Website CMS & Media</span>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveMenu("admin-marketplace")}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    activeMenu === "admin-marketplace"
+                      ? "bg-[#76B900]/15 text-[#76B900] border border-[#76B900]/30"
+                      : "text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F1F5F9] dark:hover:bg-[#1A1614] hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <ShoppingBag size={15} />
+                    <span>Marketplace Monitor</span>
+                  </div>
+                  <span className="text-[10px] text-[#76B900] font-bold">10% Fee</span>
+                </button>
+              </div>
+            )}
 
             {/* ==================================================== */}
             {/* A) CREATOR MODE SIDEBAR NAVIGATION (EARN MONEY) */}
@@ -1001,7 +1445,9 @@ const UserDashboard = () => {
             <div className="truncate flex-1">
               <div className="text-xs font-bold text-[#1E293B] dark:text-white truncate">{user?.name || "User"}</div>
               <div className="text-[10px] text-[#76B900] font-bold capitalize truncate">
-                {dashboardMode === "creator" ? "Photographer / Creator" : "Client / Booking"}
+                {user?.role === "admin"
+                  ? `Admin • ${dashboardMode === "admin" ? "Master Control" : dashboardMode === "creator" ? "Creator View" : "Client View"}`
+                  : (dashboardMode === "creator" ? "Photographer / Creator" : "Client / Booking")}
               </div>
             </div>
           </div>
@@ -1014,8 +1460,8 @@ const UserDashboard = () => {
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-[#F8F9FD] dark:bg-[#0C0A09]">
 
         {/* Top Header Bar */}
-        <header className="h-20 bg-white dark:bg-[#12100E] border-b border-[#E2E8F0] dark:border-[#262626] px-4 md:px-8 flex items-center justify-between sticky top-0 z-20 shrink-0">
-          <div className="flex items-center gap-3 w-full max-w-md">
+        <header className="h-20 bg-white dark:bg-[#12100E] border-b border-[#E2E8F0] dark:border-[#262626] px-4 md:px-8 flex items-center justify-between gap-4 lg:gap-6 sticky top-0 z-20 shrink-0">
+          <div className="flex items-center gap-3 w-full max-w-[260px] lg:max-w-xs shrink-1">
             {/* Mobile Hamburger toggle */}
             <button
               type="button"
@@ -1051,30 +1497,45 @@ const UserDashboard = () => {
 
           {/* Center Cluster: Desktop Mode Switcher (Admin Only) or Role Indicator */}
           {user?.role === "admin" ? (
-            <div className="hidden xl:flex items-center rounded-xl bg-[#F1F5F9] dark:bg-[#1A1614] p-1 border border-[#E2E8F0] dark:border-[#2D2825]">
+            <div className="hidden md:flex items-center gap-1 shrink-0 rounded-xl bg-[#F1F5F9] dark:bg-[#1A1614] p-1 border border-[#E2E8F0] dark:border-[#2D2825] shadow-sm">
               <button
                 type="button"
-                onClick={() => handleSwitchMode("creator")}
+                onClick={() => handleSwitchMode("admin")}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  dashboardMode === "creator"
+                  dashboardMode === "admin"
                     ? "bg-[#76B900] text-black shadow-sm"
-                    : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white"
+                    : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                 }`}
+                title="Switch to Admin Workspace"
               >
-                <Camera size={13} />
-                <span>Creator Hub</span>
+                <ShieldCheck size={13} className={dashboardMode === "admin" ? "text-black" : "text-[#76B900]"} />
+                <span>Admin Workspace</span>
               </button>
               <button
                 type="button"
                 onClick={() => handleSwitchMode("client")}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   dashboardMode === "client"
-                    ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
-                    : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white"
+                    ? "bg-[#76B900] text-black shadow-sm"
+                    : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                 }`}
+                title="Switch to Client & Customer Dashboard"
               >
                 <Briefcase size={13} />
-                <span>Client Portal</span>
+                <span>Client & Customer</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSwitchMode("creator")}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  dashboardMode === "creator"
+                    ? "bg-[#76B900] text-black shadow-sm"
+                    : "text-[#64748B] dark:text-[#94A3B8] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                }`}
+                title="Switch to Creator Hub Dashboard"
+              >
+                <Camera size={13} />
+                <span>Creator Hub</span>
               </button>
             </div>
           ) : (
@@ -1096,7 +1557,7 @@ const UserDashboard = () => {
           )}
 
           {/* Right cluster: User Profile + Notifications + Theme Toggle */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Quick Visit Website */}
             <Link
               to="/"
@@ -1129,7 +1590,9 @@ const UserDashboard = () => {
               <div className="hidden lg:block text-left">
                 <div className="text-xs font-bold text-black dark:text-white">{user?.name || "User"}</div>
                 <div className="text-[10px] text-[#76B900] font-bold capitalize">
-                  {dashboardMode === "creator" ? "Creator Hub" : "Client Portal"}
+                  {user?.role === "admin"
+                    ? `Admin • ${dashboardMode === "admin" ? "Workspace" : dashboardMode === "creator" ? "Creator Hub" : "Client View"}`
+                    : (dashboardMode === "creator" ? "Creator Hub" : "Client Portal")}
                 </div>
               </div>
               <ChevronDown size={14} className="text-[#94A3B8] hidden sm:block" />
@@ -1156,6 +1619,46 @@ const UserDashboard = () => {
             </div>
             <button type="button" onClick={() => setError("")} className="hover:text-rose-950 dark:hover:text-white font-bold">✕</button>
           </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* VIEW 0: ADMIN WORKSPACE CONTENT (dashboardMode === "admin") */}
+        {/* ========================================================================= */}
+        {dashboardMode === "admin" && (
+          <AdminWorkspaceContent
+            activeMenu={activeMenu}
+            setActiveMenu={setActiveMenu}
+            adminStats={adminStats}
+            adminBookings={adminBookings}
+            adminLeads={adminLeads}
+            adminStaff={adminStaff}
+            adminTasks={adminTasks}
+            adminMarketplaceStats={adminMarketplaceStats}
+            loadingAdminData={loadingAdminData}
+            formatDate={formatDate}
+            handleAssignBooking={handleAssignBooking}
+            handleUpdateBookingStatus={handleUpdateBookingStatus}
+            handleAssignLead={handleAssignLead}
+            handleUpdateLeadStatus={handleUpdateLeadStatus}
+            handleCreateTask={handleCreateTask}
+            handleUpdateTaskStatus={handleUpdateTaskStatus}
+            handleAssignTask={handleAssignTask}
+            handleDeleteTask={handleDeleteTask}
+            handleRegisterStaff={handleRegisterStaff}
+            handleDeleteStaff={handleDeleteStaff}
+            newTask={newTask}
+            setNewTask={setNewTask}
+            selectedTaskFiles={selectedTaskFiles}
+            setSelectedTaskFiles={setSelectedTaskFiles}
+            creatingTask={creatingTask}
+            taskError={taskError}
+            taskSuccess={taskSuccess}
+            newStaff={newStaff}
+            setNewStaff={setNewStaff}
+            registeringStaff={registeringStaff}
+            regError={regError}
+            regSuccess={regSuccess}
+          />
         )}
 
         {/* ========================================================================= */}

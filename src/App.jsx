@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SEOHead from "./components/SEOHead";
@@ -159,7 +159,7 @@ const AppContent = () => {
 
   const seoConfig = getSEOConfig(location.pathname);
 
-  const isDashboardRoute = location.pathname.startsWith("/dashboard") || location.pathname.startsWith("/gigs");
+  const isDashboardRoute = location.pathname.startsWith("/dashboard") || location.pathname.startsWith("/gigs") || location.pathname.startsWith("/admin");
 
   return (
     <>
@@ -177,7 +177,7 @@ const AppContent = () => {
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin" element={<Navigate to="/dashboard?mode=admin" replace />} />
               <Route path="/dashboard" element={<UserDashboard />} />
               <Route path="/gigs" element={<UserDashboard />} />
             </Routes>

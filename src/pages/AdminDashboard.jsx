@@ -410,7 +410,7 @@ const AdminDashboard = () => {
 
           <div className="flex flex-wrap items-center gap-3">
             {/* 3-Way Unified Workspace Switcher */}
-            <div className="flex items-center rounded-xl bg-brandSurface p-1 border border-brandBorder shadow-sm">
+            <div className="flex items-center gap-1 rounded-xl bg-brandSurface p-1 border border-brandBorder shadow-sm">
               <button
                 type="button"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-[#76B900] text-black shadow-sm"
