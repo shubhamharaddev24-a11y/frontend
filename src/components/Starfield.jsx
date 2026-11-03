@@ -33,8 +33,8 @@ const Starfield = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
 
-    // Generate stars with snap-back coordinates
-    const numStars = Math.floor((width * height) / 10000); // Slightly reduced density to accommodate links cleanly
+    // Generate stars with snap-back coordinates (Optimized for 60fps)
+    const numStars = Math.min(65, Math.floor((width * height) / 25000));
     const stars = [];
 
     for (let i = 0; i < numStars; i++) {
@@ -57,8 +57,7 @@ const Starfield = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
       
-      // Regenerate stars for new dimensions
-      const newNumStars = Math.floor((width * height) / 10000);
+      const newNumStars = Math.min(65, Math.floor((width * height) / 25000));
       stars.length = 0;
       for (let i = 0; i < newNumStars; i++) {
         const x = Math.random() * width;
@@ -78,24 +77,21 @@ const Starfield = () => {
 
     window.addEventListener('resize', resize);
 
+    // Detect active scrolling to pause heavy constellation lines during scroll
+    let isScrolling = false;
+    let scrollTimeout;
+    const handleScroll = () => {
+      isScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 100);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     // Render loop
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-
-      // Soft nebula background dust glow
-      const grad = ctx.createRadialGradient(
-        width / 2,
-        height / 4,
-        0,
-        width / 2,
-        height / 4,
-        Math.max(width, height) * 0.7
-      );
-      grad.addColorStop(0, 'rgba(255, 122, 24, 0.025)');
-      grad.addColorStop(0.5, 'rgba(15, 15, 17, 0)');
-      grad.addColorStop(1, 'rgba(7, 7, 8, 0)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
 
       // Draw and position stars
       for (let i = 0; i < stars.length; i++) {
@@ -133,32 +129,36 @@ const Starfield = () => {
         ctx.fill();
       }
 
-      // Draw constellation connection links
-      for (let i = 0; i < stars.length; i++) {
-        for (let j = i + 1; j < stars.length; j++) {
-          const dx = stars[i].x - stars[j].x;
-          const dy = stars[i].y - stars[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 65) {
-            let alpha = ((65 - dist) / 65) * 0.05;
+      // Draw constellation connection links only when not scrolling for max FPS
+      if (!isScrolling) {
+        for (let i = 0; i < stars.length; i++) {
+          for (let j = i + 1; j < stars.length; j++) {
+            const dx = stars[i].x - stars[j].x;
+            if (Math.abs(dx) > 55) continue;
+            const dy = stars[i].y - stars[j].y;
+            if (Math.abs(dy) > 55) continue;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 65) {
+              let alpha = ((65 - dist) / 65) * 0.05;
 
-            // Highlight connections near cursor
-            if (mouse.x !== null && mouse.y !== null) {
-              const mDx = (stars[i].x + stars[j].x) / 2 - mouse.x;
-              const mDy = (stars[i].y + stars[j].y) / 2 - mouse.y;
-              const mDist = Math.sqrt(mDx * mDx + mDy * mDy);
-              if (mDist < mouse.radius) {
-                alpha += ((mouse.radius - mDist) / mouse.radius) * 0.09;
+              // Highlight connections near cursor
+              if (mouse.x !== null && mouse.y !== null) {
+                const mDx = (stars[i].x + stars[j].x) / 2 - mouse.x;
+                const mDy = (stars[i].y + stars[j].y) / 2 - mouse.y;
+                const mDist = Math.sqrt(mDx * mDx + mDy * mDy);
+                if (mDist < mouse.radius) {
+                  alpha += ((mouse.radius - mDist) / mouse.radius) * 0.09;
+                }
               }
-            }
 
-            if (alpha > 0) {
-              ctx.beginPath();
-              ctx.moveTo(stars[i].x, stars[i].y);
-              ctx.lineTo(stars[j].x, stars[j].y);
-              ctx.strokeStyle = `rgba(255, 122, 24, ${alpha})`;
-              ctx.lineWidth = 0.4;
-              ctx.stroke();
+              if (alpha > 0) {
+                ctx.beginPath();
+                ctx.moveTo(stars[i].x, stars[i].y);
+                ctx.lineTo(stars[j].x, stars[j].y);
+                ctx.strokeStyle = `rgba(255, 122, 24, ${alpha})`;
+                ctx.lineWidth = 0.4;
+                ctx.stroke();
+              }
             }
           }
         }
@@ -174,6 +174,8 @@ const Starfield = () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
     };
   }, [isDark]);
 
@@ -183,7 +185,6 @@ const Starfield = () => {
     <canvas
       ref={canvasRef}
       className="pointer-events-none fixed inset-0 z-0 h-full w-full bg-transparent"
-      style={{ mixBlendMode: 'screen' }}
     />
   );
 };

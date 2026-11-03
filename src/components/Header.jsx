@@ -64,25 +64,31 @@ const Header = () => {
     setOpen(false);
   }, [location.pathname]);
 
-  // Handle scroll state for header transition
+  // RAF-throttled scroll state for header (prevents re-render churn at top point)
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 20;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isScrolled = window.scrollY > 20;
+          setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [scrolled]);
+  }, []);
 
   return (
     <motion.header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled
-        ? "bg-white/95 dark:bg-[#0C0A09]/95 backdrop-blur-md border-b border-[#E5E7EB] dark:border-[#362B24]/70 shadow-sm"
-        : "bg-white/90 dark:bg-[#0C0A09]/90 backdrop-blur-sm border-b border-[#E5E7EB]/50 dark:border-[#362B24]/40"
-        }`}
+      className={`fixed top-0 inset-x-0 z-50 transition-[background-color,border-color,box-shadow] duration-200 backdrop-blur-md ${
+        scrolled
+          ? "bg-white/95 dark:bg-[#0C0A09]/95 border-b border-[#E5E7EB] dark:border-[#362B24]/70 shadow-sm"
+          : "bg-white/90 dark:bg-[#0C0A09]/90 border-b border-[#E5E7EB]/50 dark:border-[#362B24]/40"
+      }`}
     >
       {/* ======================================================== */}
       {/* GSAP-STYLE RUNNING TICKER ANNOUNCEMENT BAR AT VERY TOP */}
@@ -251,14 +257,14 @@ const Header = () => {
                 className="mt-3 grid grid-cols-2 gap-2.5 border-t border-brandBorder/60 pt-4 px-1"
               >
                 <a
-                  href="tel:9271456749"
+                  href="tel:8830331309"
                   className="flex items-center justify-center gap-2 rounded-xl bg-brandAccent py-2.5 text-xs font-bold text-black hover:bg-amber-400 active:scale-95 transition-all !no-underline"
                 >
                   <Phone size={14} />
                   <span>Call Now</span>
                 </a>
                 <a
-                  href="https://wa.me/919271456749?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
+                  href="https://wa.me/918830331309?text=Hi%20CREAONNECT%2C%20I%20want%20to%20enquire%20about%20your%20services%20(Photography%2C%20Web%20Development%20or%20Marketing)."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 rounded-xl border border-brandBorder bg-brandSurfaceSoft/60 py-2.5 text-xs font-bold text-brandTextPrimary hover:text-[#25D366] hover:border-[#25D366]/40 active:scale-95 transition-all !no-underline"

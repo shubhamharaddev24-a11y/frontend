@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useMotionVariants } from "../utils/motion";
 import CreaonnectNvidiaHero from "../components/CreaonnectNvidiaHero";
 import MarketplaceNetworkSection from "../components/MarketplaceNetworkSection";
-import WeddingCrackerSparks from "../components/WeddingCrackerSparks";
 import RevealOnScroll from "../components/RevealOnScroll";
 import PhotoCounter from "../components/PhotoCounter";
 import VideoTestimonials from "../components/VideoTestimonials";
@@ -141,9 +140,7 @@ const Home = () => {
 
       {/* 3. Precious Moments Showcase Grid (Matching Viya Films screenshot 3) */}
       <section className="relative py-16 md:py-24 px-6 sm:px-12 max-w-7xl mx-auto border-t border-[#E0D7CC]/60 dark:border-[#3D342E]/60 overflow-hidden">
-        {/* Celebratory Wedding Cracker Sparks & Petal Burst Animation */}
-        <WeddingCrackerSparks />
-        {/* Editorial Text Block */}
+                {/* Editorial Text Block */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
           <p className="text-xs sm:text-sm text-[#4A4A4A] dark:text-[#B8ABA0] font-light leading-relaxed">
             From the first look to the final dance, every moment is a piece of a beautiful journey.

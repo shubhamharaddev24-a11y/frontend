@@ -14,42 +14,42 @@ const categories = [
 const DEFAULT_IMAGES = [
   {
     category: "wedding",
-    imageUrl: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1200&auto=format&fit=crop&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=720&auto=format&fit=crop&q=80",
     title: "Grand Indian wedding mandap ceremony.",
     aspectRatio: "4/5",
     objectPosition: "center 20%",
   },
   {
     category: "wedding",
-    imageUrl: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1200&auto=format&fit=crop&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=720&auto=format&fit=crop&q=80",
     title: "Bride getting ready in traditional gold attire & saree.",
     aspectRatio: "4/5",
     objectPosition: "center 20%",
   },
   {
     category: "wedding",
-    imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?w=720&auto=format&fit=crop&q=80",
     title: "Evening wedding rituals under golden festive lights.",
     aspectRatio: "4/5",
     objectPosition: "center 20%",
   },
   {
     category: "prewedding",
-    imageUrl: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&auto=format&fit=crop&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=720&auto=format&fit=crop&q=80",
     title: "Sunset pre-wedding shoot by open fields.",
     aspectRatio: "4/5",
     objectPosition: "center 20%",
   },
   {
     category: "prewedding",
-    imageUrl: "https://images.unsplash.com/photo-1525286116112-b59af11adad1?w=1200&auto=format&fit=crop&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1525286116112-b59af11adad1?w=720&auto=format&fit=crop&q=80",
     title: "Candid couple walk in natural landscape.",
     aspectRatio: "4/5",
     objectPosition: "center 20%",
   },
   {
     category: "banner",
-    imageUrl: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&auto=format&fit=crop&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=720&auto=format&fit=crop&q=80",
     title: "Colourful flex banners for local events & political branding.",
     aspectRatio: "4/5",
     objectPosition: "center 20%",
@@ -109,16 +109,14 @@ const Gallery = () => {
           {filteredImages.map((img, idx) => (
             <div
               key={img.id || img.imageUrl || img.src || idx}
-              className="group relative overflow-hidden bg-brandSurface aspect-[4/5] shadow-sm hover:shadow-md rounded-2xl border border-brandBorder/50 transition-all duration-300 transform-gpu"
-              style={{
-                contentVisibility: "auto",
-                containIntrinsicSize: "300px 400px",
-              }}
+              className="group relative overflow-hidden bg-brandSurface aspect-[4/5] shadow-sm hover:shadow-md rounded-2xl border border-brandBorder/50 transition-shadow duration-300"
+              
             >
               <img
                 src={formatImageUrl(img.imageUrl || img.src)}
                 alt={img.title || img.alt || "Portfolio image"}
-                loading="lazy"
+                loading={idx < 3 ? "eager" : "lazy"}
+                fetchPriority={idx < 3 ? "high" : "auto"}
                 decoding="async"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 style={{ objectPosition: img.objectPosition || "center 20%" }}

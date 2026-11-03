@@ -92,11 +92,9 @@ const SLIDES = [
 
 const CreaonnectNvidiaHero = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   const SLIDE_DURATION = 6000; // 6 seconds per slide
-  const INTERVAL_STEP = 50; // update every 50ms for buttery-smooth progress
 
   // Preload all slide images on mount to eliminate flicker/blank states
   useEffect(() => {
@@ -112,34 +110,20 @@ const CreaonnectNvidiaHero = () => {
     });
   }, []);
 
-  // Smooth Auto-Play Progress Loop with absolute timing (Strict-Mode safe, never skips slides)
+  // Pure lightweight timer (ZERO 50ms React re-renders! Pure 60fps GPU animation)
   useEffect(() => {
     if (isPaused) return;
 
-    // Preserve existing progress if resuming after pause
-    const initialElapsed = (progress / 100) * SLIDE_DURATION;
-    const startTime = Date.now() - initialElapsed;
+    const timer = setTimeout(() => {
+      setCurrentIdx((prev) => (prev + 1) % SLIDES.length);
+    }, SLIDE_DURATION);
 
-    const timer = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const pct = Math.min((elapsed / SLIDE_DURATION) * 100, 100);
-
-      if (elapsed >= SLIDE_DURATION) {
-        clearInterval(timer);
-        setProgress(0);
-        setCurrentIdx((prev) => (prev + 1) % SLIDES.length);
-      } else {
-        setProgress(pct);
-      }
-    }, INTERVAL_STEP);
-
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, [currentIdx, isPaused]);
 
   const activeSlide = SLIDES[currentIdx];
 
   const handleSelectSlide = (idx) => {
-    setProgress(0);
     setCurrentIdx(idx);
   };
 
@@ -149,7 +133,6 @@ const CreaonnectNvidiaHero = () => {
   };
 
   const handleNext = () => {
-    setProgress(0);
     setCurrentIdx((prev) => (prev + 1) % SLIDES.length);
   };
 
@@ -360,8 +343,12 @@ const CreaonnectNvidiaHero = () => {
                     {/* Active Filling Progress Line (NVIDIA Green #76B900) */}
                     {isActive ? (
                       <div
-                        className="h-full bg-[#76B900] transition-all duration-[50ms] ease-linear"
-                        style={{ width: `${progress}%` }}
+                        key={`prog-${currentIdx}-${isPaused}`}
+                        className="h-full bg-[#76B900] rounded-full origin-left"
+                        style={{
+                          animation: `heroTabProgress ${SLIDE_DURATION}ms linear forwards`,
+                          animationPlayState: isPaused ? "paused" : "running",
+                        }}
                       />
                     ) : (
                       <div className="h-full w-0 group-hover:w-full group-hover:bg-[#76B900]/40 transition-all duration-300" />

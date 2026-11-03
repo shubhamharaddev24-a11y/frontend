@@ -31,10 +31,10 @@ const pillars = [
     accentIcon: Film,
     route: "/gallery",
     color: "#76B900",
-    mediaImage: "/images/wedding-marathi-tika.png",
+    mediaImage: "/images/0f6a59c61160c0369b02a9eb93977763.jpg",
     mediaBadge: "4K Cinema & Film Studio",
     mediaHeadline: "Heirloom Stories Captured with Artistic Soul",
-    objectPosition: "center 30%",
+    objectPosition: "center 28%",
   },
   {
     id: "innovate",

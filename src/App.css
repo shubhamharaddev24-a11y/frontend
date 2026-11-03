@@ -503,3 +503,14 @@
 .group:hover .animate-top-ticker {
   animation-play-state: paused;
 }
+
+
+/* 60FPS GPU COMPOSITOR PROGRESS BAR ANIMATION (ZERO JS RE-RENDERS) */
+@keyframes heroTabProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}

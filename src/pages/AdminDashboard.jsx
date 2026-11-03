@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { 
-  Users, 
-  Calendar, 
-  Inbox, 
-  Clock, 
+import {
+  Users,
+  Calendar,
+  Inbox,
+  Clock,
   AlertCircle,
   LogOut,
   UserCheck,
@@ -22,11 +22,13 @@ import {
   ShoppingBag,
   ShieldCheck,
   CheckCircle2,
-  ArrowUpRight
+  ArrowUpRight,
+  Briefcase,
+  Camera
 } from "lucide-react";
-import { 
-  bookingService, 
-  leadService, 
+import {
+  bookingService,
+  leadService,
   authService,
   taskService
 } from "../services";
@@ -262,7 +264,7 @@ const AdminDashboard = () => {
       setTaskSuccess("New task with attachments created successfully!");
       setNewTask({ title: "", description: "", priority: "medium", assignedTo: "", dueDate: "" });
       setSelectedFiles([]);
-      
+
       const fileInput = document.getElementById("task-files");
       if (fileInput) fileInput.value = "";
 
@@ -357,7 +359,7 @@ const AdminDashboard = () => {
       await authService.register(newStaff);
       setRegSuccess("Staff member registered successfully!");
       setNewStaff({ name: "", email: "", password: "" });
-      
+
       const staffRes = await authService.getAllUsers();
       setStaff(staffRes?.data || []);
     } catch (err) {
@@ -394,9 +396,9 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-brandBg pb-16 pt-24 text-brandTextPrimary sm:pt-28">
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        
-        {/* Header Bar */}
-        <div className="flex flex-col justify-between gap-4 border-b border-brandBorder pb-6 sm:flex-row sm:items-center">
+
+        {/* Header Bar with Workspace Switcher */}
+        <div className="flex flex-col justify-between gap-4 border-b border-brandBorder pb-6 lg:flex-row lg:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brandAccent">
               CREAONNECT Studios & Digital
@@ -405,13 +407,45 @@ const AdminDashboard = () => {
               Admin Workspace
             </h1>
           </div>
-          <button 
-            onClick={handleLogout}
-            className="flex items-center justify-center gap-2 self-start rounded-full border border-red-500/40 bg-brandSurface px-4 py-2 text-xs font-semibold text-red-400 hover:bg-red-500/10"
-          >
-            <LogOut size={14} />
-            <span>Logout</span>
-          </button>
+
+          <div className="flex flex-wrap items-center gap-3">
+            {/* 3-Way Unified Workspace Switcher */}
+            <div className="flex items-center rounded-xl bg-brandSurface p-1 border border-brandBorder shadow-sm">
+              <button
+                type="button"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-[#76B900] text-black shadow-sm"
+              >
+                <ShieldCheck size={14} />
+                <span>Admin Workspace</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate("/dashboard?mode=client")}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-brandTextMuted hover:text-brandTextPrimary hover:bg-brandBorder/30"
+                title="Switch to Client & Customer Dashboard"
+              >
+                <Briefcase size={14} />
+                <span>Client & Customer</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate("/dashboard?mode=creator")}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-brandTextMuted hover:text-brandTextPrimary hover:bg-brandBorder/30"
+                title="Switch to Creator Hub Dashboard"
+              >
+                <Camera size={14} />
+                <span>Creator Hub</span>
+              </button>
+            </div>
+
+            <button
+              onClick={handleLogout}
+              className="flex items-center justify-center gap-2 rounded-full border border-red-500/40 bg-brandSurface px-4 py-2 text-xs font-semibold text-red-400 hover:bg-red-500/10 transition-colors"
+            >
+              <LogOut size={14} />
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
 
         {error && (
@@ -465,31 +499,28 @@ const AdminDashboard = () => {
         <div className="mt-8 flex gap-4 border-b border-brandBorder pb-3">
           <button
             onClick={() => setActiveTab("bookings")}
-            className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${
-              activeTab === "bookings" 
-                ? "border-b-2 border-brandAccent text-brandAccent" 
+            className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${activeTab === "bookings"
+                ? "border-b-2 border-brandAccent text-brandAccent"
                 : "text-brandTextMuted hover:text-brandTextPrimary"
-            }`}
+              }`}
           >
             Bookings List ({bookings.length})
           </button>
           <button
             onClick={() => setActiveTab("leads")}
-            className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${
-              activeTab === "leads" 
-                ? "border-b-2 border-brandAccent text-brandAccent" 
+            className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${activeTab === "leads"
+                ? "border-b-2 border-brandAccent text-brandAccent"
                 : "text-brandTextMuted hover:text-brandTextPrimary"
-            }`}
+              }`}
           >
             Enquiries ({leads.length})
           </button>
           <button
             onClick={() => setActiveTab("tasks")}
-            className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${
-              activeTab === "tasks" 
-                ? "border-b-2 border-brandAccent text-brandAccent" 
+            className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${activeTab === "tasks"
+                ? "border-b-2 border-brandAccent text-brandAccent"
                 : "text-brandTextMuted hover:text-brandTextPrimary"
-            }`}
+              }`}
           >
             Website Tasks ({tasks.length})
           </button>
@@ -497,21 +528,19 @@ const AdminDashboard = () => {
             <>
               <button
                 onClick={() => setActiveTab("staff")}
-                className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${
-                  activeTab === "staff" 
-                    ? "border-b-2 border-brandAccent text-brandAccent" 
+                className={`pb-2 text-sm font-semibold tracking-wider transition-colors ${activeTab === "staff"
+                    ? "border-b-2 border-brandAccent text-brandAccent"
                     : "text-brandTextMuted hover:text-brandTextPrimary"
-                }`}
+                  }`}
               >
                 Staff Directory ({staff.length})
               </button>
               <button
                 onClick={() => setActiveTab("cms")}
-                className={`pb-2 text-sm font-semibold tracking-wider transition-colors flex items-center gap-1.5 ${
-                  activeTab === "cms" 
-                    ? "border-b-2 border-brandAccent text-brandAccent" 
+                className={`pb-2 text-sm font-semibold tracking-wider transition-colors flex items-center gap-1.5 ${activeTab === "cms"
+                    ? "border-b-2 border-brandAccent text-brandAccent"
                     : "text-brandTextMuted hover:text-brandTextPrimary"
-                }`}
+                  }`}
               >
                 <Sliders size={15} />
                 <span>Website CMS & Media</span>
@@ -648,15 +677,14 @@ const AdminDashboard = () => {
                                 ₹{fee.toLocaleString()}
                               </td>
                               <td className="py-3 pr-3">
-                                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                                  ord.status === "completed"
+                                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${ord.status === "completed"
                                     ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300"
                                     : ord.status === "confirmed" || ord.status === "claimed"
-                                    ? "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300"
-                                    : ord.status === "open"
-                                    ? "bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300"
-                                    : "bg-neutral-100 dark:bg-neutral-800 text-brandTextMuted"
-                                }`}>
+                                      ? "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300"
+                                      : ord.status === "open"
+                                        ? "bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300"
+                                        : "bg-neutral-100 dark:bg-neutral-800 text-brandTextMuted"
+                                  }`}>
                                   {ord.status}
                                 </span>
                               </td>
@@ -722,12 +750,11 @@ const AdminDashboard = () => {
                           <p className="text-[11px] text-brandTextMuted">{b.eventLocation}</p>
                         </td>
                         <td className="py-3.5 pr-3">
-                          <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
-                            b.status === "confirmed" ? "bg-green-500/10 text-green-400 border border-green-500/20" :
-                            b.status === "completed" ? "bg-blue-500/10 text-blue-400 border border-blue-500/20" :
-                            b.status === "cancelled" ? "bg-red-500/10 text-red-400 border border-red-500/20" :
-                            "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
-                          }`}>
+                          <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${b.status === "confirmed" ? "bg-green-500/10 text-green-400 border border-green-500/20" :
+                              b.status === "completed" ? "bg-blue-500/10 text-blue-400 border border-blue-500/20" :
+                                b.status === "cancelled" ? "bg-red-500/10 text-red-400 border border-red-500/20" :
+                                  "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
+                            }`}>
                             {b.status}
                           </span>
                         </td>
@@ -1027,14 +1054,13 @@ const AdminDashboard = () => {
                         <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-brandBorder/30 text-[11px]">
                           <div className="flex flex-wrap items-center gap-2">
                             {/* Priority Badge */}
-                            <span className={`rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider ${
-                              t.priority === "high" ? "bg-red-500/10 text-red-400 border border-red-500/20" :
-                              t.priority === "low" ? "bg-blue-500/10 text-blue-400 border border-blue-500/20" :
-                              "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
-                            }`}>
+                            <span className={`rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider ${t.priority === "high" ? "bg-red-500/10 text-red-400 border border-red-500/20" :
+                                t.priority === "low" ? "bg-blue-500/10 text-blue-400 border border-blue-500/20" :
+                                  "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
+                              }`}>
                               {t.priority}
                             </span>
-                            
+
                             {/* Due Date */}
                             {t.dueDate && (
                               <span className="text-brandTextMuted">Due: {formatDate(t.dueDate)}</span>
@@ -1108,7 +1134,7 @@ const AdminDashboard = () => {
                         {regSuccess}
                       </div>
                     )}
-                    
+
                     <div className="coolinput coolinput-soft-bg w-full">
                       <label className="text">Name</label>
                       <input

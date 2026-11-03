@@ -34,14 +34,14 @@ const AppContent = () => {
   // Initialize Lenis smooth scroll on mount
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // spring-like deceleration
       direction: "vertical",
       gestureDirection: "vertical",
       smooth: true,
       mouseMultiplier: 1,
       smoothTouch: false, // Keep default scroll behaviors on touchscreens
-      touchMultiplier: 2,
+      touchMultiplier: 1.5,
       infinite: false,
     });
 
