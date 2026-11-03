@@ -214,91 +214,114 @@ const CreaonnectNvidiaHero = () => {
             </AnimatePresence>
           </div>
 
-          {/* RIGHT COLUMN: LAYERED 3D-ANGLED VISUAL SHOWCASE (LIKE NVIDIA LAPTOP PERSPECTIVE) */}
+          {/* RIGHT COLUMN: PAYU-STYLE BORDERLESS HERO IMAGE WITH ATMOSPHERIC EMERALD GLOW & SEAMLESS FEATHERING */}
           <div className="lg:col-span-6 relative flex items-center justify-center">
+            {/* PayU Ambient Emerald Radial Glow behind subject */}
+            <div
+              className="absolute -top-16 -right-10 w-[380px] sm:w-[520px] lg:w-[620px] h-[380px] sm:h-[520px] lg:h-[620px] pointer-events-none rounded-full blur-[90px] opacity-40 dark:opacity-55 -z-10"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(118, 185, 0, 0.35) 0%, rgba(16, 185, 129, 0.15) 40%, transparent 70%)"
+              }}
+            />
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={`visual-${activeSlide.id}`}
-                initial={{ opacity: 0, scale: 0.96, x: 20 }}
+                initial={{ opacity: 0, scale: 0.97, x: 20 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.96, x: -20 }}
+                exit={{ opacity: 0, scale: 0.97, x: -20 }}
                 transition={{ duration: 0.45, ease: "easeOut" }}
-                className="relative w-full max-w-lg lg:max-w-none flex items-center justify-center"
+                className="relative w-full max-w-xl lg:max-w-none flex items-center justify-center"
               >
-                {/* 3D Angled Layered Showcase Container - Hover paused strictly on image area */}
+                {/* PayU-Style Unboxed Container (Hover pauses carousel strictly on image) */}
                 <div
-                  className="relative w-full h-[320px] sm:h-[400px] lg:h-[440px] flex items-center justify-center cursor-pointer"
+                  className="relative w-full h-[360px] sm:h-[440px] lg:h-[500px] flex items-center justify-center lg:justify-end cursor-pointer select-none"
                   onMouseEnter={() => setIsPaused(true)}
                   onMouseLeave={() => setIsPaused(false)}
                 >
-                  
-                  {/* Background Angled Perspective Card */}
-                  <div className="absolute top-2 right-4 sm:right-8 w-4/5 h-4/5 rounded-2xl overflow-hidden border border-[#E5E7EB] dark:border-[#333] shadow-lg opacity-40 dark:opacity-20 transform rotate-6 scale-95 pointer-events-none">
-                    <img
-                      src={activeSlide.secondaryImage || activeSlide.image}
-                      alt="Background preview"
-                      className="w-full h-full object-cover filter blur-[0.5px]"
-                      style={{ objectPosition: activeSlide.objectPosition || "center top" }}
-                    />
-                  </div>
-
-                  {/* Main Hero Card (Layered with metallic bevel like NVIDIA hardware screen) */}
-                  <div className="relative w-full sm:w-[92%] h-[290px] sm:h-[370px] lg:h-[400px] rounded-2xl overflow-hidden border-2 border-brandBorder shadow-2xl bg-brandSurface group">
+                  {/* Seamless Feathered Image Container (No hard borders, no outer boxes - 100% PayU Style) */}
+                  <div
+                    className="relative w-full h-full flex items-center justify-center lg:justify-end overflow-hidden"
+                    style={{
+                      WebkitMaskImage:
+                        "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 6%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 94%, transparent 100%), linear-gradient(to bottom, rgba(0,0,0,1) 82%, transparent 100%)",
+                      maskImage:
+                        "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 6%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 94%, transparent 100%), linear-gradient(to bottom, rgba(0,0,0,1) 82%, transparent 100%)",
+                      WebkitMaskComposite: "source-in",
+                      maskComposite: "intersect"
+                    }}
+                  >
                     <img
                       src={activeSlide.image}
                       alt={activeSlide.headline}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      style={{ objectPosition: activeSlide.objectPosition || "center top" }}
+                      className="w-full h-full object-cover sm:object-contain lg:object-cover object-bottom sm:object-center transition-all duration-700 pointer-events-none select-none"
+                      style={{ objectPosition: activeSlide.objectPosition || "center 15%" }}
                     />
 
-                    {/* Gradient Overlay for crisp text contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                    {/* Left Blend Gradient (Guarantees seamless dissolve into background) */}
+                    <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-brandBg via-brandBg/60 to-transparent pointer-events-none" />
 
-                    {/* Bottom Floating Pill inside image */}
-                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white text-xs">
-                      <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
-                        <span className="h-2 w-2 rounded-full bg-[#76B900] animate-pulse" />
-                        <span className="font-bold tracking-tight">{activeSlide.floatingBadge}</span>
-                      </div>
+                    {/* Bottom Blend Gradient (Smoothly dissolves into bottom tabs border) */}
+                    <div className="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-t from-brandBg via-brandBg/70 to-transparent pointer-events-none" />
 
-                      {activeSlide.statBadge && (
-                        <div className="bg-[#76B900] text-black px-3 py-1 rounded-full font-extrabold text-[11px] shadow-md hidden sm:block">
-                          {activeSlide.statBadge.value}
-                        </div>
-                      )}
-                    </div>
+                    {/* Top Blend Subtle Gradient */}
+                    <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-brandBg/40 to-transparent pointer-events-none" />
                   </div>
 
-                  {/* Floating Live Marketplace Widget if slide 2 */}
+                  {/* PayU-Style Floating Pill Badge (Positioned over left edge of image) */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15, duration: 0.35 }}
+                    className={`absolute ${
+                      activeSlide.isMarketplaceCard
+                        ? "bottom-24 sm:bottom-32"
+                        : "bottom-12 sm:bottom-18"
+                    } left-2 sm:left-4 lg:-left-6 z-20 flex items-center gap-2.5 px-4 py-2 sm:py-2.5 rounded-full bg-black/80 dark:bg-[#07130F]/90 backdrop-blur-md border border-white/20 dark:border-[#76B900]/40 shadow-2xl text-xs sm:text-sm text-white select-none transition-all`}
+                  >
+                    <div className="h-5 w-5 rounded-full bg-[#76B900]/25 border border-[#76B900] flex items-center justify-center text-[#76B900] flex-shrink-0">
+                      <CheckCircle size={13} className="text-[#76B900]" />
+                    </div>
+                    <span className="font-semibold tracking-tight text-white/95">
+                      {activeSlide.floatingBadge.replace(/^[^\w\d]+/, "").trim()}
+                    </span>
+                    {activeSlide.statBadge && (
+                      <span className="bg-[#76B900] text-black text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-full ml-1">
+                        {activeSlide.statBadge.value}
+                      </span>
+                    )}
+                  </motion.div>
+
+                  {/* Floating Live Marketplace Widget (if slide 2) */}
                   {activeSlide.isMarketplaceCard && (
                     <motion.div
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                      className="absolute -bottom-2 -left-2 sm:left-2 bg-brandSurface p-3.5 rounded-xl border border-brandBorder shadow-xl text-left text-xs space-y-1.5 max-w-[240px] z-20"
+                      transition={{ delay: 0.25 }}
+                      className="absolute bottom-3 left-2 sm:left-4 lg:-left-6 bg-brandSurface/95 dark:bg-black/85 backdrop-blur-md p-3.5 rounded-2xl border border-brandBorder dark:border-white/15 shadow-2xl text-left text-xs space-y-1.5 max-w-[240px] z-20"
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold uppercase text-[#76B900]">Live Job Feed</span>
-                        <span className="text-[10px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 rounded">
+                        <span className="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
                           ⏳ 08h left
                         </span>
                       </div>
                       <div className="font-extrabold text-brandTextPrimary truncate">Pre-Wedding • Lonavala</div>
-                      <div className="flex items-center justify-between font-bold border-t border-brandBorder pt-1">
+                      <div className="flex items-center justify-between font-bold border-t border-brandBorder/60 pt-1">
                         <span className="text-brandTextMuted text-[10px]">Your Payout:</span>
                         <span className="text-[#76B900] font-black">₹16,200</span>
                       </div>
                     </motion.div>
                   )}
 
-                  {/* Manual Arrow Controls (Like in NVIDIA Screenshot 2 & 3) */}
-                  <div className="absolute top-4 right-4 flex items-center gap-1.5 z-20">
+                  {/* Minimal Sleek Slide Navigation Arrows */}
+                  <div className="absolute top-2 right-2 flex items-center gap-1.5 z-20 opacity-80 hover:opacity-100 transition-opacity">
                     <button
                       type="button"
                       onClick={handlePrev}
                       aria-label="Previous slide"
-                      className="h-8 w-8 bg-[#76B900] hover:bg-[#68A500] text-black flex items-center justify-center shadow-sm transition-all active:scale-95"
-                      style={{ borderRadius: "2px" }}
+                      className="h-8 w-8 rounded-full bg-black/60 hover:bg-[#76B900] hover:text-black text-white/90 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-all active:scale-95"
                     >
                       <ChevronLeft size={16} />
                     </button>
@@ -306,8 +329,7 @@ const CreaonnectNvidiaHero = () => {
                       type="button"
                       onClick={handleNext}
                       aria-label="Next slide"
-                      className="h-8 w-8 bg-[#76B900] hover:bg-[#68A500] text-black flex items-center justify-center shadow-sm transition-all active:scale-95"
-                      style={{ borderRadius: "2px" }}
+                      className="h-8 w-8 rounded-full bg-black/60 hover:bg-[#76B900] hover:text-black text-white/90 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-all active:scale-95"
                     >
                       <ChevronRight size={16} />
                     </button>
