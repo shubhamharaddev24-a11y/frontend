@@ -222,6 +222,21 @@ const UserDashboard = () => {
   const [postingOrder, setPostingOrder] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
 
+  // Lock body scroll and listen for Escape key when post order modal is open
+  useEffect(() => {
+    if (!showPostModal) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setShowPostModal(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showPostModal]);
+
   // Custom Quotation & Bidding States
   const [selectedOrderToQuote, setSelectedOrderToQuote] = useState(null);
   const [quoteFormData, setQuoteFormData] = useState({
@@ -3516,210 +3531,285 @@ const UserDashboard = () => {
       {/* ========================================================================= */}
       <AnimatePresence>
         {showPostModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-6 bg-black/75 backdrop-blur-md"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setShowPostModal(false);
+            }}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-xl bg-white dark:bg-[#171311] rounded-2xl border border-[#E2E8F0] dark:border-[#2D2825] p-6 sm:p-8 space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto"
+              initial={{ opacity: 0, scale: 0.96, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 8 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="w-full max-w-4xl max-h-[90vh] bg-white dark:bg-[#171311] rounded-2xl md:rounded-3xl border border-[#E2E8F0] dark:border-[#2D2825] shadow-2xl flex flex-col overflow-hidden my-auto"
             >
-              <div className="flex items-center justify-between pb-3 border-b border-[#F1F5F9] dark:border-[#262626]">
-                <div>
-                  <h3 className="text-lg font-black text-[#1E1B4B] dark:text-white">Book / Post Photoshoot Order</h3>
-                  <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">Studio admin will review details and launch your shoot directly to verified creators.</p>
+              {/* Pinned Sticky Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-[#F1F5F9] dark:border-[#262626] bg-white dark:bg-[#171311] shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#76B900]/15 border border-[#76B900]/30 text-[#76B900] flex items-center justify-center font-bold shrink-0">
+                    <Camera size={20} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-[#76B900] bg-[#76B900]/10 px-2 py-0.5 rounded">
+                        Shoot Dispatch
+                      </span>
+                    </div>
+                    <h3 className="text-base font-black text-[#1E1B4B] dark:text-white leading-tight mt-0.5">
+                      Book / Post Photoshoot Order
+                    </h3>
+                    <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">
+                      Studio admin will review details and launch directly to verified creators.
+                    </p>
+                  </div>
                 </div>
+
+                {/* Close Button */}
                 <button
                   type="button"
                   onClick={() => setShowPostModal(false)}
-                  className="h-8 w-8 rounded-lg hover:bg-[#F1F5F9] dark:hover:bg-[#221B17] flex items-center justify-center text-[#64748B] dark:text-neutral-400"
+                  className="h-8 w-8 rounded-lg hover:bg-[#F1F5F9] dark:hover:bg-[#221B17] flex items-center justify-center text-[#64748B] dark:text-neutral-400 transition-colors"
+                  title="Close"
                 >
                   <X size={18} />
                 </button>
               </div>
 
-              <form onSubmit={handlePostOrderSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Shoot Title</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Sunset Pre-Wedding Photoshoot in Lonavala"
-                    className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
-                    value={postFormData.title}
-                    onChange={(e) => setPostFormData({ ...postFormData, title: e.target.value })}
-                    required
-                  />
-                </div>
+              {/* Form Container */}
+              <form onSubmit={handlePostOrderSubmit} className="flex flex-col flex-1 overflow-hidden min-h-0">
+                {/* Scrollable Form Body */}
+                <div className="px-6 py-4 overflow-y-auto flex-1 min-h-0">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {/* Left Column: Shoot Details & Requirements */}
+                    <div className="space-y-3.5">
+                      <div>
+                        <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                          Shoot Title <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Sunset Pre-Wedding Photoshoot in Lonavala"
+                          className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
+                          value={postFormData.title}
+                          onChange={(e) => setPostFormData({ ...postFormData, title: e.target.value })}
+                          required
+                        />
+                      </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Category & Service Type</label>
-                    <select
-                      className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs font-semibold text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
-                      value={postFormData.eventType}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        let autoBudget = 15000;
-                        if (val === "wedding") autoBudget = 50000;
-                        else if (val === "pre-wedding") autoBudget = 25000;
-                        else if (val === "reel-shoot") autoBudget = 8000;
-                        else if (val === "video-editing") autoBudget = 5000;
-                        else if (val === "logo-design") autoBudget = 7500;
-                        else if (val === "wedding-invitation") autoBudget = 4000;
-                        else if (val === "web-development") autoBudget = 25000;
-                        else if (val === "digital-marketing") autoBudget = 12000;
-                        setPostFormData({ ...postFormData, eventType: val, budget: autoBudget });
-                      }}
-                    >
-                      <optgroup label="📷 Photography & Events">
-                        <option value="pre-wedding">Pre-Wedding Shoot (Thane / Mumbai / Lonavala)</option>
-                        <option value="wedding">Full Wedding Ceremony (Varmala, Pheras & Reception)</option>
-                        <option value="engagement">Engagement / Roka Ceremony</option>
-                        <option value="birthday">Birthday & Family Function</option>
-                        <option value="maternity">Maternity & Baby Shoot</option>
-                        <option value="portrait">Fashion & Model Portrait</option>
-                        <option value="event">Corporate / Social Event</option>
-                      </optgroup>
-                      <optgroup label="🎬 Video & Viral Reels">
-                        <option value="reel-shoot">Instagram Reel Shoot & Creative Direction</option>
-                        <option value="promotional-video">Brand Promo / Commercial Ad Video</option>
-                        <option value="music-video">Music Video Production</option>
-                        <option value="video-editing">Video & Reel Editing (DaVinci Resolve)</option>
-                        <option value="cinematography">4K Drone & Cinematic Wedding Highlights</option>
-                      </optgroup>
-                      <optgroup label="🎨 Creative Design">
-                        <option value="logo-design">Logo & Brand Identity</option>
-                        <option value="wedding-invitation">Digital Wedding Cards & Marathi Patrika</option>
-                        <option value="banner-design">Social Media Banners & Event Flex</option>
-                        <option value="branding-deck">Corporate Branding Deck</option>
-                      </optgroup>
-                      <optgroup label="💻 Digital Services">
-                        <option value="web-development">Custom Website / Web App (MERN)</option>
-                        <option value="digital-marketing">Local SEO & Google Maps #1 Ranking</option>
-                        <option value="social-media-management">Social Media Growth & Production</option>
-                      </optgroup>
-                      <optgroup label="Other">
-                        <option value="other">Custom Creative Work</option>
-                      </optgroup>
-                    </select>
-                  </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                            Category & Service Type
+                          </label>
+                          <select
+                            className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs font-semibold text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
+                            value={postFormData.eventType}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              let autoBudget = 15000;
+                              if (val === "wedding") autoBudget = 50000;
+                              else if (val === "pre-wedding") autoBudget = 25000;
+                              else if (val === "reel-shoot") autoBudget = 8000;
+                              else if (val === "video-editing") autoBudget = 5000;
+                              else if (val === "logo-design") autoBudget = 7500;
+                              else if (val === "wedding-invitation") autoBudget = 4000;
+                              else if (val === "web-development") autoBudget = 25000;
+                              else if (val === "digital-marketing") autoBudget = 12000;
+                              setPostFormData({ ...postFormData, eventType: val, budget: autoBudget });
+                            }}
+                          >
+                            <optgroup label="📷 Photography & Events">
+                              <option value="pre-wedding">Pre-Wedding Shoot (Thane / Mumbai / Lonavala)</option>
+                              <option value="wedding">Full Wedding Ceremony (Varmala, Pheras & Reception)</option>
+                              <option value="engagement">Engagement / Roka Ceremony</option>
+                              <option value="birthday">Birthday & Family Function</option>
+                              <option value="maternity">Maternity & Baby Shoot</option>
+                              <option value="portrait">Fashion & Model Portrait</option>
+                              <option value="event">Corporate / Social Event</option>
+                            </optgroup>
+                            <optgroup label="🎬 Video & Viral Reels">
+                              <option value="reel-shoot">Instagram Reel Shoot & Creative Direction</option>
+                              <option value="promotional-video">Brand Promo / Commercial Ad Video</option>
+                              <option value="music-video">Music Video Production</option>
+                              <option value="video-editing">Video & Reel Editing (DaVinci Resolve)</option>
+                              <option value="cinematography">4K Drone & Cinematic Wedding Highlights</option>
+                            </optgroup>
+                            <optgroup label="🎨 Creative Design">
+                              <option value="logo-design">Logo & Brand Identity</option>
+                              <option value="wedding-invitation">Digital Wedding Cards & Marathi Patrika</option>
+                              <option value="banner-design">Social Media Banners & Event Flex</option>
+                              <option value="branding-deck">Corporate Branding Deck</option>
+                            </optgroup>
+                            <optgroup label="💻 Digital Services">
+                              <option value="web-development">Custom Website / Web App (MERN)</option>
+                              <option value="digital-marketing">Local SEO & Google Maps #1 Ranking</option>
+                              <option value="social-media-management">Social Media Growth & Production</option>
+                            </optgroup>
+                            <optgroup label="Other">
+                              <option value="other">Custom Creative Work</option>
+                            </optgroup>
+                          </select>
+                        </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Duration</label>
-                    <select
-                      className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
-                      value={postFormData.eventDuration}
-                      onChange={(e) => setPostFormData({ ...postFormData, eventDuration: e.target.value })}
-                    >
-                      <option value="Half Day">Half Day (4-5 hrs)</option>
-                      <option value="Full Day">Full Day (8-10 hrs)</option>
-                      <option value="2 Days">2 Days Coverage</option>
-                      <option value="3 Days">3 Days Grand</option>
-                    </select>
-                  </div>
-                </div>
+                        <div>
+                          <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                            Duration
+                          </label>
+                          <select
+                            className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
+                            value={postFormData.eventDuration}
+                            onChange={(e) => setPostFormData({ ...postFormData, eventDuration: e.target.value })}
+                          >
+                            <option value="Half Day">Half Day (4-5 hrs)</option>
+                            <option value="Full Day">Full Day (8-10 hrs)</option>
+                            <option value="2 Days">2 Days Coverage</option>
+                            <option value="3 Days">3 Days Grand</option>
+                          </select>
+                        </div>
+                      </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Shoot Date</label>
-                    <input
-                      type="date"
-                      className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
-                      value={postFormData.eventDate}
-                      onChange={(e) => setPostFormData({ ...postFormData, eventDate: e.target.value })}
-                      required
-                    />
-                  </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                            Shoot Date <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="date"
+                            className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
+                            value={postFormData.eventDate}
+                            onChange={(e) => setPostFormData({ ...postFormData, eventDate: e.target.value })}
+                            required
+                          />
+                        </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Location / Venue</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Lonavala or Thane"
-                      className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
-                      value={postFormData.eventLocation}
-                      onChange={(e) => setPostFormData({ ...postFormData, eventLocation: e.target.value })}
-                      required
-                    />
-                  </div>
-                </div>
+                        <div>
+                          <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                            Location / Venue <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Lonavala or Thane"
+                            className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
+                            value={postFormData.eventLocation}
+                            onChange={(e) => setPostFormData({ ...postFormData, eventLocation: e.target.value })}
+                            required
+                          />
+                        </div>
+                      </div>
 
-                {/* Expiry Hours Selection */}
-                <div>
-                  <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Order Expiration Window</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { h: 12, label: "12 Hours (Fast)" },
-                      { h: 24, label: "24 Hours (Standard)" },
-                      { h: 48, label: "48 Hours (2 Days)" }
-                    ].map((item) => (
-                      <button
-                        key={item.h}
-                        type="button"
-                        onClick={() => setPostFormData({ ...postFormData, expiryHours: item.h })}
-                        className={`py-2 px-1 text-center rounded-xl text-xs font-semibold border transition-all ${
-                          postFormData.expiryHours === item.h
-                            ? "bg-[#76B900]/20 border-[#76B900] text-[#76B900] font-bold"
-                            : "bg-white dark:bg-[#1F1A17] border-[#CBD5E1] dark:border-[#382C24] text-[#64748B] dark:text-[#94A3B8]"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Budget & Split preview */}
-                <div>
-                  <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Budget (₹ INR)</label>
-                  <input
-                    type="number"
-                    min="1000"
-                    step="500"
-                    placeholder="15000"
-                    className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs font-bold text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
-                    value={postFormData.budget}
-                    onChange={(e) => setPostFormData({ ...postFormData, budget: e.target.value })}
-                    required
-                  />
-
-                  <div className="mt-2 p-3 bg-[#F8FAFC] dark:bg-[#12100E] border border-[#E2E8F0] dark:border-[#262626] rounded-xl text-xs space-y-1">
-                    <div className="flex justify-between text-[#64748B] dark:text-[#94A3B8]">
-                      <span>Platform Commission (10%):</span>
-                      <span className="font-semibold text-[#1E1B4B] dark:text-white">₹{platformFeeCalc.toLocaleString()}</span>
+                      <div>
+                        <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                          Shoot Requirements & Special Notes
+                        </label>
+                        <textarea
+                          rows={2}
+                          placeholder="Specify candid photography style, drone requirements, outfit changes, props..."
+                          className="w-full p-2.5 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900] resize-none"
+                          value={postFormData.message}
+                          onChange={(e) => setPostFormData({ ...postFormData, message: e.target.value })}
+                        />
+                      </div>
                     </div>
-                    <div className="flex justify-between font-bold text-[#76B900]">
-                      <span>Creator Payout (90%):</span>
-                      <span>₹{creatorPayoutCalc.toLocaleString()}</span>
+
+                    {/* Right Column: Pricing, Expiration & Escrow Protection */}
+                    <div className="space-y-3.5">
+                      {/* Budget & Split preview */}
+                      <div>
+                        <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                          Budget (₹ INR) <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          min="1000"
+                          step="500"
+                          placeholder="15000"
+                          className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs font-bold text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900]"
+                          value={postFormData.budget}
+                          onChange={(e) => setPostFormData({ ...postFormData, budget: e.target.value })}
+                          required
+                        />
+
+                        <div className="mt-2 p-2.5 bg-[#F8FAFC] dark:bg-[#12100E] border border-[#E2E8F0] dark:border-[#262626] rounded-xl text-xs space-y-1.5">
+                          <div className="flex justify-between text-[#64748B] dark:text-[#94A3B8]">
+                            <span>Platform Fee (10%):</span>
+                            <span className="font-semibold text-[#1E1B4B] dark:text-white">
+                              ₹{platformFeeCalc.toLocaleString()}
+                            </span>
+                          </div>
+                          <div className="flex justify-between font-bold text-[#76B900] border-t border-[#E2E8F0] dark:border-[#262626] pt-1">
+                            <span>Creator Payout (90%):</span>
+                            <span>₹{creatorPayoutCalc.toLocaleString()}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Expiry Hours Selection */}
+                      <div>
+                        <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
+                          Order Expiration Window
+                        </label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {[
+                            { h: 12, label: "12 Hours (Fast)" },
+                            { h: 24, label: "24 Hours (Standard)" },
+                            { h: 48, label: "48 Hours (2 Days)" }
+                          ].map((item) => (
+                            <button
+                              key={item.h}
+                              type="button"
+                              onClick={() => setPostFormData({ ...postFormData, expiryHours: item.h })}
+                              className={`py-2 px-1 text-center rounded-xl text-xs font-semibold border transition-all ${
+                                postFormData.expiryHours === item.h
+                                  ? "bg-[#76B900]/20 border-[#76B900] text-[#76B900] font-bold"
+                                  : "bg-white dark:bg-[#1F1A17] border-[#CBD5E1] dark:border-[#382C24] text-[#64748B] dark:text-[#94A3B8]"
+                              }`}
+                            >
+                              {item.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Escrow & Trust Info Card */}
+                      <div className="p-3 bg-[#76B900]/5 dark:bg-[#76B900]/10 border border-[#76B900]/20 rounded-xl space-y-1 text-xs">
+                        <div className="flex items-center gap-2 font-bold text-[#76B900]">
+                          <ShieldCheck size={16} />
+                          <span>100% Escrow Protection</span>
+                        </div>
+                        <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8] leading-relaxed">
+                          Your payment is securely held until you approve final high-res photos and videos. Once submitted, our studio admin reviews details before dispatching to creators.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">Shoot Requirements</label>
-                  <textarea
-                    rows={2}
-                    placeholder="Specify candid photography style, drone requirements, outfit changes..."
-                    className="w-full p-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1F1A17] text-xs text-[#1E1B4B] dark:text-white outline-none focus:border-[#76B900] resize-none"
-                    value={postFormData.message}
-                    onChange={(e) => setPostFormData({ ...postFormData, message: e.target.value })}
-                  />
-                </div>
-
-                <div className="pt-2 flex gap-3">
+                {/* Always-Visible Pinned Sticky Footer */}
+                <div className="px-6 py-3.5 border-t border-[#F1F5F9] dark:border-[#262626] bg-[#FAFAFA] dark:bg-[#14100E] shrink-0 flex items-center justify-between gap-3">
                   <button
                     type="button"
                     onClick={() => setShowPostModal(false)}
-                    className="flex-1 h-11 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] text-xs font-semibold text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F8FAFC] dark:hover:bg-[#221B17]"
+                    className="px-5 h-11 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] text-xs font-semibold text-[#64748B] dark:text-[#94A3B8] hover:bg-white dark:hover:bg-[#221B17] transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={postingOrder}
-                    className="flex-1 h-11 rounded bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-extrabold shadow-sm disabled:opacity-50"
-                    style={{ borderRadius: "2px" }}
+                    className="flex-1 h-11 rounded-xl bg-[#76B900] hover:bg-[#86c910] text-black text-xs font-black shadow-md shadow-[#76B900]/20 disabled:opacity-50 transition-all active:scale-95 flex items-center justify-center gap-2"
                   >
-                    {postingOrder ? "Submitting..." : "Submit Photoshoot Order"}
+                    {postingOrder ? (
+                      <>
+                        <RefreshCw size={14} className="animate-spin" />
+                        <span>Submitting Photoshoot...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles size={14} />
+                        <span>Submit Photoshoot Order</span>
+                      </>
+                    )}
                   </button>
                 </div>
               </form>

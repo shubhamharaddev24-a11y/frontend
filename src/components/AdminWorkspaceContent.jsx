@@ -1437,14 +1437,15 @@ const AdminWorkspaceContent = ({
       {/* ========================================================================= */}
       <AnimatePresence>
         {launchModalBooking && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-lg bg-white dark:bg-[#171311] rounded-2xl border border-[#E2E8F0] dark:border-[#2D2825] p-6 space-y-5 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="w-full max-w-lg bg-white dark:bg-[#171311] rounded-2xl border border-[#E2E8F0] dark:border-[#2D2825] shadow-2xl flex flex-col max-h-[88vh] overflow-hidden"
             >
-              <div className="flex items-center justify-between pb-3 border-b border-[#F1F5F9] dark:border-[#262626]">
+              {/* Pinned Sticky Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-[#F1F5F9] dark:border-[#262626] shrink-0">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl bg-[#76B900] text-black flex items-center justify-center font-bold">
                     <Rocket size={18} />
@@ -1463,108 +1464,111 @@ const AdminWorkspaceContent = ({
                 </button>
               </div>
 
-              {/* Shoot Summary Box */}
-              <div className="p-4 rounded-xl bg-[#F8FAFC] dark:bg-[#12100E] border border-[#E2E8F0] dark:border-[#262626] space-y-2">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-xs font-black text-black dark:text-white">
-                      {launchModalBooking.title || launchModalBooking.service?.name || "Photoshoot Order"}
-                    </p>
-                    <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
-                      Client: {launchModalBooking.customerName} &bull; {launchModalBooking.customerPhone}
-                    </p>
+              {/* Scrollable Modal Body */}
+              <div className="px-6 py-4 space-y-4 overflow-y-auto flex-1 min-h-0">
+                {/* Shoot Summary Box */}
+                <div className="p-4 rounded-xl bg-[#F8FAFC] dark:bg-[#12100E] border border-[#E2E8F0] dark:border-[#262626] space-y-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="text-xs font-black text-black dark:text-white">
+                        {launchModalBooking.title || launchModalBooking.service?.name || "Photoshoot Order"}
+                      </p>
+                      <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+                        Client: {launchModalBooking.customerName} &bull; {launchModalBooking.customerPhone}
+                      </p>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                      Awaiting Launch
+                    </span>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20">
-                    Awaiting Launch
-                  </span>
-                </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-[#E2E8F0] dark:border-[#262626]">
-                  <div>
-                    <span className="text-[#94A3B8] text-[10px] uppercase font-bold">Location</span>
-                    <p className="font-semibold text-black dark:text-white truncate">{launchModalBooking.eventLocation || "On-location"}</p>
-                  </div>
-                  <div>
-                    <span className="text-[#94A3B8] text-[10px] uppercase font-bold">Date & Duration</span>
-                    <p className="font-semibold text-black dark:text-white truncate">
-                      {formatDate(launchModalBooking.eventDate)} ({launchModalBooking.eventDuration || "Full Day"})
-                    </p>
+                  <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-[#E2E8F0] dark:border-[#262626]">
+                    <div>
+                      <span className="text-[#94A3B8] text-[10px] uppercase font-bold">Location</span>
+                      <p className="font-semibold text-black dark:text-white truncate">{launchModalBooking.eventLocation || "On-location"}</p>
+                    </div>
+                    <div>
+                      <span className="text-[#94A3B8] text-[10px] uppercase font-bold">Date & Duration</span>
+                      <p className="font-semibold text-black dark:text-white truncate">
+                        {formatDate(launchModalBooking.eventDate)} ({launchModalBooking.eventDuration || "Full Day"})
+                      </p>
+                    </div>
                   </div>
                 </div>
+
+                {/* Financial Breakdown (10% vs 90%) */}
+                <div className="p-4 rounded-xl bg-[#76B900]/10 border border-[#76B900]/25 space-y-2 text-xs">
+                  <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8]">
+                    <span>Total Client Budget:</span>
+                    <span className="font-black text-sm text-black dark:text-white">
+                      ₹{(launchModalBooking.totalPrice || launchModalBooking.budget || 0).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8]">
+                    <span>CREAONNECT Facilitation (10%):</span>
+                    <span className="font-bold text-[#76B900]">
+                      ₹{(launchModalBooking.platformFee || Math.round((launchModalBooking.totalPrice || launchModalBooking.budget || 0) * 0.1)).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8] pt-1 border-t border-[#76B900]/20">
+                    <span className="font-bold text-black dark:text-white">Creator Guaranteed Payout (90%):</span>
+                    <span className="font-black text-base text-[#76B900]">
+                      ₹{(launchModalBooking.freelancerPayout || Math.round((launchModalBooking.totalPrice || launchModalBooking.budget || 0) * 0.9)).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Countdown Timer Config */}
+                <div>
+                  <label className="block text-xs font-bold text-black dark:text-white mb-1.5">
+                    Marketplace Countdown Expiry
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { h: 12, label: "12 Hours" },
+                      { h: 24, label: "24 Hours (Standard)" },
+                      { h: 48, label: "48 Hours (2 Days)" }
+                    ].map(item => (
+                      <button
+                        key={item.h}
+                        type="button"
+                        onClick={() => setLaunchHours(item.h)}
+                        className={`py-2 px-1 text-center rounded-xl text-xs font-bold border transition-all ${
+                          launchHours === item.h
+                            ? "bg-[#76B900] text-black border-[#76B900] shadow-sm"
+                            : "bg-white dark:bg-[#1A1614] border-[#CBD5E1] dark:border-[#382C24] text-[#64748B] dark:text-[#94A3B8]"
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-[#94A3B8] mt-1">
+                    Countdown timer starts immediately when launched. Creators will see this live on their dashboard.
+                  </p>
+                </div>
+
+                {/* Special Admin Instructions (Optional) */}
+                <div>
+                  <label className="block text-xs font-bold text-black dark:text-white mb-1">
+                    Admin Instructions / Brief for Creators (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Priority client. Drone pilot and 4K camera gear required."
+                    value={launchNotes}
+                    onChange={(e) => setLaunchNotes(e.target.value)}
+                    className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1A1614] text-xs text-black dark:text-white outline-none focus:border-[#76B900]"
+                  />
+                </div>
               </div>
 
-              {/* Financial Breakdown (10% vs 90%) */}
-              <div className="p-4 rounded-xl bg-[#76B900]/10 border border-[#76B900]/25 space-y-2 text-xs">
-                <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8]">
-                  <span>Total Client Budget:</span>
-                  <span className="font-black text-sm text-black dark:text-white">
-                    ₹{(launchModalBooking.totalPrice || launchModalBooking.budget || 0).toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8]">
-                  <span>CREAONNECT Facilitation (10%):</span>
-                  <span className="font-bold text-[#76B900]">
-                    ₹{(launchModalBooking.platformFee || Math.round((launchModalBooking.totalPrice || launchModalBooking.budget || 0) * 0.1)).toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8] pt-1 border-t border-[#76B900]/20">
-                  <span className="font-bold text-black dark:text-white">Creator Guaranteed Payout (90%):</span>
-                  <span className="font-black text-base text-[#76B900]">
-                    ₹{(launchModalBooking.freelancerPayout || Math.round((launchModalBooking.totalPrice || launchModalBooking.budget || 0) * 0.9)).toLocaleString()}
-                  </span>
-                </div>
-              </div>
-
-              {/* Countdown Timer Config */}
-              <div>
-                <label className="block text-xs font-bold text-black dark:text-white mb-1.5">
-                  Marketplace Countdown Expiry
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { h: 12, label: "12 Hours" },
-                    { h: 24, label: "24 Hours (Standard)" },
-                    { h: 48, label: "48 Hours (2 Days)" }
-                  ].map(item => (
-                    <button
-                      key={item.h}
-                      type="button"
-                      onClick={() => setLaunchHours(item.h)}
-                      className={`py-2 px-1 text-center rounded-xl text-xs font-bold border transition-all ${
-                        launchHours === item.h
-                          ? "bg-[#76B900] text-black border-[#76B900] shadow-sm"
-                          : "bg-white dark:bg-[#1A1614] border-[#CBD5E1] dark:border-[#382C24] text-[#64748B] dark:text-[#94A3B8]"
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-                <p className="text-[11px] text-[#94A3B8] mt-1">
-                  Countdown timer starts immediately when launched. Creators will see this live on their dashboard.
-                </p>
-              </div>
-
-              {/* Special Admin Instructions (Optional) */}
-              <div>
-                <label className="block text-xs font-bold text-black dark:text-white mb-1">
-                  Admin Instructions / Brief for Creators (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Priority client. Drone pilot and 4K camera gear required."
-                  value={launchNotes}
-                  onChange={(e) => setLaunchNotes(e.target.value)}
-                  className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1A1614] text-xs text-black dark:text-white outline-none focus:border-[#76B900]"
-                />
-              </div>
-
-              {/* Actions */}
-              <div className="pt-2 flex items-center gap-3">
+              {/* Always-Visible Pinned Sticky Footer */}
+              <div className="px-6 py-3.5 border-t border-[#F1F5F9] dark:border-[#262626] bg-[#FAFAFA] dark:bg-[#14100E] shrink-0 flex items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setLaunchModalBooking(null)}
-                  className="flex-1 h-11 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] text-xs font-bold text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F8FAFC] dark:hover:bg-[#221B17]"
+                  className="flex-1 h-11 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] text-xs font-bold text-[#64748B] dark:text-[#94A3B8] hover:bg-white dark:hover:bg-[#221B17] transition-colors"
                 >
                   Cancel
                 </button>
