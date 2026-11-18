@@ -85,6 +85,11 @@ export const bookingService = {
     return response.data;
   },
 
+  launchOrderToMarketplace: async (id, launchData = {}) => {
+    const response = await api.patch(`/bookings/${id}/launch`, launchData);
+    return response.data;
+  },
+
   completeOrder: async (id) => {
     const response = await api.patch(`/bookings/marketplace/${id}/complete`);
     return response.data;

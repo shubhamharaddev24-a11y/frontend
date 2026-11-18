@@ -363,6 +363,18 @@ const UserDashboard = () => {
     }
   };
 
+  const handleLaunchOrderToMarketplace = async (bookingId, launchData = {}) => {
+    try {
+      await bookingService.launchOrderToMarketplace(bookingId, launchData);
+      setSuccessMsg("Order approved & launched to Creator Dashboard successfully!");
+      setAdminBookings(prev => prev.map(b => b._id === bookingId ? { ...b, status: "open", isLaunched: true, adminApproved: true } : b));
+      loadAdminData();
+      loadDashboardData();
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to launch order to creator marketplace.");
+    }
+  };
+
   const handleAssignLead = async (leadId, userId) => {
     try {
       await leadService.updateLead(leadId, { assignedTo: userId || null });
@@ -438,7 +450,7 @@ const UserDashboard = () => {
           const assignedUser = adminStaff.find(s => s._id === userId);
           return { ...t, assignedTo: assignedUser ? { _id: userId, name: assignedUser.name, email: assignedUser.email } : null };
         }
-        return b;
+        return t;
       }));
       setSuccessMsg("Task assignment updated.");
     } catch {
@@ -568,23 +580,33 @@ const UserDashboard = () => {
     setRefreshing(true);
     setError("");
     try {
-      const marketRes = await bookingService.getAvailableOrders({
-        eventType: filterCategory !== "all" ? filterCategory : undefined,
-        search: searchQuery || undefined
-      });
-      setAvailableOrders(marketRes?.data || []);
+      const [marketRes, claimedRes, clientRes] = await Promise.allSettled([
+        bookingService.getAvailableOrders({
+          eventType: filterCategory !== "all" ? filterCategory : undefined,
+          search: searchQuery || undefined
+        }),
+        bookingService.getMyFreelancerOrders(),
+        bookingService.getMyClientOrders()
+      ]);
 
-      const claimedRes = await bookingService.getMyFreelancerOrders();
-      setMyClaimedOrders(claimedRes?.data?.orders || []);
-      if (claimedRes?.data?.stats) {
-        setFreelancerStats(claimedRes.data.stats);
+      if (marketRes.status === "fulfilled") {
+        setAvailableOrders(marketRes.value?.data || []);
+      }
+      if (claimedRes.status === "fulfilled") {
+        setMyClaimedOrders(claimedRes.value?.data?.orders || []);
+        if (claimedRes.value?.data?.stats) {
+          setFreelancerStats(claimedRes.value.data.stats);
+        }
+      }
+      if (clientRes.status === "fulfilled") {
+        setMyClientOrders(clientRes.value?.data || []);
       }
 
-      const clientRes = await bookingService.getMyClientOrders();
-      setMyClientOrders(clientRes?.data || []);
+      if (user?.role === "admin") {
+        loadAdminData();
+      }
     } catch (err) {
-      console.error(err);
-      setError("Failed to load marketplace data. Please try again.");
+      console.warn("Dashboard data refresh note:", err);
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -707,7 +729,7 @@ const UserDashboard = () => {
         customerPhone: user?.phone || "+91 99999 99999"
       });
 
-      setSuccessMsg("Order published live to marketplace! Creators across the World can now submit proposals and claim it.");
+      setSuccessMsg("Photoshoot order submitted successfully! Our studio admin will review details and launch it to top verified creators shortly.");
       setPostFormData({
         title: "",
         eventType: "pre-wedding",
@@ -791,7 +813,8 @@ const UserDashboard = () => {
   const activeClaimed = useMemo(() => myClaimedOrders.filter(o => o.status === "claimed" || o.status === "confirmed" || o.status === "in_progress"), [myClaimedOrders]);
 
   // Client Orders stats
-  const clientOpenOrders = useMemo(() => myClientOrders.filter(o => o.status === "open"), [myClientOrders]);
+  const clientPendingOrders = useMemo(() => myClientOrders.filter(o => o.status === "pending" || !o.isLaunched), [myClientOrders]);
+  const clientOpenOrders = useMemo(() => myClientOrders.filter(o => o.status === "open" && o.isLaunched), [myClientOrders]);
   const clientClaimedOrders = useMemo(() => myClientOrders.filter(o => o.status === "claimed" || o.status === "confirmed" || o.status === "in_progress"), [myClientOrders]);
   const clientCompletedOrders = useMemo(() => myClientOrders.filter(o => o.status === "completed"), [myClientOrders]);
   const clientTotalBudgetSecured = useMemo(() => myClientOrders.reduce((sum, o) => sum + (o.totalPrice || o.budget || 0), 0), [myClientOrders]);
@@ -799,7 +822,7 @@ const UserDashboard = () => {
   // Real Calculated Earnings
   const totalUserEarnings = useMemo(() => {
     const earnedFromClaimed = completedClaimed.reduce((sum, o) => sum + (o.freelancerPayout || (o.budget ? Math.round(o.budget * 0.9) : 0)), 0);
-    return (user?.totalEarnings || 0) + earnedFromClaimed;
+    return Math.max(user?.totalEarnings || 0, earnedFromClaimed);
   }, [user, completedClaimed]);
 
   const pendingEscrowPayout = useMemo(() => {
@@ -818,7 +841,7 @@ const UserDashboard = () => {
       counts[cat] = (counts[cat] || 0) + 1;
     });
 
-    const total = allKnownOrders.length || 1;
+    const total = allKnownOrders.length;
     const categoryConfig = [
       { key: "pre-wedding", label: "Pre-Wedding", color: "#76B900" },
       { key: "wedding", label: "Wedding", color: "#A3E635" },
@@ -830,7 +853,7 @@ const UserDashboard = () => {
 
     const results = categoryConfig.map(c => {
       const count = counts[c.key] || 0;
-      const pct = allKnownOrders.length > 0 ? Math.round((count / total) * 100) : (c.key === "pre-wedding" ? 45 : c.key === "wedding" ? 35 : c.key === "commercial" ? 20 : 0);
+      const pct = total > 0 ? Math.round((count / total) * 100) : 0;
       return {
         ...c,
         count,
@@ -839,7 +862,7 @@ const UserDashboard = () => {
     });
 
     const sorted = [...results].sort((a, b) => b.percentage - a.percentage);
-    const top = sorted[0] || { label: "Pre-Wedding", percentage: 45, count: 0 };
+    const top = total > 0 && sorted[0].count > 0 ? sorted[0] : { label: "No Orders Yet", percentage: 0, count: 0 };
 
     return { dynamicCategories: results, topCategory: top };
   }, [allKnownOrders]);
@@ -849,7 +872,7 @@ const UserDashboard = () => {
     let offset = 0;
     const activeSlices = dynamicCategories.filter(c => c.percentage > 0).slice(0, 4);
     if (activeSlices.length === 0) {
-      activeSlices.push({ key: "pre-wedding", color: "#76B900", percentage: 100, label: "Pre-Wedding" });
+      return [];
     }
 
     return activeSlices.map(cat => {
@@ -879,11 +902,12 @@ const UserDashboard = () => {
       }
     });
 
-    const maxVol = Math.max(...monthTotals.map(m => m.volume), 10000);
-    return monthTotals.map((m, i) => {
+    const maxVol = Math.max(...monthTotals.map(m => m.volume), 1);
+    const hasAnyOrders = allKnownOrders.length > 0;
+    return monthTotals.map((m) => {
       const hasReal = m.volume > 0;
-      const h1Val = hasReal ? Math.max(20, Math.min(95, Math.round((m.volume / maxVol) * 90))) : [35, 55, 45, 60, 75, 40, 65, 80, 50, 70, 85, 78][i];
-      const h2Val = Math.round(h1Val * 0.55);
+      const h1Val = hasReal ? Math.max(20, Math.min(95, Math.round((m.volume / maxVol) * 90))) : (hasAnyOrders ? 4 : 2);
+      const h2Val = hasReal ? Math.round(h1Val * 0.55) : 0;
       return {
         ...m,
         h1: `${h1Val}%`,
@@ -941,8 +965,10 @@ const UserDashboard = () => {
 
   const filteredClientOrders = useMemo(() => {
     let list = [...myClientOrders];
-    if (clientOrdersFilter === "open") {
-      list = list.filter(o => o.status === "open");
+    if (clientOrdersFilter === "pending") {
+      list = list.filter(o => o.status === "pending" || !o.isLaunched);
+    } else if (clientOrdersFilter === "open") {
+      list = list.filter(o => o.status === "open" && o.isLaunched);
     } else if (clientOrdersFilter === "claimed") {
       list = list.filter(o => o.status === "claimed" || o.status === "confirmed" || o.status === "in_progress");
     } else if (clientOrdersFilter === "completed") {
@@ -1638,6 +1664,7 @@ const UserDashboard = () => {
             formatDate={formatDate}
             handleAssignBooking={handleAssignBooking}
             handleUpdateBookingStatus={handleUpdateBookingStatus}
+            handleLaunchOrderToMarketplace={handleLaunchOrderToMarketplace}
             handleAssignLead={handleAssignLead}
             handleUpdateLeadStatus={handleUpdateLeadStatus}
             handleCreateTask={handleCreateTask}
@@ -1839,6 +1866,14 @@ const UserDashboard = () => {
                     ))}
                   </motion.svg>
 
+                  {/* Center Shoots Count */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                    <span className="text-2xl font-black text-black dark:text-white">
+                      {allKnownOrders.length}
+                    </span>
+                    <span className="text-[9px] uppercase tracking-wider text-[#94A3B8] font-bold">Shoots</span>
+                  </div>
+
                   {/* Dynamic Top Category floating badge with animated breathing float */}
                   <motion.div
                     initial={{ scale: 0, opacity: 0, y: 10 }}
@@ -1853,7 +1888,9 @@ const UserDashboard = () => {
                   >
                     <div className="text-[#94A3B8] text-[9px] uppercase tracking-wider">Top Category</div>
                     <div className="font-bold">{topCategory.label}</div>
-                    <div className="font-extrabold text-[#76B900] text-xs">{topCategory.percentage}% of Shoots</div>
+                    <div className="font-extrabold text-[#76B900] text-xs">
+                      {allKnownOrders.length > 0 ? `${topCategory.percentage}% of Shoots` : "0 Shoots"}
+                    </div>
                   </motion.div>
                 </div>
 
@@ -2279,23 +2316,29 @@ const UserDashboard = () => {
             </div>
 
             {/* Client KPI Row */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
               <div className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] shadow-sm">
                 <span className="text-xs font-bold text-[#64748B] dark:text-[#94A3B8]">Total Shoots Booked</span>
                 <div className="text-2xl font-black text-black dark:text-white mt-2">{myClientOrders.length}</div>
                 <div className="text-[11px] text-[#76B900] font-bold mt-0.5">Lifetime requests</div>
               </div>
 
+              <div className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-amber-500/30 dark:border-amber-500/20 shadow-sm">
+                <span className="text-xs font-bold text-[#64748B] dark:text-[#94A3B8]">Under Studio Review</span>
+                <div className="text-2xl font-black text-amber-600 dark:text-amber-400 mt-2">{clientPendingOrders.length}</div>
+                <div className="text-[11px] text-[#94A3B8] mt-0.5">Admin approval pending</div>
+              </div>
+
+              <div className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] shadow-sm">
+                <span className="text-xs font-bold text-[#64748B] dark:text-[#94A3B8]">Live on Creator Hub</span>
+                <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-2">{clientOpenOrders.length}</div>
+                <div className="text-[11px] text-[#94A3B8] mt-0.5">Visible to creators</div>
+              </div>
+
               <div className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] shadow-sm">
                 <span className="text-xs font-bold text-[#64748B] dark:text-[#94A3B8]">Assigned / In Progress</span>
                 <div className="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-2">{clientClaimedOrders.length}</div>
                 <div className="text-[11px] text-[#94A3B8] mt-0.5">Creators actively shooting</div>
-              </div>
-
-              <div className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] shadow-sm">
-                <span className="text-xs font-bold text-[#64748B] dark:text-[#94A3B8]">Awaiting Photographers</span>
-                <div className="text-2xl font-black text-amber-600 dark:text-amber-400 mt-2">{clientOpenOrders.length}</div>
-                <div className="text-[11px] text-[#94A3B8] mt-0.5">Live on marketplace</div>
               </div>
 
               <div className="p-5 bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] shadow-sm">
@@ -2908,14 +2951,20 @@ const UserDashboard = () => {
             </div>
 
             {/* Client Orders KPI Summary */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div className="p-4 bg-white dark:bg-[#12100E] rounded-xl border border-[#E2E8F0] dark:border-[#262626]">
                 <div className="text-xs text-[#94A3B8] font-bold">Total Orders Posted</div>
                 <div className="text-xl font-black text-black dark:text-white mt-1">{myClientOrders.length}</div>
               </div>
-              <div className="p-4 bg-white dark:bg-[#12100E] rounded-xl border border-[#E2E8F0] dark:border-[#262626]">
-                <div className="text-xs text-[#94A3B8] font-bold">Awaiting Photographer</div>
+              <div className="p-4 bg-white dark:bg-[#12100E] rounded-xl border border-amber-500/30 dark:border-amber-500/20">
+                <div className="text-xs text-[#94A3B8] font-bold">Under Studio Review</div>
                 <div className="text-xl font-black text-amber-600 dark:text-amber-400 mt-1">
+                  {clientPendingOrders.length}
+                </div>
+              </div>
+              <div className="p-4 bg-white dark:bg-[#12100E] rounded-xl border border-[#E2E8F0] dark:border-[#262626]">
+                <div className="text-xs text-[#94A3B8] font-bold">Live on Marketplace</div>
+                <div className="text-xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
                   {clientOpenOrders.length}
                 </div>
               </div>
@@ -2937,7 +2986,8 @@ const UserDashboard = () => {
             <div className="flex items-center gap-2 overflow-x-auto pb-1">
               {[
                 { key: "all", label: `All (${myClientOrders.length})` },
-                { key: "open", label: `Open / Awaiting (${clientOpenOrders.length})` },
+                { key: "pending", label: `Under Review (${clientPendingOrders.length})` },
+                { key: "open", label: `Live on Market (${clientOpenOrders.length})` },
                 { key: "claimed", label: `Claimed (${clientClaimedOrders.length})` },
                 { key: "completed", label: `Completed (${clientCompletedOrders.length})` },
                 { key: "cancelled", label: `Cancelled (${myClientOrders.filter(o => o.status === "cancelled").length})` }
@@ -2978,7 +3028,8 @@ const UserDashboard = () => {
                 {filteredClientOrders.map((order) => {
                   const isClaimed = order.status === "claimed" || order.status === "confirmed" || order.status === "in_progress";
                   const isCompleted = order.status === "completed";
-                  const isOpen = order.status === "open";
+                  const isPendingLaunch = order.status === "pending" || !order.isLaunched;
+                  const isOpen = order.status === "open" && order.isLaunched;
                   const photographer = order.claimedBy;
 
                   return (
@@ -2989,15 +3040,25 @@ const UserDashboard = () => {
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-sm font-black text-black dark:text-white line-clamp-1">{order.title}</span>
                         <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
-                          isOpen
+                          isPendingLaunch
                             ? "bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300"
+                            : isOpen
+                            ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300"
                             : isClaimed
                             ? "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300"
                             : isCompleted
                             ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300"
                             : "bg-neutral-100 dark:bg-neutral-800 text-[#64748B]"
                         }`}>
-                          {isOpen ? "Awaiting Creator" : isClaimed ? "Claimed by Creator" : isCompleted ? "Completed" : "Cancelled"}
+                          {isPendingLaunch
+                            ? "🟡 Under Admin Review"
+                            : isOpen
+                            ? "🟢 Live on Marketplace"
+                            : isClaimed
+                            ? "Claimed by Creator"
+                            : isCompleted
+                            ? "Completed"
+                            : "Cancelled"}
                         </span>
                       </div>
 
@@ -3019,6 +3080,19 @@ const UserDashboard = () => {
                         <span className="text-[#64748B] dark:text-[#94A3B8]">Your Budget:</span>
                         <span className="font-black text-black dark:text-white">₹{(order.totalPrice || order.budget || 0).toLocaleString()}</span>
                       </div>
+
+                      {/* UNDER ADMIN REVIEW NOTICE */}
+                      {isPendingLaunch && (
+                        <div className="p-3.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2.5">
+                          <Clock size={16} className="shrink-0 text-amber-500 mt-0.5" />
+                          <div>
+                            <p className="font-bold">Studio Review in Progress</p>
+                            <p className="text-[11px] text-amber-700 dark:text-amber-400 mt-0.5">
+                              Our studio admin is reviewing your shoot requirements. As soon as it is approved, it will be launched live to verified creators and you will begin receiving proposals.
+                            </p>
+                          </div>
+                        </div>
+                      )}
 
                       {/* QUOTATIONS RECEIVED COMPARISON DECK */}
                       {isOpen && (
@@ -3452,7 +3526,7 @@ const UserDashboard = () => {
               <div className="flex items-center justify-between pb-3 border-b border-[#F1F5F9] dark:border-[#262626]">
                 <div>
                   <h3 className="text-lg font-black text-[#1E1B4B] dark:text-white">Book / Post Photoshoot Order</h3>
-                  <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">Order will appear live on marketplace with dynamic countdown timer.</p>
+                  <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">Studio admin will review details and launch your shoot directly to verified creators.</p>
                 </div>
                 <button
                   type="button"
@@ -3645,7 +3719,7 @@ const UserDashboard = () => {
                     className="flex-1 h-11 rounded bg-[#76B900] hover:bg-[#68A500] text-black text-xs font-extrabold shadow-sm disabled:opacity-50"
                     style={{ borderRadius: "2px" }}
                   >
-                    {postingOrder ? "Publishing..." : "Publish to Board"}
+                    {postingOrder ? "Submitting..." : "Submit Photoshoot Order"}
                   </button>
                 </div>
               </form>

@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
   FileCode,
@@ -21,7 +21,12 @@ import {
   ArrowRight,
   Eye,
   RefreshCw,
-  Users
+  Users,
+  Rocket,
+  Clock,
+  Send,
+  X,
+  Check
 } from "lucide-react";
 import AdminCMSManager from "./AdminCMSManager";
 
@@ -29,15 +34,16 @@ const AdminWorkspaceContent = ({
   activeMenu,
   setActiveMenu,
   adminStats,
-  adminBookings,
-  adminLeads,
-  adminStaff,
-  adminTasks,
+  adminBookings = [],
+  adminLeads = [],
+  adminStaff = [],
+  adminTasks = [],
   adminMarketplaceStats,
   loadingAdminData,
   formatDate,
   handleAssignBooking,
   handleUpdateBookingStatus,
+  handleLaunchOrderToMarketplace,
   handleAssignLead,
   handleUpdateLeadStatus,
   handleCreateTask,
@@ -59,6 +65,95 @@ const AdminWorkspaceContent = ({
   regError,
   regSuccess
 }) => {
+  const [launchModalBooking, setLaunchModalBooking] = useState(null);
+  const [launchHours, setLaunchHours] = useState(24);
+  const [launchNotes, setLaunchNotes] = useState("");
+  const [launchingId, setLaunchingId] = useState(null);
+  const [bookingsFilter, setBookingsFilter] = useState("all");
+  const [actionSuccess, setActionSuccess] = useState("");
+
+  const pendingLaunchBookings = useMemo(() => {
+    return adminBookings.filter(b => b.status === "pending" || !b.isLaunched);
+  }, [adminBookings]);
+
+  const liveHubBookings = useMemo(() => {
+    return adminBookings.filter(b => b.status === "open" && b.isLaunched);
+  }, [adminBookings]);
+
+  const filteredAdminBookings = useMemo(() => {
+    if (bookingsFilter === "pending_launch") return pendingLaunchBookings;
+    if (bookingsFilter === "open") return liveHubBookings;
+    if (bookingsFilter === "confirmed") return adminBookings.filter(b => b.status === "confirmed");
+    if (bookingsFilter === "completed") return adminBookings.filter(b => b.status === "completed");
+    return adminBookings;
+  }, [adminBookings, bookingsFilter, pendingLaunchBookings, liveHubBookings]);
+
+  const onConfirmLaunch = async (booking) => {
+    if (!booking || !handleLaunchOrderToMarketplace) return;
+    setLaunchingId(booking._id);
+    try {
+      await handleLaunchOrderToMarketplace(booking._id, {
+        expiryHours: launchHours,
+        notes: launchNotes
+      });
+      setActionSuccess(`Order "${booking.title || booking.customerName}" successfully launched to Creator Hub!`);
+      setTimeout(() => setActionSuccess(""), 4500);
+      setLaunchModalBooking(null);
+      setLaunchNotes("");
+    } catch (err) {
+      console.error("Launch error:", err);
+    } finally {
+      setLaunchingId(null);
+    }
+  };
+
+  // Dynamic Category Breakdown for Admin
+  const { adminCategories, adminTopCategory } = useMemo(() => {
+    const counts = {};
+    adminBookings.forEach(b => {
+      const cat = (b.eventType || b.category || "other").toLowerCase();
+      counts[cat] = (counts[cat] || 0) + 1;
+    });
+    const total = adminBookings.length;
+    const config = [
+      { key: "pre-wedding", label: "Pre-Wedding", color: "#76B900" },
+      { key: "wedding", label: "Wedding", color: "#38bdf8" },
+      { key: "commercial", label: "Commercial", color: "#f59e0b" },
+      { key: "other", label: "Studio & Other", color: "#94A3B8" }
+    ];
+    const results = config.map(c => {
+      const count = counts[c.key] || 0;
+      const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+      return { ...c, count, percentage: pct };
+    });
+    const sorted = [...results].sort((a, b) => b.percentage - a.percentage);
+    const top = total > 0 && sorted[0].count > 0 ? sorted[0] : { label: "No Orders Yet", percentage: 0, count: 0 };
+    return { adminCategories: results, adminTopCategory: top };
+  }, [adminBookings]);
+
+  // Dynamic 12-Month Bar Chart for Admin
+  const adminBarChartData = useMemo(() => {
+    const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    const monthTotals = months.map(m => ({ m, volume: 0, count: 0 }));
+    adminBookings.forEach(b => {
+      const d = b.eventDate || b.createdAt ? new Date(b.eventDate || b.createdAt) : new Date();
+      const mIdx = d.getMonth();
+      const val = b.totalPrice || b.budget || 0;
+      if (monthTotals[mIdx]) {
+        monthTotals[mIdx].volume += val;
+        monthTotals[mIdx].count += 1;
+      }
+    });
+    const maxVol = Math.max(...monthTotals.map(m => m.volume), 1);
+    const hasAny = adminBookings.length > 0;
+    return monthTotals.map(item => {
+      const hasReal = item.volume > 0;
+      const v1 = hasReal ? Math.max(15, Math.min(95, Math.round((item.volume / maxVol) * 90))) : (hasAny ? 4 : 2);
+      const v2 = hasReal ? Math.round(v1 * 0.55) : 0;
+      return { m: item.m, v1, v2, volume: item.volume };
+    });
+  }, [adminBookings]);
+
   const gmv = adminMarketplaceStats?.financials?.grossMerchandiseValue ||
     adminBookings.reduce((acc, b) => acc + (b.totalPrice || b.budget || 0), 0);
   const platformFee = adminMarketplaceStats?.financials?.totalPlatformCommission || Math.round(gmv * 0.10);
@@ -106,6 +201,56 @@ const AdminWorkspaceContent = ({
             </div>
           </div>
 
+          {/* Action Success Toast */}
+          {actionSuccess && (
+            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CheckCircle size={16} />
+                <span>{actionSuccess}</span>
+              </div>
+              <button onClick={() => setActionSuccess("")} className="text-emerald-500 hover:text-emerald-400">
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
+          {/* Alert Banner: Orders Awaiting Admin Launch to Creator Hub */}
+          {pendingLaunchBookings.length > 0 && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+              <div className="flex items-start sm:items-center gap-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-[#76B900] text-black flex items-center justify-center font-black shrink-0 shadow-sm">
+                  <Rocket size={22} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-black text-black dark:text-white">
+                      {pendingLaunchBookings.length} Photoshoot Order{pendingLaunchBookings.length > 1 ? "s" : ""} Awaiting Launch to Creator Hub
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-extrabold uppercase">
+                      Admin Review Required
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1">
+                    Clients booked these shoots. They are hidden from creators until you review details and launch them to the marketplace.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setBookingsFilter("pending_launch");
+                    setActiveMenu("admin-bookings");
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-[#76B900] hover:bg-[#86c910] text-black text-xs font-black transition-all flex items-center gap-2 shadow-sm active:scale-95"
+                >
+                  <Rocket size={14} />
+                  <span>Review & Launch ({pendingLaunchBookings.length})</span>
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Top Analytics Cards Grid (Matches Creator Hub exactly) */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Chart 1: Revenue & Financials (Dynamic 2-col) */}
@@ -137,29 +282,20 @@ const AdminWorkspaceContent = ({
               {/* Dynamic Bar Graph Mock */}
               <div className="mt-8 space-y-2">
                 <div className="h-36 flex items-end justify-between gap-2 pt-4 px-2 border-b border-[#F1F5F9] dark:border-[#262626]">
-                  {[
-                    { m: "01", v1: 45, v2: 25 },
-                    { m: "02", v1: 65, v2: 35 },
-                    { m: "03", v1: 50, v2: 30 },
-                    { m: "04", v1: 75, v2: 40 },
-                    { m: "05", v1: 95, v2: 50 },
-                    { m: "06", v1: 60, v2: 32 },
-                    { m: "07", v1: 85, v2: 45 },
-                    { m: "08", v1: 70, v2: 38 },
-                    { m: "09", v1: 55, v2: 28 },
-                    { m: "10", v1: 80, v2: 42 },
-                    { m: "11", v1: 100, v2: 55 },
-                    { m: "12", v1: 90, v2: 48 },
-                  ].map((bar, idx) => (
+                  {adminBarChartData.map((bar, idx) => (
                     <div key={idx} className="flex-1 flex flex-col items-center gap-1 group relative">
                       <div className="w-full flex items-end justify-center gap-0.5 sm:gap-1 h-28">
                         <div
                           style={{ height: `${bar.v1}%` }}
-                          className="w-full max-w-[8px] sm:max-w-[12px] bg-[#76B900] rounded-t-sm transition-all group-hover:brightness-110"
+                          className={`w-full max-w-[8px] sm:max-w-[12px] rounded-t-sm transition-all group-hover:brightness-110 ${
+                            bar.volume > 0 ? "bg-[#76B900]" : "bg-[#76B900]/20"
+                          }`}
                         />
                         <div
                           style={{ height: `${bar.v2}%` }}
-                          className="w-full max-w-[8px] sm:max-w-[12px] bg-[#64748B]/40 dark:bg-[#333] rounded-t-sm transition-all"
+                          className={`w-full max-w-[8px] sm:max-w-[12px] rounded-t-sm transition-all ${
+                            bar.volume > 0 ? "bg-[#64748B]/40 dark:bg-[#333]" : "bg-transparent"
+                          }`}
                         />
                       </div>
                       <span className="text-[10px] text-[#94A3B8] font-bold">{bar.m}</span>
@@ -194,7 +330,7 @@ const AdminWorkspaceContent = ({
                   </button>
                 </div>
                 <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8] mt-1">
-                  Calculated across {adminStats.bookings.total} recorded shoots & enquiries
+                  Calculated across {adminBookings.length} recorded shoots & enquiries
                 </p>
               </div>
 
@@ -209,29 +345,26 @@ const AdminWorkspaceContent = ({
                       fill="none"
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
-                    <path
-                      className="text-[#76B900]"
-                      strokeDasharray="50, 100"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      stroke="currentColor"
-                      fill="none"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
-                    <path
-                      className="text-[#38bdf8]"
-                      strokeDasharray="30, 100"
-                      strokeDashoffset="-50"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      stroke="currentColor"
-                      fill="none"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
+                    {adminCategories.filter(c => c.percentage > 0).map((c, i, arr) => {
+                      const prevSum = arr.slice(0, i).reduce((sum, item) => sum + item.percentage, 0);
+                      return (
+                        <path
+                          key={c.key}
+                          className="transition-all"
+                          stroke={c.color}
+                          strokeDasharray={`${c.percentage}, 100`}
+                          strokeDashoffset={-prevSum}
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                          fill="none"
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        />
+                      );
+                    })}
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
                     <span className="text-xl font-black text-black dark:text-white">
-                      {adminStats.bookings.total}
+                      {adminBookings.length}
                     </span>
                     <span className="text-[9px] uppercase tracking-wider text-[#94A3B8] font-bold">Shoots</span>
                   </div>
@@ -240,30 +373,22 @@ const AdminWorkspaceContent = ({
                 {/* Floating Category Tag */}
                 <div className="mt-3 px-3 py-1.5 rounded-xl bg-black dark:bg-[#1A1614] border border-[#333] text-center shadow-lg">
                   <p className="text-[9px] uppercase tracking-wider text-[#94A3B8] font-bold">Top Category</p>
-                  <p className="text-xs font-black text-white">Pre-Wedding &bull; 50%</p>
+                  <p className="text-xs font-black text-white">
+                    {adminTopCategory.label} &bull; {adminTopCategory.percentage}%
+                  </p>
                 </div>
               </div>
 
               {/* Donut Legend */}
               <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[#F1F5F9] dark:border-[#262626] text-center">
-                <div>
-                  <div className="text-xs font-bold text-black dark:text-white">50%</div>
-                  <div className="text-[10px] text-[#76B900] font-semibold flex items-center justify-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#76B900]" /> Pre-Wedding
+                {adminCategories.slice(0, 3).map((c) => (
+                  <div key={c.key}>
+                    <div className="text-xs font-bold text-black dark:text-white">{c.percentage}%</div>
+                    <div className="text-[10px] font-semibold flex items-center justify-center gap-1" style={{ color: c.color }}>
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c.color }} /> {c.label}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-black dark:text-white">35%</div>
-                  <div className="text-[10px] text-[#38bdf8] font-semibold flex items-center justify-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" /> Wedding
-                  </div>
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-black dark:text-white">15%</div>
-                  <div className="text-[10px] text-[#94A3B8] font-semibold flex items-center justify-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#94A3B8]" /> Studio & Flex
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -385,6 +510,7 @@ const AdminWorkspaceContent = ({
                         <th className="py-2.5">Client</th>
                         <th className="py-2.5">Service & Date</th>
                         <th className="py-2.5">Status</th>
+                        <th className="py-2.5">Creator Hub</th>
                         <th className="py-2.5 text-right">Staff</th>
                       </tr>
                     </thead>
@@ -396,7 +522,7 @@ const AdminWorkspaceContent = ({
                             <p className="text-[10px] text-[#64748B] dark:text-[#94A3B8]">{b.customerPhone}</p>
                           </td>
                           <td className="py-2.5 pr-2">
-                            <p className="font-semibold text-black dark:text-white truncate">{b.service?.name || "Custom Shoot"}</p>
+                            <p className="font-semibold text-black dark:text-white truncate">{b.service?.name || b.title || "Custom Shoot"}</p>
                             <p className="text-[10px] text-[#76B900]">{formatDate(b.eventDate)}</p>
                           </td>
                           <td className="py-2.5 pr-2">
@@ -408,6 +534,23 @@ const AdminWorkspaceContent = ({
                               }`}>
                               {b.status}
                             </span>
+                          </td>
+                          <td className="py-2.5 pr-2">
+                            {b.status === "pending" || !b.isLaunched ? (
+                              <button
+                                type="button"
+                                onClick={() => setLaunchModalBooking(b)}
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#76B900] hover:bg-[#86c910] text-black font-extrabold text-[10px] shadow-sm transition-transform active:scale-95"
+                              >
+                                <Rocket size={11} />
+                                <span>🚀 Launch</span>
+                              </button>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-500">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Live on Hub
+                              </span>
+                            )}
                           </td>
                           <td className="py-2.5 text-right font-medium text-black dark:text-white text-[11px]">
                             {b.assignedTo?.name || "Unassigned"}
@@ -485,9 +628,9 @@ const AdminWorkspaceContent = ({
         <main className="p-6 md:p-8 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-black text-black dark:text-white tracking-tight">Shoot Bookings Management</h1>
+              <h1 className="text-2xl font-black text-black dark:text-white tracking-tight">Shoot Bookings & Creator Launch</h1>
               <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-0.5">
-                Review client shoot orders, update lifecycle status, and assign studio staff members.
+                Review client bookings, launch orders live to creator dashboards, and assign studio team members.
               </p>
             </div>
             <div className="flex items-center gap-2 text-xs font-bold text-[#76B900] bg-[#76B900]/15 px-3 py-1.5 rounded-lg border border-[#76B900]/30">
@@ -496,9 +639,48 @@ const AdminWorkspaceContent = ({
             </div>
           </div>
 
+          {/* Action Success Toast */}
+          {actionSuccess && (
+            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CheckCircle size={16} />
+                <span>{actionSuccess}</span>
+              </div>
+              <button onClick={() => setActionSuccess("")} className="text-emerald-500 hover:text-emerald-400">
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
+          {/* Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            {[
+              { key: "all", label: `All Bookings (${adminBookings.length})` },
+              { key: "pending_launch", label: `🚀 Pending Launch (${pendingLaunchBookings.length})`, highlight: pendingLaunchBookings.length > 0 },
+              { key: "open", label: `● Live on Creator Hub (${liveHubBookings.length})` },
+              { key: "confirmed", label: `✓ Confirmed (${adminBookings.filter(b => b.status === 'confirmed').length})` },
+              { key: "completed", label: `Completed (${adminBookings.filter(b => b.status === 'completed').length})` }
+            ].map(tab => (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => setBookingsFilter(tab.key)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                  bookingsFilter === tab.key
+                    ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
+                    : tab.highlight
+                    ? "bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-black"
+                    : "bg-white dark:bg-[#12100E] text-[#64748B] dark:text-[#94A3B8] border border-[#E2E8F0] dark:border-[#262626]"
+                }`}
+              >
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+
           <div className="bg-white dark:bg-[#12100E] rounded-2xl border border-[#E2E8F0] dark:border-[#262626] p-6 shadow-sm">
-            {adminBookings.length === 0 ? (
-              <div className="py-12 text-center text-xs text-[#94A3B8]">No bookings recorded yet.</div>
+            {filteredAdminBookings.length === 0 ? (
+              <div className="py-12 text-center text-xs text-[#94A3B8]">No bookings found in this filter tab.</div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-xs text-left">
@@ -506,13 +688,15 @@ const AdminWorkspaceContent = ({
                     <tr>
                       <th className="py-3 font-bold">Client / Contact</th>
                       <th className="py-3 font-bold">Service / Date</th>
+                      <th className="py-3 font-bold">Budget & Payout</th>
                       <th className="py-3 font-bold">Status</th>
+                      <th className="py-3 font-bold">Marketplace Launch</th>
                       <th className="py-3 font-bold">Assigned Staff</th>
                       <th className="py-3 font-bold text-right">Update Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#F1F5F9] dark:divide-[#262626]">
-                    {adminBookings.map((b) => (
+                    {filteredAdminBookings.map((b) => (
                       <tr key={b._id} className="hover:bg-[#F8FAFC] dark:hover:bg-[#1A1614]">
                         <td className="py-3.5 pr-3">
                           <p className="font-bold text-black dark:text-white">{b.customerName}</p>
@@ -520,9 +704,18 @@ const AdminWorkspaceContent = ({
                           <p className="text-[10px] text-[#94A3B8]">{b.customerEmail}</p>
                         </td>
                         <td className="py-3.5 pr-3">
-                          <p className="font-bold text-black dark:text-white">{b.service?.name || "Custom Shoot"}</p>
+                          <p className="font-bold text-black dark:text-white">{b.service?.name || b.title || "Custom Shoot"}</p>
                           <p className="text-[#76B900] font-semibold">{formatDate(b.eventDate)}</p>
                           <p className="text-[10px] text-[#94A3B8]">{b.eventLocation}</p>
+                        </td>
+                        <td className="py-3.5 pr-3">
+                          <p className="font-black text-black dark:text-white">₹{(b.totalPrice || b.budget || 0).toLocaleString()}</p>
+                          <p className="text-[10px] text-[#76B900] font-semibold">
+                            Creator: ₹{(b.freelancerPayout || Math.round((b.totalPrice || b.budget || 0) * 0.9)).toLocaleString()}
+                          </p>
+                          <p className="text-[10px] text-[#94A3B8]">
+                            Platform (10%): ₹{(b.platformFee || Math.round((b.totalPrice || b.budget || 0) * 0.1)).toLocaleString()}
+                          </p>
                         </td>
                         <td className="py-3.5 pr-3">
                           <span className={`inline-flex rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ${b.status === "confirmed"
@@ -535,6 +728,30 @@ const AdminWorkspaceContent = ({
                             }`}>
                             {b.status}
                           </span>
+                        </td>
+                        <td className="py-3.5 pr-3">
+                          {b.status === "pending" || !b.isLaunched ? (
+                            <button
+                              type="button"
+                              onClick={() => setLaunchModalBooking(b)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#76B900] hover:bg-[#86c910] text-black text-xs font-black shadow-sm transition-all active:scale-95 whitespace-nowrap"
+                            >
+                              <Rocket size={13} />
+                              <span>🚀 Launch to Creators</span>
+                            </button>
+                          ) : (
+                            <div className="flex flex-col">
+                              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-500">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Live on Hub
+                              </span>
+                              <span className="text-[10px] text-[#94A3B8]">
+                                {b.expiresAt && new Date(b.expiresAt) > new Date()
+                                  ? `${Math.max(1, Math.round((new Date(b.expiresAt) - new Date()) / 3600000))}h left`
+                                  : 'Circulating'}
+                              </span>
+                            </div>
+                          )}
                         </td>
                         <td className="py-3.5 pr-3">
                           <div className="flex items-center gap-1.5">
@@ -1099,8 +1316,278 @@ const AdminWorkspaceContent = ({
               </p>
             </div>
           </div>
+
+          {/* Pending Launch Queue in Marketplace */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-black text-black dark:text-white flex items-center gap-2">
+                  <span>Awaiting Admin Launch Queue</span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/15 text-amber-600 dark:text-amber-400">
+                    {pendingLaunchBookings.length}
+                  </span>
+                </h3>
+                <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">Orders submitted by clients awaiting admin review and release to creator feeds.</p>
+              </div>
+            </div>
+
+            {pendingLaunchBookings.length === 0 ? (
+              <div className="p-8 text-center bg-white dark:bg-[#12100E] rounded-2xl border border-dashed border-[#CBD5E1] dark:border-[#262626] text-xs text-[#94A3B8]">
+                ✓ All client orders are reviewed and launched! No pending orders.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {pendingLaunchBookings.map((b) => (
+                  <div key={b._id} className="p-4 rounded-2xl bg-white dark:bg-[#12100E] border border-amber-500/30 dark:border-amber-500/20 shadow-sm space-y-3">
+                    <div className="flex justify-between items-start gap-2">
+                      <div>
+                        <h4 className="text-xs font-black text-black dark:text-white">{b.title || b.service?.name || "Photoshoot Order"}</h4>
+                        <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">{b.customerName} &bull; {b.customerPhone}</p>
+                      </div>
+                      <span className="px-2 py-0.5 rounded text-[9px] font-bold uppercase bg-amber-500/20 text-amber-600 dark:text-amber-400">
+                        Pending Launch
+                      </span>
+                    </div>
+
+                    <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8] space-y-1">
+                      <p>📍 {b.eventLocation}</p>
+                      <p>📅 {formatDate(b.eventDate)} ({b.eventDuration || "Full Day"})</p>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1A1614] border border-[#E2E8F0] dark:border-[#262626] flex justify-between items-center text-xs">
+                      <span className="text-[#64748B] dark:text-[#94A3B8]">Budget / Payout:</span>
+                      <span className="font-black text-[#76B900]">₹{(b.totalPrice || b.budget || 0).toLocaleString()}</span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setLaunchModalBooking(b)}
+                      className="w-full py-2 rounded-xl bg-[#76B900] hover:bg-[#86c910] text-black text-xs font-black shadow-sm flex items-center justify-center gap-1.5 transition-transform active:scale-95"
+                    >
+                      <Rocket size={13} />
+                      <span>🚀 Launch to Creators</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Live Circulating Orders in Marketplace */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-black text-black dark:text-white flex items-center gap-2">
+                  <span>Live Circulating Shoots on Creator Hub</span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#76B900]/15 text-[#76B900]">
+                    {liveHubBookings.length}
+                  </span>
+                </h3>
+                <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">Orders actively visible to photographers, videographers, and creators right now.</p>
+              </div>
+            </div>
+
+            {liveHubBookings.length === 0 ? (
+              <div className="p-8 text-center bg-white dark:bg-[#12100E] rounded-2xl border border-dashed border-[#CBD5E1] dark:border-[#262626] text-xs text-[#94A3B8]">
+                No active orders currently live on Creator Hub. Launch an order above to start!
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {liveHubBookings.map((b) => (
+                  <div key={b._id} className="p-4 rounded-2xl bg-white dark:bg-[#12100E] border border-[#E2E8F0] dark:border-[#262626] shadow-sm space-y-3">
+                    <div className="flex justify-between items-start gap-2">
+                      <div>
+                        <h4 className="text-xs font-black text-black dark:text-white">{b.title || b.service?.name || "Photoshoot Order"}</h4>
+                        <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">{b.customerName}</p>
+                      </div>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold uppercase bg-emerald-500/15 text-emerald-500">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Live on Hub
+                      </span>
+                    </div>
+
+                    <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8] space-y-1">
+                      <p>📍 {b.eventLocation}</p>
+                      <p>📅 {formatDate(b.eventDate)} ({b.eventDuration || "Full Day"})</p>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-[#76B900]/10 border border-[#76B900]/20 flex justify-between items-center text-xs">
+                      <span className="text-[#64748B] dark:text-[#94A3B8]">Creator Payout (90%):</span>
+                      <span className="font-black text-[#76B900]">₹{(b.freelancerPayout || Math.round((b.totalPrice || b.budget || 0) * 0.9)).toLocaleString()}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] text-[#94A3B8]">
+                      <span>Proposals: {b.quotations?.length || 0}</span>
+                      <span>
+                        {b.expiresAt && new Date(b.expiresAt) > new Date()
+                          ? `⏱️ ${Math.max(1, Math.round((new Date(b.expiresAt) - new Date()) / 3600000))}h left`
+                          : 'Expired'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </main>
       )}
+
+      {/* ========================================================================= */}
+      {/* LAUNCH TO CREATORS CONFIRMATION & SETUP MODAL */}
+      {/* ========================================================================= */}
+      <AnimatePresence>
+        {launchModalBooking && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="w-full max-w-lg bg-white dark:bg-[#171311] rounded-2xl border border-[#E2E8F0] dark:border-[#2D2825] p-6 space-y-5 shadow-2xl"
+            >
+              <div className="flex items-center justify-between pb-3 border-b border-[#F1F5F9] dark:border-[#262626]">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-[#76B900] text-black flex items-center justify-center font-bold">
+                    <Rocket size={18} />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-black text-black dark:text-white">Launch Shoot to Creator Hub</h3>
+                    <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">Review details before releasing this booking live to verified creators.</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setLaunchModalBooking(null)}
+                  className="h-8 w-8 rounded-lg hover:bg-[#F1F5F9] dark:hover:bg-[#221B17] flex items-center justify-center text-[#64748B] dark:text-[#94A3B8]"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Shoot Summary Box */}
+              <div className="p-4 rounded-xl bg-[#F8FAFC] dark:bg-[#12100E] border border-[#E2E8F0] dark:border-[#262626] space-y-2">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="text-xs font-black text-black dark:text-white">
+                      {launchModalBooking.title || launchModalBooking.service?.name || "Photoshoot Order"}
+                    </p>
+                    <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+                      Client: {launchModalBooking.customerName} &bull; {launchModalBooking.customerPhone}
+                    </p>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                    Awaiting Launch
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-[#E2E8F0] dark:border-[#262626]">
+                  <div>
+                    <span className="text-[#94A3B8] text-[10px] uppercase font-bold">Location</span>
+                    <p className="font-semibold text-black dark:text-white truncate">{launchModalBooking.eventLocation || "On-location"}</p>
+                  </div>
+                  <div>
+                    <span className="text-[#94A3B8] text-[10px] uppercase font-bold">Date & Duration</span>
+                    <p className="font-semibold text-black dark:text-white truncate">
+                      {formatDate(launchModalBooking.eventDate)} ({launchModalBooking.eventDuration || "Full Day"})
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Financial Breakdown (10% vs 90%) */}
+              <div className="p-4 rounded-xl bg-[#76B900]/10 border border-[#76B900]/25 space-y-2 text-xs">
+                <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8]">
+                  <span>Total Client Budget:</span>
+                  <span className="font-black text-sm text-black dark:text-white">
+                    ₹{(launchModalBooking.totalPrice || launchModalBooking.budget || 0).toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8]">
+                  <span>CREAONNECT Facilitation (10%):</span>
+                  <span className="font-bold text-[#76B900]">
+                    ₹{(launchModalBooking.platformFee || Math.round((launchModalBooking.totalPrice || launchModalBooking.budget || 0) * 0.1)).toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-[#64748B] dark:text-[#94A3B8] pt-1 border-t border-[#76B900]/20">
+                  <span className="font-bold text-black dark:text-white">Creator Guaranteed Payout (90%):</span>
+                  <span className="font-black text-base text-[#76B900]">
+                    ₹{(launchModalBooking.freelancerPayout || Math.round((launchModalBooking.totalPrice || launchModalBooking.budget || 0) * 0.9)).toLocaleString()}
+                  </span>
+                </div>
+              </div>
+
+              {/* Countdown Timer Config */}
+              <div>
+                <label className="block text-xs font-bold text-black dark:text-white mb-1.5">
+                  Marketplace Countdown Expiry
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { h: 12, label: "12 Hours" },
+                    { h: 24, label: "24 Hours (Standard)" },
+                    { h: 48, label: "48 Hours (2 Days)" }
+                  ].map(item => (
+                    <button
+                      key={item.h}
+                      type="button"
+                      onClick={() => setLaunchHours(item.h)}
+                      className={`py-2 px-1 text-center rounded-xl text-xs font-bold border transition-all ${
+                        launchHours === item.h
+                          ? "bg-[#76B900] text-black border-[#76B900] shadow-sm"
+                          : "bg-white dark:bg-[#1A1614] border-[#CBD5E1] dark:border-[#382C24] text-[#64748B] dark:text-[#94A3B8]"
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[11px] text-[#94A3B8] mt-1">
+                  Countdown timer starts immediately when launched. Creators will see this live on their dashboard.
+                </p>
+              </div>
+
+              {/* Special Admin Instructions (Optional) */}
+              <div>
+                <label className="block text-xs font-bold text-black dark:text-white mb-1">
+                  Admin Instructions / Brief for Creators (Optional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Priority client. Drone pilot and 4K camera gear required."
+                  value={launchNotes}
+                  onChange={(e) => setLaunchNotes(e.target.value)}
+                  className="w-full h-10 px-3 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] bg-white dark:bg-[#1A1614] text-xs text-black dark:text-white outline-none focus:border-[#76B900]"
+                />
+              </div>
+
+              {/* Actions */}
+              <div className="pt-2 flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setLaunchModalBooking(null)}
+                  className="flex-1 h-11 rounded-xl border border-[#CBD5E1] dark:border-[#382C24] text-xs font-bold text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F8FAFC] dark:hover:bg-[#221B17]"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={launchingId === launchModalBooking._id}
+                  onClick={() => onConfirmLaunch(launchModalBooking)}
+                  className="flex-1 h-11 rounded-xl bg-[#76B900] hover:bg-[#86c910] text-black text-xs font-black shadow-md shadow-[#76B900]/20 flex items-center justify-center gap-2 disabled:opacity-50 transition-all active:scale-95"
+                >
+                  {launchingId === launchModalBooking._id ? (
+                    <span>Launching...</span>
+                  ) : (
+                    <>
+                      <Rocket size={15} />
+                      <span>🚀 Launch Live to Creators</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
