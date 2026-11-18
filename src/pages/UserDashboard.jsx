@@ -3580,9 +3580,9 @@ const UserDashboard = () => {
               <form onSubmit={handlePostOrderSubmit} className="flex flex-col flex-1 overflow-hidden min-h-0">
                 {/* Scrollable Form Body */}
                 <div className="px-6 py-4 overflow-y-auto flex-1 min-h-0">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-0 md:divide-x divide-[#E2E8F0] dark:divide-[#2D2825]">
                     {/* Left Column: Shoot Details & Requirements */}
-                    <div className="space-y-3.5">
+                    <div className="space-y-3.5 md:pr-6">
                       <div>
                         <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
                           Shoot Title <span className="text-red-500">*</span>
@@ -3713,7 +3713,7 @@ const UserDashboard = () => {
                     </div>
 
                     {/* Right Column: Pricing, Expiration & Escrow Protection */}
-                    <div className="space-y-3.5">
+                    <div className="space-y-3.5 md:pl-6">
                       {/* Budget & Split preview */}
                       <div>
                         <label className="block text-xs font-bold text-[#1E1B4B] dark:text-white mb-1">
